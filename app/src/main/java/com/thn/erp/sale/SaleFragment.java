@@ -12,4 +12,16 @@ public class SaleFragment extends BaseFragment {
     protected int getLayout() {
         return R.layout.fragment_sale;
     }
+
+
+
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void installListener() {
+
+    }
 }

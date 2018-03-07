@@ -2,10 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/white"
     android:orientation="vertical">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="销售" />
+    <com.flyco.tablayout.SlidingTabLayout
+        android:id="@+id/slidingTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp35"
+        tl:tl_textSelectColor="@color/color_FAF867"
+        tl:tl_textAllCaps="true"
+        tl:tl_tab_padding="@dimen/dp15"
+        tl:tl_indicator_height="0dp"
+        tl:tl_textUnselectColor="@android:color/white"
+        android:background="@android:color/white"
+        tl:tl_textsize="@dimen/sp12"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp05"
+        android:background="@color/color_eee"
+        />
+    <com.thn.erp.view.CustomViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>
