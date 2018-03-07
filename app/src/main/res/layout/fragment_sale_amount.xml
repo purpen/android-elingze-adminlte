@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     >
-    <com.taihuoniao.banmen.views.CustomScrollView
+    <com.thn.erp.view.CustomScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="2017-05-28至2017-06-26"
-                                android:textColor="@color/color_666"
+                                android:textColor="@color/color_222"
                                 android:textSize="@dimen/sp9" />
 
                             <ImageView
@@ -93,7 +93,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/color_f8f8f8"
+                        android:background="@color/color_FAFAFA"
                         android:padding="@dimen/dp10">
 
                         <TextView
@@ -110,201 +110,7 @@
                     </RelativeLayout>
                 </LinearLayout>
 
-
-                <!--订单数量-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp5"
-                    android:background="@android:color/white"
-                    android:orientation="vertical"
-                    android:paddingBottom="@dimen/dp15"
-                    android:paddingLeft="@dimen/dp15"
-                    android:paddingRight="@dimen/dp15"
-                    android:paddingTop="@dimen/dp10">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="销售订单"
-                            android:textColor="@color/color_222"
-                            android:textSize="@dimen/sp14" />
-
-                        <LinearLayout
-                            android:id="@+id/llSaleOrderPeriod"
-                            android:layout_width="wrap_content"
-                            android:layout_height="23dp"
-                            android:layout_alignParentRight="true"
-                            android:background="@drawable/border_date_radius_ddd"
-                            android:gravity="center"
-                            android:orientation="horizontal"
-                            android:paddingLeft="@dimen/dp5"
-                            android:paddingRight="@dimen/dp5">
-
-                            <TextView
-                                android:id="@+id/tvSaleOrderPeriod"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="2017-05-28至2017-06-26"
-                                android:textColor="@color/color_666"
-                                android:textSize="@dimen/sp9" />
-
-                            <ImageView
-                                android:id="@+id/ivOrderTriangle"
-                                android:layout_width="9dp"
-                                android:layout_height="9dp"
-                                android:layout_marginLeft="@dimen/dp5"
-                                android:src="@mipmap/icon_date_triangle" />
-                        </LinearLayout>
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/dp5"
-                        android:layout_marginTop="@dimen/dp10">
-
-                        <TextView
-                            android:id="@+id/currentOrders"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="订单数：123"
-                            android:textColor="@color/color_222"
-                            android:textSize="@dimen/sp10" />
-
-                        <TextView
-                            android:id="@+id/currentOrderDate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:text="日期：2017-05-28"
-                            android:textColor="@color/color_666"
-                            android:textSize="@dimen/sp10" />
-                    </RelativeLayout>
-
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/color_f8f8f8"
-                        android:padding="@dimen/dp10">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="订单数(个)"
-                            android:textColor="@color/color_222"
-                            android:textSize="@dimen/sp8" />
-
-                        <com.github.mikephil.charting.charts.LineChart
-                            android:id="@+id/orderChart"
-                            android:layout_width="match_parent"
-                            android:layout_height="156dp" />
-                    </RelativeLayout>
-                </LinearLayout>
-
-                <!--24小时成功下单-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp5"
-                    android:background="@android:color/white"
-                    android:orientation="vertical"
-                    android:paddingBottom="@dimen/dp15"
-                    android:paddingLeft="@dimen/dp15"
-                    android:paddingRight="@dimen/dp15"
-                    android:paddingTop="@dimen/dp10">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="24小时成功下单"
-                            android:textColor="@color/color_222"
-                            android:textSize="@dimen/sp14" />
-
-                        <LinearLayout
-                            android:id="@+id/llSaleOrder24"
-                            android:layout_width="wrap_content"
-                            android:layout_height="23dp"
-                            android:layout_alignParentRight="true"
-                            android:background="@drawable/border_date_radius_ddd"
-                            android:gravity="center"
-                            android:orientation="horizontal"
-                            android:paddingLeft="@dimen/dp5"
-                            android:paddingRight="@dimen/dp5">
-
-                            <TextView
-                                android:id="@+id/tvSaleOrder24"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="2017-05-28至2017-06-26"
-                                android:textColor="@color/color_666"
-                                android:textSize="@dimen/sp9" />
-
-                            <ImageView
-                                android:id="@+id/iv24Triangle"
-                                android:layout_width="9dp"
-                                android:layout_height="9dp"
-                                android:layout_marginLeft="@dimen/dp5"
-                                android:src="@mipmap/icon_date_triangle" />
-                        </LinearLayout>
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/dp5"
-                        android:layout_marginTop="@dimen/dp10">
-
-                        <TextView
-                            android:id="@+id/current24Orders"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="订单数：123"
-                            android:textColor="@color/color_222"
-                            android:textSize="@dimen/sp10" />
-
-                        <TextView
-                            android:id="@+id/currentTime"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:text="日期：2017-05-28"
-                            android:textColor="@color/color_666"
-                            android:textSize="@dimen/sp10" />
-                    </RelativeLayout>
-
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp10"
-                        android:background="@color/color_f8f8f8"
-                        android:padding="@dimen/dp10">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="订单数(个)"
-                            android:textColor="@color/color_222"
-                            android:textSize="@dimen/sp8" />
-
-                        <com.github.mikephil.charting.charts.LineChart
-                            android:id="@+id/ordersIn24Chart"
-                            android:layout_width="match_parent"
-                            android:layout_height="156dp" />
-                    </RelativeLayout>
-                </LinearLayout>
-
-                <!--top100-->
+                <!--销售产品top100-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -343,7 +149,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="2017-05-28至2017-06-26"
-                                android:textColor="@color/color_666"
+                                android:textColor="@color/color_222"
                                 android:textSize="@dimen/sp9" />
 
                             <ImageView
@@ -364,18 +170,17 @@
                         android:textColor="@color/color_222"
                         android:textSize="@dimen/sp10" />
 
-                    <com.taihuoniao.banmen.views.ListViewForScrollView
+                    <com.thn.erp.view.ListViewForScrollView
                         android:id="@+id/listViewForScrollView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp10"
-                        android:background="@color/color_f8f8f8"
                         android:divider="@color/color_eee"
                         android:dividerHeight="@dimen/dp05"
                         android:padding="@dimen/dp10" />
                 </LinearLayout>
             </LinearLayout>
-    </com.taihuoniao.banmen.views.CustomScrollView>
+    </com.thn.erp.view.CustomScrollView>
     <include
         android:id="@+id/emptyView"
         layout="@layout/view_no_chart_data"

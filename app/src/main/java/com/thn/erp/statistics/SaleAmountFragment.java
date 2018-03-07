@@ -1,6 +1,7 @@
 package com.thn.erp.statistics;
 
 import android.graphics.drawable.Drawable;
+import android.provider.SyncStateContract;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
@@ -23,8 +24,16 @@ import com.github.mikephil.charting.utils.Utils;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
+import com.thn.erp.net.ClientParamsAPI;
+import com.thn.erp.net.HttpRequest;
+import com.thn.erp.net.HttpRequestCallback;
+import com.thn.erp.net.URL;
+import com.thn.erp.utils.DateUtil;
+import com.thn.erp.utils.JsonUtil;
+import com.thn.erp.utils.LogUtil;
 import com.thn.erp.view.CustomScrollView;
 import com.thn.erp.view.ListViewForScrollView;
+import com.thn.erp.view.MyMarkerView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,10 +62,6 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
     TextView currentSaleAccount;
     @BindView(R.id.currentSaleDate)
     TextView currentSaleDate;
-    @BindView(R.id.currentOrders)
-    TextView currentOrders;
-    @BindView(R.id.currentOrderDate)
-    TextView currentOrderDate;
     private List<SalesTrendsBean.DataBean> datas;
     @BindView(R.id.saleAmountChart)
     LineChart saleAmountChart;
@@ -66,10 +71,6 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
     TextView tvSaleAmountPeriod;
     @BindView(R.id.ivTriangle)
     ImageView ivTriangle;
-
-    @BindView(R.id.currentTime)
-    TextView currentTime;
-
     @BindView(R.id.tvSaleRank)
     TextView tvSaleRank;
 
@@ -90,26 +91,16 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
         color=getResources().getColor(R.color.color_ff5a5f);
         statesArr=new ArrayList<>();
         setUpSaleAmountChart();
-        setUpSaleOrderChart();
-        setUpSaleOrderIn24Chart();
         listViewForScrollView.setFocusable(false);
         View view = View.inflate(activity, R.layout.header_sale_top100, null);
         listViewForScrollView.addHeaderView(view);
     }
 
-    @OnClick({R.id.llSaleAmountPeriod,R.id.llSaleOrderPeriod,R.id.llSaleOrder24,R.id.llSaleRank})
+    @OnClick({R.id.llSaleAmountPeriod,R.id.llSaleRank})
     void onViewClicked(View v){
         switch (v.getId()){
             case R.id.llSaleAmountPeriod:
                 currentClickedId = R.id.llSaleAmountPeriod;
-                getCalendarTime();
-                break;
-            case R.id.llSaleOrderPeriod:
-                currentClickedId = R.id.llSaleOrderPeriod;
-                getCalendarTime();
-                break;
-            case R.id.llSaleOrder24:
-                currentClickedId = R.id.llSaleOrder24;
                 getCalendarTime();
                 break;
             case R.id.llSaleRank:
@@ -149,16 +140,6 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
                 tvSaleAmountPeriod.setText(dateStr);
                 getSaleAmountData(start_time,end_time);
                 break;
-            case R.id.llSaleOrderPeriod:
-                isLoadSaleOrder = true;
-                isLoadSaleAmount=false;
-                tvSaleOrderPeriod.setText(dateStr);
-                getSaleAmountData(start_time,end_time);
-                break;
-            case R.id.llSaleOrder24:
-                tvSaleOrder24.setText(dateStr);
-                getSaleOrdersIn24Data(start_time,end_time);
-                break;
             case R.id.llSaleRank:
                 tvSaleRank.setText(dateStr);
                 getProductsTop100Data(start_time,end_time);
@@ -166,80 +147,6 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
                 break;
         }
 
-    }
-
-    /**
-     * 设置24小时内订单表
-     */
-    private void setUpSaleOrderIn24Chart() {
-        XAxis xAxis = ordersIn24Chart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        ordersIn24Chart.getLegend().setEnabled(false);
-        ordersIn24Chart.setScaleEnabled(false);
-        ordersIn24Chart.getDescription().setEnabled(false);
-        int axisColor = getResources().getColor(R.color.color_222);
-        xAxis.setAxisLineColor(axisColor);
-        xAxis.setAxisLineWidth(LINE_WIDTH);
-        xAxis.setTextSize(TEXT_SIZE);
-        xAxis.setDrawGridLines(false);
-        MyMarkerView mv = new MyMarkerView(activity,R.layout.custom_marker_view);
-        mv.setChartView(ordersIn24Chart);
-        ordersIn24Chart.setMarker(mv);
-        xAxis.setValueFormatter((float value, AxisBase axis) -> {
-            if (null==datas) return "";
-            if (datas.size()>0){
-                return String.valueOf(in24HoursDatas.get((int) value).time)+"点";
-            }else {
-                return "";
-            }
-        });
-        //设置是否显示x轴
-        xAxis.setEnabled(true);
-        YAxis leftAxis = ordersIn24Chart.getAxisLeft();
-        leftAxis.setAxisLineColor(axisColor);
-        leftAxis.setAxisLineWidth(LINE_WIDTH);
-        leftAxis.setDrawZeroLine(true);
-        leftAxis.setAxisMinimum(0);
-        YAxis yAxisRight = ordersIn24Chart.getAxisRight();
-        yAxisRight.setEnabled(false);
-    }
-
-    /**
-     * 销售订单
-     */
-    private void setUpSaleOrderChart() {
-        XAxis xAxis = orderChart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        orderChart.getLegend().setEnabled(false);
-        orderChart.setScaleEnabled(false);
-        orderChart.getDescription().setEnabled(false);
-        orderChart.setPinchZoom(true);
-        int axisColor = getResources().getColor(R.color.color_222);
-        xAxis.setAxisLineColor(axisColor);
-        xAxis.setAxisLineWidth(LINE_WIDTH);
-        xAxis.setTextSize(TEXT_SIZE);
-        MyMarkerView mv = new MyMarkerView(activity,R.layout.custom_marker_view);
-        mv.setChartView(orderChart);
-        orderChart.setMarker(mv);
-        xAxis.setValueFormatter((float value, AxisBase axis) -> {
-            if (null==datas) return "";
-            if (datas.size()>0){
-                return String.valueOf(datas.get((int) value).time.substring(5));
-            }else {
-                return "";
-            }
-        });
-
-        xAxis.setDrawGridLines(false);
-        //设置是否显示x轴
-        xAxis.setEnabled(true);
-        YAxis leftAxis = orderChart.getAxisLeft();
-        leftAxis.setAxisLineColor(axisColor);
-        leftAxis.setAxisLineWidth(LINE_WIDTH);
-        leftAxis.setDrawZeroLine(true);
-        leftAxis.setAxisMinimum(0);
-        YAxis yAxisRight = orderChart.getAxisRight();
-        yAxisRight.setEnabled(false);
     }
 
     @Override
@@ -250,33 +157,6 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
                 currentSaleAccount.setText(String.format("销售额：%s",e.getY()));
                 if (null==datas) return;
                 currentSaleDate.setText(datas.get((int)e.getX()).time);
-            }
-
-            @Override
-            public void onNothingSelected() {
-
-            }
-        });
-
-        orderChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-            @Override
-            public void onValueSelected(Entry e, Highlight h) {
-                currentOrders.setText(String.format("订单数：%s",(int)e.getY()));
-                if (null==datas) return;
-                currentOrderDate.setText(datas.get((int)e.getX()).time);
-            }
-
-            @Override
-            public void onNothingSelected() {
-            }
-        });
-
-        ordersIn24Chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-            @Override
-            public void onValueSelected(Entry e, Highlight h) {
-                current24Orders.setText(String.format("订单数：%s",(int)e.getY()));
-                if (null==in24HoursDatas) return;
-                currentTime.setText(in24HoursDatas.get((int)e.getX()).time+"点");
             }
 
             @Override
@@ -325,51 +205,15 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
     @Override
     protected void requestNet() {
         String end_time = DateUtil.getSpecifiedDayBefore(new Date(),1);
-        String start_time=DateUtil.getSpecifiedMonthBefore(end_time,1);
+        String start_time= DateUtil.getSpecifiedMonthBefore(end_time,1);
         LogUtil.e("end_time="+end_time+";start_time="+start_time);
         tvSaleAmountPeriod.setText(String.format("%s至%s",start_time,end_time));
-        tvSaleOrderPeriod.setText(String.format("%s至%s",start_time,end_time));
-        tvSaleOrder24.setText(String.format("%s至%s",start_time,end_time));
         tvSaleRank.setText(String.format("%s至%s",start_time,end_time));
         isLoadSaleAmount=true;
         isLoadSaleOrder=true;
         getSaleAmountData(start_time,end_time);
         getProductsTop100Data(start_time,end_time);
-        getSaleOrdersIn24Data(start_time,end_time);
     }
-
-    /**
-     * 获取24小时内订单数
-     * @param start_time
-     * @param end_time
-     */
-    private void getSaleOrdersIn24Data(String start_time, String end_time) {
-        if (TextUtils.isEmpty(start_time)) return;
-        if (TextUtils.isEmpty(end_time)) return;
-        HashMap<String, String> params = ClientParamsAPI.getSalesOrdersIn24Params(start_time, end_time);
-        HttpRequest.sendRequest(HttpRequest.GET, URL.ORDERS_IN_24HOURS, params, new HttpRequestCallback() {
-
-            @Override
-            public void onSuccess(String json) {
-                OrdersIn24HoursBean  ordersIn24HoursBean= JsonUtil.fromJson(json, OrdersIn24HoursBean.class);
-                if (null == ordersIn24HoursBean) return;
-                if (ordersIn24HoursBean.meta.status_code==Constants.SUCCESS){
-                    if (null!=in24HoursDatas) in24HoursDatas.clear();
-                    in24HoursDatas=ordersIn24HoursBean.data;
-                    setOrdersIn24HoursData(in24HoursDatas);
-                }else {
-                    ToastUtils.showError(ordersIn24HoursBean.meta.message);
-                }
-            }
-
-            @Override
-            public void onFailure(IOException e) {
-                ToastUtils.showError(R.string.network_err);
-            }
-        });
-    }
-
-
 
     /**
      * 获取top100产品列表
@@ -386,7 +230,7 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
             public void onSuccess(String json) {
                 SaleTop100Bean saleTop100Bean = JsonUtil.fromJson(json, SaleTop100Bean.class);
                 if (null == saleTop100Bean) return;
-                if (saleTop100Bean.meta.status_code== Constants.SUCCESS){
+                if (saleTop100Bean.meta.status_code== SyncStateContract.Constants.SUCCESS){
                     refreshList(saleTop100Bean.data);
                 }else {
                     ToastUtils.showError(saleTop100Bean.meta.message);
@@ -582,61 +426,6 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
             saleAmountChart.setData(data);
         }
         saleAmountChart.invalidate();
-    }
-
-    /**
-     * 设置24小时订单数据
-     * @param datas
-     */
-    private void setOrdersIn24HoursData(List<OrdersIn24HoursBean.DataBean> datas) {
-        ArrayList<Entry> values = new ArrayList<>();
-        int len = datas.size();
-        if (len==0) {
-            statesArr.add(false);
-        }else {
-            statesArr.add(true);
-        }
-        checkHaveNotData();
-        for (int i = 0; i < len; i++) {
-            OrdersIn24HoursBean.DataBean dataBean = datas.get(i);
-            Integer counts = Integer.valueOf(dataBean.order_count);
-            if (i==0) {
-                current24Orders.setText(String.format("订单数：%s",counts));
-                currentTime.setText(dataBean.time);
-            }
-            values.add(new Entry(i,counts));
-        }
-
-        LineDataSet set;
-
-        if (ordersIn24Chart.getData() != null &&
-                ordersIn24Chart.getData().getDataSetCount() > 0) {
-            set = (LineDataSet) ordersIn24Chart.getData().getDataSetByIndex(0);
-            set.setValues(values);
-            ordersIn24Chart.getData().notifyDataChanged();
-            ordersIn24Chart.notifyDataSetChanged();
-        } else {
-            set = new LineDataSet(values, "");
-            set.setDrawIcons(false);
-            set.setCubicIntensity(0.2f);
-            set.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
-            set.setColor(color);
-            set.setDrawCircles(false);
-//            set.setCircleColor(color);
-            set.setLineWidth(LINE_WIDTH);
-//            set.setCircleRadius(1f);
-            set.setDrawCircleHole(false);
-            set.setValueTextSize(VALUE_TEXT_SIZE);
-            set.setValueTextColor(color);
-            set.setDrawValues(false);
-            setLineChartFillStyle(set);
-            set.setValueFormatter((float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) -> String.valueOf((int) value));
-            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-            dataSets.add(set);
-            LineData data = new LineData(dataSets);
-            ordersIn24Chart.setData(data);
-        }
-        ordersIn24Chart.invalidate();
     }
 
     private void checkHaveNotData(){
