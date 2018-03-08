@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 网络请求时的ProgressDialog -->
+    <style name="THN_CustomDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="THN_custom_progress_dialog" parent="@style/THN_CustomDialog">
+        <!--<item name="android:windowBackground">@drawable/corner_black</item>-->
+        <item name="android:windowNoTitle">true</item>
+    </style>
+</resources>

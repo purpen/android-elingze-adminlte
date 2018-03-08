@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Environment;
 
 import com.squareup.leakcanary.LeakCanary;
+import com.stephen.taihuoniaolibrary.common.THNApp;
 import com.thn.erp.base.BaseActivity;
 
 import java.io.File;
@@ -51,6 +52,8 @@ public class AppApplication extends Application {
             }
             LeakCanary.install(this);
         }
+
+        THNApp.init(this);
     }
 
     public boolean isSD() {
