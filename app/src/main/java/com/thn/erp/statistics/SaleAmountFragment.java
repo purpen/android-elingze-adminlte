@@ -1,7 +1,6 @@
 package com.thn.erp.statistics;
 
 import android.graphics.drawable.Drawable;
-import android.provider.SyncStateContract;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
@@ -17,20 +16,27 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.Utils;
 import com.github.mikephil.charting.utils.ViewPortHandler;
+import com.thn.erp.Constants;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
+import com.thn.erp.bean.SaleTop100Bean;
+import com.thn.erp.bean.SalesTrendsBean;
 import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
+import com.thn.erp.statistics.adapter.ProductsTop100Adapter;
 import com.thn.erp.utils.DateUtil;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.LogUtil;
+import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.CustomScrollView;
 import com.thn.erp.view.ListViewForScrollView;
 import com.thn.erp.view.MyMarkerView;
@@ -88,7 +94,7 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
 
     @Override
     protected void initView() {
-        color=getResources().getColor(R.color.color_ff5a5f);
+        color=getResources().getColor(R.color.color_27AE59);
         statesArr=new ArrayList<>();
         setUpSaleAmountChart();
         listViewForScrollView.setFocusable(false);
@@ -176,12 +182,23 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
         xAxis.setAxisLineColor(axisColor);
         xAxis.setAxisLineWidth(LINE_WIDTH);
         xAxis.setTextSize(TEXT_SIZE);
-        xAxis.setValueFormatter((float value, AxisBase axis) -> {
-            if (datas==null) return null;
-            if (datas.size()>0){
-                return String.valueOf(datas.get((int) value).time.substring(5));
-            }else {
-                return "";
+//        xAxis.setValueFormatter((float value, AxisBase axis) -> {
+//            if (datas==null) return null;
+//            if (datas.size()>0){
+//                return String.valueOf(datas.get((int) value).time.substring(5));
+//            }else {
+//                return "";
+//            }
+//        });
+        xAxis.setValueFormatter(new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                if (datas==null) return null;
+                if (datas.size()>0){
+                    return String.valueOf(datas.get((int) value).time.substring(5));
+                }else {
+                    return "";
+                }
             }
         });
         MyMarkerView mv = new MyMarkerView(activity,R.layout.custom_marker_view);
@@ -230,7 +247,7 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
             public void onSuccess(String json) {
                 SaleTop100Bean saleTop100Bean = JsonUtil.fromJson(json, SaleTop100Bean.class);
                 if (null == saleTop100Bean) return;
-                if (saleTop100Bean.meta.status_code== SyncStateContract.Constants.SUCCESS){
+                if (saleTop100Bean.meta.status_code== Constants.SUCCESS){
                     refreshList(saleTop100Bean.data);
                 }else {
                     ToastUtils.showError(saleTop100Bean.meta.message);
@@ -279,7 +296,6 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
                     if (null!=datas) datas.clear();
                     datas = salesTrendsBean.data;
                     if (isLoadSaleAmount) setSaleAmountChartData(datas);
-                    if (isLoadSaleOrder) setSaleOrderChartData(datas);
                 }else {
                     ToastUtils.showError(salesTrendsBean.meta.message);
                 }
@@ -292,66 +308,7 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
         });
     }
 
-    /**
-     * 设置订单数量表数据
-     *
-     * @param datas
-     */
-    private void setSaleOrderChartData(List<SalesTrendsBean.DataBean> datas) {
-        if (null==datas) {
-            statesArr.add(false);
-            return;
-        }
-        if (datas.size()==0){
-            statesArr.add(false);
-        } else {
-            statesArr.add(true);
-        }
-        checkHaveNotData();
-        ArrayList<Entry> values = new ArrayList<>();
-        int len = datas.size();
 
-        for (int i = 0; i < len; i++) {
-            SalesTrendsBean.DataBean dataBean = datas.get(i);
-            Integer counts = Integer.valueOf(dataBean.order_count);
-            if (i==0) {
-                currentOrders.setText(String.format("订单数：%s",counts));
-                currentOrderDate.setText(dataBean.time);
-            }
-            values.add(new Entry(i,counts));
-        }
-
-        LineDataSet set;
-
-        if (orderChart.getData() != null &&
-                orderChart.getData().getDataSetCount() > 0) {
-            set = (LineDataSet) orderChart.getData().getDataSetByIndex(0);
-            set.setValues(values);
-            orderChart.getData().notifyDataChanged();
-            orderChart.notifyDataSetChanged();
-        } else {
-            set = new LineDataSet(values, "");
-            set.setDrawIcons(false);
-            set.setCubicIntensity(0.2f);
-            set.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
-            set.setColor(color);
-//            set.setCircleColor(color);
-            set.setLineWidth(LINE_WIDTH);
-//            set.setCircleRadius(3f);
-            set.setDrawCircles(false);
-            set.setDrawCircleHole(false);
-            set.setValueTextSize(VALUE_TEXT_SIZE);
-            set.setValueTextColor(color);
-            set.setDrawValues(false);
-            setLineChartFillStyle(set);
-            set.setValueFormatter((float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) -> String.valueOf((int) value));
-            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-            dataSets.add(set);
-            LineData data = new LineData(dataSets);
-            orderChart.setData(data);
-        }
-        orderChart.invalidate();
-    }
 
     /**
      * 设置linechart填充样式
@@ -419,7 +376,13 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
             set.setValueTextColor(color);
             set.setDrawValues(false);
             setLineChartFillStyle(set);
-            set.setValueFormatter((float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) -> String.valueOf((int)value));
+//            set.setValueFormatter((float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) -> String.valueOf((int)value));
+            set.setValueFormatter(new IValueFormatter() {
+                @Override
+                public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+                    return String.valueOf((int)value);
+                }
+            });
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
             dataSets.add(set);
             LineData data = new LineData(dataSets);

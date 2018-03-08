@@ -31,7 +31,7 @@
             android:scaleType="centerInside"
             android:visibility="gone" />
 
-        <com.taihuoniao.banmen.views.svprogress.SVCircleProgressBar
+        <com.thn.erp.view.svprogress.SVCircleProgressBar
             android:id="@+id/circleProgressBar"
             android:layout_width="@dimen/dp60"
             android:layout_height="@dimen/dp60"

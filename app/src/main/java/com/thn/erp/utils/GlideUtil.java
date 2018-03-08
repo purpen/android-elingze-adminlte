@@ -16,8 +16,8 @@ import com.thn.erp.R;
  * Emial: 895745843@qq.com
  */
 public class GlideUtil {
-    private static final Integer DEFAULT_IMAGEID = R.mipmap.default_load;
-    private static final Integer ERROR_IMAGEID = R.mipmap.default_load;
+    private static final Integer DEFAULT_IMAGEID = R.mipmap.ic_launcher;
+    private static final Integer ERROR_IMAGEID = R.mipmap.ic_launcher;
     private static final int FADE_IN_DURATION = 300;
 
     public static Context getContext() {

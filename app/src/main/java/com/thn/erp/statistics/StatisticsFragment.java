@@ -16,7 +16,7 @@ import butterknife.BindView;
  * Created by lilin on 2018/3/7.
  */
 
-public class SaleFragment extends BaseFragment {
+public class StatisticsFragment extends BaseFragment {
     @BindView(R.id.slidingTabLayout)
     SlidingTabLayout slidingTabLayout;
     @BindView(R.id.viewPager)
@@ -34,10 +34,10 @@ public class SaleFragment extends BaseFragment {
     protected void initView() {
         ArrayList<Class> classes = new ArrayList<>();
         classes.add(SaleAmountFragment.class);
-        classes.add(SaleChannelFragment.class);
-        classes.add(SaleAmountPerUserFragment.class);
-        classes.add(SaleAmountAreaFragment.class);
-        classes.add(HotTagsFragment.class);
+        classes.add(SaleAmountFragment.class);
+        classes.add(SaleAmountFragment.class);
+        classes.add(SaleAmountFragment.class);
+        classes.add(SaleAmountFragment.class);
         String[] titles = getResources().getStringArray(R.array.statistics_titles);
         adapter=new BaseViewPagerAdapter(getChildFragmentManager(),classes, Arrays.asList(titles));
         viewPager.setAdapter(adapter);

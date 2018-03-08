@@ -8,7 +8,7 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
-import com.taihuoniao.banmen.R;
+import com.thn.erp.R;
 
 
 /**

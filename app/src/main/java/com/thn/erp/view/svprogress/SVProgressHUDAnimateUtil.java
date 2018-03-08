@@ -2,7 +2,7 @@ package com.thn.erp.view.svprogress;
 
 import android.view.Gravity;
 
-import com.taihuoniao.banmen.R;
+import com.thn.erp.R;
 
 
 /**

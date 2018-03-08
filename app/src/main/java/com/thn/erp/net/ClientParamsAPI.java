@@ -19,4 +19,12 @@ public class ClientParamsAPI {
         params.put("token", SPUtil.read(Constants.TOKEN));
         return params;
     }
+
+    public static HashMap<String,String> getSalesTrendsRequestParams(String start_time, String end_time) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("start_time",start_time);
+        params.put("end_time", end_time);
+        params.put("token", SPUtil.read(Constants.TOKEN));
+        return params;
+    }
 }

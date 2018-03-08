@@ -12,9 +12,11 @@
         tl:tl_textSelectColor="@color/color_FAF867"
         tl:tl_textAllCaps="true"
         tl:tl_tab_padding="@dimen/dp15"
-        tl:tl_indicator_height="0dp"
+        tl:tl_tab_space_equal="true"
+        tl:tl_indicator_height="2dp"
+        tl:tl_indicator_color="@color/color_FAF867"
         tl:tl_textUnselectColor="@android:color/white"
-        android:background="@android:color/white"
+        android:background="@color/color_27AE59"
         tl:tl_textsize="@dimen/sp12"
         />
     <View
