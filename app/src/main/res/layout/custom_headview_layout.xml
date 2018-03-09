@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:background="@null"
-        android:src="@mipmap/icon_head_back" />
+        android:src="@mipmap/icon_return" />
 
     <ImageButton
         android:id="@+id/iv_left"
@@ -58,7 +58,7 @@
         android:layout_marginLeft="@dimen/dp60"
         android:ellipsize="end"
         android:maxLines = "1"
-        android:textColor="@color/textColorPrimary"
+        android:textColor="@android:color/white"
         android:textSize="@dimen/sp17"
         android:visibility="gone" />
 
