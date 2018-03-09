@@ -8,36 +8,36 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.taihuoniao.banmen.Constants;
-import com.taihuoniao.banmen.R;
-import com.taihuoniao.banmen.base.BaseFragment;
-import com.taihuoniao.banmen.main.MainActivity;
-import com.taihuoniao.banmen.network.ClientParamsAPI;
-import com.taihuoniao.banmen.network.HttpRequest;
-import com.taihuoniao.banmen.network.HttpRequestCallback;
-import com.taihuoniao.banmen.network.URL;
-import com.taihuoniao.banmen.useraccount.bean.LoginBean;
-import com.taihuoniao.banmen.utils.JsonUtil;
-import com.taihuoniao.banmen.utils.SPUtil;
-import com.taihuoniao.banmen.utils.ToastUtils;
-import com.taihuoniao.banmen.utils.Util;
-import com.taihuoniao.banmen.views.svprogress.WaitingDialog;
+import com.thn.erp.Constants;
+import com.thn.erp.MainActivity;
+import com.thn.erp.R;
+import com.thn.erp.base.BaseFragment;
+import com.thn.erp.net.ClientParamsAPI;
+import com.thn.erp.net.HttpRequest;
+import com.thn.erp.net.HttpRequestCallback;
+import com.thn.erp.net.URL;
+import com.thn.erp.user.bean.LoginBean;
+import com.thn.erp.utils.JsonUtil;
+import com.thn.erp.utils.SPUtil;
+import com.thn.erp.utils.ToastUtils;
+import com.thn.erp.utils.Util;
+import com.thn.erp.view.svprogress.WaitingDialog;
 
 import java.io.IOException;
 import java.util.HashMap;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 
 public class LoginFragment extends BaseFragment {
-    @Bind(R.id.et_phone)
+    @BindView(R.id.et_phone)
     EditText etPhone;
-    @Bind(R.id.et_password)
+    @BindView(R.id.et_password)
     EditText etPassword;
-    @Bind(R.id.tv_forget_password)
+    @BindView(R.id.tv_forget_password)
     TextView tvForgetPassword;
-    @Bind(R.id.btn_login)
+    @BindView(R.id.btn_login)
     Button btnLogin;
     private String userName;
     private String userPsw;
@@ -48,7 +48,7 @@ public class LoginFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
-        page = bundle.getString(LoginActivity.class.getSimpleName());
+//        page = bundle.getString(LoginActivity.class.getSimpleName());
     }
 
     @Override
