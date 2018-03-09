@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp45"
+    android:id="@+id/relativeLayout_titleBar"
+    android:background="@color/color_27AE59">
+    <ImageButton
+        android:id="@+id/head_goback"
+        android:layout_width="@dimen/dp45"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:background="@null"
+        android:src="@mipmap/icon_head_back" />
+
+    <ImageButton
+        android:id="@+id/iv_left"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:background="@null"
+        android:padding="@dimen/dp16"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/rl_search"
+        android:layout_width="@dimen/dp250"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_toRightOf="@+id/head_goback"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp35"
+            android:background="@null"
+            android:drawablePadding="@dimen/dp5"
+            android:imeOptions="actionSearch"
+            android:paddingLeft="@dimen/dp10"
+            android:maxLines = "1"
+            android:textSize="@dimen/sp14" />
+        <ImageButton
+            android:id="@+id/ib_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp16"
+            android:background="@null" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/head_center_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginRight="@dimen/dp60"
+        android:layout_marginLeft="@dimen/dp60"
+        android:ellipsize="end"
+        android:maxLines = "1"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="@dimen/sp17"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/iv_center_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/rl_head_shop"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:visibility="gone">
+
+        <ImageButton
+            android:id="@+id/head_view_shop"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:clickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:padding="@dimen/dp16" />
+
+        <TextView
+            android:id="@+id/tv_tip_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@id/head_view_shop"
+            android:clickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:gravity="center"
+            android:text="99+"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="@dimen/sp10"
+            android:visibility="gone" />
+            <!--android:background="@drawable/cart_num_bg"-->
+    </RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/ib_right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:background="@null"
+        android:padding="@dimen/dp16"
+        android:visibility="gone" />
+        <!--android:src="@mipmap/icon_more"-->
+
+    <ImageButton
+        android:id="@+id/iv_head_search"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignTop="@+id/rl_head_shop"
+        android:layout_toLeftOf="@+id/rl_head_shop"
+        android:layout_toStartOf="@+id/rl_head_shop"
+        android:background="@null"
+        android:paddingLeft="@dimen/dp16"
+        android:paddingRight="@dimen/dp16"
+        android:src="@mipmap/ic_launcher"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_head_right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:drawablePadding="@dimen/dp5"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp16"
+        android:paddingRight="@dimen/dp16"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="@dimen/sp14"
+        android:visibility="gone" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone" />
+</RelativeLayout>

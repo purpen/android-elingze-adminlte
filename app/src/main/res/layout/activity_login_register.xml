@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <ImageButton
+        android:id="@+id/ibtn_close"
+        android:layout_width="@dimen/dp45"
+        android:layout_height="@dimen/dp45"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@null"
+        android:src="@mipmap/icon_login_close" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp05"
+        android:background="@color/color_f8f8f8"
+        android:layout_below="@+id/ibtn_close"
+        />
+
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="@dimen/dp65"
+        android:layout_height="@dimen/dp35"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp110"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/ic_launcher" />
+
+    <com.thn.erp.view.WrapContentHeightViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_logo"
+        android:layout_marginTop="@dimen/dp50" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp15"
+        android:orientation="horizontal"
+        android:layout_below="@+id/viewPager"
+        android:gravity="center"
+        >
+        <TextView
+            android:id="@+id/tvLoginReg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_27AE59"
+            android:textSize="@dimen/sp14"
+            android:text="@string/loginfiu"
+            />
+        <View
+            android:layout_width="@dimen/dp1"
+            android:layout_height="@dimen/dp15"
+            android:background="@color/color_666"
+            android:layout_marginLeft="@dimen/dp8"
+            android:layout_marginRight="@dimen/dp8"
+            />
+        <TextView
+            android:id="@+id/tvForgetPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_666"
+            android:textSize="@dimen/sp14"
+            android:text="@string/forget_password"
+            />
+    </LinearLayout>
+    <Button
+        android:id="@+id/btn_switch"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:layout_below="@+id/viewPager"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp10"
+        android:layout_gravity="center_horizontal"
+        android:background="@null"
+        android:textColor="@color/color_666"
+        android:textSize="@dimen/sp14"
+        android:visibility="gone"
+        />
+
+</RelativeLayout>

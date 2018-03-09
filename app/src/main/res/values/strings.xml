@@ -1,5 +1,18 @@
 <resources>
     <string name="app_name">ERP</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="get_code">验证码</string>
+    <string name="input_check_code">输入验证码</string>
+    <string name="phone_num">手机号</string>
+    <string name="submit">提交</string>
+    <string name="password">密码</string>
+    <string name="forget_password">忘记密码</string>
+    <string name="newpassword">设置新密码</string>
+    <string name="forget_password_tips">如果您忘记了你的密码，可以通过手机号找回</string>
+    <string name="please_input">请输入</string>
+    <string name="no_account">还没有账号?&#160;&#160;&#160;&#160;立即注册</string>
+    <string name="has_account">已有账号?&#160;&#160;&#160;&#160;立即登录</string>
     <string name="nav_bottom_home">概览</string>
     <string name="nav_bottom_goods">商品</string>
     <string name="nav_bottom_sale">销售</string>
@@ -9,4 +22,6 @@
     <string name="network_not_well">您的网络不稳定，请刷新重试～</string>
     <string name="network_err">网络错误</string>
     <string name="refresh">刷新</string>
+    <string name="loginfiu">登录</string>
+    <string name="registerfiu">注册</string>
 </resources>
