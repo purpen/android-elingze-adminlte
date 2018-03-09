@@ -30,4 +30,21 @@
     <declare-styleable name="CircleColorView">
         <attr name="ViewColor" format="color"/>
     </declare-styleable>
+
+    <!-- 自定义属性 -->
+    <declare-styleable name="MyTopBar">
+        <attr name="leftTextColor" format="color" />
+        <!-- BackGround属性可以颜色，也可以是一个资源文件 -->
+        <!-- 所以BackGround是 format="reference|color"-->
+        <attr name="leftBackGround" format="reference|color" />
+        <attr name="leftText" format="string" />
+
+        <attr name="title" format="string" />
+        <attr name="titleTextSize" format="dimension" />
+        <attr name="titleTextColor" format="color" />
+
+        <attr name="rightTextColor" format="color" />
+        <attr name="rightBackGround" format="reference|color" />
+        <attr name="rightText" format="string" />
+    </declare-styleable>
 </resources>

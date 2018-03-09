@@ -1,4 +1,11 @@
 <resources>
+
+    <!-- 字体大小 -->
+    <dimen name="THN_fontSize_title">17dp</dimen> <!-- 标题文字 -->
+    <dimen name="THN_fontSize_text">15dp</dimen> <!-- 正文 -->
+    <dimen name="THN_fontSize_assist">12dp</dimen> <!-- 个别辅助文字 -->
+    <dimen name="THN_fontSize_label">14dp</dimen> <!-- 标签文字 -->
+
     <dimen name="dp05">0.5dp</dimen>
     <dimen name="dp1">1dp</dimen>
     <dimen name="dp2">2dp</dimen>

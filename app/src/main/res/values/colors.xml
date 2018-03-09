@@ -13,6 +13,27 @@
     <color name="color_FAFAFA">#FAFAFA</color>
     <color name="color_66fee178">#66fee178</color>
     <color name="color_ff5a5f">#ff5a5f</color>
+
+    <!-- 主体颜色 -->
+    <color name="THN_color_primaryColor">#28AA5A</color>
+
+    <!-- 辅助颜色 -->
+    <color name="THN_color_assistColor">#FAF867</color>
+
+    <!-- 其他颜色 -->
+    <color name="THN_color_bgColor_gray">#FAFAFA</color> <!-- 背景灰色 -->
+    <color name="THN_color_lineColor_darkGray">#E6E6E6</color> <!-- 线条颜色 -->
+
+    <!-- 字体颜色 -->
+    <color name="THN_color_fontColor_primary">#222222</color> <!-- 文字 -->
+    <color name="THN_color_fontColor_assist">#666666</color> <!-- 辅助文字 -->
+    <color name="THN_color_fontColor_hint">#999999</color> <!-- 提示文字 -->
+    <color name="THN_color_fontColor_link">#28AA5A</color> <!-- 重点或链接文字 -->
+    <color name="THN_color_fontColor_yellow">#FAF867</color> <!-- 黄色文字 -->
+    <color name="THN_color_fontColor_title">#FFFFFF</color> <!-- 标题文字 -->
+
+    <color name="transparent15">#26000000</color>
+
     <color name="color_f8f8f8">#F8F8F8</color>
     <color name="color_ddd">#DDD</color>
 </resources>
