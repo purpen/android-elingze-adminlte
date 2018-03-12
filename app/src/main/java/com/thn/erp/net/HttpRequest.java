@@ -202,18 +202,18 @@ public class HttpRequest {
      */
     public static Call sendRequest(HashMap<String, String> params, HttpRequestCallback callback) {
 
-        if (null==params)
+        if (null == params)
             throw new IllegalArgumentException("argument callback can not be null");
 
         if (null == callback)
             throw new IllegalArgumentException("argument callback can not be null");
 
         String str = params.get("email") + ":" + params.get("password");
-            str ="Basic  "+Base64.encodeToString(str.getBytes(), Base64.DEFAULT);
+        str = "Basic  " + Base64.encodeToString(str.getBytes(), Base64.DEFAULT);
         Request request = null;
         request = new Request.Builder()
                 .url(URL.AUTH_LOGIN)
-                .addHeader("Authorization",str.trim())
+                .addHeader("Authorization", str.trim())
                 .post(getRequestBody(params))
                 .build();
         Call call = mOkHttpClient.newCall(request);
@@ -249,7 +249,6 @@ public class HttpRequest {
     private static Request getRequest(String url, HashMap<String, Object> params) {
         Request request = new Request.Builder()
                 .url(url)
-                .addHeader("Content-Type", "application/json; charset=UTF-8")
                 .post(getMultipartBody(params))
                 .build();
         return request;

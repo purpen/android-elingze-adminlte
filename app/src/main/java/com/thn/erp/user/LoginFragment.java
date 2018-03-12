@@ -17,7 +17,6 @@ import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.user.bean.LoginBean;
 import com.thn.erp.utils.JsonUtil;
-import com.thn.erp.utils.LogUtil;
 import com.thn.erp.utils.SPUtil;
 import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.svprogress.WaitingDialog;
@@ -87,7 +86,6 @@ public class LoginFragment extends BaseFragment {
 
             @Override
             public void onSuccess(String json) {
-                LogUtil.e(json);
                 dialog.dismiss();
                 LoginBean loginBean = JsonUtil.fromJson(json, LoginBean.class);
                 if (loginBean.success == true) {
