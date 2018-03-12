@@ -11,8 +11,8 @@ import com.thn.erp.base.BaseActivity;
 import com.thn.erp.net.DataConstants;
 import com.thn.erp.user.LoginRegisterActivity;
 import com.thn.erp.utils.SPUtil;
-import com.thn.erp.view.ScrollableView;
-import com.thn.erp.view.ViewPagerAdapter;
+import com.thn.erp.view.autoScrollViewpager.ScrollableView;
+import com.thn.erp.view.autoScrollViewpager.ViewPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

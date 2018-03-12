@@ -62,4 +62,5 @@ dependencies {
     implementation project(':MPChartLib')
     implementation project(':library-taihuoniao')
     compile 'com.android.support:recyclerview-v7:26.1.0'
+    implementation files('libs/commons-codec-1.11.jar')
 }

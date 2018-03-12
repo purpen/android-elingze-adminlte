@@ -3,9 +3,67 @@ package com.thn.erp.net;
 import com.thn.erp.Constants;
 import com.thn.erp.utils.SPUtil;
 
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.digest.DigestUtils;
+
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class ClientParamsAPI {
+    public static final String app_key = "G8IHjw1lBYDM76fxJtKe";
+    public static final String app_secret = "aa0533900e3d8b024c11e722874231b54019b14a";
+
+    private static HashMap<String,String> generateCommonParams(){
+        HashMap<String, String> params = new HashMap<>();
+        String timeStamp = String.valueOf(System.currentTimeMillis() / 1000);
+        String nonceStr = generateRandomString();
+        params.put("app_key",app_key);
+        params.put("timestamp",timeStamp);
+        params.put("nonce_str",nonceStr);
+        Map treeMap=new TreeMap<String,String>(
+                new Comparator<String>() {
+                    @Override
+                    public int compare(String s, String t1) {
+                        return s.compareTo(t1);
+                    }
+                }
+        );
+        treeMap.put("app_key",app_key);
+        treeMap.put("timestamp",timeStamp);
+        treeMap.put("nonce_str",nonceStr);
+        params.put("sign",generateSign(treeMap));
+        return params;
+    }
+
+    /**
+     * nonce_str
+     * 获得随机字符串
+     * @return
+     */
+    private static String generateRandomString() {
+        String nonce_str ="";
+        String randomStr="ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678";
+        for (int i = 0; i < 16; i++) {
+            nonce_str += randomStr.charAt((int) Math.floor(Math.random() * randomStr.length()));
+        }
+        return nonce_str;
+    }
+
+    private static String generateSign(Map map) {
+        StringBuilder sb = new StringBuilder();
+        Iterator<String> iterator = map.keySet().iterator();
+        while (iterator.hasNext()){
+            String key = iterator.next();
+            String value = (String)map.get(key);
+            sb.append(key+"="+value+"&");
+        }
+        sb.deleteCharAt(sb.lastIndexOf("&"));
+        sb.append(app_secret);
+        return new String(Hex.encodeHex(DigestUtils.sha1(sb.toString())));
+    }
 
     /**
      * 获取注册参数
@@ -15,10 +73,12 @@ public class ClientParamsAPI {
      * @return
      */
     public static HashMap<String,String> getRegisterRequestParams(String account, String userPsw, String checkCode) {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("account",account);
+//        1059232202@qq.com
+        HashMap<String, String> params = generateCommonParams();
+        params.put("email",account);
+        params.put("username",checkCode);
         params.put("password",userPsw);
-        params.put("code",checkCode);
+//        params.put("code",checkCode);
         return params;
     }
 
@@ -73,7 +133,7 @@ public class ClientParamsAPI {
     }
 
     public static HashMap<String,String> getSalesTrendsRequestParams(String start_time, String end_time) {
-        HashMap<String, String> params = new HashMap<>();
+        HashMap<String, String> params = generateCommonParams();
         params.put("start_time",start_time);
         params.put("end_time", end_time);
         params.put("token", SPUtil.read(Constants.TOKEN));
@@ -88,8 +148,8 @@ public class ClientParamsAPI {
      * @return
      */
     public static HashMap<String, String> getLoginRequestParams(String account, String password) {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("account", account);
+        HashMap<String, String> params = generateCommonParams();
+        params.put("email", account);
 //        params.put("from_to", "2");     //登录渠道
         params.put("password", password);
         return params;

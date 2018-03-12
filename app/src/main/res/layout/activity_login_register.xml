@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/color_27AE59"
             android:textSize="@dimen/sp14"
-            android:text="@string/loginfiu"
+            android:text="@string/register"
             />
         <View
             android:layout_width="@dimen/dp1"

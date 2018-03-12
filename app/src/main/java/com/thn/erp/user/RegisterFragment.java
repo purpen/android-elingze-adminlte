@@ -17,11 +17,10 @@ import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.user.bean.AuthCheckCodeBean;
-import com.thn.erp.user.bean.LoginBean;
+import com.thn.erp.user.bean.RegisterBean;
 import com.thn.erp.utils.JsonUtil;
-import com.thn.erp.utils.SPUtil;
+import com.thn.erp.utils.LogUtil;
 import com.thn.erp.utils.ToastUtils;
-import com.thn.erp.utils.Util;
 import com.thn.erp.view.svprogress.WaitingDialog;
 
 import java.io.IOException;
@@ -82,10 +81,10 @@ public class RegisterFragment extends BaseFragment {
             return;
         }
 
-        if (!Util.isMobileNO(account)) {
-            ToastUtils.showInfo("请输入正确手机号");
-            return;
-        }
+//        if (!Util.isMobileNO(account)) {
+//            ToastUtils.showInfo("请输入正确手机号");
+//            return;
+//        }
 
         btnCheckCode.setEnabled(false);
         HashMap<String, String> params = ClientParamsAPI.getCheckCodeRequestParams(account);
@@ -109,6 +108,7 @@ public class RegisterFragment extends BaseFragment {
 
             @Override
             public void onFailure(IOException e) {
+                LogUtil.e(e.toString());
                 btnCheckCode.setEnabled(true);
                 ToastUtils.showError(R.string.network_err);
             }
@@ -127,12 +127,14 @@ public class RegisterFragment extends BaseFragment {
             @Override
             public void onSuccess(String json) {
                 dialog.dismiss();
-                LoginBean loginBean = JsonUtil.fromJson(json, LoginBean.class);
-                if (loginBean.meta.status_code == Constants.SUCCESS) {
-                    SPUtil.write(Constants.TOKEN, loginBean.data.token);
-                    jump2MainPage();
+                RegisterBean registerBean = JsonUtil.fromJson(json, RegisterBean.class);
+                if (registerBean.success == true) {
+                    ((LoginRegisterActivity)activity).viewPager.setCurrentItem(0,true);
+//                    TODO 切换到登录界面
+//                    SPUtil.write(Constants.TOKEN, loginBean.data.token);
+//                    jump2MainPage();
                 } else {
-                    ToastUtils.showError(loginBean.meta.message);
+                    ToastUtils.showError(registerBean.status.message);
                 }
 
             }
@@ -163,10 +165,10 @@ public class RegisterFragment extends BaseFragment {
             return false;
         }
 
-        if (!Util.isMobileNO(account)) {
-            ToastUtils.showInfo("请输入正确手机号");
-            return false;
-        }
+//        if (!Util.isMobileNO(account)) {
+//            ToastUtils.showInfo("请输入正确手机号");
+//            return false;
+//        }
 
         checkCode = etCode.getText().toString();
         if (TextUtils.isEmpty(checkCode)) {

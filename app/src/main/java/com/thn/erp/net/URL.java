@@ -5,7 +5,7 @@ package com.thn.erp.net;
  * 网络请求url封装
  */
 public class URL {
-    public static final String BASE_URL = "http://k.taihuoniao.com/saasApi/"; //线上
+    public static final String BASE_URL = "https://fx.taihuoniao.com/api/v1.0/"; //线上
 //    public static final String BASE_URL = "http://t.taihuoniao.com/app/api";  // 测试环境
 
 

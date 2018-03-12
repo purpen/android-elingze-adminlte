@@ -15,12 +15,11 @@ import com.thn.erp.base.BaseFragment;
 import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
-import com.thn.erp.net.URL;
 import com.thn.erp.user.bean.LoginBean;
 import com.thn.erp.utils.JsonUtil;
+import com.thn.erp.utils.LogUtil;
 import com.thn.erp.utils.SPUtil;
 import com.thn.erp.utils.ToastUtils;
-import com.thn.erp.utils.Util;
 import com.thn.erp.view.svprogress.WaitingDialog;
 
 import java.io.IOException;
@@ -80,7 +79,7 @@ public class LoginFragment extends BaseFragment {
         if (TextUtils.isEmpty(userName)) return;
         if (TextUtils.isEmpty(userPsw)) return;
         HashMap<String, String> params = ClientParamsAPI.getLoginRequestParams(userName, userPsw);
-        HttpRequest.sendRequest(HttpRequest.POST, URL.AUTH_LOGIN, params, new HttpRequestCallback() {
+        HttpRequest.sendRequest(params,new HttpRequestCallback() {
             @Override
             public void onStart() {
                 dialog.show();
@@ -88,13 +87,14 @@ public class LoginFragment extends BaseFragment {
 
             @Override
             public void onSuccess(String json) {
+                LogUtil.e(json);
                 dialog.dismiss();
                 LoginBean loginBean = JsonUtil.fromJson(json, LoginBean.class);
-                if (loginBean.meta.status_code == Constants.SUCCESS) {
+                if (loginBean.success == true) {
                     SPUtil.write(Constants.TOKEN, loginBean.data.token);
                     jump2MainPage();
                 }else {
-                    ToastUtils.showError(loginBean.meta.message);
+                    ToastUtils.showError(loginBean.status.message);
                 }
             }
 
@@ -121,10 +121,10 @@ public class LoginFragment extends BaseFragment {
             ToastUtils.showInfo("请输入手机号");
             return false;
         }
-        if (!Util.isMobileNO(userName)) {
-            ToastUtils.showInfo("请输入正确手机号");
-            return false;
-        }
+//        if (!Util.isMobileNO(userName)) {
+//            ToastUtils.showInfo("请输入正确手机号");
+//            return false;
+//        }
 
         userPsw = etPassword.getText().toString();
         if (TextUtils.isEmpty(userPsw)) {

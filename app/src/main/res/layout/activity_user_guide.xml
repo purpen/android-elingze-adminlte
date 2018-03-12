@@ -12,7 +12,7 @@
         android:scaleType="fitXY"
         android:visibility="gone" />
 
-    <com.taihuoniao.banmen.views.ScrollableView
+    <com.thn.erp.view.autoScrollViewpager.ScrollableView
         android:id="@+id/scrollableView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
