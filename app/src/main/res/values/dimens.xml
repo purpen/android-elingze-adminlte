@@ -88,4 +88,5 @@
     <dimen name="size_minwidth_waiting_dialog">120dp</dimen>
     <dimen name="sp9">9sp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="dp9">9dp</dimen>
 </resources>

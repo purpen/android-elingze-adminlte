@@ -5,6 +5,7 @@ import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
 import com.thn.erp.base.BaseViewPagerAdapter;
+import com.thn.erp.view.CustomHeadView;
 import com.thn.erp.view.CustomViewPager;
 
 import java.util.ArrayList;
@@ -17,6 +18,8 @@ import butterknife.BindView;
  */
 
 public class StatisticsFragment extends BaseFragment {
+    @BindView(R.id.customHeadView)
+    CustomHeadView customHeadView;
     @BindView(R.id.slidingTabLayout)
     SlidingTabLayout slidingTabLayout;
     @BindView(R.id.viewPager)
@@ -32,6 +35,9 @@ public class StatisticsFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        customHeadView.setHeadGoBackShow(false);
+        customHeadView.setCenterTxtShow(getString(R.string.statistics_title),getResources().getColor(android.R.color.white));
+        customHeadView.setBackgroundColor(getResources().getColor(R.color.color_27AE59));
         ArrayList<Class> classes = new ArrayList<>();
         classes.add(SaleAmountFragment.class);
         classes.add(SaleAmountFragment.class);

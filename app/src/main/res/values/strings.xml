@@ -24,4 +24,7 @@
     <string name="refresh">刷新</string>
     <string name="loginfiu">登录</string>
     <string name="registerfiu">注册</string>
+    <string name="statistics_title">统计</string>
+    <string name="user_manage_title">客户</string>
+    <string name="add_customer">添加客户</string>
 </resources>

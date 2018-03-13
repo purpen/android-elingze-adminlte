@@ -139,7 +139,7 @@
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/dp16"
         android:paddingRight="@dimen/dp16"
-        android:textColor="@color/color_27AE59"
+        android:textColor="@android:color/white"
         android:textSize="@dimen/sp14"
         android:visibility="gone" />
 

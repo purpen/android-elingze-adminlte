@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:focusableInTouchMode="true"
+    android:background="@color/color_f8f8f8">
+    <com.thn.erp.view.CustomHeadView
+        android:id="@+id/customHeadView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.thn.erp.view.SearchView
+        android:id="@+id/searchView"
+        style="@style/StyleSearchView"
+        android:layout_marginTop="@dimen/dp9"
+        />
+
+    <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
+        android:id="@+id/ultimateRecyclerView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        app:recyclerviewClipToPadding="true"
+        app:recyclerviewDefaultSwipeColor="@color/color_27AE59"
+        app:recyclerviewScrollbars="vertical" />
+</LinearLayout>

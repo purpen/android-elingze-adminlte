@@ -2,10 +2,8 @@ package com.thn.erp.overview;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.StatFs;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +11,8 @@ import android.view.ViewGroup;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
 import com.thn.erp.common.GlobalCallBack;
+import com.thn.erp.overview.usermanage.UserManageActivity;
+import com.thn.erp.utils.LogUtil;
 import com.thn.erp.view.MyTopBar;
 import com.thn.erp.view.autoScrollViewpager.ScrollableView;
 import com.thn.erp.view.autoScrollViewpager.ViewPagerAdapter;
@@ -115,7 +115,12 @@ public class OverViewFragment extends BaseFragment {
         mListAdapter = new ListRecyclerViewAdapter(getActivity(), new GlobalCallBack() {
             @Override
             public void callBack(Object o) {
-
+                LogUtil.e(o.toString());
+                if (o instanceof Map){
+                    if (((Map) o).get("name").equals("客户管理")){
+                        startActivity(new Intent(activity, UserManageActivity.class));
+                    }
+                }
             }
         });
         listFragment.setAdapter(mListAdapter);

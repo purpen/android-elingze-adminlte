@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.thn.erp">
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application
         android:name=".AppApplication"
         android:allowBackup="true"
@@ -10,16 +13,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UserGuideActivity">
+        <activity android:name=".UserGuideActivity"
+            android:theme="@style/NoTitleFullscreen"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".user.LoginRegisterActivity"></activity>
         <activity android:name=".user.ForgetPasswordActivity"></activity>
+        <activity android:name=".overview.usermanage.UserManageActivity"></activity>
     </application>
 
 </manifest>
