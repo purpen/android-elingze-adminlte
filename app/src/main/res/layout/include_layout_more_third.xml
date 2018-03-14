@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="10dp"
+    android:orientation="vertical"
+    android:layout_marginBottom="5dp"
+    tools:showIn="@layout/fragment_more">
+
+    <include layout="@layout/include_view_layout_line" />
+
+    <com.thn.erp.view.common.LinearLayoutArrowTextView
+        android:id="@+id/layoutItemView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/THN_color_bgColor_white" />
+
+    <include layout="@layout/include_view_layout_line" />
+
+    <com.thn.erp.view.common.LinearLayoutArrowTextView
+        android:id="@+id/layoutItemView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/THN_color_bgColor_white" />
+
+    <include layout="@layout/include_view_layout_line" />
+
+    <com.thn.erp.view.common.LinearLayoutArrowTextView
+        android:id="@+id/layoutItemView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/THN_color_bgColor_white">
+
+    </com.thn.erp.view.common.LinearLayoutArrowTextView>
+
+    <include layout="@layout/include_view_layout_line" />
+
+    <com.thn.erp.view.common.LinearLayoutArrowTextView
+        android:id="@+id/layoutItemView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/THN_color_bgColor_white">
+
+    </com.thn.erp.view.common.LinearLayoutArrowTextView>
+
+    <include layout="@layout/include_view_layout_line" />
+
+    <com.thn.erp.view.common.LinearLayoutArrowTextView
+        android:id="@+id/layoutItemView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/THN_color_bgColor_white">
+
+    </com.thn.erp.view.common.LinearLayoutArrowTextView>
+
+    <include layout="@layout/include_view_layout_line" />
+
+    <com.thn.erp.view.common.LinearLayoutArrowTextView
+        android:id="@+id/layoutItemView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/THN_color_bgColor_white">
+
+    </com.thn.erp.view.common.LinearLayoutArrowTextView>
+
+    <include layout="@layout/include_view_layout_line" />
+</LinearLayout>
+    

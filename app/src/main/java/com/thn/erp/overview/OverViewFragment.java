@@ -2,10 +2,8 @@ package com.thn.erp.overview;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.StatFs;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +11,6 @@ import android.view.ViewGroup;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
 import com.thn.erp.common.GlobalCallBack;
-import com.thn.erp.view.MyTopBar;
 import com.thn.erp.view.autoScrollViewpager.ScrollableView;
 import com.thn.erp.view.autoScrollViewpager.ViewPagerAdapter;
 
@@ -35,8 +32,6 @@ public class OverViewFragment extends BaseFragment {
     public static final String URL1 = "https://mmbiz.qpic.cn/mmbiz_jpg/TCHicQEF6XKDbGWldXqGLNK5B4W02lnWXWNdCDpD3DLicWzP93PSibGZVMxDk1jHK0cwZnUwXwciciaAMKagVS0wmuA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1";
     public static final String URL2 = "https://mmbiz.qpic.cn/mmbiz_jpg/TCHicQEF6XKDbGWldXqGLNK5B4W02lnWXWNdCDpD3DLicWzP93PSibGZVMxDk1jHK0cwZnUwXwciciaAMKagVS0wmuA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1";
     public static final String URL3 = "https://mmbiz.qpic.cn/mmbiz_jpg/TCHicQEF6XKDbGWldXqGLNK5B4W02lnWXWNdCDpD3DLicWzP93PSibGZVMxDk1jHK0cwZnUwXwciciaAMKagVS0wmuA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1";
-    @BindView(R.id.my_topbar)
-    MyTopBar myTopbar;
     @BindView(R.id.scrollableView)
     ScrollableView scrollableView;
     Unbinder unbinder;
@@ -115,7 +110,7 @@ public class OverViewFragment extends BaseFragment {
         mListAdapter = new ListRecyclerViewAdapter(getActivity(), new GlobalCallBack() {
             @Override
             public void callBack(Object o) {
-
+                startActivity(new Intent(getActivity(), CustomerManageActivity.class));
             }
         });
         listFragment.setAdapter(mListAdapter);

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.thn.erp">
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".AppApplication"
         android:allowBackup="true"
@@ -17,9 +19,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".user.LoginRegisterActivity"></activity>
-        <activity android:name=".user.ForgetPasswordActivity"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".user.LoginRegisterActivity" />
+        <activity android:name=".user.ForgetPasswordActivity" />
+
+
+        <!-- 仓库管理 -->
+        <activity android:name="com.thn.erp.more.repository.RepositoryManageActivity" />
+        <activity android:name="com.thn.erp.more.repository.LookRepositoryActivity" />
+        <activity android:name="com.thn.erp.more.repository.AddRepositoryActivity" />
+
+        <!-- 客户管理 -->
+        <activity android:name="com.thn.erp.overview.CustomerManageActivity" />
+        <activity android:name="com.thn.erp.overview.AddCustomerActivity" />
     </application>
 
 </manifest>

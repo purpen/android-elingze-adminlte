@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="44dp"
+    android:gravity="center_vertical"
+    android:background="#FFFFFF"
+    tools:showIn="@layout/activity_customer_add">
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:text="启用"
+        android:textColor="#222222"
+        android:textSize="15sp" />
+
+    <include layout="@layout/include_view_fill_width" />
+
+    <ch.ielse.view.SwitchView
+        android:id="@+id/switchView1"
+        android:layout_width="39dp"
+        android:layout_height="24dp"
+        android:layout_marginRight="15dp" />
+</LinearLayout>

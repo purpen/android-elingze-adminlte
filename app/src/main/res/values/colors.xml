@@ -22,6 +22,7 @@
 
     <!-- 其他颜色 -->
     <color name="THN_color_bgColor_gray">#FAFAFA</color> <!-- 背景灰色 -->
+    <color name="THN_color_bgColor_white">#FFFFFF</color> <!-- 背景白色 -->
     <color name="THN_color_lineColor_darkGray">#E6E6E6</color> <!-- 线条颜色 -->
 
     <!-- 字体颜色 -->
