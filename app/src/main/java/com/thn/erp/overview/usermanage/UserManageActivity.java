@@ -1,6 +1,7 @@
 package com.thn.erp.overview.usermanage;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.IBinder;
 import android.view.MotionEvent;
 import android.view.View;
@@ -52,7 +53,7 @@ public class UserManageActivity extends BaseActivity {
         customHeadView.getHeadRightTV().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtils.showInfo("添加客户");
+                startActivity(new Intent(activity,AddCustomActivity.class));
             }
         });
     }

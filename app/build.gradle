@@ -62,6 +62,7 @@ dependencies {
     implementation project(':MPChartLib')
     compile 'com.github.bumptech.glide:glide:3.7.0'
     implementation project(':library-taihuoniao')
+    compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.android.support:recyclerview-v7:26.1.0'
     implementation files('libs/commons-codec-1.11.jar')
     implementation project(':ultimaterecyclerview')

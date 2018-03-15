@@ -169,7 +169,7 @@ public class MainActivity extends BaseActivity {
         fragments.add(fragment);
     }
 
-    @OnClick({R.id.ll_nav0, R.id.ll_nav1, R.id.ll_nav2, R.id.ll_nav3})
+    @OnClick({R.id.ll_nav0, R.id.ll_nav1, R.id.ll_nav2, R.id.ll_nav3,R.id.ll_nav4})
     void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_nav0:
@@ -211,11 +211,11 @@ public class MainActivity extends BaseActivity {
         } else {
             tabList = new ArrayList<>();
         }
-        initTabItem(image0, tv_nav0, OverViewFragment.class, R.mipmap.ic_launcher, R.mipmap.ic_launcher);
-        initTabItem(image1, tv_nav1, GoodsFragment.class, R.mipmap.ic_launcher, R.mipmap.ic_launcher);
-        initTabItem(image2, tv_nav2, SaleFragment.class, R.mipmap.ic_launcher, R.mipmap.ic_launcher);
-        initTabItem(image3, tv_nav3, StatisticsFragment.class, R.mipmap.ic_launcher, R.mipmap.ic_launcher);
-        initTabItem(image4, tv_nav4, MoreFragment.class, R.mipmap.ic_launcher, R.mipmap.ic_launcher);
+        initTabItem(image0, tv_nav0, OverViewFragment.class, R.mipmap.home_selected, R.mipmap.home_normal);
+        initTabItem(image1, tv_nav1, GoodsFragment.class, R.mipmap.goods_selected, R.mipmap.goods_normal);
+        initTabItem(image2, tv_nav2, SaleFragment.class, R.mipmap.sale_selected, R.mipmap.sale_normal);
+        initTabItem(image3, tv_nav3, StatisticsFragment.class, R.mipmap.statistic_selected, R.mipmap.statistic_normal);
+        initTabItem(image4, tv_nav4, MoreFragment.class, R.mipmap.more_selected, R.mipmap.more_normal);
 //        WindowUtils.showStatusBar(this);
     }
 

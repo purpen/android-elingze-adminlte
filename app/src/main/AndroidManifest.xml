@@ -28,6 +28,8 @@
         <activity android:name=".user.LoginRegisterActivity"></activity>
         <activity android:name=".user.ForgetPasswordActivity"></activity>
         <activity android:name=".overview.usermanage.UserManageActivity"></activity>
+        <activity android:name=".overview.usermanage.AddCustomActivity"></activity>
+        <activity android:name=".overview.usermanage.EditCustomerClassActivity"></activity>
     </application>
 
 </manifest>
