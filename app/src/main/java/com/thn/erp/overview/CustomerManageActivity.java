@@ -44,7 +44,7 @@ public class CustomerManageActivity extends BaseActivity implements ImpTopbarOnC
     protected void initView() {
         publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
         publicTopBar.setTopBarCenterTextView("客户管理", getResources().getColor(R.color.THN_color_fontColor_primary));
-        publicTopBar.setTopBarLeftImageView(R.mipmap.ic_launcher);
+        publicTopBar.setTopBarLeftImageView(true);
         publicTopBar.setTopBarRightTextView("添加客户", Color.parseColor("#27AE59"));
         publicTopBar.setTopBarOnClickListener(this);
     }

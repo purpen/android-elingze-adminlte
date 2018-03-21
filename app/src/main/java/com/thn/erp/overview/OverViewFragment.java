@@ -29,9 +29,14 @@ import butterknife.Unbinder;
 
 public class OverViewFragment extends BaseFragment {
 
-    public static final String URL1 = "https://mmbiz.qpic.cn/mmbiz_jpg/TCHicQEF6XKDbGWldXqGLNK5B4W02lnWXWNdCDpD3DLicWzP93PSibGZVMxDk1jHK0cwZnUwXwciciaAMKagVS0wmuA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1";
-    public static final String URL2 = "https://mmbiz.qpic.cn/mmbiz_jpg/TCHicQEF6XKDbGWldXqGLNK5B4W02lnWXWNdCDpD3DLicWzP93PSibGZVMxDk1jHK0cwZnUwXwciciaAMKagVS0wmuA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1";
-    public static final String URL3 = "https://mmbiz.qpic.cn/mmbiz_jpg/TCHicQEF6XKDbGWldXqGLNK5B4W02lnWXWNdCDpD3DLicWzP93PSibGZVMxDk1jHK0cwZnUwXwciciaAMKagVS0wmuA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1";
+    public static final String URL1 = "https://p4.taihuoniao.com/asset/180125/5a69ae57fc8b12b0488c1133-1";
+    public static final String URL2 = "https://p4.taihuoniao.com/asset/180125/5a698874fc8b129c418b6c46-1";
+    public static final String URL3 = "https://p4.taihuoniao.com/asset/171106/5a0039f3fc8b12a94b8b6223-1";
+
+    public static final String LINK1 = "https://www.taihuoniao.com/tracker?kid=183561214";
+    public static final String LINK2 = "https://www.taihuoniao.com/tracker?kid=183548689";
+    public static final String LINK3 = "https://www.taihuoniao.com/tracker?kid=178066260";
+
     @BindView(R.id.scrollableView)
     ScrollableView scrollableView;
     Unbinder unbinder;
@@ -120,7 +125,7 @@ public class OverViewFragment extends BaseFragment {
         List<Object> list = new ArrayList<>();
         for(int i = 0; i < ITEMS.length; i++) {
             Map<String, String> map = new HashMap<>();
-            map.put("img", "");
+            map.put("img", String.valueOf(IMGS[i]));
             map.put("name", ITEMS[i]);
             list.add(map);
         }
@@ -128,4 +133,12 @@ public class OverViewFragment extends BaseFragment {
     }
 
     public static final String[] ITEMS = {"商品管理", "采购单", "销售单", "库存查询", "客户管理", "经营概况","推荐有奖", "增值服务"};
+    public static final int[] IMGS = {R.mipmap.icon_overview_main_category_01, R.mipmap.icon_overview_main_category_02,
+            R.mipmap.icon_overview_main_category_03,
+            R.mipmap.icon_overview_main_category_04,
+            R.mipmap.icon_overview_main_category_05,
+            R.mipmap.icon_overview_main_category_06,
+            R.mipmap.icon_overview_main_category_07,
+            R.mipmap.icon_overview_main_category_08,
+            R.mipmap.icon_overview_main_category_09};
 }

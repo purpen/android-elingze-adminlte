@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.base.BaseFragment;
+import com.thn.erp.base.BaseStyle2Activity;
 import com.thn.erp.common.ImpTopbarOnClickListener;
 import com.thn.erp.view.common.PublicTopBar;
 
@@ -19,7 +20,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RepositoryManageActivity extends BaseActivity implements ViewPager.OnPageChangeListener, ImpTopbarOnClickListener {
+public class RepositoryManageActivity extends BaseStyle2Activity implements ViewPager.OnPageChangeListener, ImpTopbarOnClickListener {
 
     @BindView(R.id.publicTopBar)
     PublicTopBar publicTopBar;
@@ -58,7 +59,7 @@ public class RepositoryManageActivity extends BaseActivity implements ViewPager.
     private void initTopBar() {
         publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
         publicTopBar.setTopBarCenterTextView("仓库管理", getResources().getColor(R.color.THN_color_fontColor_primary));
-        publicTopBar.setTopBarLeftImageView(R.mipmap.ic_launcher);
+        publicTopBar.setTopBarLeftImageView(true);
         publicTopBar.setTopBarRightTextView("添加", Color.parseColor("#27AE59"));
         publicTopBar.setTopBarOnClickListener(this);
     }

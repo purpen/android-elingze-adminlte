@@ -1,8 +1,6 @@
 package com.thn.erp.goods;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,10 +9,6 @@ import android.view.ViewGroup;
 
 import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
-import com.thn.erp.common.GlobalCallBack;
-import com.thn.erp.overview.ListRecyclerViewAdapter;
-import com.thn.erp.view.MyTopBar;
-import com.thn.erp.view.autoScrollViewpager.ScrollableView;
 import com.thn.erp.view.common.PublicTopBar;
 
 import java.util.ArrayList;
@@ -57,7 +51,7 @@ public class GoodsFragment extends BaseFragment {
         super.initView();
         initTopBar();
         initRecyclerView();
-        initListAdapter();
+//        initListAdapter();
     }
 
     private void initTopBar() {
@@ -69,7 +63,7 @@ public class GoodsFragment extends BaseFragment {
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         ryMenuItem.setLayoutManager(linearLayoutManager);
 
-        titleRecyclerViewAdapter = new TitleRecyclerViewAdapter(getActivity(), ITEMS);
+        titleRecyclerViewAdapter = new TitleRecyclerViewAdapter(getActivity(), generateAdapterDatas());
         titleRecyclerViewAdapter.setOnBindListener(new TitleRecyclerViewAdapter.OnBindListener() {
             @Override
             public void onBind(View view, int i) {
@@ -81,16 +75,19 @@ public class GoodsFragment extends BaseFragment {
 
     }
 
-    private void initListAdapter(){
-//        List<Object> list = new ArrayList<>();
-//        for(int i = 0; i < ITEMS.length; i++) {
-//            Map<String, String> map = new HashMap<>();
-//            map.put("img", "");
-//            map.put("name", ITEMS[i]);
-//            list.add(map);
-//        }
-//        titleRecyclerViewAdapter.putList(list);
+    private List<Map<String, Object>> generateAdapterDatas(){
+        List<Map<String, Object>> list = new ArrayList<>();
+        for(int i = 0; i < ITEMS.length; i++) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("img", IMGS[i]);
+            map.put("name", ITEMS[i]);
+            list.add(map);
+        }
+        return list;
     }
 
     public static final String[] ITEMS = {"新增", "分类", "搜索", "品牌", "产品组", "促销"};
+    public static final int[] IMGS = {R.mipmap.icon_goods_top_category_01, R.mipmap.icon_goods_top_category_02
+            , R.mipmap.icon_goods_top_category_03, R.mipmap.icon_goods_top_category_04
+            , R.mipmap.icon_goods_top_category_05, R.mipmap.icon_goods_top_category_06};
 }

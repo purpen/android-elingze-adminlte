@@ -29,9 +29,19 @@
         <activity android:name="com.thn.erp.more.repository.LookRepositoryActivity" />
         <activity android:name="com.thn.erp.more.repository.AddRepositoryActivity" />
 
+        <activity android:name="com.thn.erp.more.DemoActivity"/>
+        <activity android:name="com.thn.erp.more.ToolsActivity"/>
+        <activity android:name="com.thn.erp.more.SettingActivity"/>
+        <activity android:name="com.thn.erp.more.SupplierManageActivity"/>
+        <activity android:name="com.thn.erp.more.AccountManageActivity"/>
+
         <!-- 客户管理 -->
         <activity android:name="com.thn.erp.overview.CustomerManageActivity" />
         <activity android:name="com.thn.erp.overview.AddCustomerActivity" />
+        <activity android:name="com.thn.erp.overview.ChooseCategoryActivity" />
+        <activity android:name="com.thn.erp.overview.AddCategoryActivity" />
+
+
     </application>
 
 </manifest>

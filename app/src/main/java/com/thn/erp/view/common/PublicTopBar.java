@@ -77,6 +77,18 @@ public class PublicTopBar extends RelativeLayout implements View.OnClickListener
         imageViewTopBarLeft.setVisibility(VISIBLE);
     }
 
+    public void setTopBarLeftImageView(boolean imgBack){
+        if (!imgBack) {
+            return;
+        }
+        imageViewTopBarLeft.setImageResource(R.mipmap.icon_topbar_back);
+        imageViewTopBarLeft.setVisibility(VISIBLE);
+    }
+
+    public void setRelativeLayoutTopBarLeft(int resid, ImpTopbarOnClickListener impTopbarOnClickListener) {
+
+    }
+
     // 中
 /*    public void setRelativeLayoutTopBarCenter(int resid){
         textViewTopBarCenter.setText(resid);

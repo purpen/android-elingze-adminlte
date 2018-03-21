@@ -17,14 +17,19 @@ package com.thn.erp.goods;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.thn.erp.R;
+
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -35,7 +40,7 @@ public class TitleRecyclerViewAdapter extends RecyclerView.Adapter<TitleRecycler
     private static final String TAG = TitleRecyclerViewAdapter.class.getSimpleName();
 
     // 数据集
-    private String[] mDataList;
+    private List<Map<String, Object>> mDataList;
     private Context mContext;
     private OnBindListener onBindListener;
 
@@ -53,7 +58,7 @@ public class TitleRecyclerViewAdapter extends RecyclerView.Adapter<TitleRecycler
         mContext = context;
     }
 
-    public TitleRecyclerViewAdapter(Context context, String[] dataList) {
+    public TitleRecyclerViewAdapter(Context context, List<Map<String, Object>> dataList) {
         super();
         mContext = context;
         this.mDataList = dataList;
@@ -64,7 +69,7 @@ public class TitleRecyclerViewAdapter extends RecyclerView.Adapter<TitleRecycler
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         int resId = R.layout.item_recyclerview_goods_title;
         View view = LayoutInflater.from(mContext).inflate(resId, viewGroup, false);
         ViewHolder viewHolder = new ViewHolder(view);
@@ -73,11 +78,15 @@ public class TitleRecyclerViewAdapter extends RecyclerView.Adapter<TitleRecycler
 
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int i) {
-        if (mDataList == null || mDataList.length == 0) {
+        if (mDataList == null || mDataList.size() == 0) {
             Log.d(TAG, "mDataset has no data!");
             return;
         }
-        viewHolder.mTextView.setText(mDataList[i]);
+        Map map = mDataList.get(i);
+        String name = (String) map.get("name");
+        Integer imgId = (Integer) map.get("img");
+        viewHolder.mTextView.setText(name);
+        viewHolder.mView.setImageResource(imgId);
         viewHolder.itemView.setTag(i);
         viewHolder.itemView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -102,13 +111,13 @@ public class TitleRecyclerViewAdapter extends RecyclerView.Adapter<TitleRecycler
 
     @Override
     public int getItemCount() {
-        return mDataList.length;
+        return mDataList==null ? 0 : mDataList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView mTextView;
-        public View mView;
+        public ImageView mView;
 
         public ViewHolder(View itemView) {
             super(itemView);

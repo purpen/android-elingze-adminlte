@@ -58,7 +58,7 @@ public class AddRepositoryActivity extends BaseActivity implements ImpTopbarOnCl
     private void initTopBar() {
         publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
         publicTopBar.setTopBarCenterTextView("新增仓库", getResources().getColor(R.color.THN_color_fontColor_primary));
-        publicTopBar.setTopBarLeftImageView(R.mipmap.ic_launcher);
+        publicTopBar.setTopBarLeftImageView(true);
         publicTopBar.setTopBarRightTextView("保存", Color.parseColor("#27AE59"));
         publicTopBar.setTopBarOnClickListener(this);
     }

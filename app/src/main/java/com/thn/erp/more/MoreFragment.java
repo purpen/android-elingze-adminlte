@@ -100,17 +100,22 @@ public class MoreFragment extends BaseFragment {
             case R.id.linearLayout_service3:    Toast.makeText(activity, "提工单", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.layoutItemView1:  Toast.makeText(activity, NAMES[0], Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(activity, DemoActivity.class));
                 break;
             case R.id.layoutItemView2:  Toast.makeText(activity, NAMES[1], Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(activity, ToolsActivity.class));
                 break;
             case R.id.layoutItemView3:  Toast.makeText(activity, NAMES[2], Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(activity, SettingActivity.class));
                 break;
             case R.id.layoutItemView4:  Toast.makeText(activity, NAMES[3], Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getActivity(), RepositoryManageActivity.class));
                 break;
             case R.id.layoutItemView5:  Toast.makeText(activity, NAMES[4], Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(activity, SupplierManageActivity.class));
                 break;
             case R.id.layoutItemView6:  Toast.makeText(activity, NAMES[5], Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(activity, AccountManageActivity.class));
                 break;
         }
     }

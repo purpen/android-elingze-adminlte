@@ -27,7 +27,7 @@ public class LinearLayoutArrowTextView extends LinearLayout{
 
     public LinearLayoutArrowTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        LayoutInflater.from(context).inflate(R.layout.include_view_layout_item, this, true);
+        LayoutInflater.from(context).inflate(R.layout.view_linearlayout_item_arrow_textview, this, true);
         initView();
     }
 

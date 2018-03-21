@@ -38,7 +38,8 @@
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:background="@drawable/bg_circle_green"
+                    android:src="@mipmap/icon_more_customer_service_online" />
 
                 <TextView
                     style="@style/ModuleMoreSecondServicePrimaryStyle"
@@ -74,7 +75,8 @@
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:background="@drawable/bg_circle_green"
+                    android:src="@mipmap/icon_more_customer_service_hotline" />
 
                 <TextView
                     style="@style/ModuleMoreSecondServicePrimaryStyle"
@@ -108,10 +110,11 @@
                 android:gravity="center_vertical">
 
                 <ImageView
+                    android:background="@drawable/bg_circle_green"
                     android:id="@+id/imageView_service_online"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/icon_more_customer_service_submitorder" />
 
                 <TextView
                     android:id="@+id/TextView_service_online"

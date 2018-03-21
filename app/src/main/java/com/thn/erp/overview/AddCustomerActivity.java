@@ -1,5 +1,6 @@
 package com.thn.erp.overview;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -84,7 +85,7 @@ public class AddCustomerActivity extends BaseActivity implements ImpTopbarOnClic
     private void initTopbar() {
         publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
         publicTopBar.setTopBarCenterTextView("新增客户", getResources().getColor(R.color.THN_color_fontColor_primary));
-        publicTopBar.setTopBarLeftImageView(R.mipmap.ic_launcher);
+        publicTopBar.setTopBarLeftImageView(true);
         publicTopBar.setTopBarRightTextView("保存", Color.parseColor("#27AE59"));
         publicTopBar.setTopBarOnClickListener(this);
     }
@@ -99,7 +100,7 @@ public class AddCustomerActivity extends BaseActivity implements ImpTopbarOnClic
         editTextViewCustomerAddBasicInfo4.setInitKeyAndHint(BASIC_INFOS[3], new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(AddCustomerActivity.this, ChooseCategoryActivity.class));
             }
         });
         editTextViewCustomerAddBasicInfo5.setInitKeyAndHint(BASIC_INFOS[4], new SwitchView.OnStateChangedListener() {

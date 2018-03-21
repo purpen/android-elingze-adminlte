@@ -50,7 +50,7 @@ public class LookRepositoryActivity extends BaseActivity implements ImpTopbarOnC
     private void initTopBar() {
         publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
         publicTopBar.setTopBarCenterTextView("查看仓库", getResources().getColor(R.color.THN_color_fontColor_primary));
-        publicTopBar.setTopBarLeftImageView(R.mipmap.ic_launcher);
+        publicTopBar.setTopBarLeftImageView(true);
         publicTopBar.setTopBarRightTextView("编辑", Color.parseColor("#27AE59"));
         publicTopBar.setTopBarOnClickListener(this);
     }

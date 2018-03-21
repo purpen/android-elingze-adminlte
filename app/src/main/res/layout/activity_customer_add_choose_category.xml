@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F9F9F9"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_public_topbar" />
+
+    <include layout="@layout/include_view_layout_line" />
+
+    <com.thn.erp.view.common.LinearLayoutSingleChoiceTextView android:id="@+id/linearLayout_singleChoice_textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include layout="@layout/include_view_layout_line" />
+    <com.thn.erp.view.common.LinearLayoutSingleChoiceTextView android:id="@+id/linearLayout_singleChoice_textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <include layout="@layout/include_view_layout_line" />
+    <com.thn.erp.view.common.LinearLayoutSingleChoiceTextView android:id="@+id/linearLayout_singleChoice_textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <include layout="@layout/include_view_layout_line" />
+    <com.thn.erp.view.common.LinearLayoutSingleChoiceTextView android:id="@+id/linearLayout_singleChoice_textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <include layout="@layout/include_view_layout_line" />
+
+    <TextView
+        android:id="@+id/textView_add_category"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:text="添加分类"
+        android:textColor="#27AE59"
+        android:textSize="17sp"
+        android:gravity="center"
+        android:background="@drawable/border_circle_green"
+        android:layout_height="40dp" />
+</LinearLayout>
