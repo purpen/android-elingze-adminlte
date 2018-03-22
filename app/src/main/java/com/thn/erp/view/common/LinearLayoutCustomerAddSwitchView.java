@@ -20,7 +20,7 @@ import ch.ielse.view.SwitchView;
 public class LinearLayoutCustomerAddSwitchView extends LinearLayout {
     private TextView textView1;
     private SwitchView switchView1;
-
+    private boolean enabled = true;
 
 
     private SwitchView.OnStateChangedListener mOnStateChangedListener;
@@ -40,7 +40,6 @@ public class LinearLayoutCustomerAddSwitchView extends LinearLayout {
     }
 
     private void initView() {
-
         textView1 = (TextView) findViewById(R.id.textView1);
         switchView1 = (SwitchView) findViewById(R.id.switchView1);
     }
@@ -56,14 +55,18 @@ public class LinearLayoutCustomerAddSwitchView extends LinearLayout {
         switchView1.setOnStateChangedListener(new SwitchView.OnStateChangedListener() {
             @Override
             public void toggleToOn(SwitchView view) {
-                view.toggleSwitch(true);
-                onStateChangedListener.toggleToOn(view);
+                if (enabled) {
+                    view.toggleSwitch(true);
+                    onStateChangedListener.toggleToOn(view);
+                }
             }
 
             @Override
             public void toggleToOff(SwitchView view) {
-                view.toggleSwitch(false);
-                onStateChangedListener.toggleToOff(view);
+                if (enabled) {
+                    view.toggleSwitch(false);
+                    onStateChangedListener.toggleToOff(view);
+                }
             }
         });
     }
@@ -73,7 +76,11 @@ public class LinearLayoutCustomerAddSwitchView extends LinearLayout {
 //        textView1.setText(str);
 //    }
 
-//    public void setValue(String str) {
-//        editText1.setText(str);
-//    }
+    public void setValue(String str) {
+        switchView1.setOpened(false);
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 }

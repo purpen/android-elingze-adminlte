@@ -1,4 +1,4 @@
-package com.thn.erp.overview;
+package com.thn.erp.more.supplier;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -18,20 +18,24 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by Stephen on 2018/3/14 10:43
+ * Created by Stephen on 2018/3/21 15:22
  * Email: 895745843@qq.com
  */
 
-public class CustomerManageActivity extends BaseStyle2Activity implements ImpTopbarOnClickListener {
+public class SupplierManageActivity extends BaseStyle2Activity implements ImpTopbarOnClickListener {
 
     @BindView(R.id.publicTopBar)
     PublicTopBar publicTopBar;
     @BindView(R.id.linearLayout_customer_search)
     LinearLayout linearLayoutCustomerSearch;
+    @BindView(R.id.linearLayout_supplier1)
+    LinearLayout linearLayoutSupplier1;
+    @BindView(R.id.linearLayout_supplier2)
+    LinearLayout linearLayoutSupplier2;
 
     @Override
     protected int getLayout() {
-        return R.layout.activity_customer_ganage;
+        return R.layout.activity_more_manage_supplier;
     }
 
     @Override
@@ -44,9 +48,9 @@ public class CustomerManageActivity extends BaseStyle2Activity implements ImpTop
     @Override
     protected void initView() {
         publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
-        publicTopBar.setTopBarCenterTextView("客户管理", getResources().getColor(R.color.THN_color_fontColor_primary));
+        publicTopBar.setTopBarCenterTextView("供应商管理", getResources().getColor(R.color.THN_color_fontColor_primary));
         publicTopBar.setTopBarLeftImageView(true);
-        publicTopBar.setTopBarRightTextView("添加客户", Color.parseColor("#27AE59"));
+        publicTopBar.setTopBarRightTextView("新增供应商", Color.parseColor("#27AE59"));
         publicTopBar.setTopBarOnClickListener(this);
     }
 
@@ -59,14 +63,18 @@ public class CustomerManageActivity extends BaseStyle2Activity implements ImpTop
             case ImpTopbarOnClickListener.CENTER:
                 break;
             case ImpTopbarOnClickListener.RIGHT:
-                Toast.makeText(activity, "添加客户", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, AddCustomerActivity.class));
+                startActivity(new Intent(this, SupplierAddActivity.class));
                 break;
         }
     }
 
-    @OnClick(R.id.linearLayout_customer_search)
-    public void onViewClicked() {
-        Toast.makeText(activity, "客户搜索", Toast.LENGTH_SHORT).show();
+    @OnClick({R.id.linearLayout_supplier1, R.id.linearLayout_supplier2})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.linearLayout_supplier1:
+            case R.id.linearLayout_supplier2:
+                startActivity(new Intent(activity, SupplierLookActivity.class));
+                break;
+        }
     }
 }

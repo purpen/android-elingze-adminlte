@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
 import com.thn.erp.more.repository.RepositoryManageActivity;
+import com.thn.erp.more.supplier.SupplierManageActivity;
 import com.thn.erp.view.common.LinearLayoutArrowTextView;
 
 import butterknife.BindView;

@@ -3,4 +3,50 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include layout="@layout/include_public_topbar" />
+
+    <include layout="@layout/include_view_layout_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#FFFFFF">
+
+        <LinearLayout
+            android:id="@+id/linearLayout_customer_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_circle_gray"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@mipmap/icon_topbar_search" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:layout_marginLeft="7dp"
+                android:textColor="#999999"
+                android:text="名称/手机号" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <include layout="@layout/include_view_layout_line" />
+
+    <include layout="@layout/include_layout_customer" android:id="@+id/linearLayout_supplier1"/>
+
+    <include layout="@layout/include_view_layout_line" />
+
+    <include layout="@layout/include_layout_customer" android:id="@+id/linearLayout_supplier2"/>
+
+    <include layout="@layout/include_view_layout_line" />
+
 </LinearLayout>

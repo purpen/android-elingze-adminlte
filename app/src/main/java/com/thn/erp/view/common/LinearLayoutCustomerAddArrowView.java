@@ -44,7 +44,7 @@ public class LinearLayoutCustomerAddArrowView extends LinearLayout {
 
 
     public void setInitKeyAndHint(String str1, OnClickListener onClickListener) {
-        setInitKeyAndHint(str1, "请选择", onClickListener, R.mipmap.ic_launcher);
+        setInitKeyAndHint(str1, "请选择", onClickListener, R.mipmap.icon_more_other_arrow);
     }
 
     public void setInitKeyAndHint(String str1, String str2, OnClickListener onClickListener, int imageid) {
@@ -52,5 +52,9 @@ public class LinearLayoutCustomerAddArrowView extends LinearLayout {
         textView2.setText(str2);
         imageView1.setImageResource(imageid);
         setOnClickListener(onClickListener);
+    }
+
+    public void setValue(String str){
+        textView2.setText(str);
     }
 }

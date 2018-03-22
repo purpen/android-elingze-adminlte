@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
+import com.thn.erp.base.BaseStyle2Activity;
 import com.thn.erp.view.common.PublicTopBar;
 
 import butterknife.BindView;
@@ -15,7 +16,7 @@ import butterknife.ButterKnife;
  * Email: 895745843@qq.com
  */
 
-public class AddCategoryActivity extends BaseActivity {
+public class AddCategoryActivity extends BaseStyle2Activity {
 
     @BindView(R.id.publicTopBar)
     PublicTopBar publicTopBar;

@@ -51,6 +51,6 @@
         android:layout_height="24dp"
         android:layout_gravity="center_vertical"
         android:layout_marginRight="15dp"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/icon_more_other_arrow" />
 
 </LinearLayout>
