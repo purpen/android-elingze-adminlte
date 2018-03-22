@@ -1,54 +1,24 @@
 package com.thn.erp.base;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 
 /**
- * Created by lilin on 2018/3/22.
+ * Created by Stephen on 2018/3/12 18:09
+ * Email: 895745843@qq.com
  */
 
-public class BaseRecyclerViewAdapter extends UltimateViewAdapter {
+public abstract class BaseRecyclerViewAdapter<BaseViewHolder extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<BaseViewHolder> {
 
-    @Override
-    public RecyclerView.ViewHolder newHeaderHolder(View view) {
-        return null;
+    public BaseRecyclerViewAdapter() {
+        super();
     }
 
-    @Override
-    public long generateHeaderId(int position) {
-        return 0;
-    }
-
-    @Override
-    public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
-
-    }
-
-    @Override
-    public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
-        return null;
-    }
-
-    @Override
-    public RecyclerView.ViewHolder newFooterHolder(View view) {
-        return null;
-    }
-
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
-        return null;
-    }
-
+    @NonNull
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+        onBindBaseViewHolder((BaseRecyclerViewViewHolder)holder, position);
     }
 
-    @Override
-    public int getAdapterItemCount() {
-        return 0;
-    }
+    public abstract void onBindBaseViewHolder(BaseRecyclerViewViewHolder holder, int position);
 }

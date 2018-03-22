@@ -103,7 +103,7 @@ public abstract class RecyclingPagerAdapter extends PagerAdapter {
      *
      * @param position The position of the item within the adapter's data set of the item whose view
      *        we want.
-     * @param convertView The old view to reuse, if possible. Note: You should check that this view
+     * @param convertView The old view to reuse, if possible. Note: You should selector_choose_category_normal that this view
      *        is non-null and of an appropriate type before using. If it is not possible to convert
      *        this view to display the correct data, this method can create a new view.
      *        Heterogeneous lists can specify their number of view types, so that this View is

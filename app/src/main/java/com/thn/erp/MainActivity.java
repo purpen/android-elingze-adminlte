@@ -169,7 +169,7 @@ public class MainActivity extends BaseActivity {
         fragments.add(fragment);
     }
 
-    @OnClick({R.id.ll_nav0, R.id.ll_nav1, R.id.ll_nav2, R.id.ll_nav3,R.id.ll_nav4})
+    @OnClick({R.id.ll_nav0, R.id.ll_nav1, R.id.ll_nav2, R.id.ll_nav3, R.id.ll_nav4})
     void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_nav0:

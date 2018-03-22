@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/layout_titlebar" />
+    <include layout="@layout/include_overview_title" />
 
     <com.thn.erp.view.autoScrollViewpager.ScrollableView
         android:id="@+id/scrollableView"

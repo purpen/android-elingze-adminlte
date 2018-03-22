@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F9F9F9"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_public_topbar" />
+
+    <include layout="@layout/include_view_layout_line" />
+
+    <include layout="@layout/include_view_separate_vertical_10dp" />
+
+    <include layout="@layout/include_view_layout_line" />
+
+    <LinearLayout style="@style/ModuleMoreRepositoryLookLinearLayoutStyle">
+
+        <TextView
+            style="@style/ModuleMoreRepositoryNameKeyStyle"
+            android:text="名称" />
+
+        <include layout="@layout/include_view_fill_width" />
+
+        <EditText
+            android:id="@+id/editText1"
+            style="@style/ModuleMoreRepositoryNameValueStyle"
+            android:background="#0000"
+            android:enabled="false"
+            android:text="仓库01"
+            android:textCursorDrawable="@null" />
+    </LinearLayout>
+
+    <include layout="@layout/include_view_layout_line" />
+
+    <include layout="@layout/include_view_separate_vertical_10dp" />
+
+    <include layout="@layout/include_view_layout_line" />
+
+    <LinearLayout style="@style/ModuleMoreRepositoryLookLinearLayoutStyle">
+
+        <TextView
+            style="@style/ModuleMoreRepositoryNameKeyStyle"
+            android:text="负责人" />
+
+        <include layout="@layout/include_view_fill_width" />
+
+        <EditText
+            android:id="@+id/editText2"
+            style="@style/ModuleMoreRepositoryNameValueStyle"
+            android:background="#0000"
+            android:enabled="false"
+            android:text="仓库01"
+            android:textCursorDrawable="@null" />
+    </LinearLayout>
+
+    <include layout="@layout/include_view_layout_line" />
+
+    <LinearLayout style="@style/ModuleMoreRepositoryLookLinearLayoutStyle">
+
+        <TextView
+            style="@style/ModuleMoreRepositoryNameKeyStyle"
+            android:text="备注" />
+
+        <include layout="@layout/include_view_fill_width" />
+
+        <EditText
+            android:id="@+id/editText3"
+            style="@style/ModuleMoreRepositoryNameValueStyle"
+            android:background="#0000"
+            android:enabled="false"
+            android:text="仓库01"
+            android:textCursorDrawable="@null" />
+    </LinearLayout>
+
+    <include layout="@layout/include_view_layout_line" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout_repository_delete_repository"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_circle_green"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="删除仓库"
+            android:textColor="#FFFFFF"
+            android:textSize="17sp" />
+    </LinearLayout>
+</LinearLayout>

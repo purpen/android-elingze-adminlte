@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="110dp"
+    android:layout_marginTop="10dp"
+    android:background="@color/THN_color_bgColor_white"
+    android:orientation="vertical"
+    tools:showIn="@layout/fragment_more">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:text="客户服务"
+        android:textColor="@color/THN_color_fontColor_assist"
+        android:textSize="15sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="10dp">
+
+        <LinearLayout
+            android:id="@+id/linearLayout_service1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_circle_green"
+                    android:src="@mipmap/icon_more_customer_service_online" />
+
+                <TextView
+                    style="@style/ModuleMoreSecondServicePrimaryStyle"
+                    android:text="在线服务" />
+            </LinearLayout>
+
+
+            <TextView
+                style="@style/ModuleMoreSecondServiceAssistStyle"
+                android:text="常见问题解答" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="40dp"
+            android:background="#999999" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout_service2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_circle_green"
+                    android:src="@mipmap/icon_more_customer_service_hotline" />
+
+                <TextView
+                    style="@style/ModuleMoreSecondServicePrimaryStyle"
+                    android:text="客服热线" />
+            </LinearLayout>
+
+
+            <TextView
+                style="@style/ModuleMoreSecondServiceAssistStyle"
+                android:text="7X12小时人工服务" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="40dp"
+            android:background="#999999" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout_service3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:background="@drawable/bg_circle_green"
+                    android:id="@+id/imageView_service_online"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@mipmap/icon_more_customer_service_submitorder" />
+
+                <TextView
+                    android:id="@+id/TextView_service_online"
+                    style="@style/ModuleMoreSecondServicePrimaryStyle"
+                    android:text="提工单" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imageView_service_online"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:text="" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <include layout="@layout/include_view_layout_line" />
+</LinearLayout>

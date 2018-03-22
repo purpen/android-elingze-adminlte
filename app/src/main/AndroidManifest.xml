@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.thn.erp">
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".AppApplication"
         android:allowBackup="true"
@@ -30,6 +32,24 @@
         <activity android:name=".overview.usermanage.UserManageActivity"></activity>
         <activity android:name=".overview.usermanage.AddCustomActivity"></activity>
         <activity android:name=".overview.usermanage.EditCustomerClassActivity"></activity>
-    </application>
 
+        <!-- 仓库管理 -->
+        <activity android:name="com.thn.erp.more.repository.RepositoryManageActivity" />
+        <activity android:name="com.thn.erp.more.repository.LookRepositoryActivity" />
+        <activity android:name="com.thn.erp.more.repository.AddRepositoryActivity" />
+
+        <activity android:name="com.thn.erp.more.DemoActivity"/>
+        <activity android:name="com.thn.erp.more.ToolsActivity"/>
+        <activity android:name="com.thn.erp.more.SettingActivity"/>
+        <activity android:name="com.thn.erp.more.SupplierManageActivity"/>
+        <activity android:name="com.thn.erp.more.AccountManageActivity"/>
+
+        <!-- 客户管理 -->
+        <activity android:name="com.thn.erp.overview.CustomerManageActivity" />
+        <activity android:name="com.thn.erp.overview.AddCustomerActivity" />
+        <activity android:name="com.thn.erp.overview.ChooseCategoryActivity" />
+        <activity android:name="com.thn.erp.overview.AddCategoryActivity" />
+
+
+    </application>
 </manifest>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.thn.erp.more.repository.RepositoryManageActivity">
+
+    <include layout="@layout/include_public_topbar" />
+
+    <include layout="@layout/include_view_layout_line" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayout_repository_tab"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        app:tabIndicatorColor="#00000000"
+        app:tabIndicatorHeight="2dp"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="#27AE59"
+        app:tabTextColor="#999999" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#e2e2e2" />
+
+    <include layout="@layout/include_view_separate_vertical_10dp" />
+    <include layout="@layout/include_view_layout_line" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager_repository_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f8f8f8" />
+
+</LinearLayout>

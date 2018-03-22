@@ -112,7 +112,7 @@ public class ViewPagerAdapter<T> extends RecyclingPagerAdapter {
 //        if (activity instanceof MainActivity) {
 //            view.setOnClickListener(new View.OnClickListener() {
 //                @Override
-//                public void onClick(View v) {
+//                public void onTopBarClick(View v) {
 //                    final BannerBean.RowsBean banner = (BannerBean.RowsBean) content;
 //                    GoToNextUtils.goToIntent(activity, Integer.valueOf(banner.type), banner.web_url);
 //
@@ -122,7 +122,7 @@ public class ViewPagerAdapter<T> extends RecyclingPagerAdapter {
 //        if (activity instanceof DetailsActivity) {
 //            view.setOnClickListener(new View.OnClickListener() {
 //                @Override
-//                public void onClick(View v) {
+//                public void onTopBarClick(View v) {
 //
 //                    // TODO: 2017/11/21 无须点击操作
 ////                    MainApplication.picList = (List<String>) list;
