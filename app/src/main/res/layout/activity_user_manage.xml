@@ -21,7 +21,6 @@
         android:id="@+id/ultimateRecyclerView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="?attr/actionBarSize"
         app:recyclerviewClipToPadding="true"
         app:recyclerviewDefaultSwipeColor="@color/color_27AE59"
         app:recyclerviewScrollbars="vertical" />

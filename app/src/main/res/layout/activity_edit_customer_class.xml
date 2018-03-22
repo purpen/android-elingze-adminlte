@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <com.thn.erp.view.CustomHeadView
         android:id="@+id/customHeadView"
@@ -10,15 +11,21 @@
 
     <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
         android:id="@+id/ultimateRecyclerView"
+        android:layout_below="@+id/customHeadView"
         android:layout_above="@+id/addClassBtn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        app:recyclerviewClipToPadding="true"
+        app:recyclerviewScrollbars="vertical"
+        />
+
     <Button
         android:id="@+id/addClassBtn"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="@dimen/dp300"
         android:layout_height="@dimen/dp35"
-        android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:background="@drawable/shape_radius35_corner"
         android:text="添加分类"
         android:textColor="@color/color_27AE59"

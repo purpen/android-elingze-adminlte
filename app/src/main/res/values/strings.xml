@@ -50,4 +50,5 @@
     <string name="custom_on">启用</string>
     <string name="item_on">启用</string>
     <string name="select_class_title">选择分类</string>
+    <string name="confirm">确认</string>
 </resources>
