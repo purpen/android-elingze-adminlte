@@ -3,9 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/color_27AE59</item>
+        <item name="colorPrimaryDark">@color/color_27AE59</item>
+        <item name="colorAccent">@color/color_222</item>
     </style>
 
     <!-- MainActivity中最下面RadioGroup的五个Button的样式 -->
@@ -18,7 +18,13 @@
         <item name="android:paddingBottom">2dp</item>
     </style>
 
-
+    <!-- 全屏 -->
+    <style name="NoTitleFullscreen" parent="AppTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
     <style name="CustomDialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
@@ -31,9 +37,6 @@
     <style name="waiting_dialog" parent="@style/CustomDialog">
         <item name="android:windowNoTitle">true</item>
     </style>
-
-
-
 
     <!-- 更多 -->
     <style name="ModuleMoreSecondServicePrimaryStyle">
@@ -91,4 +94,31 @@
     </style>-->
 
 
+    <style name="StyleSearchView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:background">@drawable/bg_search_view</item>
+        <item name="android:drawablePadding">5dp</item>
+        <item name="android:drawableStart">@mipmap/icon_search</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:imeOptions">actionSearch</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColorHint">@color/color_999</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:hint">名称/手机号</item>
+    </style>
+
+    <!--自定义switch的按钮和轨迹颜色theme-->
+    <style name="mySwitch">
+        <!-- switch 打开时的按钮的颜色 轨迹颜色默认为30%（看效果就明白30%是怎么回事了）这个颜色 -->
+        <item name="colorControlActivated">@color/color_27AE59</item>
+        <!--  switch关闭时的按钮的颜色 -->
+        <item name="colorSwitchThumbNormal">@color/color_27AE59</item>
+        <!-- switch关闭时的轨迹的颜色 30%这个颜色 -->
+        <item name="android:colorForeground">@color/color_27AE59</item>
+
+    </style>
 </resources>

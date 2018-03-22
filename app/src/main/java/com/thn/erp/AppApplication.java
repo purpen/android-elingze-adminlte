@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
+import android.support.multidex.MultiDexApplication;
 
 import com.squareup.leakcanary.LeakCanary;
 import com.stephen.taihuoniaolibrary.common.THNApp;
@@ -22,7 +23,7 @@ import java.util.List;
  * 检查在DataConstants.NETWORK_FAILURE情况下dialog是否隐藏
  * 检查所有的Toast，删除没用的提示
  */
-public class AppApplication extends Application {
+public class AppApplication extends MultiDexApplication {
     private static Application instance;
     public static int which_activity;//判断是从哪个界面跳转到登录界面,0是默认从主页面跳
 

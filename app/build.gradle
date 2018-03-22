@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 
-def releaseTime() {
+static def releaseTime() {
     return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
 }
 
@@ -19,7 +19,7 @@ android {
     signingConfigs {
         release {
 //            storeFile file('//C:/AndroidStudio_workspace/ERP/app/erp.jks')
-            storeFile file('/Users/lilin/AndroidStudioProjects/ERP/app/erp.jks')
+//            storeFile file('/Users/lilin/AndroidStudioProjects/ERP/app/erp.jks')
             storePassword '123456'
             keyAlias 'erp'
             keyPassword '123456'
@@ -64,9 +64,16 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation project(':dateRangePicker')
     implementation project(':MPChartLib')
+    compile 'com.github.bumptech.glide:glide:3.7.0'
     implementation project(':library-taihuoniao')
+    compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.android.support:recyclerview-v7:27.1.0'
     implementation files('libs/commons-codec-1.11.jar')
+    implementation project(':ultimaterecyclerview')
     implementation 'com.android.support:design:27.1.0'
     compile 'ch.ielse:switchbutton:1.0.1'
+    implementation 'com.android.support:multidex:1.0.3'
+//    implementation 'com.android.support:support-v4:27.1.0'
+    implementation 'com.android.support:animated-vector-drawable:27.1.0'
+    implementation 'com.android.support:support-v13:27.1.0'
 }

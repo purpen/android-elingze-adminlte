@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <com.thn.erp.view.CustomHeadView
+        android:id="@+id/customHeadView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
+        android:id="@+id/ultimateRecyclerView"
+        android:layout_above="@+id/addClassBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/addClassBtn"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="@dimen/dp300"
+        android:layout_height="@dimen/dp35"
+        android:layout_centerInParent="true"
+        android:background="@drawable/shape_radius35_corner"
+        android:text="添加分类"
+        android:textColor="@color/color_27AE59"
+        android:textSize="@dimen/sp12" />
+</RelativeLayout>

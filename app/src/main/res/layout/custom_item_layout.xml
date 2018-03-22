@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_item_box"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp45"
+    android:background="@drawable/selector_fff_eee">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/dp16"
+        android:paddingStart="@dimen/dp16"
+        >
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:drawablePadding="@dimen/dp10"
+            android:text="@string/app_name"
+            android:textSize="@dimen/sp14" />
+        <EditText
+            android:id="@+id/et_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:minWidth="@dimen/dp200"
+            android:background="@null"
+            android:hint="@string/app_name"
+            android:maxLength="30"
+            android:paddingRight="@dimen/dp15"
+            android:paddingEnd="@dimen/dp15"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginStart="@dimen/dp10"
+            android:maxLines="1"
+            android:gravity="right"
+            android:textSize="@dimen/sp14"
+            android:visibility="gone" />
+        <TextView
+            android:id="@+id/tv_arrow_left1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv_content"
+            android:layout_toEndOf="@id/tv_content"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginStart="@dimen/dp10"
+            android:ellipsize="end"
+            android:maxLength="15"
+            android:text="@string/please_input"
+            android:textColor="@color/color_999"
+            android:textSize="@dimen/sp14"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_more_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:paddingRight="@dimen/dp16"
+        android:paddingEnd="@dimen/dp16"
+        android:src="@mipmap/icon_arrow_more" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_user_avatar"
+        android:layout_width="@dimen/dp60"
+        android:layout_height="@dimen/dp60"
+        android:layout_centerInParent="true"
+        android:layout_marginRight="@dimen/dp10"
+        android:layout_marginEnd="@dimen/dp10"
+        android:layout_toLeftOf="@id/iv_more_arrow"
+        android:layout_toStartOf="@id/iv_more_arrow"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/iv_bar_code"
+        android:layout_width="@dimen/dp30"
+        android:layout_height="@dimen/dp30"
+        android:layout_centerInParent="true"
+        android:layout_marginRight="@dimen/dp10"
+        android:layout_marginEnd="@dimen/dp10"
+        android:layout_toLeftOf="@id/iv_more_arrow"
+        android:layout_toStartOf="@id/iv_more_arrow"
+        android:visibility="gone"
+        />
+    <TextView
+        android:id="@+id/tv_arrow_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/iv_more_arrow"
+        android:layout_toStartOf="@id/iv_more_arrow"
+        android:layout_marginRight="@dimen/dp10"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_marginLeft="@dimen/dp10"
+        android:text="@string/app_name"
+        android:textColor="@color/color_666"
+        android:textSize="@dimen/sp14"
+        android:visibility="gone"
+        />
+    <com.thn.erp.view.BadgeView
+        android:id="@+id/tv_tip_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/iv_more_arrow"
+        android:layout_marginRight="@dimen/dp5"
+        android:layout_marginEnd="@dimen/dp5"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp10"
+        android:visibility="gone"
+        />
+    <TextView
+        android:id="@+id/tv_right_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:ellipsize="end"
+        android:maxLength="15"
+        android:paddingRight="@dimen/dp10"
+        android:paddingEnd="@dimen/dp10"
+        android:text="@string/app_name"
+        android:textColor="@color/color_222"
+        android:textSize="@dimen/sp14"
+        android:visibility="gone" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp05"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_ddd" />
+</RelativeLayout>

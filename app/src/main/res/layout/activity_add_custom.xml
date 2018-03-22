@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_f8f8f8"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <com.thn.erp.view.CustomHeadView
+        android:id="@+id/customHeadView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_f8f8f8"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <!--基本信息-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp40"
+                android:background="@color/color_FAFAFA"
+                android:paddingLeft="@dimen/dp15"
+                android:text="@string/basic_info"
+                android:textColor="@color/color_666"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/sp15"
+                />
+
+
+            <com.thn.erp.view.CustomItemLayout
+                android:id="@+id/itemUserName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.thn.erp.view.CustomItemLayout
+                android:id="@+id/itemContact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.thn.erp.view.CustomItemLayout
+                android:id="@+id/itemPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.thn.erp.view.CustomItemLayout
+                android:id="@+id/itemUserClass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp40"
+                android:background="@android:color/white"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/item_on"
+                    android:paddingLeft="@dimen/dp15"
+                    android:textColor="@color/color_222"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/sp15"
+                    />
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/switchCompat"
+                    android:switchMinWidth="40dp"
+                    android:theme="@style/mySwitch"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+            <!--扩展信息-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp40"
+                android:background="@color/color_FAFAFA"
+                android:paddingLeft="@dimen/dp15"
+                android:text="@string/expand_info"
+                android:textColor="@color/color_666"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/sp15"
+                />
+
+            <com.thn.erp.view.CustomItemLayout
+                android:id="@+id/itemTel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.thn.erp.view.CustomItemLayout
+                android:id="@+id/itemEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.thn.erp.view.CustomItemLayout
+                android:id="@+id/itemFoxmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.thn.erp.view.CustomItemLayout
+                android:id="@+id/itemGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.thn.erp.view.CustomItemLayout
+                android:id="@+id/itemBirth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp5"
+                />
+
+            <!--地址信息-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp40"
+                android:background="@color/color_FAFAFA"
+                android:paddingLeft="@dimen/dp15"
+                android:text="@string/address_info"
+                android:textColor="@color/color_666"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/sp15"
+                />
+
+            <com.thn.erp.view.CustomItemLayout
+                android:id="@+id/itemProvince"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.thn.erp.view.CustomItemLayout
+                android:id="@+id/itemCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.thn.erp.view.CustomItemLayout
+                android:id="@+id/itemCounty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.thn.erp.view.CustomItemLayout
+                android:id="@+id/itemDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.thn.erp.view.CustomItemLayout
+                android:id="@+id/itemComment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp5"
+                />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

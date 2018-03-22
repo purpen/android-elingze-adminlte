@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
 import com.thn.erp.common.GlobalCallBack;
+import com.thn.erp.overview.usermanage.UserManageActivity;
+import com.thn.erp.utils.LogUtil;
 import com.thn.erp.view.autoScrollViewpager.ScrollableView;
 import com.thn.erp.view.autoScrollViewpager.ViewPagerAdapter;
 
@@ -116,6 +118,12 @@ public class OverViewFragment extends BaseFragment {
             @Override
             public void callBack(Object o) {
                 startActivity(new Intent(getActivity(), CustomerManageActivity.class));
+                LogUtil.e(o.toString());
+                if (o instanceof Map){
+                    if (((Map) o).get("name").equals("客户管理")){
+                        startActivity(new Intent(activity, UserManageActivity.class));
+                    }
+                }
             }
         });
         listFragment.setAdapter(mListAdapter);

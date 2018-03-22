@@ -5,15 +5,20 @@
     xmlns:tl="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/white"
     android:orientation="vertical">
+    <com.thn.erp.view.CustomHeadView
+        android:id="@+id/customHeadView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
     <com.flyco.tablayout.SlidingTabLayout
         android:id="@+id/slidingTabLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp35"
         tl:tl_textSelectColor="@color/color_FAF867"
         tl:tl_textAllCaps="true"
-        tl:tl_tab_padding="@dimen/dp15"
         tl:tl_tab_space_equal="true"
+        tl:tl_tab_padding="@dimen/dp15"
         tl:tl_indicator_height="2dp"
+        tl:tl_indicator_width_equal_title="true"
         tl:tl_indicator_color="@color/color_FAF867"
         tl:tl_textUnselectColor="@android:color/white"
         android:background="@color/color_27AE59"

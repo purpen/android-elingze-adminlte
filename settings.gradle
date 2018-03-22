@@ -1,1 +1,1 @@
-include ':app', ':dateRangePicker', ':MPChartLib', ':library-taihuoniao'
+include ':app', ':dateRangePicker', ':MPChartLib', ':library-taihuoniao', ':ultimaterecyclerview'
