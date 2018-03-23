@@ -154,10 +154,24 @@ public class ClientParamsAPI {
         params.put("password", password);
         return params;
     }
+    /**
+     * 获取新增商品接口
+     * @param name
+     * @param cover_id
+     * @param price
+     * @return
+     */
+    public static HashMap<String, String> getGoodsListParams(String name, String cover_id, String price) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("name", name);
+        params.put("cover_id", cover_id);
+        params.put("price", price);
+        return params;
+    }
 
     /**
      * 获取分销客户列表
-     * @param page 当前第几页
+     * @param page page 当前第几页
      * @return
      */
     public static HashMap<String,String> getCustomerList(int page) {
