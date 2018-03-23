@@ -109,9 +109,11 @@ public class URL {
     public static final String POSTER_POSTER_LIST       = "http://k.taihuoniao.com/saasApi/posters";
     public static final String POSTER_POSTER_DETAILS    = "http://k.taihuoniao.com/saasApi/poster";
 
-
-
-
     // 新增商品
     public static final String PRODUCTS_ADD             = "products";
+
+    /**
+     * 分销客户列表
+     */
+    public static final String CUSTOMER_LIST = BASE_URL+"customers";
 }

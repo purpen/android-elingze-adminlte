@@ -90,6 +90,7 @@ public class LoginFragment extends BaseFragment {
                 LoginBean loginBean = JsonUtil.fromJson(json, LoginBean.class);
                 if (loginBean.success == true) {
                     SPUtil.write(Constants.TOKEN, loginBean.data.token);
+                    SPUtil.write(Constants.LOGIN_INFO,userName+":"+userPsw);
                     jump2MainPage();
                 }else {
                     ToastUtils.showError(loginBean.status.message);

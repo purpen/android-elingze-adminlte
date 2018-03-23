@@ -16,24 +16,25 @@ import android.widget.TextView;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.thn.erp.R;
+import com.thn.erp.overview.usermanage.bean.CustomerData;
 
 import java.security.SecureRandom;
 import java.util.List;
 
 
 public class SimpleAdapter extends UltimateViewAdapter {
-    private List<String> stringList;
+    private List<CustomerData.DataBean.CustomersBean> list;
 
-    public SimpleAdapter(List<String> stringList) {
-        this.stringList = stringList;
+    public SimpleAdapter(List<CustomerData.DataBean.CustomersBean> list) {
+        this.list = list;
     }
 
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        if (position < getItemCount() && (customHeaderView != null ? position <= stringList.size() : position < stringList.size()) && (customHeaderView != null ? position > 0 : true)) {
-
-            ((ViewHolder) holder).textViewSample.setText(stringList.get(customHeaderView != null ? position - 1 : position));
+        if (position < getItemCount() && (customHeaderView != null ? position <= list.size() : position < list.size()) && (customHeaderView != null ? position > 0 : true)) {
+            CustomerData.DataBean.CustomersBean customerBean = list.get(customHeaderView != null ? position - 1 : position);
+            ((ViewHolder) holder).textViewSample.setText(customerBean.name);
             // ((ViewHolder) holder).itemView.setActivated(selectedItems.get(position, false));
             if (mDragStartListener != null) {
 //                ((ViewHolder) holder).imageViewSample.setOnTouchListener(new View.OnTouchListener() {
@@ -59,7 +60,7 @@ public class SimpleAdapter extends UltimateViewAdapter {
 
     @Override
     public int getAdapterItemCount() {
-        return stringList.size();
+        return list.size();
     }
 
     @Override
@@ -82,30 +83,31 @@ public class SimpleAdapter extends UltimateViewAdapter {
     }
 
 
-    public void insert(String string, int position) {
-        insertInternal(stringList, string, position);
+    public void insert(CustomerData.DataBean.CustomersBean customersBean, int position) {
+        insertInternal(list, customersBean, position);
     }
 
     public void remove(int position) {
-        removeInternal(stringList, position);
+        removeInternal(list, position);
     }
 
     public void clear() {
-        clearInternal(stringList);
+        clearInternal(list);
     }
 
 
     public void swapPositions(int from, int to) {
-        swapPositions(stringList, from, to);
+        swapPositions(list, from, to);
     }
 
 
     @Override
     public long generateHeaderId(int position) {
         // URLogs.d("position--" + position + "   " + getItem(position));
-        if (getItem(position).length() > 0)
-            return getItem(position).charAt(0);
-        else return -1;
+//        if (getItem(position).length() > 0)
+//            return getItem(position).charAt(0);
+//        else return -1;
+        return position;
     }
 
     @Override
@@ -120,7 +122,7 @@ public class SimpleAdapter extends UltimateViewAdapter {
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
 
         TextView textView = (TextView) viewHolder.itemView.findViewById(R.id.stick_text);
-        textView.setText(String.valueOf(getItem(position).charAt(0)));
+//        textView.setText(String.valueOf(getItem(position).charAt(0)));
 //        viewHolder.itemView.setBackgroundColor(Color.parseColor("#AA70DB93"));
         viewHolder.itemView.setBackgroundColor(Color.parseColor("#AAffffff"));
         ImageView imageView = (ImageView) viewHolder.itemView.findViewById(R.id.stick_img);
@@ -160,13 +162,7 @@ public class SimpleAdapter extends UltimateViewAdapter {
         }
 
     }
-//
-//    private int getRandomColor() {
-//        SecureRandom rgen = new SecureRandom();
-//        return Color.HSVToColor(150, new float[]{
-//                rgen.nextInt(359), 1, 1
-//        });
-//    }
+
 
     public void setOnDragStartListener(OnStartDragListener dragStartListener) {
         mDragStartListener = dragStartListener;
@@ -180,20 +176,6 @@ public class SimpleAdapter extends UltimateViewAdapter {
 
         public ViewHolder(View itemView) {
             super(itemView);
-//            itemView.setOnTouchListener(new SwipeDismissTouchListener(itemView, null, new SwipeDismissTouchListener.DismissCallbacks() {
-//                @Override
-//                public boolean canDismiss(Object token) {
-//                    Logs.d("can dismiss");
-//                    return true;
-//                }
-//
-//                @Override
-//                public void onDismiss(View view, Object token) {
-//                   // Logs.d("dismiss");
-//                    remove(getPosition());
-//
-//                }
-//            }));
             textViewSample = (TextView) itemView.findViewById(
                     R.id.company);
             item_view = itemView.findViewById(R.id.itemview);
@@ -210,13 +192,13 @@ public class SimpleAdapter extends UltimateViewAdapter {
         }
     }
 
-    public String getItem(int position) {
+    public CustomerData.DataBean.CustomersBean getItem(int position) {
         if (customHeaderView != null)
             position--;
         // URLogs.d("position----"+position);
-        if (position >= 0 && position < stringList.size())
-            return stringList.get(position);
-        else return "";
+        if (position >= 0 && position < list.size())
+            return list.get(position);
+        else return null;
     }
 
 }

@@ -3,14 +3,25 @@ package com.thn.erp.overview.usermanage;
 import android.content.Intent;
 import android.support.v7.widget.SwitchCompat;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.CompoundButton;
 
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
+import com.thn.erp.net.ClientParamsAPI;
+import com.thn.erp.net.HttpRequest;
+import com.thn.erp.net.HttpRequestCallback;
+import com.thn.erp.net.URL;
+import com.thn.erp.overview.usermanage.bean.AddCustomerData;
+import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.CustomHeadView;
 import com.thn.erp.view.CustomItemLayout;
+import com.thn.erp.view.svprogress.WaitingDialog;
+
+import java.io.IOException;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -53,6 +64,15 @@ public class AddCustomActivity extends BaseActivity {
     CustomItemLayout itemDetail;
     @BindView(R.id.itemComment)
     CustomItemLayout itemComment;
+    private WaitingDialog dialog;
+    private String name="";
+    private String province="";
+    private String city="";
+    private String area="";
+    private String street_address="";
+    private String mobile="";
+    private String phone="";
+    private String email="";
 
     @Override
     protected int getLayout() {
@@ -61,6 +81,7 @@ public class AddCustomActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        dialog = new WaitingDialog(this);
         customHeadView.setHeadCenterTxtShow(true, R.string.add_customer_title);
         customHeadView.setHeadRightTxtShow(true, R.string.save);
         itemUserName.setTVStyle(0, R.string.custom_name, R.color.color_222);
@@ -120,7 +141,7 @@ public class AddCustomActivity extends BaseActivity {
         customHeadView.getHeadRightTV().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtils.showInfo("保存");
+                addCustomer();
             }
         });
 
@@ -148,37 +169,59 @@ public class AddCustomActivity extends BaseActivity {
         }
     }
 
+
+    private void addCustomer() {
+        if (!checkUserInput()) return;
+        HashMap<String, String> params = ClientParamsAPI.addCustomer(1,name,province,city,area,street_address,mobile,phone,email);
+        HttpRequest.sendRequest(HttpRequest.POST, URL.CUSTOMER_LIST, params, new HttpRequestCallback() {
+            @Override
+            public void onStart() {
+                dialog.show();
+            }
+
+            @Override
+            public void onSuccess(String json) {
+                dialog.dismiss();
+                AddCustomerData data = JsonUtil.fromJson(json, AddCustomerData.class);
+                if (data.success == true) {
+                    ToastUtils.showSuccess(R.string.submit_success);
+                } else {
+                    ToastUtils.showError(data.status.message);
+                }
+
+            }
+
+            @Override
+            public void onFailure(IOException e) {
+                dialog.dismiss();
+                ToastUtils.showError(R.string.network_err);
+            }
+        });
+    }
+
     /**
-     * 重置密码
+     * 检查用户输入
      */
-//    private void updatePassword() {
-//        HashMap<String, String> params = ClientParamsAPI.getResetPasswordRequestParams(account, userPsw, checkCode);
-//        HttpRequest.sendRequest(HttpRequest.POST, URL.RESET_PASSWORD, params, new HttpRequestCallback() {
-//            @Override
-//            public void onStart() {
-//                btnSubmit.setEnabled(false);
-//            }
-//
-//            @Override
-//            public void onSuccess(String json) {
-//                btnSubmit.setEnabled(true);
-//                ResetPasswordBean resetPasswordBean = JsonUtil.fromJson(json, ResetPasswordBean.class);
-//                if (resetPasswordBean.meta.status_code == Constants.SUCCESS) {
-//                    ToastUtils.showSuccess(resetPasswordBean.meta.message);
-//                    finish();
-//                } else {
-//                    ToastUtils.showError(resetPasswordBean.meta.message);
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(IOException e) {
-//                btnSubmit.setEnabled(true);
-//                ToastUtils.showError(R.string.network_err);
-//            }
-//        });
-//    }
+    private boolean checkUserInput() {
+        name=itemUserName.getRightETTxt();
+        if (TextUtils.isEmpty(name)){
+            ToastUtils.showInfo(R.string.input_username);
+            return false;
+        }
+//        手机
+        mobile = itemPhone.getRightETTxt();
+        if (TextUtils.isEmpty(mobile)){
+            ToastUtils.showInfo(R.string.input_phone);
+            return false;
+        }
 
-
+        province = itemProvince.getTvarrowLeftTxt();
+        city = itemCity.getTvarrowLeftTxt();
+        area = itemCounty.getTvarrowLeftTxt();
+        street_address = itemDetail.getRightETTxt();
+        email = itemEmail.getRightETTxt();
+//        座机
+        phone = itemTel.getRightETTxt();
+        return true;
+    }
 }

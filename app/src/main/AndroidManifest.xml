@@ -31,6 +31,7 @@
         <activity android:name=".overview.usermanage.UserManageActivity"></activity>
         <activity android:name=".overview.usermanage.AddCustomActivity"></activity>
         <activity android:name=".overview.usermanage.EditCustomerClassActivity"></activity>
+        <activity android:name=".sale.DXOrderActivity"></activity>
 
         <!-- 仓库管理 -->
         <activity android:name="com.thn.erp.more.repository.RepositoryManageActivity" />
