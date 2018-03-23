@@ -57,4 +57,9 @@
     <string name="input_username">请输入客户名</string>
     <string name="input_phone">请输入手机号</string>
     <string name="submit_success">提交成功</string>
+    <string name="all_money">合计: </string>
+    <string name="submit_order">结算</string>
+    <string name="dx_order_title">代下单</string>
+    <string name="select_customer_title">选择客户</string>
+    <string name="select_goods_title">选择商品</string>
 </resources>

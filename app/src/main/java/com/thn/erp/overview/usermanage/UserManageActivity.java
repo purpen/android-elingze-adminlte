@@ -22,7 +22,7 @@ import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
-import com.thn.erp.overview.usermanage.adapter.SimpleAdapter;
+import com.thn.erp.overview.usermanage.adapter.CustomerListAdapter;
 import com.thn.erp.overview.usermanage.bean.CustomerData;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.ToastUtils;
@@ -49,7 +49,7 @@ public class UserManageActivity extends BaseActivity {
     UltimateRecyclerView ultimateRecyclerView;
     @BindView(R.id.searchView)
     SearchView searchView;
-    private SimpleAdapter simpleRecyclerViewAdapter;
+    private CustomerListAdapter simpleRecyclerViewAdapter;
     private LinearLayoutManager linearLayoutManager;
     private ItemTouchHelper mItemTouchHelper;
     private WaitingDialog dialog;
@@ -72,7 +72,7 @@ public class UserManageActivity extends BaseActivity {
 //        list.add(bean);
         customHeadView.setHeadCenterTxtShow(true, R.string.user_manage_title);
         customHeadView.setHeadRightTxtShow(true, R.string.add_customer);
-        simpleRecyclerViewAdapter = new SimpleAdapter(list);
+        simpleRecyclerViewAdapter = new CustomerListAdapter(list);
         linearLayoutManager = new LinearLayoutManager(this);
         ultimateRecyclerView.setHasFixedSize(true);
         ultimateRecyclerView.setLayoutManager(linearLayoutManager);
@@ -166,7 +166,7 @@ public class UserManageActivity extends BaseActivity {
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(simpleRecyclerViewAdapter);
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(ultimateRecyclerView.mRecyclerView);
-        simpleRecyclerViewAdapter.setOnDragStartListener(new SimpleAdapter.OnStartDragListener() {
+        simpleRecyclerViewAdapter.setOnDragStartListener(new CustomerListAdapter.OnStartDragListener() {
             @Override
             public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
                 mItemTouchHelper.startDrag(viewHolder);

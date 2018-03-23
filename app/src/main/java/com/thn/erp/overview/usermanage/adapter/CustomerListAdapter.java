@@ -22,10 +22,10 @@ import java.security.SecureRandom;
 import java.util.List;
 
 
-public class SimpleAdapter extends UltimateViewAdapter {
+public class CustomerListAdapter extends UltimateViewAdapter {
     private List<CustomerData.DataBean.CustomersBean> list;
 
-    public SimpleAdapter(List<CustomerData.DataBean.CustomersBean> list) {
+    public CustomerListAdapter(List<CustomerData.DataBean.CustomersBean> list) {
         this.list = list;
     }
 

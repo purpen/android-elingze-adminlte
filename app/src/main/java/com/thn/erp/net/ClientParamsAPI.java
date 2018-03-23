@@ -186,4 +186,17 @@ public class ClientParamsAPI {
         params.put("email",email);
         return params;
     }
+
+    /**
+     * 获取商品列表或某分类所有商品
+     * @param page
+     * @return
+     */
+    public static HashMap<String,String> getGoodsList(String cid,int page) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("cid", String.valueOf(cid));
+        params.put("page",String.valueOf(page));
+        params.put("per_page",Constants.PAGE_SIZE);
+        return params;
+    }
 }

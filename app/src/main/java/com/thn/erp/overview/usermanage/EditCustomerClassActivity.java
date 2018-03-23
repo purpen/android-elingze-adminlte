@@ -12,7 +12,7 @@ import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.itemTouchHelper.SimpleItemTouchHelperCallback;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
-import com.thn.erp.overview.usermanage.adapter.SimpleAdapter;
+import com.thn.erp.overview.usermanage.adapter.CustomerListAdapter;
 import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.CustomHeadView;
 
@@ -31,7 +31,7 @@ public class EditCustomerClassActivity extends BaseActivity {
     @BindView(R.id.addClassBtn)
     Button addClassBtn;
     private LinearLayoutManager linearLayoutManager;
-    private SimpleAdapter simpleRecyclerViewAdapter;
+    private CustomerListAdapter simpleRecyclerViewAdapter;
     private int moreNum=2;
     private ItemTouchHelper mItemTouchHelper;
 
@@ -95,7 +95,7 @@ public class EditCustomerClassActivity extends BaseActivity {
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(simpleRecyclerViewAdapter);
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(ultimateRecyclerView.mRecyclerView);
-        simpleRecyclerViewAdapter.setOnDragStartListener(new SimpleAdapter.OnStartDragListener() {
+        simpleRecyclerViewAdapter.setOnDragStartListener(new CustomerListAdapter.OnStartDragListener() {
             @Override
             public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
                 mItemTouchHelper.startDrag(viewHolder);

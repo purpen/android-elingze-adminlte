@@ -113,4 +113,9 @@ public class URL {
      * 分销客户列表
      */
     public static final String CUSTOMER_LIST = BASE_URL+"customers";
+
+    /**
+     * 所有商品列表
+     */
+    public static final String GOODS_LIST = BASE_URL+"products";
 }

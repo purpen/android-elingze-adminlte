@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp120"
+    android:gravity="center_vertical"
+    android:id="@+id/itemview">
+
+    <ImageView
+        android:id="@+id/ivCover"
+        android:layout_width="@dimen/dp90"
+        android:layout_height="@dimen/dp90"
+        android:layout_marginLeft="@dimen/dp15"
+        android:layout_marginRight="@dimen/dp15"
+        android:src="@mipmap/ic_launcher"
+        />
+    <TextView
+        android:id="@+id/goodsName"
+        android:layout_toRightOf="@+id/ivCover"
+        android:layout_width="wrap_content"
+        android:textSize="@dimen/sp17"
+        android:layout_marginLeft="@dimen/dp15"
+        android:textColor="@color/color_222"
+        android:layout_height="wrap_content"
+        android:text="test2"/>
+
+    <TextView
+        android:id="@+id/tvNum"
+        android:layout_below="@+id/goodsName"
+        android:layout_width="wrap_content"
+        android:textSize="@dimen/sp15"
+        android:textColor="@color/color_666"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/goodsName"
+        android:text="test2"/>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvNum"
+        android:layout_alignLeft="@+id/goodsName"
+        android:layout_alignBottom="@+id/ivCover"
+        android:gravity="bottom"
+        >
+        <EditText
+            android:id="@+id/price"
+            android:background="@null"
+            android:layout_width="wrap_content"
+            android:textSize="@dimen/sp15"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_222"
+            style="StyleReactBorder"
+            android:text="test2"/>
+        <EditText
+            android:id="@+id/stockNum"
+            android:background="@null"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp15"
+            android:layout_width="wrap_content"
+            android:textColor="@color/color_222"
+            android:textSize="@dimen/sp15"
+            android:layout_height="wrap_content"
+            style="StyleReactBorder"
+            android:text="test2"/>
+    </RelativeLayout>
+</RelativeLayout>

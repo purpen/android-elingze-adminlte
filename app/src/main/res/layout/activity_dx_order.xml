@@ -1,15 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <com.thn.erp.view.CustomHeadView
         android:id="@+id/customHeadView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <ScrollView
+        android:layout_height="wrap_content"
+        />
+    <LinearLayout
+        android:id="@+id/llSelCustomer"
+        android:layout_below="@+id/customHeadView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="@dimen/dp45"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp15"
+            android:text="客户"
+            android:textSize="@dimen/sp14"
+            android:textColor="@color/color_222"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp30"
+            android:minWidth="@dimen/dp200"
+            android:padding="@dimen/dp5"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="输入或选择"
+            android:textColor="@color/color_222"
+            android:textSize="@dimen/sp12"
+            android:layout_marginLeft="@dimen/dp5"
+            android:layout_marginRight="@dimen/dp10"
+            />
+        <Button
+            android:id="@+id/selectBtn"
+            android:layout_width="@dimen/dp80"
+            android:layout_height="@dimen/dp45"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_marginRight="@dimen/dp15"
+            android:textSize="@dimen/sp14"
+            android:textColor="@color/color_27AE59"
+            android:text="选择"
+            />
+    </LinearLayout>
 
-    </ScrollView>
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/llSelGoods"
+        android:layout_below="@+id/llSelCustomer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp45"
+        android:layout_marginTop="@dimen/dp10"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+        <Button
+            android:id="@+id/selectGoodsBtn"
+            android:layout_width="@dimen/dp80"
+            android:layout_height="@dimen/dp45"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_marginRight="@dimen/dp15"
+            android:textSize="@dimen/sp14"
+            android:textColor="@color/color_27AE59"
+            android:text="选择商品"
+            />
+    </LinearLayout>
+
+    <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
+        android:id="@+id/ultimateRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/llSelGoods"
+        app:recyclerviewClipToPadding="true"
+        app:recyclerviewDefaultSwipeColor="@color/color_27AE59"
+        app:recyclerviewScrollbars="vertical"
+        android:layout_above="@+id/rl"
+        />
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_alignParentBottom="true"
+        >
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp05"
+            android:background="@color/color_eee"
+            android:layout_alignParentTop="true"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_toLeftOf="@+id/sumPrice"
+            android:gravity="center_vertical"
+            android:textColor="@color/color_27AE59"
+            android:paddingLeft="@dimen/dp15"
+            android:text="@string/all_money" />
+
+        <TextView
+            android:id="@+id/sumPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:text="￥10"
+            android:layout_toLeftOf="@+id/submitOrder"
+            android:gravity="center_vertical"
+            android:paddingRight="@dimen/dp10"
+            android:textColor="@color/color_27AE59" />
+
+        <Button
+            android:id="@+id/submitOrder"
+            android:layout_width="100dp"
+            android:layout_height="44dp"
+            android:layout_alignParentRight="true"
+            android:background="@color/color_27AE59"
+            android:text="@string/submit_order"
+            android:textColor="@android:color/white" />
+    </RelativeLayout>
+</RelativeLayout>

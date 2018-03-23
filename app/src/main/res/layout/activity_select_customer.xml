@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <com.thn.erp.view.CustomHeadView
+        android:id="@+id/customHeadView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <com.thn.erp.view.SearchView
+        android:id="@+id/searchView"
+        android:layout_below="@+id/customHeadView"
+        style="@style/StyleSearchView"
+        android:hint="客户名"
+        android:layout_marginTop="@dimen/dp9"
+        android:layout_marginBottom="@dimen/dp9"
+        />
+
+    <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
+        android:id="@+id/ultimateRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/searchView"
+        app:recyclerviewClipToPadding="true"
+        app:recyclerviewDefaultSwipeColor="@color/color_27AE59"
+        app:recyclerviewScrollbars="vertical"
+        />
+</RelativeLayout>

@@ -116,6 +116,17 @@
         <item name="android:hint">名称/手机号</item>
     </style>
 
+    <style name="StyleReactBorder">
+        <item name="android:layout_width">@dimen/dp80</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:background">@drawable/bg_rect_border</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <!--自定义switch的按钮和轨迹颜色theme-->
     <style name="mySwitch">
         <!-- switch 打开时的按钮的颜色 轨迹颜色默认为30%（看效果就明白30%是怎么回事了）这个颜色 -->
