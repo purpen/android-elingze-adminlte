@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F9F9F9"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_public_topbar" />
+
+    <include layout="@layout/include_view_layout_line" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/linearLayout_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/ModuleOverViewCustomerAddTabStyle"
+                android:text="基本信息" />
+            <include layout="@layout/include_view_layout_line" />
+
+            <com.thn.erp.view.common.LinearLayoutCustomerAddEditTextView
+                android:id="@+id/editTextView_customer_add_basic_info1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <include layout="@layout/include_view_layout_line" />
+            <com.thn.erp.view.common.LinearLayoutCustomerAddEditTextView
+                android:layout_width="wrap_content"
+                android:id="@+id/editTextView_customer_add_basic_info2"
+                android:layout_height="wrap_content" />
+            <include layout="@layout/include_view_layout_line" />
+            <com.thn.erp.view.common.LinearLayoutCustomerAddEditTextView
+                android:layout_width="wrap_content"
+                android:id="@+id/editTextView_customer_add_basic_info3"
+                android:layout_height="wrap_content" />
+            <include layout="@layout/include_view_layout_line" />
+            <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView
+                android:layout_width="wrap_content"
+                android:id="@+id/editTextView_customer_add_basic_info4"
+                android:layout_height="wrap_content" />
+            <include layout="@layout/include_view_layout_line" />
+            <com.thn.erp.view.common.LinearLayoutCustomerAddSwitchView
+                android:layout_width="wrap_content"
+                android:id="@+id/editTextView_customer_add_basic_info5"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                style="@style/ModuleOverViewCustomerAddTabStyle"
+                android:text="扩展信息" />
+            <include layout="@layout/include_view_layout_line" />
+            <com.thn.erp.view.common.LinearLayoutCustomerAddEditTextView
+                android:layout_width="wrap_content"
+                android:id="@+id/editTextView_customer_add_additional_info1"
+                android:layout_height="wrap_content" />
+            <include layout="@layout/include_view_layout_line" />
+            <com.thn.erp.view.common.LinearLayoutCustomerAddEditTextView
+                android:layout_width="wrap_content"
+                android:id="@+id/editTextView_customer_add_additional_info2"
+                android:layout_height="wrap_content" />
+            <include layout="@layout/include_view_layout_line" />
+            <com.thn.erp.view.common.LinearLayoutCustomerAddEditTextView
+                android:layout_width="wrap_content"
+                android:id="@+id/editTextView_customer_add_additional_info3"
+                android:layout_height="wrap_content" />
+
+            <include layout="@layout/include_view_separate_vertical_10dp" />
+            <include layout="@layout/include_view_layout_line" />
+            <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView
+                android:layout_width="wrap_content"
+                android:id="@+id/editTextView_customer_add_additional_info4"
+                android:layout_height="wrap_content" />
+            <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView
+                android:layout_width="wrap_content"
+                android:id="@+id/editTextView_customer_add_additional_info5"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                style="@style/ModuleOverViewCustomerAddTabStyle"
+                android:text="地址信息" />
+            <include layout="@layout/include_view_layout_line" />
+            <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView
+                android:layout_width="wrap_content"
+                android:id="@+id/editTextView_customer_add_address_info1"
+                android:layout_height="wrap_content" />
+            <include layout="@layout/include_view_layout_line" />
+            <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView
+                android:id="@+id/editTextView_customer_add_address_info2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <include layout="@layout/include_view_layout_line" />
+            <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView
+                android:layout_width="wrap_content"
+                android:id="@+id/editTextView_customer_add_address_info3"
+                android:layout_height="wrap_content" />
+            <include layout="@layout/include_view_layout_line" />
+            <com.thn.erp.view.common.LinearLayoutCustomerAddEditTextView
+                android:layout_width="wrap_content"
+                android:id="@+id/editTextView_customer_add_address_info4"
+                android:layout_height="wrap_content" />
+            <include layout="@layout/include_view_layout_line" />
+            <include layout="@layout/include_view_separate_vertical_10dp" />
+            <com.thn.erp.view.common.LinearLayoutCustomerAddEditTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="44dp"
+                android:id="@+id/editTextView_customer_add_address_info5" />
+
+            <include layout="@layout/include_view_layout_line" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout_repository_delete_repository"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_circle_green"
+                android:gravity="center"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="删除供应商"
+                    android:textColor="#FFFFFF"
+                    android:textSize="17sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

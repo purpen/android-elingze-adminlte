@@ -8,6 +8,11 @@
         <item name="colorAccent">@color/color_222</item>
     </style>
 
+    <!-- Activity 通用样式 -->
+    <style name="CommonActivityTheme"  parent="AppTheme">
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+
     <!-- MainActivity中最下面RadioGroup的五个Button的样式 -->
     <style name="MainButtonStyle">
         <item name="android:layout_height">match_parent</item>

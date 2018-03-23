@@ -14,11 +14,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/CommonActivityTheme">
         <activity android:name=".UserGuideActivity"
             android:theme="@style/NoTitleFullscreen"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,10 +37,14 @@
         <activity android:name="com.thn.erp.more.repository.LookRepositoryActivity" />
         <activity android:name="com.thn.erp.more.repository.AddRepositoryActivity" />
 
+        <!-- 供应商管理 -->
+        <activity android:name="com.thn.erp.more.supplier.SupplierManageActivity"/>
+        <activity android:name="com.thn.erp.more.supplier.SupplierAddActivity"/>
+        <activity android:name="com.thn.erp.more.supplier.SupplierLookActivity"/>
+
         <activity android:name="com.thn.erp.more.DemoActivity"/>
         <activity android:name="com.thn.erp.more.ToolsActivity"/>
         <activity android:name="com.thn.erp.more.SettingActivity"/>
-        <activity android:name="com.thn.erp.more.SupplierManageActivity"/>
         <activity android:name="com.thn.erp.more.AccountManageActivity"/>
 
         <!-- 客户管理 -->

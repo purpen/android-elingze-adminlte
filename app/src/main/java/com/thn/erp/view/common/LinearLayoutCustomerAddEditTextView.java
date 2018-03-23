@@ -58,4 +58,13 @@ public class LinearLayoutCustomerAddEditTextView extends LinearLayout {
     public void setValue(String str) {
         editText1.setText(str);
     }
+
+    public void setEnabled(boolean enabled){
+        editText1.setFocusable(enabled);
+        editText1.setFocusableInTouchMode(enabled);
+        editText1.setEnabled(enabled);
+        if (enabled) {
+            editText1.requestFocus();
+        }
+    }
 }

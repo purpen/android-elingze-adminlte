@@ -1,4 +1,4 @@
-package com.thn.erp.overview;
+package com.thn.erp.more.supplier;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,6 +10,7 @@ import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.base.BaseStyle2Activity;
 import com.thn.erp.common.ImpTopbarOnClickListener;
+import com.thn.erp.overview.ChooseCategoryActivity;
 import com.thn.erp.view.common.LinearLayoutCustomerAddArrowView;
 import com.thn.erp.view.common.LinearLayoutCustomerAddEditTextView;
 import com.thn.erp.view.common.LinearLayoutCustomerAddSwitchView;
@@ -17,18 +18,19 @@ import com.thn.erp.view.common.PublicTopBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import ch.ielse.view.SwitchView;
 
 /**
- * Created by Stephen on 2018/3/14 16:27
+ * Created by Stephen on 2018/3/122 16:53
  * Email: 895745843@qq.com
  */
 
-public class AddCustomerActivity extends BaseStyle2Activity implements ImpTopbarOnClickListener {
+public class SupplierAddActivity extends BaseStyle2Activity implements ImpTopbarOnClickListener {
 
-    public static final String[] BASIC_INFOS = {"客户名称", "联系人", "手机", "分类", "启用"}; // 基本信息
-    public static final String[] Additional_INFOS = {"电话", "邮箱", "传真", "性别","生日"}; // 扩展信息
-    public static final String[] Address_INFOS = {"省市","城市","区县", "详细地址", "备注"}; // 地址信息
+    public static final String[] BASIC_INFOS = {"供应商名称", "联系人", "手机", "分类", "启用"}; // 基本信息
+    public static final String[] Additional_INFOS = {"电话", "邮箱", "传真", "性别", "生日"}; // 扩展信息
+    public static final String[] Address_INFOS = {"省市", "城市", "区县", "详细地址", "备注"}; // 地址信息
 
     @BindView(R.id.publicTopBar)
     PublicTopBar publicTopBar;
@@ -65,7 +67,7 @@ public class AddCustomerActivity extends BaseStyle2Activity implements ImpTopbar
 
     @Override
     protected int getLayout() {
-        return R.layout.activity_customer_add;
+        return R.layout.activity_more_manage_supplier_add;
     }
 
     @Override
@@ -85,7 +87,7 @@ public class AddCustomerActivity extends BaseStyle2Activity implements ImpTopbar
 
     private void initTopbar() {
         publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
-        publicTopBar.setTopBarCenterTextView("新增客户", getResources().getColor(R.color.THN_color_fontColor_primary));
+        publicTopBar.setTopBarCenterTextView("新增供应商", getResources().getColor(R.color.THN_color_fontColor_primary));
         publicTopBar.setTopBarLeftImageView(true);
         publicTopBar.setTopBarRightTextView("保存", Color.parseColor("#27AE59"));
         publicTopBar.setTopBarOnClickListener(this);
@@ -101,7 +103,7 @@ public class AddCustomerActivity extends BaseStyle2Activity implements ImpTopbar
         editTextViewCustomerAddBasicInfo4.setInitKeyAndHint(BASIC_INFOS[3], new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(AddCustomerActivity.this, ChooseCategoryActivity.class));
+                startActivity(new Intent(SupplierAddActivity.this, ChooseCategoryActivity.class));
             }
         });
         editTextViewCustomerAddBasicInfo5.setInitKeyAndHint(BASIC_INFOS[4], new SwitchView.OnStateChangedListener() {
@@ -168,7 +170,7 @@ public class AddCustomerActivity extends BaseStyle2Activity implements ImpTopbar
     public void onTopBarClick(View view, int position) {
         if (position == ImpTopbarOnClickListener.LEFT) {
             this.finish();
-        }else if (position == ImpTopbarOnClickListener.RIGHT) {
+        } else if (position == ImpTopbarOnClickListener.RIGHT) {
             Toast.makeText(activity, "保存", Toast.LENGTH_SHORT).show();
         }
     }
