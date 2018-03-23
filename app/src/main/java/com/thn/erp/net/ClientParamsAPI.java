@@ -13,8 +13,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class ClientParamsAPI {
-    public static final String app_key = "G8IHjw1lBYDM76fxJtKe";
-    public static final String app_secret = "aa0533900e3d8b024c11e722874231b54019b14a";
+    public static final String app_key = "fi2N0mZVRUjzCkwtKWbM";
+    public static final String app_secret = "cc3c36db353b4543aba12db6bbcff6cb53a592b2";
 
     private static HashMap<String,String> generateCommonParams(){
         HashMap<String, String> params = new HashMap<>();
@@ -152,6 +152,38 @@ public class ClientParamsAPI {
         params.put("email", account);
 //        params.put("from_to", "2");     //登录渠道
         params.put("password", password);
+        return params;
+    }
+
+    /**
+     * 获取分销客户列表
+     * @param page 当前第几页
+     * @return
+     */
+    public static HashMap<String,String> getCustomerList(int page) {
+        HashMap<String, String> params = generateCommonParams();
+//        params.put("token",SPUtil.read(Constants.TOKEN));
+        params.put("page", String.valueOf(page));
+        params.put("per_page",Constants.PAGE_SIZE);
+        return params;
+    }
+
+    /**
+     * 新增用户
+     * @return
+     */
+    public static HashMap<String,String> addCustomer(int grade_id,String name,String province,String city,String area,String street_address,String mobile,String phone,String email) {
+        HashMap<String, String> params = generateCommonParams();
+//        params.put("token",SPUtil.read(Constants.TOKEN));
+        params.put("grade_id", String.valueOf(grade_id));
+        params.put("name",name);
+        params.put("province",province);
+        params.put("city",city);
+        params.put("area",area);
+        params.put("street_address",street_address);
+        params.put("mobile",mobile);
+        params.put("phone",phone);
+        params.put("email",email);
         return params;
     }
 }

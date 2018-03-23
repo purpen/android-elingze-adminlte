@@ -1,12 +1,10 @@
 package com.thn.erp.overview.usermanage;
 
-import android.graphics.Color;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 
@@ -17,9 +15,6 @@ import com.thn.erp.base.BaseActivity;
 import com.thn.erp.overview.usermanage.adapter.SimpleAdapter;
 import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.CustomHeadView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -50,25 +45,25 @@ public class EditCustomerClassActivity extends BaseActivity {
 //        customHeadView.setBackgroundColor(getResources().getColor(android.R.color.white));
         customHeadView.setHeadCenterTxtShow(true, R.string.select_class_title);
         customHeadView.setHeadRightTxtShow(true, R.string.confirm);
-        final List<String> stringList = new ArrayList<>();
-        stringList.add("111");
-        stringList.add("aaa");
-        stringList.add("222");
-        stringList.add("33");
-        stringList.add("44");
-        stringList.add("55");
-        stringList.add("66");
-        stringList.add("11771");
-        simpleRecyclerViewAdapter = new SimpleAdapter(stringList);
-        linearLayoutManager = new LinearLayoutManager(this);
-        ultimateRecyclerView.setHasFixedSize(true);
-        ultimateRecyclerView.setLayoutManager(linearLayoutManager);
-        ultimateRecyclerView.setLoadMoreView(LayoutInflater.from(this)
-                .inflate(R.layout.custom_bottom_progressbar, null));
-        ultimateRecyclerView.setRecylerViewBackgroundColor(Color.WHITE);
-        ultimateRecyclerView.reenableLoadmore();
-        ultimateRecyclerView.setAdapter(simpleRecyclerViewAdapter);
-        ultimateRecyclerView.addItemDividerDecoration(activity);
+//        final List<String> stringList = new ArrayList<>();
+//        stringList.add("111");
+//        stringList.add("aaa");
+//        stringList.add("222");
+//        stringList.add("33");
+//        stringList.add("44");
+//        stringList.add("55");
+//        stringList.add("66");
+//        stringList.add("11771");
+//        simpleRecyclerViewAdapter = new SimpleAdapter(stringList);
+//        linearLayoutManager = new LinearLayoutManager(this);
+//        ultimateRecyclerView.setHasFixedSize(true);
+//        ultimateRecyclerView.setLayoutManager(linearLayoutManager);
+//        ultimateRecyclerView.setLoadMoreView(LayoutInflater.from(this)
+//                .inflate(R.layout.custom_bottom_progressbar, null));
+//        ultimateRecyclerView.setRecylerViewBackgroundColor(Color.WHITE);
+//        ultimateRecyclerView.reenableLoadmore();
+//        ultimateRecyclerView.setAdapter(simpleRecyclerViewAdapter);
+//        ultimateRecyclerView.addItemDividerDecoration(activity);
     }
 
     @Override
@@ -86,7 +81,7 @@ public class EditCustomerClassActivity extends BaseActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        simpleRecyclerViewAdapter.insert(moreNum++ + "  Refresh things", 0);
+//                        simpleRecyclerViewAdapter.insert(moreNum++ + "  Refresh things", 0);
                         ultimateRecyclerView.setRefreshing(false);
                         //   ultimateRecyclerView.scrollBy(0, -50);
                         linearLayoutManager.scrollToPosition(0);
@@ -114,9 +109,9 @@ public class EditCustomerClassActivity extends BaseActivity {
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     public void run() {
-                        simpleRecyclerViewAdapter.insert("More " + moreNum++, simpleRecyclerViewAdapter.getAdapterItemCount());
-                        simpleRecyclerViewAdapter.insert("More " + moreNum++, simpleRecyclerViewAdapter.getAdapterItemCount());
-                        simpleRecyclerViewAdapter.insert("More " + moreNum++, simpleRecyclerViewAdapter.getAdapterItemCount());
+//                        simpleRecyclerViewAdapter.insert("More " + moreNum++, simpleRecyclerViewAdapter.getAdapterItemCount());
+//                        simpleRecyclerViewAdapter.insert("More " + moreNum++, simpleRecyclerViewAdapter.getAdapterItemCount());
+//                        simpleRecyclerViewAdapter.insert("More " + moreNum++, simpleRecyclerViewAdapter.getAdapterItemCount());
                         // linearLayoutManager.scrollToPositionWithOffset(maxLastVisiblePosition,-1);
                         //   linearLayoutManager.scrollToPosition(maxLastVisiblePosition);
 

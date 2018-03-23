@@ -4,8 +4,10 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Base64;
 
+import com.thn.erp.Constants;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.LogUtil;
+import com.thn.erp.utils.SPUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -201,7 +203,6 @@ public class HttpRequest {
      * @return
      */
     public static Call sendRequest(HashMap<String, String> params, HttpRequestCallback callback) {
-
         if (null == params)
             throw new IllegalArgumentException("argument callback can not be null");
 
@@ -256,19 +257,28 @@ public class HttpRequest {
 
     private static Request getRequest(String type, String url, HashMap<String, String> params) {
         Request request = null;
+        String str=SPUtil.read(Constants.LOGIN_INFO);
+        if (!TextUtils.isEmpty(str)){
+            str = "Basic  " + Base64.encodeToString(str.getBytes(), Base64.DEFAULT);
+        }
         switch (type) {
             case POST:
                 request = new Request.Builder()
                         .url(url)
+                        .addHeader("Authorization", str.trim())
                         .post(getRequestBody(params))
                         .build();
                 break;
             case GET:
-                request = new Request.Builder().url(getUrl(url, params)).build();
+                request = new Request.Builder()
+                        .url(getUrl(url, params))
+                        .addHeader("Authorization", str.trim())
+                        .build();
                 break;
             case PUT:
                 request = new Request.Builder()
                         .url(url)
+                        .addHeader("Authorization", str.trim())
                         .put(getRequestBody(params))
                         .build();
                 break;

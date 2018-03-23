@@ -16,7 +16,6 @@
 package com.thn.erp.goods;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,9 +23,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.stephen.taihuoniaolibrary.utils.THNDpUtil;
 import com.thn.erp.R;
+import com.thn.erp.utils.Util;
 
 import java.util.List;
 import java.util.Map;
@@ -43,14 +45,19 @@ public class TitleRecyclerViewAdapter extends RecyclerView.Adapter<TitleRecycler
     private List<Map<String, Object>> mDataList;
     private Context mContext;
     private OnBindListener onBindListener;
-
-
+    private OnItemClickListener onItemClickListener;
+    private View view;
+    private boolean equalWidth = false;
     private View selectedViewIndicate;
     private View focusedView;
     private int lastSelectedPosition = -1;
 
     public interface OnBindListener {
         void onBind(View view, int i);
+    }
+
+    public interface OnItemClickListener {
+        void onClick(View view, int i);
     }
 
     public TitleRecyclerViewAdapter(Context context) {
@@ -64,14 +71,30 @@ public class TitleRecyclerViewAdapter extends RecyclerView.Adapter<TitleRecycler
         this.mDataList = dataList;
     }
 
+    public TitleRecyclerViewAdapter(Context context, List<Map<String, Object>> dataList,boolean equalWidth) {
+        super();
+        mContext = context;
+        this.mDataList = dataList;
+        this.equalWidth = equalWidth;
+    }
+
     public void setOnBindListener(OnBindListener onBindListener) {
         this.onBindListener = onBindListener;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         int resId = R.layout.item_recyclerview_goods_title;
-        View view = LayoutInflater.from(mContext).inflate(resId, viewGroup, false);
+        view = LayoutInflater.from(mContext).inflate(resId, viewGroup, false);
+        if (equalWidth) {
+            view.setLayoutParams(new RelativeLayout.LayoutParams((int) (Util.getScreenWidth() * 0.25), view.getLayoutParams().height));
+        }else {
+            view.setLayoutParams(new RelativeLayout.LayoutParams(THNDpUtil.dp2px(view.getContext(),80), view.getLayoutParams().height));
+        }
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -104,6 +127,15 @@ public class TitleRecyclerViewAdapter extends RecyclerView.Adapter<TitleRecycler
                     focusedView = v;
                     v.requestFocus();
                     lastSelectedPosition = viewHolder.getAdapterPosition();
+                }
+            }
+        });
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (null!=onItemClickListener){
+                    onItemClickListener.onClick(viewHolder.itemView,viewHolder.getAdapterPosition());
                 }
             }
         });
