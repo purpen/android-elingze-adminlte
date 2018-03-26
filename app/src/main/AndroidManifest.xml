@@ -56,6 +56,11 @@
         <activity android:name="com.thn.erp.overview.ChooseCategoryActivity" />
         <activity android:name="com.thn.erp.overview.AddCategoryActivity" />
 
+        <!-- 商品 -->
+        <activity android:name="com.thn.erp.goods.GoodsDetailsActivity" />
+        <activity android:name="com.thn.erp.goods.brand.GoodsBrandActivity" />
+        <activity android:name="com.thn.erp.goods.category.GoodsCategoryActivity" />
+        <activity android:name="com.thn.erp.goods.GoodsAddActivity" />
 
     </application>
 </manifest>

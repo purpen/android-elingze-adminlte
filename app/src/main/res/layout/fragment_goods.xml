@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <include layout="@layout/include_public_topbar" />
@@ -23,11 +24,11 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="150dp"
-        android:text="新增商品" />
+    <com.thn.erp.base.BaseUltimateRecyclerView
+        android:id="@+id/ultimateRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:recyclerviewClipToPadding="true"
+        app:recyclerviewScrollbars="vertical"
+        />
 </LinearLayout>

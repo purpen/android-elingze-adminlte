@@ -23,6 +23,9 @@ public class URL {
     public static final String ORDERS_IN_24HOURS = BASE_URL + "survey/hourOrder";
     public static final String SALE_CHANNEL = BASE_URL + "survey/sourceSales";
 
+    // 获取七牛Token
+    public static final String FILE_TOKEN = BASE_URL + "assets/up_token";
+
     /**
      * 获取注册验证码
      */
@@ -109,8 +112,13 @@ public class URL {
     public static final String POSTER_POSTER_LIST       = "http://k.taihuoniao.com/saasApi/posters";
     public static final String POSTER_POSTER_DETAILS    = "http://k.taihuoniao.com/saasApi/poster";
 
-    // 新增商品
-    public static final String PRODUCTS_ADD             = "products";
+    // 所有商品列表
+//    public static final String PRODUCTS_RECOMMEND       = "products";
+    public static final String PRODUCT_DETAILS            = "products/<rid>/detail";
+
+    // 品牌
+    public static final String PRODUCT_BRAND              = "brands";
+    public static final String PRODUCT_CATEGORY           = "categories";
 
     /**
      * 分销客户列表
