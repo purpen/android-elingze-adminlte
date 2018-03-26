@@ -214,4 +214,63 @@ public class ClientParamsAPI {
         params.put("per_page",Constants.PAGE_SIZE);
         return params;
     }
+
+
+    /**
+     * 创建订单
+     * @return
+     */
+    public static HashMap<String,String> createOrderParams(String store_id,String address_rid) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("store_id", store_id);
+        params.put("address_rid",address_rid);
+        return params;
+    }
+
+    /**
+     * 获得运费
+     * @return
+     */
+    public static HashMap<String,String> getFreightParams() {
+        return generateCommonParams();
+    }
+
+    /**
+     * 获取地址列表
+     * @return
+     */
+    public static HashMap<String,String> getAddressListParams() {
+        return generateCommonParams();
+    }
+
+    /**
+     * 获取默认地址
+     * @return
+     */
+    public static HashMap<String,String> getDefaultAddressParams() {
+        return generateCommonParams();
+    }
+
+    /**
+     * 删除收货地址
+     * @return
+     */
+    public static HashMap<String,String> deleteAddressParams() {
+        return generateCommonParams();
+    }
+
+    /**
+     * 获取省
+     */
+    public static HashMap<String,String> getProvinceParams() {
+        return generateCommonParams();
+    }
+
+    /**
+     * 接口仅需默认参数
+     * @return
+     */
+    public static HashMap<String,String> getDefaultParams() {
+        return generateCommonParams();
+    }
 }

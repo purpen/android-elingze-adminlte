@@ -7,7 +7,6 @@ package com.thn.erp.overview.usermanage.adapter;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -24,7 +23,13 @@ import java.util.List;
 
 public class CustomerListAdapter extends UltimateViewAdapter {
     private List<CustomerData.DataBean.CustomersBean> list;
-
+    private OnItemClickListener onItemClickListener;
+    public interface OnItemClickListener {
+        void onClick(View view, int i);
+    }
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
     public CustomerListAdapter(List<CustomerData.DataBean.CustomersBean> list) {
         this.list = list;
     }
@@ -33,8 +38,10 @@ public class CustomerListAdapter extends UltimateViewAdapter {
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (position < getItemCount() && (customHeaderView != null ? position <= list.size() : position < list.size()) && (customHeaderView != null ? position > 0 : true)) {
-            CustomerData.DataBean.CustomersBean customerBean = list.get(customHeaderView != null ? position - 1 : position);
-            ((ViewHolder) holder).textViewSample.setText(customerBean.name);
+            final int pos = customHeaderView != null ? position - 1 : position;
+            CustomerData.DataBean.CustomersBean customerBean = list.get(pos);
+            ViewHolder viewHolder = ((ViewHolder) holder);
+            viewHolder.textViewSample.setText(customerBean.name);
             // ((ViewHolder) holder).itemView.setActivated(selectedItems.get(position, false));
             if (mDragStartListener != null) {
 //                ((ViewHolder) holder).imageViewSample.setOnTouchListener(new View.OnTouchListener() {
@@ -47,10 +54,19 @@ public class CustomerListAdapter extends UltimateViewAdapter {
 //                    }
 //                });
 
-                ((ViewHolder) holder).item_view.setOnTouchListener(new View.OnTouchListener() {
+//                viewHolder.item_view.setOnTouchListener(new View.OnTouchListener() {
+//                    @Override
+//                    public boolean onTouch(View v, MotionEvent event) {
+//                        return false;
+//                    }
+//                });
+
+                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        return false;
+                    public void onClick(View view) {
+                        if (onItemClickListener!=null){
+                            onItemClickListener.onClick(view,pos);
+                        }
                     }
                 });
             }

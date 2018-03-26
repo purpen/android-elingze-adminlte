@@ -26,13 +26,16 @@
             android:textColor="@color/color_222"
             />
         <EditText
+            android:id="@+id/etCustomer"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp30"
             android:minWidth="@dimen/dp200"
             android:padding="@dimen/dp5"
             android:layout_weight="1"
             android:background="@null"
-            android:hint="输入或选择"
+            android:hint="请选择客户"
+            android:inputType="none"
+            android:editable="false"
             android:textColor="@color/color_222"
             android:textSize="@dimen/sp12"
             android:layout_marginLeft="@dimen/dp5"

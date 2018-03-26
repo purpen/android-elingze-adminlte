@@ -48,7 +48,7 @@ public class SelectCustomerActivity extends BaseActivity {
     private int page;
     private List<CustomerData.DataBean.CustomersBean> list;
     private Boolean isRefreshing = false;
-    private CustomerListAdapter simpleRecyclerViewAdapter;
+    private CustomerListAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
 
     @Override
@@ -62,7 +62,7 @@ public class SelectCustomerActivity extends BaseActivity {
         dialog = new WaitingDialog(activity);
         list = new ArrayList<>();
         customHeadView.setHeadCenterTxtShow(true, R.string.select_customer_title);
-        simpleRecyclerViewAdapter = new CustomerListAdapter(list);
+        adapter = new CustomerListAdapter(list);
         linearLayoutManager = new LinearLayoutManager(this);
         ultimateRecyclerView.setHasFixedSize(true);
         ultimateRecyclerView.setLayoutManager(linearLayoutManager);
@@ -74,7 +74,7 @@ public class SelectCustomerActivity extends BaseActivity {
                 UltimateRecyclerView.EMPTY_CLEAR_ALL,
                 UltimateRecyclerView.STARTWITH_ONLINE_ITEMS);
         ultimateRecyclerView.reenableLoadmore();
-        ultimateRecyclerView.setAdapter(simpleRecyclerViewAdapter);
+        ultimateRecyclerView.setAdapter(adapter);
         ultimateRecyclerView.addItemDividerDecoration(activity);
     }
 
@@ -103,16 +103,26 @@ public class SelectCustomerActivity extends BaseActivity {
             }
         });
 
-        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(simpleRecyclerViewAdapter);
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
         final ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(ultimateRecyclerView.mRecyclerView);
-        simpleRecyclerViewAdapter.setOnDragStartListener(new CustomerListAdapter.OnStartDragListener() {
+        adapter.setOnDragStartListener(new CustomerListAdapter.OnStartDragListener() {
             @Override
             public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
                 mItemTouchHelper.startDrag(viewHolder);
             }
         });
 
+
+        adapter.setOnItemClickListener(new CustomerListAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(View view, int i) {
+                Intent intent = new Intent();
+                intent.putExtra(CustomerData.class.getSimpleName(),list.get(i));
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
 
         ultimateRecyclerView.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
@@ -160,14 +170,14 @@ public class SelectCustomerActivity extends BaseActivity {
     private void updateData(List<CustomerData.DataBean.CustomersBean> customers) {
         if (isRefreshing) {
             for (CustomerData.DataBean.CustomersBean customer : customers) {
-                simpleRecyclerViewAdapter.insert(customer, 0);
+                adapter.insert(customer, 0);
             }
             ultimateRecyclerView.setRefreshing(false);
             linearLayoutManager.scrollToPosition(0);
-            simpleRecyclerViewAdapter.notifyDataSetChanged();
+            adapter.notifyDataSetChanged();
         } else {
             for (CustomerData.DataBean.CustomersBean customer : customers) {
-                simpleRecyclerViewAdapter.insert(customer, simpleRecyclerViewAdapter.getAdapterItemCount());
+                adapter.insert(customer, adapter.getAdapterItemCount());
             }
         }
         dialog.dismiss();

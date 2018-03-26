@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <com.thn.erp.view.CustomHeadView
+        android:id="@+id/customHeadView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <com.thn.erp.view.CustomItemLayout
+        android:id="@+id/customName"
+        android:layout_below="@id/customHeadView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp10"
+        />
+
+    <com.thn.erp.view.CustomItemLayout
+        android:id="@+id/shopName"
+        android:layout_below="@+id/customName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp5"
+        android:layout_marginBottom="@dimen/dp5"
+        android:visibility="gone"
+        />
+
+    <RelativeLayout
+        android:id="@+id/rlAddress"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@android:color/white"
+        android:layout_below="@+id/customName"
+        android:layout_marginTop="@dimen/dp5"
+        >
+
+        <ImageView
+            android:id="@+id/iv"
+            android:layout_width="41dp"
+            android:layout_height="match_parent"
+            android:padding="13dp"
+            android:src="@mipmap/icon_address" />
+
+        <ImageView
+            android:id="@+id/ivMore"
+            android:layout_width="50dp"
+            android:layout_height="100dp"
+            android:layout_alignParentRight="true"
+            android:padding="20dp"
+            android:src="@mipmap/icon_arrow_more" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_toLeftOf="@+id/ivMore"
+            android:layout_toRightOf="@id/iv"
+            android:gravity="center">
+
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines = "1"
+                android:textColor="#212121"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvName"
+                android:layout_marginTop="5dp"
+                android:maxLines = "1"
+                android:textColor="#212121"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/tvAddressDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvAddress"
+                android:layout_marginTop="5dp"
+                android:maxLines="1"
+                android:textColor="#212121"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/tvPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvAddressDetail"
+                android:layout_marginTop="5dp"
+                android:maxLines="1"
+                android:textColor="#212121"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/tvNoAddressTips"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/set_address"
+                android:textColor="#999999"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
+        android:id="@+id/ultimateRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rlAddress"
+        app:recyclerviewClipToPadding="true"
+        app:recyclerviewDefaultSwipeColor="@color/color_27AE59"
+        app:recyclerviewScrollbars="vertical"
+        android:layout_above="@+id/rl"
+        />
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_alignParentBottom="true"
+        >
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp05"
+            android:background="@color/color_eee"
+            android:layout_alignParentTop="true"
+            />
+        <TextView
+            android:id="@+id/tvFreight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp12"
+            android:textColor="@color/color_222"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp15"
+            android:text="运费"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_toLeftOf="@+id/sumPrice"
+            android:gravity="center_vertical"
+            android:textColor="@color/color_27AE59"
+            android:paddingLeft="@dimen/dp15"
+            android:text="@string/all_money" />
+
+        <TextView
+            android:id="@+id/sumPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:text="￥10"
+            android:layout_toLeftOf="@+id/submitOrder"
+            android:gravity="center_vertical"
+            android:paddingRight="@dimen/dp10"
+            android:textColor="@color/color_27AE59" />
+
+        <Button
+            android:id="@+id/submitOrder"
+            android:layout_width="100dp"
+            android:layout_height="44dp"
+            android:layout_alignParentRight="true"
+            android:background="@color/color_27AE59"
+            android:text="@string/submit_order"
+            android:textColor="@android:color/white" />
+    </RelativeLayout>
+</RelativeLayout>
