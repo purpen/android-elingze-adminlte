@@ -8,5 +8,8 @@
         <item>订单</item>
         <item>库存</item>
     </string-array>
-
+    <string-array name="text_dialog_button">
+        <item>取消</item>
+        <item>确定</item>
+    </string-array>
 </resources>

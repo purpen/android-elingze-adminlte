@@ -44,6 +44,7 @@ public class HttpRequest {
     public static final String POST = "POST";
     public static final String GET = "GET";
     public static final String PUT = "PUT";
+    public static final String DELETE = "DELETE";
     public final static int CONNECT_TIMEOUT = 30;
     public final static int READ_TIMEOUT = 30;
     public final static int WRITE_TIMEOUT = 30;
@@ -280,6 +281,12 @@ public class HttpRequest {
                         .url(url)
                         .addHeader("Authorization", str.trim())
                         .put(getRequestBody(params))
+                        .build();
+                break;
+            case DELETE:
+                request = new Request.Builder()
+                        .url(url)
+                        .addHeader("Authorization", str.trim())
                         .build();
                 break;
             default:

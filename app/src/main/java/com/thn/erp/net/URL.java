@@ -105,9 +105,6 @@ public class URL {
      */
     public static final String PRODUCTS_ARTICLE_LIST = BASE_URL+"product/articleLists";
 
-    // 海报
-    public static final String POSTER_POSTER_LIST       = "http://k.taihuoniao.com/saasApi/posters";
-    public static final String POSTER_POSTER_DETAILS    = "http://k.taihuoniao.com/saasApi/poster";
 
     // 新增商品
     public static final String PRODUCTS_ADD             = "products";
@@ -121,4 +118,34 @@ public class URL {
      * 所有商品列表
      */
     public static final String GOODS_LIST = BASE_URL+"products";
+    /**
+     * 新增订单
+     */
+    public static final String ADD_ORDER = BASE_URL+"orders/create";
+    /**
+     * 获得运费
+     */
+    public static final String GET_FREIGHT = BASE_URL+"orders/freight";
+
+    /**
+     * 地址列表
+     */
+    public static final String ADDRESS_LIST = BASE_URL+"address";
+
+    /**
+     * 删收货地址
+     */
+    public static final String DELETE_ADDRESS = BASE_URL+"address/";
+
+    /**
+     * 获取省列表
+     */
+    public static final String PROVINCE_LIST = BASE_URL+"places/provinces";
+
+    public static final String CITIES_LIST = BASE_URL + "places/";
+
+    /**
+     * 获取默认地址
+     */
+    public static String GET_DEFAULT_ADDRESS = BASE_URL+"address/is_default";
 }

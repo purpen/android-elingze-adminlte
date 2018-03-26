@@ -42,15 +42,33 @@
         android:layout_alignBottom="@+id/ivCover"
         android:gravity="bottom"
         >
+        <TextView
+            android:id="@+id/tvPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="单价："
+            android:textSize="@dimen/sp15"
+            android:textColor="@color/color_222"
+            />
         <EditText
             android:id="@+id/price"
             android:background="@null"
+            android:layout_toRightOf="@+id/tvPrice"
             android:layout_width="wrap_content"
             android:textSize="@dimen/sp15"
             android:layout_height="wrap_content"
             android:textColor="@color/color_222"
             style="StyleReactBorder"
             android:text="test2"/>
+        <TextView
+            android:id="@+id/tvCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/stockNum"
+            android:text="数量："
+            android:textSize="@dimen/sp15"
+            android:textColor="@color/color_222"
+            />
         <EditText
             android:id="@+id/stockNum"
             android:background="@null"

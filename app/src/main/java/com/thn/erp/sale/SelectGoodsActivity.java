@@ -182,6 +182,5 @@ public class SelectGoodsActivity extends BaseActivity {
                 adapter.insert(goods, adapter.getAdapterItemCount());
             }
         }
-        dialog.dismiss();
     }
 }

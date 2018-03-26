@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_f8f8f8"
+    android:fitsSystemWindows="true">
+
+    <com.thn.erp.view.CustomHeadView
+        android:id="@+id/customHeadView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/activity_select_address_emptylinear"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_above="@id/activity_select_address_addnewaddresstv"-->
+    <!--android:layout_below="@id/custom_head"-->
+    <!--android:gravity="center"-->
+    <!--android:orientation="vertical"-->
+    <!--android:visibility="gone">-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:src="@mipmap/addbig" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="10dp"-->
+    <!--android:text="@string/no_address"-->
+    <!--android:textColor="#ff999999"-->
+    <!--android:textSize="14sp" />-->
+    <!--</LinearLayout>-->
+
+
+    <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
+        android:id="@+id/ultimateRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/customHeadView"
+        android:layout_above="@+id/addAddress"
+        app:recyclerviewClipToPadding="true"
+        app:recyclerviewDefaultSwipeColor="@color/color_27AE59"
+        app:recyclerviewScrollbars="vertical" />
+
+    <LinearLayout
+        android:id="@+id/addAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/dp5"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp05"
+            android:background="@color/color_ddd" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:text="@string/add_new_address"
+            android:textColor="@color/color_27AE59"
+            android:textSize="14sp" />
+    </LinearLayout>
+</RelativeLayout>
