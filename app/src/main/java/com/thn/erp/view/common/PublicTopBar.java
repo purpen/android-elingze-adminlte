@@ -1,5 +1,6 @@
 package com.thn.erp.view.common;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ public class PublicTopBar extends RelativeLayout implements View.OnClickListener
     private TextView textViewTopBarRight;
 
     private ImpTopbarOnClickListener mImpTopbarOnClickListener;
+    private boolean isBackKey;
 
     public PublicTopBar(Context context) {
         this(context, null);
@@ -78,6 +80,7 @@ public class PublicTopBar extends RelativeLayout implements View.OnClickListener
     }
 
     public void setTopBarLeftImageView(boolean imgBack){
+        isBackKey = imgBack;
         if (!imgBack) {
             return;
         }
@@ -113,7 +116,16 @@ public class PublicTopBar extends RelativeLayout implements View.OnClickListener
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.relativeLayout_topBar_left: mImpTopbarOnClickListener.onTopBarClick(view, ImpTopbarOnClickListener.LEFT);
+            case R.id.relativeLayout_topBar_left:
+                if (isBackKey) {
+                    Context context = view.getContext();
+                    if (context instanceof Activity) {
+                        Activity activity = (Activity) context;
+                        activity.finish();
+                        break;
+                    }
+                }
+                mImpTopbarOnClickListener.onTopBarClick(view, ImpTopbarOnClickListener.LEFT);
                 break;
             case R.id.relativeLayout_topBar_center: mImpTopbarOnClickListener.onTopBarClick(view, ImpTopbarOnClickListener.CENTER);
                 break;

@@ -131,7 +131,7 @@ public class HttpRequest {
                     message.obj = response.body().string();
                     handler.sendMessage(message);
                 } else {
-                    LogUtil.e("服务器响应失败： URL = "+ url + "| 状态码 " + response.code());
+                    LogUtil.e("服务器响应失败： URL = "+ url + " 状态码 " + response.code());
                     Message message = Message.obtain();
                     message.what = NetWorkHandler.CALLBACK_FAILURE;
                     message.obj = new IOException("INTERNAL SERVER ERROR");

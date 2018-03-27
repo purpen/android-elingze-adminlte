@@ -156,20 +156,24 @@ public class UltimateRecyclerView extends FrameLayout implements Scrollable {
     private int mTotalItemCount = 0;
     private int previousTotal = 0;
     private int mFirstVisibleItem;
+    protected Context mContext;
 
     public UltimateRecyclerView(Context context) {
         super(context);
+        this.mContext = context;
         initViews();
     }
 
     public UltimateRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.mContext = context;
         initAttrs(attrs);
         initViews();
     }
 
     public UltimateRecyclerView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.mContext = context;
         initAttrs(attrs);
         initViews();
     }

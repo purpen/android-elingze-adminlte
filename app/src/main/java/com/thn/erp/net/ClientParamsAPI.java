@@ -16,7 +16,7 @@ public class ClientParamsAPI {
     public static final String app_key = "fi2N0mZVRUjzCkwtKWbM";
     public static final String app_secret = "cc3c36db353b4543aba12db6bbcff6cb53a592b2";
 
-    private static HashMap<String,String> generateCommonParams(){
+    public static HashMap<String,String> generateCommonParams(){
         HashMap<String, String> params = new HashMap<>();
         String timeStamp = String.valueOf(System.currentTimeMillis() / 1000);
         String nonceStr = generateRandomString();
@@ -118,6 +118,7 @@ public class ClientParamsAPI {
         params.put("password",userPsw);
         return params;
     }
+
     /**
      * 获得top100产品列表
      * @param start_time
@@ -155,13 +156,13 @@ public class ClientParamsAPI {
         return params;
     }
     /**
-     * 获取新增商品接口
+     * 获取新增商品参数
      * @param name
      * @param cover_id
      * @param price
      * @return
      */
-    public static HashMap<String, String> getGoodsListParams(String name, String cover_id, String price) {
+    public static HashMap<String, String> getProductSAddParams(String name, String cover_id, String price) {
         HashMap<String, String> params = generateCommonParams();
         params.put("name", name);
         params.put("cover_id", cover_id);

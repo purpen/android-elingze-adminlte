@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <include layout="@layout/include_public_topbar" />
+
+    <include layout="@layout/include_view_layout_line" />
+
+    <com.thn.erp.view.SearchView
+        android:id="@+id/searchView"
+        android:layout_below="@+id/customHeadView"
+        style="@style/StyleSearchView"
+        android:hint="商品名"
+        android:layout_marginTop="@dimen/dp9"
+        android:layout_marginBottom="@dimen/dp9"
+        />
+
+    <com.thn.erp.base.BaseUltimateRecyclerView
+        android:id="@+id/ultimateRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/searchView"
+        app:recyclerviewClipToPadding="true"
+        app:recyclerviewScrollbars="vertical"
+        />
+        <!--app:recyclerviewDefaultSwipeColor="@color/color_27AE59"-->
+</LinearLayout>

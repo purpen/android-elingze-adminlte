@@ -21,6 +21,7 @@ public abstract class BaseFragment<T> extends Fragment {
     protected final String TAG = getClass().getSimpleName();
     protected FragmentActivity activity;
     private Unbinder unbinder;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         LogUtil.e("onCreate()" + TAG);
