@@ -198,7 +198,7 @@ public class AddressSelectFragment extends DialogFragment {
             });
         }
 
-        if (adapterCounty != null) { //获取县/区一级乡镇
+        if (adapterCounty != null) { //点击县/区获取乡镇
             adapterCounty.setOnItemClickListener(new SimpleTextAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
@@ -222,7 +222,7 @@ public class AddressSelectFragment extends DialogFragment {
             });
         }
 
-        if (adapterTown != null) { //获取乡镇的下一级
+        if (adapterTown != null) { //点击乡镇item
             adapterTown.setOnItemClickListener(new TownsListAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
@@ -232,7 +232,8 @@ public class AddressSelectFragment extends DialogFragment {
                     tvTown.setText(curTowns.name);
                     oid = curTowns.oid;
                     layer = OTHERS_TYPE;
-//                    requestNet();
+//                    选完镇地址，直接设置
+                    setAddressData();
                 }
 
                 @Override
@@ -241,6 +242,16 @@ public class AddressSelectFragment extends DialogFragment {
                 }
             });
         }
+    }
+
+    /**
+     * app暂时最多四级，设置地址数据
+     */
+    private void setAddressData() {
+        if (listener!=null){
+            listener.onAddressChoosed(curProvince,curCity,curCounty,curTowns);
+        }
+        dismiss();
     }
 
     /**
@@ -353,74 +364,6 @@ public class AddressSelectFragment extends DialogFragment {
 
     private void requestNet() {
         getProvinces();
-//        HashMap<String, String> params = ClientParamsAPI.requestAddressRequestParams(String.valueOf(oid), String.valueOf(pid), String.valueOf(layer));
-//        HttpRequest.post(params, URL.SHOPPING_FETCH_CHINA_CITY, new GlobalDataCallBack(){
-//            @Override
-//            public void onStart() {
-//                progressbar.setVisibility(View.VISIBLE);
-//                setItemClickable(false);
-//            }
-//
-//            @Override
-//            public void onSuccess(String json) {
-//                setItemClickable(true);
-//                progressbar.setVisibility(View.GONE);
-//                HttpResponse<AddressData> response = JsonUtil.json2Bean(json, new TypeToken<HttpResponse<AddressData>>() {
-//                });
-//                if (response.isSuccess()) {
-//                    AddressData data = response.getData();
-//                    if (data.rows.size() == 0) {
-//                        StringBuilder builder = new StringBuilder();
-//                        builder.append(curProvince.name);
-//                        String please_select = getResources().getString(R.string.please_select);
-//                        if (!TextUtils.equals(please_select, tvCity.getText()))
-//                            builder.append(curCity.name);
-//                        if (!TextUtils.equals(please_select, tvCounty.getText()))
-//                            builder.append(curCounty.name);
-//                        if (!TextUtils.equals(please_select, tvTown.getText()))
-//                            builder.append(curTown.name);
-
-//                        if (listener!=null){
-//                            listener.onAddressChoosed(curProvince,curCity,curCounty,curVillage);
-//                        }
-//                        dismiss();
-//                        return;
-//                    }
-//                    switch (layer) {
-//                        case PROVINCE_TYPE:
-//                            provinceList.clear();
-//                            provinceList.addAll(data.rows);
-//                            break;
-//                        case CITY_TYPE:
-//                            cityList.clear();
-//                            cityList.addAll(data.rows);
-//                            tvCity.setVisibility(View.VISIBLE);
-//                            break;
-//                        case COUNTY_TYPE:
-//                            countyList.clear();
-//                            countyList.addAll(data.rows);
-//                            tvCounty.setVisibility(View.VISIBLE);
-//                            break;
-//                        case TOWN_TYPE:
-//                            villageList.clear();
-//                            villageList.addAll(data.rows);
-//                            tvTown.setVisibility(View.VISIBLE);
-//                            break;
-//                        default:
-//                            break;
-//                    }
-//                    refreshUI();
-//                } else {
-//                    ToastUtils.showError(response.getMessage());
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(String error) {
-//                setItemClickable(true);
-//                progressbar.setVisibility(View.GONE);
-//            }
-//        });
     }
 
     /**
@@ -479,6 +422,12 @@ public class AddressSelectFragment extends DialogFragment {
                 }
                 break;
             case COUNTY_TYPE:
+//                没有县一级数据直接设置地址同时将市级列表显示
+                if (countyList.size()==0){
+                    recyclerViewCity.setVisibility(View.VISIBLE);
+                    setAddressData();
+                    return;
+                }
                 recyclerViewCounty.setVisibility(View.VISIBLE);
                 if (adapterCounty == null) {
                     adapterCounty = new SimpleTextAdapter(getActivity(), countyList);
@@ -488,6 +437,12 @@ public class AddressSelectFragment extends DialogFragment {
                 }
                 break;
             case TOWN_TYPE:
+//                没有镇一级数据直接设置地址同时将县级列表显示
+                if (townsList.size()==0){
+                    recyclerViewCounty.setVisibility(View.VISIBLE);
+                    setAddressData();
+                    return;
+                }
                 recyclerViewTown.setVisibility(View.VISIBLE);
                 if (adapterTown == null) {
                     adapterTown = new TownsListAdapter(getActivity(), townsList);
@@ -495,10 +450,7 @@ public class AddressSelectFragment extends DialogFragment {
                 } else {
                     adapterTown.notifyDataSetChanged();
                 }
-                if (listener!=null){
-                    listener.onAddressChoosed(curProvince,curCity,curCounty,curTowns);
-                }
-                dismiss();
+
                 break;
             default:
                 break;
@@ -527,6 +479,9 @@ public class AddressSelectFragment extends DialogFragment {
         }
     }
 
+    /**
+     * 隐藏地址列表
+     */
     private void resetListUI() {
         recyclerViewProvince.setVisibility(View.GONE);
         recyclerViewCity.setVisibility(View.GONE);

@@ -272,4 +272,31 @@ public class ClientParamsAPI {
     public static HashMap<String,String> getDefaultParams() {
         return generateCommonParams();
     }
+
+    /**
+     *
+     * @param consigneeName
+     * @param phone
+     * @param provinceId
+     * @param cityId
+     * @param countyId
+     * @param townId
+     * @param addressDetail
+     * @param zipCode
+     * @param checked
+     * @return
+     */
+    public static HashMap<String,String> getCommitAddressParams(String consigneeName, String phone, String provinceId, String cityId, String countyId, String townId, String addressDetail, String zipCode, boolean checked) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("first_name",consigneeName);
+        params.put("mobile",phone);
+        params.put("province_id",provinceId);
+        params.put("city_id",cityId);
+        params.put("town_id",countyId);
+        params.put("area_id",townId);
+        params.put("street_address",addressDetail);
+        params.put("zipcode",zipCode);
+        params.put("is_default",String.valueOf(checked));
+        return params;
+    }
 }

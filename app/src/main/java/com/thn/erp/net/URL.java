@@ -145,6 +145,11 @@ public class URL {
     public static final String CITIES_LIST = BASE_URL + "places/";
 
     /**
+     * 提交收货地址
+     */
+    public static final String COMMIT_ADDRESS = BASE_URL + "address";
+
+    /**
      * 获取默认地址
      */
     public static String GET_DEFAULT_ADDRESS = BASE_URL+"address/is_default";
