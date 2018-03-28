@@ -20,8 +20,8 @@ import com.thn.erp.net.DataConstants;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
-import com.thn.erp.sale.adapter.AddressListAdapter;
 import com.thn.erp.sale.adapter.GoodsAdapter;
+import com.thn.erp.sale.adapter.ManageAddressListAdapter;
 import com.thn.erp.sale.bean.AddressData;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.ToastUtils;
@@ -36,9 +36,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 选择地址
+ * 管理地址
  */
-public class SelectAddressActivity extends BaseActivity{
+public class ManageAddressActivity extends BaseActivity{
 
     public static final int REQUEST_ADDRESS_CODE = 0x000010;
     @BindView(R.id.customHeadView)
@@ -50,7 +50,7 @@ public class SelectAddressActivity extends BaseActivity{
     private int page=1;
 
     private List<AddressData.DataBean> list = new ArrayList<>();
-    private AddressListAdapter adapter;
+    private ManageAddressListAdapter adapter;
     //网络请求
     private int currentPage = 1;
     private THNWaittingDialog dialog;
@@ -60,7 +60,7 @@ public class SelectAddressActivity extends BaseActivity{
 
     @Override
     protected int getLayout() {
-        return R.layout.activity_select_address;
+        return R.layout.activity_manage_address;
     }
 
     @Override
@@ -72,10 +72,9 @@ public class SelectAddressActivity extends BaseActivity{
     }
 
     protected void initView() {
-        customHeadView.setHeadCenterTxtShow(true, R.string.select_address_title);
-        customHeadView.setHeadRightTxtShow(true,R.string.manage_address);
+        customHeadView.setHeadCenterTxtShow(true, R.string.manage_address_title);
         dialog = new THNWaittingDialog(this);
-        adapter = new AddressListAdapter(list);
+        adapter = new ManageAddressListAdapter(activity,list);
         linearLayoutManager = new LinearLayoutManager(this);
         ultimateRecyclerView.setHasFixedSize(true);
         ultimateRecyclerView.setLayoutManager(linearLayoutManager);
@@ -99,20 +98,11 @@ public class SelectAddressActivity extends BaseActivity{
     @Override
     protected void onResume() {
         super.onResume();
-//        if (listViewAdapter != null) {
-//            listViewAdapter.setAddressId(addressId);
-//            listViewAdapter.notifyDataSetChanged();
-//        }
+        adapter.notifyDataSetChanged();
     }
 
     @Override
     protected void installListener() {
-        customHeadView.getHeadRightTV().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(activity,ManageAddressActivity.class));
-            }
-        });
 
         ultimateRecyclerView.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -133,16 +123,6 @@ public class SelectAddressActivity extends BaseActivity{
             }
         });
 
-        adapter.setOnItemClickListener(new AddressListAdapter.OnItemClickListener() {
-            @Override
-            public void onClick(View view, int i) {
-                Intent intent = new Intent();
-                intent.putExtra(SelectAddressActivity.class.getSimpleName(),list.get(i));
-                setResult(RESULT_OK, intent);
-                finish();
-            }
-        });
-
         ultimateRecyclerView.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMore(int itemsCount, final int maxLastVisiblePosition) {
@@ -157,7 +137,7 @@ public class SelectAddressActivity extends BaseActivity{
     void performClick(View v){
         switch (v.getId()){
             case R.id.addAddress:
-                Intent intent = new Intent(SelectAddressActivity.this, AddNewAddressActivity.class);
+                Intent intent = new Intent(ManageAddressActivity.this, AddNewAddressActivity.class);
                 startActivityForResult(intent, DataConstants.REQUESTCODE_ADDNEWADDRESS);
                 break;
             default:
@@ -180,6 +160,47 @@ public class SelectAddressActivity extends BaseActivity{
                 }
                 break;
         }
+    }
+
+//    @Override
+//    public void onBackPressed() {
+//        Intent intent = new Intent();
+//        for (int i = 0; i < list.size(); i++) {
+//            if (list.get(i).isSelected) {
+//                intent.putExtra("addressBean", list.get(i));
+//                break;
+//            }
+//        }
+//        setResult(DataConstants.REQUESTCODE_ADDRESS, intent);
+//        super.onBackPressed();
+//    }
+
+    public void deleteAddress(String id) {
+        if (!dialog.isShowing()) {
+            dialog.show();
+        }
+//        HashMap<String, String> params = ClientDiscoverAPI.getdeleteAddressNetRequestParams(id);
+//        HttpRequest.post(params, URL.URLSTRING_DELETE_ADDRESS, new GlobalDataCallBack() {
+//            @Override
+//            public void onSuccess(String json) {
+//                HttpResponse netBean = JsonUtil.fromJson(json, HttpResponse.class);
+//                if (netBean.isSuccess()) {
+//                    ToastUtils.showSuccess("删除成功");
+//                    currentPage = 1;
+//                    getAddressList(currentPage + "");
+//                } else {
+//                    dialog.dismiss();
+//                    ToastUtils.showError(netBean.getMessage());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(String error) {
+//                dialog.dismiss();
+//                progressBar.setVisibility(View.GONE);
+//                ToastUtils.showError(R.string.network_err);
+//            }
+//        });
     }
 
     //获得收货地址列表

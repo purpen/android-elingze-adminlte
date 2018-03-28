@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginLeft="@dimen/dp15"
+    android:paddingTop="@dimen/dp10"
+    android:paddingBottom="@dimen/dp10"
+    android:layout_marginRight="@dimen/dp15"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp15">
+
+        <TextView
+            android:id="@+id/item_address_nametv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="name"
+            android:textColor="@color/color_222"
+            android:textSize="@dimen/sp15" />
+
+        <TextView
+            android:id="@+id/item_address_phonetv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:text="phone"
+            android:textColor="@color/color_222"
+            android:textSize="@dimen/sp15" />
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/tvAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:paddingBottom="@dimen/dp5"
+        android:paddingTop="@dimen/dp5"
+        android:text="address"
+        android:textColor="@color/color_222"
+        android:textSize="@dimen/sp12" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:button="@drawable/checkbox_style"
+            android:checked="false"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dp5"
+            android:textSize="@dimen/sp12"
+            android:text="@string/default_address" />
+        <TextView
+            android:id="@+id/tvDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="@dimen/dp5"
+            android:padding="@dimen/dp10"
+            android:gravity="center"
+            android:textSize="@dimen/sp12"
+            android:text="删除" />
+        <TextView
+            android:id="@+id/tvEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/tvDelete"
+            android:padding="@dimen/dp10"
+            android:layout_marginRight="@dimen/dp5"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dp5"
+            android:textSize="@dimen/sp12"
+            android:text="编辑"
+            />
+
+    </RelativeLayout>
+</LinearLayout>

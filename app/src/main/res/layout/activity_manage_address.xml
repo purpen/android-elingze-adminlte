@@ -40,6 +40,7 @@
             android:background="@android:color/white"
             android:gravity="center"
             android:text="@string/add_new_address"
+            android:visibility="gone"
             android:textColor="@color/color_27AE59"
             android:textSize="14sp" />
     </LinearLayout>

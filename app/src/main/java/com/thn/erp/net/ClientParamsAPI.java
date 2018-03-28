@@ -6,6 +6,7 @@ import com.thn.erp.utils.SPUtil;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -220,11 +221,19 @@ public class ClientParamsAPI {
      * 创建订单
      * @return
      */
-    public static HashMap<String,String> createOrderParams(String store_id,String address_rid) {
-        HashMap<String, String> params = generateCommonParams();
-        params.put("store_id", store_id);
-        params.put("address_rid",address_rid);
-        return params;
+    public static HashMap createOrderParams(long store_id,String address_rid,double freight,ArrayList items) {
+        HashMap<String,String> params = generateCommonParams();
+        HashMap<String, Object> hashMap = new HashMap<>();
+        Iterator<Map.Entry<String, String>> iterator = params.entrySet().iterator();
+        while (iterator.hasNext()){
+            Map.Entry<String, String> entry = iterator.next();
+            hashMap.put(entry.getKey(),entry.getValue());
+        }
+        hashMap.put("store_id", store_id);
+        hashMap.put("address_rid",address_rid);
+        hashMap.put("freight",freight);
+        hashMap.put("items",items);
+        return hashMap;
     }
 
     /**

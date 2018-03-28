@@ -58,7 +58,7 @@
     <string name="input_phone">请输入手机号</string>
     <string name="submit_success">提交成功</string>
     <string name="all_money">合计: </string>
-    <string name="submit_order">结算</string>
+    <string name="submit_order">提交订单</string>
     <string name="dx_order_title">代下单</string>
     <string name="select_customer_title">选择客户</string>
     <string name="select_goods_title">选择商品</string>
@@ -66,7 +66,7 @@
     <string name="create_order_title">创建订单</string>
     <string name="add_new_address">新增地址</string>
     <string name="select_address_title">选择地址</string>
-    <string name="default_address">默认</string>
+    <string name="default_address">默认地址</string>
     <string name="set_address">请添加地址</string>
     <string name="new_consignee_address">新增地址</string>
     <string name="edit_address">编辑地址</string>
@@ -77,9 +77,11 @@
     <string name="postcode">请输入邮编</string>
     <string name="please_select_address">请选择收货地址</string>
     <string name="detail_address">详细地址</string>
-    <string name="set_default_address">设为默认</string>
+    <string name="set_default_address">设为默认地址</string>
     <string name="name_is_empty">请输入收货人</string>
     <string name="phone_is_empty">请输入手机号</string>
     <string name="phone_is_err">请输入正确手机号</string>
     <string name="address_details_is_empty">请输入详细地址</string>
+    <string name="manage_address">管理地址</string>
+    <string name="manage_address_title">管理地址</string>
 </resources>

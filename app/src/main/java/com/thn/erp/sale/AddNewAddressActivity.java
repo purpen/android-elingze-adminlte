@@ -1,39 +1,30 @@
 package com.thn.erp.sale;
 
-import android.content.Intent;
 import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
+import com.stephen.taihuoniaolibrary.utils.THNToastUtil;
 import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.net.ClientParamsAPI;
-import com.thn.erp.net.DataConstants;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.sale.bean.AddressData;
 import com.thn.erp.sale.bean.CommitConsigneeData;
-import com.thn.erp.sale.bean.DeleteAddressData;
 import com.thn.erp.sale.bean.ProvinceCityRestrict;
 import com.thn.erp.sale.bean.TownsData;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.utils.Util;
 import com.thn.erp.view.CustomHeadView;
-import com.thn.erp.view.dialog.DefaultDialog;
-import com.thn.erp.view.dialog.IDialogListenerConfirmBack;
-
 import java.io.IOException;
 import java.util.HashMap;
-
 import butterknife.BindView;
 import butterknife.OnClick;
-import okhttp3.Call;
 
 /**
  * @author lilin
@@ -54,22 +45,18 @@ public class AddNewAddressActivity extends BaseActivity {
     EditText etAddressDetails;
     @BindView(R.id.switchCompat)
     SwitchCompat switchCompat;
-    @BindView(R.id.btn_commit)
-    Button btnCommit;
     //从选择地址界面传递过来的数据
     private AddressData.DataBean addressBean;
     private String provinceId;
     private String cityId;
     private String countyId;
     private String townId;
-//    private boolean isdefault = true;//设置此地址是否为默认地址
     private THNWaittingDialog dialog;
     private AddressSelectFragment addressSelectFragment;
     private ProvinceCityRestrict.DataBean curProvince;
     private ProvinceCityRestrict.DataBean curCity;
     private ProvinceCityRestrict.DataBean curCounty;
     private TownsData.DataBean curTown;
-    private boolean isAddressSelected;
 
 
     @Override
@@ -79,7 +66,7 @@ public class AddNewAddressActivity extends BaseActivity {
 
     @Override
     protected void getIntentData() {
-        AddressData.DataBean extra= getIntent().getParcelableExtra(CreateOrderActivity.class.getSimpleName());
+        AddressData.DataBean extra= getIntent().getParcelableExtra(AddNewAddressActivity.class.getSimpleName());
         if (extra!=null) {
             addressBean = extra;
         }
@@ -90,47 +77,15 @@ public class AddNewAddressActivity extends BaseActivity {
         dialog = new THNWaittingDialog(this);
         if (addressBean != null) {
             customHeadView.setHeadCenterTxtShow(true, R.string.edit_address);
-            customHeadView.setHeadRightTxtShow(true, R.string.delete);
+            customHeadView.setHeadRightTxtShow(true, R.string.save);
             customHeadView.getHeadRightTV().setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    new DefaultDialog(AddNewAddressActivity.this, getResources().getString(R.string.hint_dialog_delete_address_title), getResources().getStringArray(R.array.text_dialog_button), new IDialogListenerConfirmBack() {
-
-                        @Override
-                        public void clickRight() {
-                            HashMap<String, String> params = ClientParamsAPI.deleteAddressParams();
-                            Call httpHandler = HttpRequest.sendRequest(HttpRequest.DELETE,URL.DELETE_ADDRESS, params,new HttpRequestCallback() {
-                                @Override
-                                public void onStart() {
-                                    if (dialog != null && !activity.isFinishing()) dialog.show();
-                                }
-
-                                @Override
-                                public void onSuccess(String json) {
-                                    DeleteAddressData deleteAddressData = JsonUtil.fromJson(json, DeleteAddressData.class);
-                                    if (deleteAddressData.success) {
-                                        ToastUtils.showSuccess("删除成功");
-                                        Intent intent = new Intent();
-                                        intent.putExtra("address", 1);
-                                        setResult(DataConstants.RESULTCODE_ADDNEWADDRESS, intent);
-                                        finish();
-                                    } else {
-                                        ToastUtils.showError(deleteAddressData.status.message);
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(IOException e) {
-                                    dialog.dismiss();
-                                    ToastUtils.showError(R.string.network_err);
-                                }
-                            });
-                        }
-                    });
+                public void onClick(View v) {//保存地址
+                    commitConsigneeAddress();
                 }
             });
             etConsigneeName.setText(addressBean.full_name);
-            etPhone.setText(addressBean.phone);
+            etPhone.setText(addressBean.mobile);
             String builder = addressBean.province +
                     " " +
                     addressBean.city +
@@ -139,16 +94,11 @@ public class AddNewAddressActivity extends BaseActivity {
                     " " +
                     addressBean.area;
             tvAddress.setText(builder);
-//            provinceId = addressBean.province_id;
-//            cityId = addressBean.city_id;
-//            townId = addressBean.town_id;
             etAddressDetails.setText(addressBean.street_address);
 //            etZipCode.setText(addressBean.);
-            if (!addressBean.is_default) {
-//                isdefault = false;
-                switchCompat.setChecked(false);
+            if (addressBean.is_default) {
+                switchCompat.setChecked(true);
             } else {
-//                isdefault = true;
                 switchCompat.setChecked(false);
             }
         } else {
@@ -169,7 +119,7 @@ public class AddNewAddressActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.tv_address, R.id.btn_commit, R.id.switchCompat})
+    @OnClick({R.id.tv_address,R.id.switchCompat})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_address:
@@ -201,23 +151,11 @@ public class AddNewAddressActivity extends BaseActivity {
                                 curTown = towns;
                             }
                             tvAddress.setText(builder.toString());
-                            isAddressSelected=true;
                         }
                     });
                 } else {
                     addressSelectFragment.show(activity.getFragmentManager(), AddressSelectFragment.class.getSimpleName());
                 }
-                break;
-//            case R.id.switchCompat:
-//                点击后设置为相反状态
-//                if (switchCompat.isChecked()) {
-//                    switchCompat.setChecked(false);
-//                } else {
-//                    switchCompat.setChecked(true);
-//                }
-//                break;
-            case R.id.btn_commit:
-                commitConsigneeAddress();
                 break;
             default:
                 break;
@@ -256,8 +194,8 @@ public class AddNewAddressActivity extends BaseActivity {
             ToastUtils.showInfo(R.string.address_details_is_empty);
             return;
         }
-
-        if (isAddressSelected){
+        String method;
+        if (addressBean==null){ //新增地址
             if (curProvince != null) {
                 provinceId = String.valueOf(curProvince.oid);
             } else {
@@ -278,26 +216,19 @@ public class AddNewAddressActivity extends BaseActivity {
             }else {
                 townId = "0";
             }
-        }else {
-            if (addressBean!=null){
+            method=HttpRequest.POST;
+        }else { //编辑地址
+            method = HttpRequest.DELETE;
+            THNToastUtil.showInfo("缺少省ID");
+//            TODO 缺少省市区ID
 //                provinceId=addressBean.;
 //                cityId=addressBean.city_id;
 //                countyId=addressBean.county_id;
 //                townId=addressBean.town_id;
-            }else {
-                ToastUtils.showError(R.string.network_err);
-            }
         }
-//
-//        String id;
-//        if (addressBean == null) {
-//            id = "";
-//        } else {
-//            id = addressBean._id;
-//        }
-//
+
         HashMap<String, String> params = ClientParamsAPI.getCommitAddressParams(consigneeName, phone, provinceId, cityId, countyId, townId, addressDetail, etZipCode.getText().toString(), switchCompat.isChecked());
-        HttpRequest.sendRequest(HttpRequest.POST,URL.COMMIT_ADDRESS,params, new HttpRequestCallback(){
+        HttpRequest.sendRequest(method,URL.COMMIT_ADDRESS,params, new HttpRequestCallback(){
             @Override
             public void onStart() {
                 if (!activity.isFinishing()) dialog.show();

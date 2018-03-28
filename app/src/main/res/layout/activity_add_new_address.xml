@@ -14,60 +14,55 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/btn_commit"
         android:layout_below="@+id/customHeadView"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/dp16"
-        android:paddingRight="@dimen/dp16">
+        android:paddingLeft="@dimen/dp15"
+        android:paddingRight="@dimen/dp15">
 
         <EditText
             android:id="@+id/et_consignee_name"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp40"
-            android:layout_marginTop="10dp"
+            android:layout_height="@dimen/dp35"
+            android:layout_marginTop="@dimen/dp15"
             android:background="@drawable/background_product_white_corner"
             android:hint="@string/consignee_name"
             android:maxLines="1"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
+            android:paddingLeft="@dimen/dp10"
             android:textColor="@color/color_222"
             android:textSize="@dimen/sp14" />
 
         <EditText
             android:id="@+id/et_phone"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp40"
-            android:layout_marginTop="5dp"
+            android:layout_height="@dimen/dp35"
+            android:layout_marginTop="@dimen/dp10"
             android:background="@drawable/background_product_white_corner"
             android:hint="@string/phone"
             android:inputType="phone"
             android:maxLines="1"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
+            android:paddingLeft="@dimen/dp10"
             android:textSize="@dimen/sp14" />
 
         <EditText
             android:id="@+id/et_zip_code"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp40"
-            android:layout_marginTop="5dp"
+            android:layout_height="@dimen/dp35"
+            android:layout_marginTop="@dimen/dp10"
             android:background="@drawable/background_product_white_corner"
             android:hint="@string/postcode"
             android:inputType="number"
             android:maxLines="1"
             android:textColor="@color/color_222"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
+            android:paddingLeft="@dimen/dp10"
             android:textSize="@dimen/sp14" />
 
         <TextView
             android:id="@+id/tv_address"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp40"
-            android:layout_marginTop="5dp"
+            android:layout_height="@dimen/dp35"
+            android:layout_marginTop="@dimen/dp10"
             android:background="@drawable/background_product_white_corner"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
+            android:paddingLeft="@dimen/dp10"
             android:hint="@string/please_select_address"
             android:ellipsize="end"
             android:gravity="center_vertical"
@@ -77,20 +72,19 @@
         <EditText
             android:id="@+id/et_address_details"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp40"
-            android:layout_marginTop="5dp"
+            android:layout_height="@dimen/dp35"
+            android:layout_marginTop="@dimen/dp10"
             android:background="@drawable/background_product_white_corner"
             android:hint="@string/detail_address"
             android:maxLines="1"
             android:textColor="@color/color_222"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
+            android:paddingLeft="@dimen/dp10"
             android:textSize="@dimen/sp14" />
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp40"
-            android:layout_marginTop="5dp"
+            android:layout_height="@dimen/dp35"
+            android:layout_marginTop="@dimen/dp10"
             android:background="@drawable/background_product_white_corner"
             >
             <TextView
@@ -106,7 +100,6 @@
                 android:id="@+id/switchCompat"
                 android:switchMinWidth="40dp"
                 android:theme="@style/mySwitch"
-                android:layout_marginRight="@dimen/dp5"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
@@ -114,13 +107,4 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_commit"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp45"
-        android:layout_alignParentBottom="true"
-        android:background="@color/color_222"
-        android:textSize="@dimen/sp16"
-        android:visibility="gone"
-        />
 </RelativeLayout>

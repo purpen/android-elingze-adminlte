@@ -93,7 +93,7 @@ public class HttpRequest {
     }
 
 
-    public static Call sendRequest(String type, String requestUrl, HashMap<String, String> params, HttpRequestCallback callback) {
+    public static Call sendRequest(String type, String requestUrl, HashMap params, HttpRequestCallback callback) {
         if (null == params) throw new IllegalArgumentException("argument params can not be null ");
         if (TextUtils.isEmpty(requestUrl))
             throw new IllegalArgumentException("argument requestUrl can not be null");
@@ -256,7 +256,7 @@ public class HttpRequest {
         return request;
     }
 
-    private static Request getRequest(String type, String url, HashMap<String, String> params) {
+    private static Request getRequest(String type, String url, HashMap params) {
         Request request = null;
         String str=SPUtil.read(Constants.LOGIN_INFO);
         if (!TextUtils.isEmpty(str)){
@@ -330,7 +330,8 @@ public class HttpRequest {
     }
 
 
-    private static RequestBody getRequestBody(HashMap<String, String> params) {
+    private static RequestBody getRequestBody(HashMap params) {
+        String s = JsonUtil.toJson(params);
         RequestBody requestBody = RequestBody.create(JSON, JsonUtil.toJson(params));
         return requestBody;
     }
