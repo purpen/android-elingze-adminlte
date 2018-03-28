@@ -9,6 +9,7 @@ import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
 import com.thn.erp.goods.TitleRecyclerViewAdapter;
+import com.thn.erp.overview.usermanage.UserManageActivity;
 import com.thn.erp.view.common.PublicTopBar;
 
 import java.util.ArrayList;
@@ -52,7 +53,19 @@ public class SaleFragment extends BaseFragment {
         titleRecyclerViewAdapter.setOnItemClickListener(new TitleRecyclerViewAdapter.OnItemClickListener(){
             @Override
             public void onClick(View view, int i) {
-                startActivity(new Intent(activity,DXOrderActivity.class));
+                switch (i){
+                    case 0:
+                        startActivity(new Intent(activity,UserManageActivity.class));
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        startActivity(new Intent(activity,DXOrderActivity.class));
+                        break;
+                }
+
             }
         });
     }

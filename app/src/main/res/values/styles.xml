@@ -132,7 +132,7 @@
         <!-- switch 打开时的按钮的颜色 轨迹颜色默认为30%（看效果就明白30%是怎么回事了）这个颜色 -->
         <item name="colorControlActivated">@color/color_27AE59</item>
         <!--  switch关闭时的按钮的颜色 -->
-        <item name="colorSwitchThumbNormal">@color/color_27AE59</item>
+        <item name="colorSwitchThumbNormal">@color/color_ddd</item>
         <!-- switch关闭时的轨迹的颜色 30%这个颜色 -->
         <item name="android:colorForeground">@color/color_27AE59</item>
 

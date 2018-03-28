@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import com.stephen.taihuoniaolibrary.utils.THNToastUtil;
 import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
@@ -22,6 +23,7 @@ import com.thn.erp.sale.bean.CreateOrderData;
 import com.thn.erp.sale.bean.DefaultAddressData;
 import com.thn.erp.sale.bean.FreightData;
 import com.thn.erp.sale.bean.GoodsData;
+import com.thn.erp.sale.bean.OrderGoodsItem;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.CustomHeadView;
@@ -66,14 +68,14 @@ public class CreateOrderActivity extends BaseActivity {
     TextView tvAddress;
     @BindView(R.id.tvNoAddressTips)
     TextView tvNoAddressTips;
-    @BindView(R.id.tvAddressDetail)
-    TextView tvAddressDetail;
     @BindView(R.id.tvPhone)
     TextView tvPhone;
-
+    //    运费
+    private int freight;
     private GoodsAdapter adapter;
     private List<GoodsData.DataBean.ProductsBean> list;
     private THNWaittingDialog dialog;
+    private DefaultAddressData.DataBean address;
 
     @Override
     protected void getIntentData() {
@@ -122,10 +124,25 @@ public class CreateOrderActivity extends BaseActivity {
      * 创建订单
      */
     private void createOrder() {
-        String storeId = "";
-        String addressId = "";
-        HashMap<String, String> params = ClientParamsAPI.createOrderParams(storeId, addressId);
-        HttpRequest.sendRequest(HttpRequest.GET, URL.ADD_ORDER, params, new HttpRequestCallback() {
+        if (null == address) {
+            THNToastUtil.showInfo("请选择收货地址");
+            return;
+        }
+        long storeId = 0;
+        String addressId = address.rid;
+        ArrayList<OrderGoodsItem> items = new ArrayList<>();
+        OrderGoodsItem item;
+        for (GoodsData.DataBean.ProductsBean goodsData : list) {
+            item = new OrderGoodsItem();
+            item.rid = goodsData.rid;
+//            TODO 这是测试数据
+            item.rid = "118260884497";
+            item.quantity = 1;
+            item.deal_price = goodsData.sale_price;
+            items.add(item);
+        }
+        HashMap params = ClientParamsAPI.createOrderParams(storeId, addressId, freight, items);
+        HttpRequest.sendRequest(HttpRequest.POST, URL.ADD_ORDER, params, new HttpRequestCallback() {
             @Override
             public void onStart() {
                 dialog.show();
@@ -174,11 +191,8 @@ public class CreateOrderActivity extends BaseActivity {
                 DefaultAddressData addressData = JsonUtil.fromJson(json, DefaultAddressData.class);
                 if (addressData.success == true) {
                     if (addressData.data == null) return;
-                    tvNoAddressTips.setVisibility(View.GONE);
-                    tvName.setText(addressData.data.full_name);
-                    tvAddress.setText(addressData.data.province + " " + addressData.data.city + " " + " " + addressData.data.town);
-                    tvAddressDetail.setText(addressData.data.street_address);
-                    tvPhone.setText(addressData.data.phone);
+                    address = addressData.data;
+                    setConsigneeAddress(address);
                 } else {
                     ToastUtils.showError(addressData.status.message);
                 }
@@ -192,6 +206,31 @@ public class CreateOrderActivity extends BaseActivity {
             }
         });
     }
+
+    /**
+     * 设置收货地址Ad
+     *
+     * @param dataBean
+     */
+    private void setConsigneeAddress(DefaultAddressData.DataBean dataBean) {
+        tvNoAddressTips.setVisibility(View.GONE);
+        tvName.setText("收货人：" + dataBean.full_name);
+        tvAddress.setText("收货地址：" + dataBean.province + dataBean.city + dataBean.town + dataBean.street_address);
+        tvPhone.setText(dataBean.mobile);
+    }
+
+    /**
+     * 设置收货地址
+     *
+     * @param dataBean
+     */
+    private void setConsigneeAddress(AddressData.DataBean dataBean) {
+        tvNoAddressTips.setVisibility(View.GONE);
+        tvName.setText("收货人：" + dataBean.full_name);
+        tvAddress.setText("收货地址：" + dataBean.province + dataBean.city + dataBean.town + dataBean.street_address);
+        tvPhone.setText(dataBean.mobile);
+    }
+
 
     /**
      * 获取运费
@@ -209,6 +248,7 @@ public class CreateOrderActivity extends BaseActivity {
                 dialog.dismiss();
                 FreightData freightData = JsonUtil.fromJson(json, FreightData.class);
                 if (freightData.success == true) {
+                    freight = freightData.data.freight;
                     tvFreight.setText("运费：￥" + freightData.data.freight);
                 } else {
                     ToastUtils.showError(freightData.status.message);
@@ -230,8 +270,10 @@ public class CreateOrderActivity extends BaseActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_ADDRESS_CODE:
-                    AddressData.DataBean dataBean = data.getParcelableExtra(AddressData.class.getSimpleName());
-//                    adapter.insert(goods,adapter.getAdapterItemCount());
+                    AddressData.DataBean dataBean = data.getParcelableExtra(SelectAddressActivity.class.getSimpleName());
+                    if (dataBean != null) {
+                        setConsigneeAddress(dataBean);
+                    }
                     break;
                 default:
                     break;

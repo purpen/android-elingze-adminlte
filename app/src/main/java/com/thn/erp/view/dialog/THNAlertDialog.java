@@ -53,7 +53,7 @@ import com.thn.erp.utils.Util;
         this.setContentView(R.layout.dialog_alertdialog_layout);
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.gravity = Gravity.CENTER;
-        lp.width = (int) (Util.getScreenWidth() * 0.87);
+        lp.width = (int) (Util.getScreenWidth() * 0.8);
         getWindow().setAttributes(lp);
         this.setCanceledOnTouchOutside(false);
 

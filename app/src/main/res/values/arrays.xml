@@ -12,4 +12,10 @@
         <item>取消</item>
         <item>确定</item>
     </string-array>
+
+    <integer-array name="google_colors">
+        <item>@color/color_27AE59</item>
+        <item>@color/color_27AE59</item>
+        <item>@color/color_27AE59</item>
+    </integer-array>
 </resources>

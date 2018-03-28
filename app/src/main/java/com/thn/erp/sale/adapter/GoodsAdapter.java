@@ -52,33 +52,14 @@ public class GoodsAdapter extends UltimateViewAdapter {
             viewHolder.tvNum.setText("编号："+goods.rid);
             viewHolder.price.setText("￥"+goods.sale_price);
             viewHolder.stockNum.setText("库存："+position);
-            // ((ViewHolder) holder).itemView.setActivated(selectedItems.get(position, false));
-            if (mDragStartListener != null) {
-//                ((ViewHolder) holder).imageViewSample.setOnTouchListener(new View.OnTouchListener() {
-//                    @Override
-//                    public boolean onTouch(View v, MotionEvent event) {
-//                        if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
-//                            mDragStartListener.onStartDrag(holder);
-//                        }
-//                        return false;
-//                    }
-//                });
-
-//                ((ViewHolder) holder).itemView.setOnTouchListener(new View.OnTouchListener() {
-//                    @Override
-//                    public boolean onTouch(View v, MotionEvent event) {
-//                        return false;
-//                    }
-//                });
-                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (onItemClickListener!=null){
-                            onItemClickListener.onClick(view,pos);
-                        }
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (onItemClickListener!=null){
+                        onItemClickListener.onClick(view,pos);
                     }
-                });
-            }
+                }
+            });
         }
 
     }
@@ -90,7 +71,6 @@ public class GoodsAdapter extends UltimateViewAdapter {
 
     @Override
     public RecyclerView.ViewHolder newFooterHolder(View view) {
-        // return new itemCommonBinder(view, false);
         return new UltimateRecyclerviewViewHolder<>(view);
     }
 

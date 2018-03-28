@@ -6,6 +6,7 @@ import com.thn.erp.utils.SPUtil;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -220,11 +221,19 @@ public class ClientParamsAPI {
      * 创建订单
      * @return
      */
-    public static HashMap<String,String> createOrderParams(String store_id,String address_rid) {
-        HashMap<String, String> params = generateCommonParams();
-        params.put("store_id", store_id);
-        params.put("address_rid",address_rid);
-        return params;
+    public static HashMap createOrderParams(long store_id,String address_rid,double freight,ArrayList items) {
+        HashMap<String,String> params = generateCommonParams();
+        HashMap<String, Object> hashMap = new HashMap<>();
+        Iterator<Map.Entry<String, String>> iterator = params.entrySet().iterator();
+        while (iterator.hasNext()){
+            Map.Entry<String, String> entry = iterator.next();
+            hashMap.put(entry.getKey(),entry.getValue());
+        }
+        hashMap.put("store_id", store_id);
+        hashMap.put("address_rid",address_rid);
+        hashMap.put("freight",freight);
+        hashMap.put("items",items);
+        return hashMap;
     }
 
     /**
@@ -272,5 +281,32 @@ public class ClientParamsAPI {
      */
     public static HashMap<String,String> getDefaultParams() {
         return generateCommonParams();
+    }
+
+    /**
+     *
+     * @param consigneeName
+     * @param phone
+     * @param provinceId
+     * @param cityId
+     * @param countyId
+     * @param townId
+     * @param addressDetail
+     * @param zipCode
+     * @param checked
+     * @return
+     */
+    public static HashMap<String,String> getCommitAddressParams(String consigneeName, String phone, String provinceId, String cityId, String countyId, String townId, String addressDetail, String zipCode, boolean checked) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("first_name",consigneeName);
+        params.put("mobile",phone);
+        params.put("province_id",provinceId);
+        params.put("city_id",cityId);
+        params.put("town_id",countyId);
+        params.put("area_id",townId);
+        params.put("street_address",addressDetail);
+        params.put("zipcode",zipCode);
+        params.put("is_default",String.valueOf(checked));
+        return params;
     }
 }

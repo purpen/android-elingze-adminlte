@@ -80,7 +80,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/llSelGoods"
         app:recyclerviewClipToPadding="true"
-        app:recyclerviewDefaultSwipeColor="@color/color_27AE59"
+        app:recyclerviewDefaultSwipeColor="@array/google_colors"
         app:recyclerviewScrollbars="vertical"
         android:layout_above="@+id/rl"
         />
@@ -122,7 +122,7 @@
             android:layout_height="44dp"
             android:layout_alignParentRight="true"
             android:background="@color/color_27AE59"
-            android:text="@string/submit_order"
+            android:text="去下单"
             android:textColor="@android:color/white" />
     </RelativeLayout>
 </RelativeLayout>

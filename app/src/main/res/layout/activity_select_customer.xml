@@ -24,8 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/searchView"
+        app:recyclerviewDefaultSwipeColor="@array/google_colors"
         app:recyclerviewClipToPadding="true"
-        app:recyclerviewDefaultSwipeColor="@color/color_27AE59"
         app:recyclerviewScrollbars="vertical"
         />
 </RelativeLayout>

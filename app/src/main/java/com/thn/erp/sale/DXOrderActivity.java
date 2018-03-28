@@ -92,7 +92,7 @@ public class DXOrderActivity extends BaseActivity {
                 }
 
                 Intent intent = new Intent(activity, CreateOrderActivity.class);
-                intent.putParcelableArrayListExtra(SelectGoodsActivity.class.getSimpleName(),list);
+                intent.putParcelableArrayListExtra(DXOrderActivity.class.getSimpleName(),list);
                 startActivity(intent);
                 break;
         }

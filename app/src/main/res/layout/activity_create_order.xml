@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp10"
+        android:visibility="gone"
         />
 
     <com.thn.erp.view.CustomItemLayout
@@ -35,20 +36,34 @@
         android:layout_below="@+id/customName"
         android:layout_marginTop="@dimen/dp5"
         >
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp1"
+            android:layout_alignParentTop="true"
+            android:background="@color/color_eee"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp1"
+            android:layout_alignParentBottom="true"
+            android:background="@color/color_eee"
+            />
         <ImageView
             android:id="@+id/iv"
             android:layout_width="41dp"
             android:layout_height="match_parent"
-            android:padding="13dp"
+            android:paddingLeft="@dimen/sp15"
+            android:paddingRight="@dimen/dp10"
             android:src="@mipmap/icon_address" />
 
         <ImageView
             android:id="@+id/ivMore"
-            android:layout_width="50dp"
-            android:layout_height="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:padding="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp15"
+            android:layout_marginLeft="@dimen/dp10"
             android:src="@mipmap/icon_arrow_more" />
 
         <RelativeLayout
@@ -57,45 +72,32 @@
             android:layout_toLeftOf="@+id/ivMore"
             android:layout_toRightOf="@id/iv"
             android:gravity="center">
-
-
             <TextView
                 android:id="@+id/tvName"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines = "1"
-                android:textColor="#212121"
-                android:textSize="14sp" />
-
+                android:textColor="@color/color_222"
+                android:textSize="@dimen/sp15" />
+            <TextView
+                android:id="@+id/tvPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:maxLines="1"
+                android:textColor="@color/color_222"
+                android:textSize="@dimen/sp15" />
             <TextView
                 android:id="@+id/tvAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tvName"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/dp10"
                 android:maxLines = "1"
-                android:textColor="#212121"
-                android:textSize="11sp" />
-
-            <TextView
-                android:id="@+id/tvAddressDetail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvAddress"
-                android:layout_marginTop="5dp"
-                android:maxLines="1"
-                android:textColor="#212121"
-                android:textSize="11sp" />
-
-            <TextView
-                android:id="@+id/tvPhone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvAddressDetail"
-                android:layout_marginTop="5dp"
-                android:maxLines="1"
-                android:textColor="#212121"
-                android:textSize="11sp" />
+                android:textColor="@color/color_222"
+                android:textSize="@dimen/sp12"
+                android:ellipsize="end"
+                />
 
             <TextView
                 android:id="@+id/tvNoAddressTips"
@@ -104,7 +106,9 @@
                 android:gravity="center"
                 android:text="@string/set_address"
                 android:textColor="#999999"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:visibility="gone"
+                />
 
         </RelativeLayout>
     </RelativeLayout>
@@ -115,7 +119,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/rlAddress"
         app:recyclerviewClipToPadding="true"
-        app:recyclerviewDefaultSwipeColor="@color/color_27AE59"
+        app:recyclerviewDefaultSwipeColor="@array/google_colors"
         app:recyclerviewScrollbars="vertical"
         android:layout_above="@+id/rl"
         />
