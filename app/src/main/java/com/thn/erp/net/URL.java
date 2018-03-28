@@ -112,6 +112,7 @@ public class URL {
     // 所有商品列表
 //    public static final String PRODUCTS_RECOMMEND       = "products";
     public static final String PRODUCT_DETAILS            = "products/<rid>/detail";
+    public static final String QINIU_TOKEN                = "assets/up_token";
 
     // 品牌
     public static final String PRODUCT_BRAND              = "brands";

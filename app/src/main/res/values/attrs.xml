@@ -47,4 +47,5 @@
         <attr name="rightBackGround" format="reference|color" />
         <attr name="rightText" format="string" />
     </declare-styleable>
+
 </resources>

@@ -42,4 +42,12 @@
 
     <color name="color_f8f8f8">#F8F8F8</color>
     <color name="color_ddd">#DDD</color>
+
+    <color name="color_af8323">#af8323</color>
+    <color name="color_333">#333</color>
+    <color name="backround_black">#ff010101</color>
+    <color name="white">#ffffff</color>
+    <color name="color_transparent">#00000000</color>
+
+
 </resources>
