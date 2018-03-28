@@ -4,13 +4,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
-import com.marshalchen.ultimaterecyclerview.itemTouchHelper.SimpleItemTouchHelperCallback;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.net.ClientParamsAPI;
@@ -103,17 +100,6 @@ public class SelectCustomerActivity extends BaseActivity {
             }
         });
 
-        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
-        final ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
-        mItemTouchHelper.attachToRecyclerView(ultimateRecyclerView.mRecyclerView);
-        adapter.setOnDragStartListener(new CustomerListAdapter.OnStartDragListener() {
-            @Override
-            public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
-                mItemTouchHelper.startDrag(viewHolder);
-            }
-        });
-
-
         adapter.setOnItemClickListener(new CustomerListAdapter.OnItemClickListener() {
             @Override
             public void onClick(View view, int i) {
@@ -128,8 +114,8 @@ public class SelectCustomerActivity extends BaseActivity {
             @Override
             public void loadMore(int itemsCount, final int maxLastVisiblePosition) {
                 isRefreshing = false;
-                getCustomers();
                 page++;
+                getCustomers();
             }
         });
     }
@@ -144,7 +130,7 @@ public class SelectCustomerActivity extends BaseActivity {
         HttpRequest.sendRequest(HttpRequest.GET, URL.CUSTOMER_LIST, params, new HttpRequestCallback() {
             @Override
             public void onStart() {
-                dialog.show();
+                if (!isRefreshing) dialog.show();
             }
 
             @Override
@@ -152,7 +138,9 @@ public class SelectCustomerActivity extends BaseActivity {
                 dialog.dismiss();
                 CustomerData customerBean = JsonUtil.fromJson(json, CustomerData.class);
                 if (customerBean.success == true) {
-                    updateData(customerBean.data.customers);
+                    List<CustomerData.DataBean.CustomersBean> customers = customerBean.data.customers;
+                    if (customers.size()==0) ultimateRecyclerView.disableLoadmore();
+                    updateData(customers);
                 } else {
                     ToastUtils.showError(customerBean.status.message);
                 }
@@ -169,6 +157,7 @@ public class SelectCustomerActivity extends BaseActivity {
 
     private void updateData(List<CustomerData.DataBean.CustomersBean> customers) {
         if (isRefreshing) {
+            adapter.clear();
             for (CustomerData.DataBean.CustomersBean customer : customers) {
                 adapter.insert(customer, 0);
             }
@@ -180,6 +169,6 @@ public class SelectCustomerActivity extends BaseActivity {
                 adapter.insert(customer, adapter.getAdapterItemCount());
             }
         }
-        dialog.dismiss();
+        if (adapter.getAdapterItemCount()==0) ultimateRecyclerView.showEmptyView();
     }
 }

@@ -24,9 +24,9 @@
     </LinearLayout>
     <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
         android:id="@+id/ultimateRecyclerView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:recyclerviewClipToPadding="true"
-        app:recyclerviewDefaultSwipeColor="@color/color_27AE59"
+        app:recyclerviewDefaultSwipeColor="@array/google_colors"
         app:recyclerviewScrollbars="vertical" />
 </LinearLayout>

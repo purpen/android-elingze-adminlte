@@ -4,13 +4,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
-import com.marshalchen.ultimaterecyclerview.itemTouchHelper.SimpleItemTouchHelperCallback;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.net.ClientParamsAPI;
@@ -105,16 +102,6 @@ public class SelectGoodsActivity extends BaseActivity {
             }
         });
 
-        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
-        final ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
-        mItemTouchHelper.attachToRecyclerView(ultimateRecyclerView.mRecyclerView);
-        adapter.setOnDragStartListener(new GoodsAdapter.OnStartDragListener() {
-            @Override
-            public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
-                mItemTouchHelper.startDrag(viewHolder);
-            }
-        });
-
         adapter.setOnItemClickListener(new GoodsAdapter.OnItemClickListener() {
             @Override
             public void onClick(View view, int i) {
@@ -130,8 +117,8 @@ public class SelectGoodsActivity extends BaseActivity {
             @Override
             public void loadMore(int itemsCount, final int maxLastVisiblePosition) {
                 isRefreshing = false;
-                getGoodsList();
                 page++;
+                getGoodsList();
             }
         });
     }
@@ -146,7 +133,7 @@ public class SelectGoodsActivity extends BaseActivity {
         HttpRequest.sendRequest(HttpRequest.GET, URL.GOODS_LIST, params, new HttpRequestCallback() {
             @Override
             public void onStart() {
-                dialog.show();
+                if (!isRefreshing)dialog.show();
             }
 
             @Override
@@ -154,6 +141,8 @@ public class SelectGoodsActivity extends BaseActivity {
                 dialog.dismiss();
                 GoodsData customerBean = JsonUtil.fromJson(json, GoodsData.class);
                 if (customerBean.success == true) {
+                    List<GoodsData.DataBean.ProductsBean> products = customerBean.data.products;
+                    if (products.size()==0) ultimateRecyclerView.disableLoadmore();
                     updateData(customerBean.data.products);
                 } else {
                     ToastUtils.showError(customerBean.status.message);
@@ -171,8 +160,9 @@ public class SelectGoodsActivity extends BaseActivity {
 
     private void updateData(List<GoodsData.DataBean.ProductsBean> goodses) {
         if (isRefreshing) {
+            adapter.clear();
             for (GoodsData.DataBean.ProductsBean goods : goodses) {
-                adapter.insert(goods, 0);
+                adapter.insert(goods, adapter.getAdapterItemCount());
             }
             ultimateRecyclerView.setRefreshing(false);
             linearLayoutManager.scrollToPosition(0);
@@ -182,5 +172,6 @@ public class SelectGoodsActivity extends BaseActivity {
                 adapter.insert(goods, adapter.getAdapterItemCount());
             }
         }
+        if (adapter.getAdapterItemCount()==0) ultimateRecyclerView.showEmptyView();
     }
 }

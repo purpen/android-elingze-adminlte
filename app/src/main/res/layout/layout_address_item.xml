@@ -43,6 +43,7 @@
             android:paddingLeft="@dimen/dp5"
             android:paddingRight="@dimen/dp5"
             android:textColor="@android:color/white"
+            android:layout_marginRight="@dimen/dp5"
             android:textSize="@dimen/sp10"
             android:visibility="gone" />
 

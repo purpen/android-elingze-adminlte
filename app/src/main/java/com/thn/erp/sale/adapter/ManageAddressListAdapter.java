@@ -250,12 +250,6 @@ public class ManageAddressListAdapter extends UltimateViewAdapter {
     }
 
 
-    public void setOnDragStartListener(OnStartDragListener dragStartListener) {
-        mDragStartListener = dragStartListener;
-
-    }
-
-
     public AddressData.DataBean getItem(int position) {
         if (customHeaderView != null)
             position--;

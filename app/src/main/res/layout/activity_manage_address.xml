@@ -17,7 +17,7 @@
         android:layout_below="@+id/customHeadView"
         android:layout_above="@+id/addAddress"
         app:recyclerviewClipToPadding="true"
-        app:recyclerviewDefaultSwipeColor="@color/color_27AE59"
+        app:recyclerviewDefaultSwipeColor="@array/google_colors"
         app:recyclerviewScrollbars="vertical" />
 
     <LinearLayout

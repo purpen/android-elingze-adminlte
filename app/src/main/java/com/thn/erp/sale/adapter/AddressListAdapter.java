@@ -153,7 +153,6 @@ public class AddressListAdapter extends UltimateViewAdapter {
     public void onItemMove(int fromPosition, int toPosition) {
         if (fromPosition > 0 && toPosition > 0) {
             swapPositions(fromPosition, toPosition);
-//        notifyItemMoved(fromPosition, toPosition);
             super.onItemMove(fromPosition, toPosition);
         }
 
@@ -163,8 +162,6 @@ public class AddressListAdapter extends UltimateViewAdapter {
     public void onItemDismiss(int position) {
         if (position > 0) {
             remove(position);
-            // notifyItemRemoved(position);
-//        notifyDataSetChanged();
             super.onItemDismiss(position);
         }
 
@@ -180,7 +177,6 @@ public class AddressListAdapter extends UltimateViewAdapter {
     public AddressData.DataBean getItem(int position) {
         if (customHeaderView != null)
             position--;
-        // URLogs.d("position----"+position);
         if (position >= 0 && position < list.size())
             return list.get(position);
         else return null;

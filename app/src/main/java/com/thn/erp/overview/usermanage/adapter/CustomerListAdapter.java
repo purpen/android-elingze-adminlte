@@ -42,35 +42,16 @@ public class CustomerListAdapter extends UltimateViewAdapter {
             CustomerData.DataBean.CustomersBean customerBean = list.get(pos);
             ViewHolder viewHolder = ((ViewHolder) holder);
             viewHolder.textViewSample.setText(customerBean.name);
-            // ((ViewHolder) holder).itemView.setActivated(selectedItems.get(position, false));
-            if (mDragStartListener != null) {
-//                ((ViewHolder) holder).imageViewSample.setOnTouchListener(new View.OnTouchListener() {
-//                    @Override
-//                    public boolean onTouch(View v, MotionEvent event) {
-//                        if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
-//                            mDragStartListener.onStartDrag(holder);
-//                        }
-//                        return false;
-//                    }
-//                });
-
-//                viewHolder.item_view.setOnTouchListener(new View.OnTouchListener() {
-//                    @Override
-//                    public boolean onTouch(View v, MotionEvent event) {
-//                        return false;
-//                    }
-//                });
-
-                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (onItemClickListener!=null){
-                            onItemClickListener.onClick(view,pos);
-                        }
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onClick(view, pos);
                     }
-                });
-            }
+                }
+            });
         }
+
 
     }
 
@@ -81,7 +62,6 @@ public class CustomerListAdapter extends UltimateViewAdapter {
 
     @Override
     public RecyclerView.ViewHolder newFooterHolder(View view) {
-        // return new itemCommonBinder(view, false);
         return new UltimateRecyclerviewViewHolder<>(view);
     }
 
@@ -93,7 +73,7 @@ public class CustomerListAdapter extends UltimateViewAdapter {
     @Override
     public UltimateRecyclerviewViewHolder onCreateViewHolder(ViewGroup parent) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.recycler_view_adapter, parent, false);
+                .inflate(R.layout.layout_customer_item, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
@@ -119,10 +99,6 @@ public class CustomerListAdapter extends UltimateViewAdapter {
 
     @Override
     public long generateHeaderId(int position) {
-        // URLogs.d("position--" + position + "   " + getItem(position));
-//        if (getItem(position).length() > 0)
-//            return getItem(position).charAt(0);
-//        else return -1;
         return position;
     }
 
@@ -211,7 +187,6 @@ public class CustomerListAdapter extends UltimateViewAdapter {
     public CustomerData.DataBean.CustomersBean getItem(int position) {
         if (customHeaderView != null)
             position--;
-        // URLogs.d("position----"+position);
         if (position >= 0 && position < list.size())
             return list.get(position);
         else return null;

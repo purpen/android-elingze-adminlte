@@ -4,14 +4,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
-import com.marshalchen.ultimaterecyclerview.itemTouchHelper.SimpleItemTouchHelperCallback;
 import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
@@ -21,7 +18,6 @@ import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.sale.adapter.AddressListAdapter;
-import com.thn.erp.sale.adapter.GoodsAdapter;
 import com.thn.erp.sale.bean.AddressData;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.ToastUtils;
@@ -52,9 +48,7 @@ public class SelectAddressActivity extends BaseActivity{
     private List<AddressData.DataBean> list = new ArrayList<>();
     private AddressListAdapter adapter;
     //网络请求
-    private int currentPage = 1;
     private THNWaittingDialog dialog;
-    private String addressId;
     private LinearLayoutManager linearLayoutManager;
     private boolean isRefreshing = false;
 
@@ -66,9 +60,7 @@ public class SelectAddressActivity extends BaseActivity{
     @Override
     protected void getIntentData() {
         Intent intent = getIntent();
-        if (intent.hasExtra(TAG)) {
-            addressId = intent.getStringExtra(TAG);
-        }
+
     }
 
     protected void initView() {
@@ -123,16 +115,6 @@ public class SelectAddressActivity extends BaseActivity{
             }
         });
 
-        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
-        final ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
-        mItemTouchHelper.attachToRecyclerView(ultimateRecyclerView.mRecyclerView);
-        adapter.setOnDragStartListener(new GoodsAdapter.OnStartDragListener() {
-            @Override
-            public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
-                mItemTouchHelper.startDrag(viewHolder);
-            }
-        });
-
         adapter.setOnItemClickListener(new AddressListAdapter.OnItemClickListener() {
             @Override
             public void onClick(View view, int i) {
@@ -169,15 +151,7 @@ public class SelectAddressActivity extends BaseActivity{
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (resultCode) {
             case REQUEST_ADDRESS_CODE:
-                int result = data.getIntExtra("address", 0);
-                if (result == 1) {
-                    list.clear();
-                    currentPage = 1;
-                    if (!dialog.isShowing()) {
-                        dialog.show();
-                    }
-                    getAddressList();
-                }
+
                 break;
         }
     }
@@ -188,13 +162,15 @@ public class SelectAddressActivity extends BaseActivity{
         HttpRequest.sendRequest(HttpRequest.GET,URL.ADDRESS_LIST,params,new HttpRequestCallback() {
             @Override
             public void onStart() {
-                dialog.show();
+               if (!isRefreshing) dialog.show();
             }
             @Override
             public void onSuccess(String json) {
                 dialog.dismiss();
                 AddressData addressData = JsonUtil.fromJson(json,AddressData.class);
                 if (addressData.success == true) {
+                    List<AddressData.DataBean> data = addressData.data;
+                    if (data.size()==0) ultimateRecyclerView.disableLoadmore();
                     updateData(addressData.data);
                 } else {
                     ToastUtils.showError(addressData.status.message);
@@ -211,7 +187,7 @@ public class SelectAddressActivity extends BaseActivity{
 
     private void updateData(List<AddressData.DataBean> addresses) {
         if (isRefreshing) {
-            list.clear();
+            adapter.clear();
             for (AddressData.DataBean address : addresses) {
                 adapter.insert(address, 0);
             }
@@ -223,5 +199,7 @@ public class SelectAddressActivity extends BaseActivity{
                 adapter.insert(address, adapter.getAdapterItemCount());
             }
         }
+
+        if (adapter.getAdapterItemCount()==0) ultimateRecyclerView.showEmptyView();
     }
 }
