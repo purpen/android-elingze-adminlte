@@ -12,6 +12,7 @@ android {
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "boolean", "LOG_DEBUG", "true"
     }
@@ -73,7 +74,11 @@ dependencies {
     implementation 'com.android.support:design:27.1.0'
     compile 'ch.ielse:switchbutton:1.0.1'
     implementation 'com.android.support:multidex:1.0.3'
-//    implementation 'com.android.support:support-v4:27.1.0'
+    //    implementation 'com.android.support:support-v4:27.1.0'
     implementation 'com.android.support:animated-vector-drawable:27.1.0'
     implementation 'com.android.support:support-v13:27.1.0'
+    implementation files('libs/commons-codec-1.11.jar')
+    compile 'com.qiniu:qiniu-android-sdk:7.3.11'
+//    implementation files('libs/happy-dns-0.2.9.jar')
+    compile 'com.hyman:flowlayout-lib:1.1.2'
 }

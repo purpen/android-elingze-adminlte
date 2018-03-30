@@ -6,9 +6,14 @@ import android.content.SharedPreferences;
 import android.os.Environment;
 import android.support.multidex.MultiDexApplication;
 
+import com.qiniu.android.common.FixedZone;
+import com.qiniu.android.common.Zone;
+import com.qiniu.android.storage.Configuration;
+import com.qiniu.android.storage.UploadManager;
 import com.squareup.leakcanary.LeakCanary;
 import com.stephen.taihuoniaolibrary.common.THNApp;
 import com.thn.erp.base.BaseActivity;
+import com.thn.erp.common.THNZone;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -32,6 +37,7 @@ public class AppApplication extends MultiDexApplication {
 
     // activityList
     private List<BaseActivity> mBaseActivityList;
+    private static UploadManager uploadManager;
 
 
     public static Application getContext() {
@@ -55,6 +61,7 @@ public class AppApplication extends MultiDexApplication {
         }
 
         THNApp.init(this);
+        initQiNiu();
     }
 
     public boolean isSD() {
@@ -118,5 +125,24 @@ public class AppApplication extends MultiDexApplication {
             BaseActivity remove = mBaseActivityList.remove(i);
             remove.finish();
         }
+    }
+
+    private void initQiNiu() {
+        Configuration config = new Configuration.Builder()
+                .chunkSize(512 * 1024)        // 分片上传时，每片的大小。 默认256K
+                .putThreshhold(1024 * 1024)   // 启用分片上传阀值。默认512K
+                .connectTimeout(10)           // 链接超时。默认10秒
+                .useHttps(true)               // 是否使用https上传域名
+                .responseTimeout(60)          // 服务器响应超时。默认60秒
+//                .recorder(recorder)           // recorder分片上传时，已上传片记录器。默认null
+//                .recorder(recorder, keyGen)   // keyGen 分片上传时，生成标识符，用于片记录器区分是那个文件的上传记录
+                .zone(THNZone.zone0)        // 设置区域，指定不同区域的上传域名、备用域名、备用IP。
+                .build();
+
+        // 重用 uploadManager。一般地，只需要创建一个 uploadManager 对象
+        uploadManager = new UploadManager(config);
+    }
+    public static UploadManager getUploadManager() {
+        return uploadManager;
     }
 }

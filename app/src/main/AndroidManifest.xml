@@ -64,7 +64,17 @@
         <activity android:name="com.thn.erp.goods.GoodsDetailsActivity" />
         <activity android:name="com.thn.erp.goods.brand.GoodsBrandActivity" />
         <activity android:name="com.thn.erp.goods.category.GoodsCategoryActivity" />
-        <activity android:name="com.thn.erp.goods.GoodsAddActivity" />
+        <activity android:name="com.thn.erp.goods.add.GoodsAddActivity" />
+        <activity android:name="com.thn.erp.album.ImageSelectActivity" />
+        <activity android:name="com.thn.erp.goods.add.ImageCropActivity" />
+        <activity android:name=".goods.add.GoodsNameEditActivity" />
+        <activity android:name=".goods.add.GoodsCategoryEditActivity" />
+        <activity android:name=".goods.add.GoodsCodeEditActivity" />
+        <activity android:name=".goods.add.GoodsIntroductionEditActivity" />
+        <activity android:name=".goods.add.GoodsKeywordsEditActivity" />
+        <activity android:name=".goods.add.GoodsPriceEditActivity" />
+        <activity android:name=".goods.add.GoodsSpecificationEditActivity" />
+        <activity android:name=".goods.add.GoodsUnitEditActivity" />
 
     </application>
 </manifest>

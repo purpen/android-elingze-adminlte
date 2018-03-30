@@ -57,7 +57,9 @@ public class LinearLayoutCustomerAddSwitchView extends LinearLayout {
             public void toggleToOn(SwitchView view) {
                 if (enabled) {
                     view.toggleSwitch(true);
-                    onStateChangedListener.toggleToOn(view);
+                    if (onStateChangedListener != null) {
+                        onStateChangedListener.toggleToOn(view);
+                    }
                 }
             }
 
@@ -65,7 +67,9 @@ public class LinearLayoutCustomerAddSwitchView extends LinearLayout {
             public void toggleToOff(SwitchView view) {
                 if (enabled) {
                     view.toggleSwitch(false);
-                    onStateChangedListener.toggleToOff(view);
+                    if (onStateChangedListener != null) {
+                        onStateChangedListener.toggleToOff(view);
+                    }
                 }
             }
         });
@@ -82,5 +86,9 @@ public class LinearLayoutCustomerAddSwitchView extends LinearLayout {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public boolean getSwitchStatus(){
+        return switchView1.isOpened();
     }
 }

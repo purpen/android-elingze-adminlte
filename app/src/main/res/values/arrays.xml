@@ -13,6 +13,20 @@
         <item>确定</item>
     </string-array>
 
+    <string-array name="GoodsKey1">
+        <item>商品名称</item>
+        <item>商品分类</item>
+        <item>商品介绍</item>
+    </string-array>
+
+    <string-array name="GoodsKey2">
+        <item>价格设置</item>
+        <item>规格属性</item>
+        <item>商品编码／条形码</item>
+        <item>单位</item>
+        <item>关键字</item>
+    </string-array>
+
     <integer-array name="google_colors">
         <item>@color/color_27AE59</item>
         <item>@color/color_27AE59</item>

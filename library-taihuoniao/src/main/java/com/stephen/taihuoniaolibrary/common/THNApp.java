@@ -22,11 +22,11 @@ public class THNApp {
         return mContext;
     }
 
-    public int getScreenHeight() {
+    public static int getScreenHeight() {
         return mContext.getResources().getDisplayMetrics().heightPixels;
     }
 
-    public int getScreenWidth() {
+    public static int getScreenWidth() {
         return mContext.getResources().getDisplayMetrics().widthPixels;
     }
 }

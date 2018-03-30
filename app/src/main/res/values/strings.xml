@@ -82,6 +82,16 @@
     <string name="phone_is_empty">请输入手机号</string>
     <string name="phone_is_err">请输入正确手机号</string>
     <string name="address_details_is_empty">请输入详细地址</string>
+
+    <!-- 图片选择器 -->
+    <string name="l_album_name_all">最近图片</string>
+    <string name="l_album_name_selected">选择图片</string>
+    <string name="l_album_name_camera">相机</string>
+    <string name="l_album_name_download">下载</string>
+    <string name="l_album_name_screen_shot">屏幕截图</string>
+    <string name="close">关闭</string>
+    <string name="cancel">取消</string>
+
     <string name="manage_address">管理地址</string>
     <string name="manage_address_title">管理地址</string>
     <string name="inventory">库存</string>

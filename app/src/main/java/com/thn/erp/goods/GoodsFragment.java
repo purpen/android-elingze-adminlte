@@ -1,31 +1,27 @@
 package com.thn.erp.goods;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
-import com.marshalchen.ultimaterecyclerview.itemTouchHelper.SimpleItemTouchHelperCallback;
 import com.stephen.taihuoniaolibrary.utils.THNLogUtil;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
 import com.thn.erp.base.BaseUltimateRecyclerView;
 import com.thn.erp.common.OnRecyclerViewItemClickListener;
+import com.thn.erp.goods.add.GoodsAddActivity;
 import com.thn.erp.goods.brand.GoodsBrandActivity;
 import com.thn.erp.goods.category.GoodsCategoryActivity;
 import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
-import com.thn.erp.sale.adapter.GoodsAdapter;
 import com.thn.erp.sale.bean.GoodsData;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.ToastUtils;
