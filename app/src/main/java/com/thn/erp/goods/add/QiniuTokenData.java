@@ -1,4 +1,4 @@
-package com.thn.erp.goods;
+package com.thn.erp.goods.add;
 
 /**
  * Created by Stephen on 2018/3/28 18:51
@@ -49,6 +49,17 @@ public class QiniuTokenData {
 
         private String up_endpoint;
         private String up_token;
+        private String user_id;
+
+        public String getDirectory_id() {
+            return directory_id;
+        }
+
+        public void setDirectory_id(String directory_id) {
+            this.directory_id = directory_id;
+        }
+
+        private String directory_id;
 
         public void setUp_endpoint(String up_endpoint) {
             this.up_endpoint = up_endpoint;
@@ -64,6 +75,14 @@ public class QiniuTokenData {
 
         public String getUp_token() {
             return up_token;
+        }
+
+        public String getUser_id() {
+            return user_id;
+        }
+
+        public void setUser_id(String user_id) {
+            this.user_id = user_id;
         }
     }
 

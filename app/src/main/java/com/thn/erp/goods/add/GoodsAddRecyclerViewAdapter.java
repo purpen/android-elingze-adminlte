@@ -1,23 +1,17 @@
-package com.thn.erp.goods;
+package com.thn.erp.goods.add;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.thn.erp.R;
 import com.thn.erp.common.OnRecyclerViewItemClickListener;
 import com.thn.erp.utils.GlideUtil;
-import com.thn.erp.utils.Util;
-import com.thn.erp.view.PopupWindowUtil;
 
 import java.util.ArrayList;
 import java.util.List;

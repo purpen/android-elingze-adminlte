@@ -57,4 +57,8 @@ public class LinearLayoutCustomerAddArrowView extends LinearLayout {
     public void setValue(String str){
         textView2.setText(str);
     }
+
+    public CharSequence getValue() {
+        return textView2.getText();
+    }
 }

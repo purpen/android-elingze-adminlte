@@ -113,6 +113,7 @@ public class URL {
 //    public static final String PRODUCTS_RECOMMEND       = "products";
     public static final String PRODUCT_DETAILS            = "products/<rid>/detail";
     public static final String QINIU_TOKEN                = "assets/up_token";
+    public static final String PRODUCT_ADD                = "products";
 
     // 品牌
     public static final String PRODUCT_BRAND              = "brands";

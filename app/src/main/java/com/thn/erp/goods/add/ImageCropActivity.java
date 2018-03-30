@@ -1,10 +1,9 @@
-package com.thn.erp.goods;
+package com.thn.erp.goods.add;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -12,11 +11,8 @@ import android.widget.RelativeLayout;
 import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
-import com.thn.erp.net.URL;
 import com.thn.erp.utils.GlideUtil;
 import com.thn.erp.view.ImageCrop.ClipSquareImageView;
-
-import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
