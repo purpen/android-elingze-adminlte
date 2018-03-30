@@ -1,17 +1,31 @@
 package com.thn.erp.sale;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
 import com.thn.erp.goods.TitleRecyclerViewAdapter;
+import com.thn.erp.net.ClientParamsAPI;
+import com.thn.erp.net.HttpRequest;
+import com.thn.erp.net.HttpRequestCallback;
+import com.thn.erp.net.URL;
 import com.thn.erp.overview.usermanage.UserManageActivity;
+import com.thn.erp.sale.adapter.OrderListAdapter;
+import com.thn.erp.sale.bean.OrderData;
+import com.thn.erp.utils.JsonUtil;
+import com.thn.erp.utils.LogUtil;
+import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.common.PublicTopBar;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,7 +44,15 @@ public class SaleFragment extends BaseFragment {
     RecyclerView ryMenuItem;
     @BindView(R.id.ultimateRecyclerView)
     UltimateRecyclerView ultimateRecyclerView;
+    private boolean isRefreshing = false;
     private TitleRecyclerViewAdapter titleRecyclerViewAdapter;
+    private OrderListAdapter adapter;
+    private THNWaittingDialog dialog;
+    private int page = 1;
+    private String status = "";
+    private LinearLayoutManager linearLayoutManager;
+    private List<OrderData.DataBean.OrdersBean> list;
+
     @Override
     protected int getLayout() {
         return R.layout.fragment_sale;
@@ -39,15 +61,26 @@ public class SaleFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        page = 1;
+        dialog= new THNWaittingDialog(activity);
         myTopbar.setTopBarCenterTextView("销售", getResources().getColor(R.color.THN_color_bgColor_white));
         initRecyclerView();
+        list = new ArrayList<>();
+        adapter = new OrderListAdapter(activity,list);
+        linearLayoutManager = new LinearLayoutManager(activity);
+        ultimateRecyclerView.setHasFixedSize(true);
+        ultimateRecyclerView.setLayoutManager(linearLayoutManager);
+        ultimateRecyclerView.setLoadMoreView(LayoutInflater.from(activity)
+                .inflate(R.layout.custom_bottom_progressbar, null));
+        ultimateRecyclerView.setRecylerViewBackgroundColor(Color.WHITE);
+        ultimateRecyclerView.setEmptyView(
+                R.layout.empty_view,
+                UltimateRecyclerView.EMPTY_CLEAR_ALL,
+                UltimateRecyclerView.STARTWITH_ONLINE_ITEMS);
+        ultimateRecyclerView.reenableLoadmore();
+        ultimateRecyclerView.setAdapter(adapter);
+        ultimateRecyclerView.addItemDividerDecoration(activity);
     }
-
-    @Override
-    protected void requestNet() {
-        super.requestNet();
-    }
-
     @Override
     protected void installListener() {
         titleRecyclerViewAdapter.setOnItemClickListener(new TitleRecyclerViewAdapter.OnItemClickListener(){
@@ -68,7 +101,84 @@ public class SaleFragment extends BaseFragment {
 
             }
         });
+
+        ultimateRecyclerView.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                page = 1;
+                isRefreshing = true;
+                getOrderList();
+            }
+        });
+
+        ultimateRecyclerView.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void loadMore(int itemsCount, final int maxLastVisiblePosition) {
+                isRefreshing = false;
+                page++;
+                getOrderList();
+            }
+        });
     }
+
+    @Override
+    protected void requestNet() {
+        getOrderList();
+    }
+
+    /**
+     * 获取订单列表
+     */
+    private void getOrderList() {
+        HashMap<String, String> params = ClientParamsAPI.getOrderList(status,page);
+        HttpRequest.sendRequest(HttpRequest.GET, URL.ORDER_LIST, params, new HttpRequestCallback() {
+            @Override
+            public void onStart() {
+                if (!isRefreshing) dialog.show();
+            }
+
+            @Override
+            public void onSuccess(String json) {
+                dialog.dismiss();
+                OrderData orderData = JsonUtil.fromJson(json, OrderData.class);
+                if (orderData.success == true) {
+                    LogUtil.e(json);
+                    List<OrderData.DataBean.OrdersBean> orders = orderData.data.orders;
+                    updateData(orders);
+                } else {
+                    ToastUtils.showError(orderData.status.message);
+                }
+
+            }
+
+            @Override
+            public void onFailure(IOException e) {
+                dialog.dismiss();
+                ToastUtils.showError(R.string.network_err);
+            }
+        });
+    }
+
+    private void updateData(List<OrderData.DataBean.OrdersBean> ordersBeans) {
+        if (isRefreshing) {
+            adapter.clear();
+            for (OrderData.DataBean.OrdersBean order : ordersBeans) {
+                adapter.insert(order, adapter.getAdapterItemCount());
+            }
+            ultimateRecyclerView.setRefreshing(false);
+            linearLayoutManager.scrollToPosition(0);
+            adapter.notifyDataSetChanged();
+        } else {
+            for (OrderData.DataBean.OrdersBean order : ordersBeans) {
+                adapter.insert(order, adapter.getAdapterItemCount());
+            }
+        }
+        if (ordersBeans.size() == 0 && adapter.getAdapterItemCount()>0) ultimateRecyclerView.disableLoadmore();
+        if (adapter.getAdapterItemCount() == 0) ultimateRecyclerView.showEmptyView();
+    }
+
+
+
 
     private void initRecyclerView() {
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);

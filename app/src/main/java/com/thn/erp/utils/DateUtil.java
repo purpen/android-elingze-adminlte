@@ -60,4 +60,15 @@ public class DateUtil {
         }
         return null;
     }
+
+    /**
+     * 根据时间戳获得日期
+     */
+    public static String getDateByTimestamp(long timestamp){
+        timestamp = timestamp*1000;
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        c.setTime(new Date(timestamp));
+        return simpleDateFormat.format(c.getTime());
+    }
 }

@@ -47,38 +47,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="单价："
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/sp14"
             android:textColor="@color/color_222"
             />
         <EditText
             android:id="@+id/price"
-            android:background="@null"
             android:layout_toRightOf="@+id/tvPrice"
-            android:layout_width="wrap_content"
-            android:textSize="@dimen/sp15"
-            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp14"
             android:textColor="@color/color_222"
-            style="StyleReactBorder"
-            android:text="test2"/>
+            style="@style/StyleReactBorder"
+            android:inputType="numberDecimal"
+            />
         <TextView
             android:id="@+id/tvCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/stockNum"
             android:text="数量："
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/sp14"
             android:textColor="@color/color_222"
             />
         <EditText
             android:id="@+id/stockNum"
-            android:background="@null"
+            style="@style/StyleReactBorder"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/dp15"
-            android:layout_width="wrap_content"
             android:textColor="@color/color_222"
-            android:textSize="@dimen/sp15"
-            android:layout_height="wrap_content"
-            style="StyleReactBorder"
-            android:text="test2"/>
+            android:textSize="@dimen/sp14"
+            android:inputType="number"
+            />
     </RelativeLayout>
 </RelativeLayout>

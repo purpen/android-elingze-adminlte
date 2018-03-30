@@ -84,4 +84,7 @@
     <string name="address_details_is_empty">请输入详细地址</string>
     <string name="manage_address">管理地址</string>
     <string name="manage_address_title">管理地址</string>
+    <string name="inventory">库存</string>
+    <string name="color_category">颜色分类</string>
+    <string name="default_txt">颜色分类</string>
 </resources>

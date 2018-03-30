@@ -2,12 +2,24 @@ package com.thn.erp.sale;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.net.ClientParamsAPI;
@@ -17,6 +29,7 @@ import com.thn.erp.net.URL;
 import com.thn.erp.overview.usermanage.AddCustomActivity;
 import com.thn.erp.sale.adapter.GoodsAdapter;
 import com.thn.erp.sale.bean.GoodsData;
+import com.thn.erp.sale.bean.SKUData;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.CustomHeadView;
@@ -29,6 +42,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by lilin on 2018/3/23.
@@ -39,6 +53,8 @@ public class SelectGoodsActivity extends BaseActivity {
     CustomHeadView customHeadView;
     @BindView(R.id.searchView)
     SearchView searchView;
+    @BindView(R.id.rl)
+    RelativeLayout rl;
     @BindView(R.id.ultimateRecyclerView)
     UltimateRecyclerView ultimateRecyclerView;
     private WaitingDialog dialog;
@@ -47,7 +63,9 @@ public class SelectGoodsActivity extends BaseActivity {
     private Boolean isRefreshing = false;
     private GoodsAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
-    private String cid="";
+    private String cid = "";
+    private PopupWindow popupWindow;
+    private ViewHolder holder;
 
     @Override
     protected int getLayout() {
@@ -74,7 +92,9 @@ public class SelectGoodsActivity extends BaseActivity {
         ultimateRecyclerView.reenableLoadmore();
         ultimateRecyclerView.setAdapter(adapter);
         ultimateRecyclerView.addItemDividerDecoration(activity);
+        initPopWindow();
     }
+
 
     @Override
     protected void installListener() {
@@ -105,6 +125,10 @@ public class SelectGoodsActivity extends BaseActivity {
         adapter.setOnItemClickListener(new GoodsAdapter.OnItemClickListener() {
             @Override
             public void onClick(View view, int i) {
+                if (list.size()==0) return;
+//                getSKUList(list.get(i));
+//                showPopupWindow();
+
                 Intent intent = new Intent();
                 intent.putExtra(GoodsData.class.getSimpleName(),list.get(i));
                 setResult(RESULT_OK, intent);
@@ -123,17 +147,93 @@ public class SelectGoodsActivity extends BaseActivity {
         });
     }
 
+    private void initPopWindow() {
+        View popupView = LayoutInflater.from(activity).inflate(R.layout.dialog_select_goods, null);
+        holder = new ViewHolder(popupView);
+        popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        // 设置动画效果
+        popupWindow.setAnimationStyle(R.style.popupwindow_style);
+        popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+//        confirmBtn.setOnClickListener(this);
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams params = getWindow().getAttributes();
+                params.alpha = 1f;
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                getWindow().setAttributes(params);
+            }
+        });
+        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return false;
+            }
+        });
+
+    }
+
+    /**
+     * 显示弹出框
+     */
+    private void showPopupWindow() {
+        Window window = getWindow();
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.alpha = 0.4f;
+        window.setAttributes(params);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);//这行代码可以使window后的所有东西边暗淡
+        popupWindow.setBackgroundDrawable(ContextCompat.getDrawable(this, android.R.color.white));
+        popupWindow.showAtLocation(rl, Gravity.BOTTOM, 0, 0);
+
+    }
+
     @Override
     protected void requestNet() {
         getGoodsList();
+
+    }
+
+    /**
+     * 获取SKU列表
+     * @param productsBean
+     */
+    private void getSKUList(GoodsData.DataBean.ProductsBean productsBean) {
+        HashMap<String, String> params = ClientParamsAPI.getDefaultParams();
+        HttpRequest.sendRequest(HttpRequest.GET, URL.BASE_URL+productsBean.rid+"/skus", params, new HttpRequestCallback() {
+            @Override
+            public void onStart() {
+                dialog.show();
+            }
+
+            @Override
+            public void onSuccess(String json) {
+                dialog.dismiss();
+                SKUData skuData = JsonUtil.fromJson(json, SKUData.class);
+                if (skuData.success == true) {
+                    List<SKUData.DataBean> datas = skuData.data;
+//TODO
+                } else {
+                    ToastUtils.showError(skuData.status.message);
+                }
+
+            }
+
+            @Override
+            public void onFailure(IOException e) {
+                dialog.dismiss();
+                ToastUtils.showError(R.string.network_err);
+            }
+        });
     }
 
     private void getGoodsList() {
-        HashMap<String, String> params = ClientParamsAPI.getGoodsList(cid,page);
+        HashMap<String, String> params = ClientParamsAPI.getGoodsList(cid, page);
         HttpRequest.sendRequest(HttpRequest.GET, URL.GOODS_LIST, params, new HttpRequestCallback() {
             @Override
             public void onStart() {
-                if (!isRefreshing)dialog.show();
+                if (!isRefreshing) dialog.show();
             }
 
             @Override
@@ -142,7 +242,7 @@ public class SelectGoodsActivity extends BaseActivity {
                 GoodsData customerBean = JsonUtil.fromJson(json, GoodsData.class);
                 if (customerBean.success == true) {
                     List<GoodsData.DataBean.ProductsBean> products = customerBean.data.products;
-                    if (products.size()==0) ultimateRecyclerView.disableLoadmore();
+                    if (products.size() == 0) ultimateRecyclerView.disableLoadmore();
                     updateData(customerBean.data.products);
                 } else {
                     ToastUtils.showError(customerBean.status.message);
@@ -172,6 +272,31 @@ public class SelectGoodsActivity extends BaseActivity {
                 adapter.insert(goods, adapter.getAdapterItemCount());
             }
         }
-        if (adapter.getAdapterItemCount()==0) ultimateRecyclerView.showEmptyView();
+        if (adapter.getAdapterItemCount() == 0) ultimateRecyclerView.showEmptyView();
+    }
+
+
+    /**
+     * 商品选择数量对话框
+     */
+    class ViewHolder extends UltimateRecyclerviewViewHolder {
+        @BindView(R.id.dialogUltimateRecyclerView)
+        UltimateRecyclerView dialogUltimateRecyclerView;
+        @BindView(R.id.dialog_cart_productimg)
+        ImageView dialogCartProductimg;
+        @BindView(R.id.dialog_cart_producttitle)
+        TextView dialogCartProducttitle;
+        @BindView(R.id.dialog_cart_price)
+        TextView dialogCartPrice;
+        @BindView(R.id.dialog_cart_skusnumber)
+        TextView dialogCartSkusnumber;
+
+        @BindView(R.id.dialog_confirm_btn)
+        Button dialogConfirmBtn;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
     }
 }

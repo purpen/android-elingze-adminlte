@@ -309,4 +309,18 @@ public class ClientParamsAPI {
         params.put("is_default",String.valueOf(checked));
         return params;
     }
+
+    /**
+     * 获取订单列表
+     * @param status 订单状态
+     * @param page
+     * @return
+     */
+    public static HashMap<String,String> getOrderList(String status,int page){
+        HashMap<String, String> params = generateCommonParams();
+        params.put("status",status);
+        params.put("page",String.valueOf(page));
+        params.put("per_page",Constants.PAGE_SIZE);
+        return params;
+    }
 }

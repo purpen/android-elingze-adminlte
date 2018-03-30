@@ -331,7 +331,6 @@ public class HttpRequest {
 
 
     private static RequestBody getRequestBody(HashMap params) {
-        String s = JsonUtil.toJson(params);
         RequestBody requestBody = RequestBody.create(JSON, JsonUtil.toJson(params));
         return requestBody;
     }

@@ -158,6 +158,11 @@ public class URL {
     public static final String COMMIT_ADDRESS = BASE_URL + "address";
 
     /**
+     * 订单列表
+     */
+    public static final String ORDER_LIST = BASE_URL + "orders";
+
+    /**
      * 获取默认地址
      */
     public static String GET_DEFAULT_ADDRESS = BASE_URL+"address/is_default";

@@ -7,7 +7,6 @@ package com.thn.erp.sale.adapter;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -46,25 +45,6 @@ public class DXOrderGoodsAdapter extends UltimateViewAdapter {
             viewHolder.tvNum.setText("编号："+goods.rid);
             viewHolder.price.setText(""+goods.sale_price);
             viewHolder.stockNum.setText(""+position);
-            // ((ViewHolder) holder).itemView.setActivated(selectedItems.get(position, false));
-            if (mDragStartListener != null) {
-//                ((ViewHolder) holder).imageViewSample.setOnTouchListener(new View.OnTouchListener() {
-//                    @Override
-//                    public boolean onTouch(View v, MotionEvent event) {
-//                        if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
-//                            mDragStartListener.onStartDrag(holder);
-//                        }
-//                        return false;
-//                    }
-//                });
-
-                viewHolder.itemview.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        return false;
-                    }
-                });
-            }
         }
 
     }
@@ -76,7 +56,6 @@ public class DXOrderGoodsAdapter extends UltimateViewAdapter {
 
     @Override
     public RecyclerView.ViewHolder newFooterHolder(View view) {
-        // return new itemCommonBinder(view, false);
         return new UltimateRecyclerviewViewHolder<>(view);
     }
 
