@@ -323,4 +323,11 @@ public class ClientParamsAPI {
         params.put("per_page",Constants.PAGE_SIZE);
         return params;
     }
+
+    /**
+     * 获取订单详情
+     */
+    public static HashMap<String,String> getOrderDetailParams() {
+        return generateCommonParams();
+    }
 }

@@ -12,6 +12,7 @@ import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
+import com.thn.erp.common.OnRecyclerViewItemClickListener;
 import com.thn.erp.goods.TitleRecyclerViewAdapter;
 import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
@@ -99,6 +100,16 @@ public class SaleFragment extends BaseFragment {
                         break;
                 }
 
+            }
+        });
+        adapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+            @Override
+            public void onClick(View view, int i) {
+                LogUtil.e("i="+i);
+                if (list.size()==0 || i<0) return;
+                Intent intent = new Intent(activity,OrderDetailsActivity.class);
+                intent.putExtra(OrderDetailsActivity.class.getSimpleName(),list.get(i));
+                activity.startActivity(intent);
             }
         });
 
