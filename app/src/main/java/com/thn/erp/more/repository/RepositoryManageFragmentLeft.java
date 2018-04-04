@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
-import com.thn.erp.common.ImpRecyclerViewItemClick;
+import com.thn.erp.common.interfaces.ImpRecyclerViewItemClick;
 
 import java.util.ArrayList;
 import java.util.HashMap;

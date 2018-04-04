@@ -1,4 +1,4 @@
-package com.thn.erp.common;
+package com.thn.erp.common.interfaces;
 
 import android.view.View;
 

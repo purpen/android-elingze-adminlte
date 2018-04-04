@@ -10,8 +10,10 @@ import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseStyle2Activity;
 import com.thn.erp.base.BaseUltimateRecyclerView;
-import com.thn.erp.common.ImpTopbarOnClickListener;
-import com.thn.erp.common.OnRecyclerViewItemClickListener;
+import com.thn.erp.common.constant.ExtraKey;
+import com.thn.erp.common.interfaces.ImpTopbarOnClickListener;
+import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
+import com.thn.erp.goods.GoodsListActivity;
 import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
@@ -121,10 +123,10 @@ public class GoodsBrandActivity extends BaseStyle2Activity implements ImpTopbarO
         adapter.setOnItemClickListener(new OnRecyclerViewItemClickListener(){
             @Override
             public void onClick(View view, int i) {
-                Intent intent = new Intent();
-                intent.putExtra(GoodsData.class.getSimpleName(),list.get(i));
-                setResult(RESULT_OK, intent);
-                finish();
+                Intent intent = new Intent(GoodsBrandActivity.this, GoodsListActivity.class);
+                intent.putExtra(ExtraKey.BRAND_ID,list.get(i).getRid());
+                intent.putExtra(ExtraKey.BRAND_NAME,list.get(i).getName());
+                startActivity(intent);
             }
         });
     }

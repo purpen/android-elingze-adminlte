@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseRecyclerViewAdapter;
 import com.thn.erp.base.BaseRecyclerViewViewHolder;
-import com.thn.erp.common.ImpRecyclerViewItemClick;
+import com.thn.erp.common.interfaces.ImpRecyclerViewItemClick;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.thn.erp.common;
+package com.thn.erp.common.interfaces;
 
 /**
  * Created by Stephen on 2018/3/12 20:16

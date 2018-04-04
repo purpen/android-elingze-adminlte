@@ -2,16 +2,14 @@ package com.thn.erp.more.repository;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.thn.erp.R;
-import com.thn.erp.base.BaseActivity;
 import com.thn.erp.base.BaseStyle2Activity;
-import com.thn.erp.common.ImpTopbarOnClickListener;
+import com.thn.erp.common.interfaces.ImpTopbarOnClickListener;
 import com.thn.erp.view.common.PublicTopBar;
 
 import butterknife.BindView;

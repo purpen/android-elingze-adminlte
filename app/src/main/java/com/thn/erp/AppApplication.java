@@ -6,14 +6,12 @@ import android.content.SharedPreferences;
 import android.os.Environment;
 import android.support.multidex.MultiDexApplication;
 
-import com.qiniu.android.common.FixedZone;
-import com.qiniu.android.common.Zone;
 import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UploadManager;
 import com.squareup.leakcanary.LeakCanary;
 import com.stephen.taihuoniaolibrary.common.THNApp;
 import com.thn.erp.base.BaseActivity;
-import com.thn.erp.common.THNZone;
+import com.thn.erp.common.constant.THNZone;
 
 import java.io.File;
 import java.util.ArrayList;

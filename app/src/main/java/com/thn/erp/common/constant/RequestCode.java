@@ -1,4 +1,4 @@
-package com.thn.erp.common;
+package com.thn.erp.common.constant;
 
 /**
  * Created by Stephen on 2018/3/29 17:02

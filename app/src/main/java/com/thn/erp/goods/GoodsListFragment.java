@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +13,8 @@ import com.stephen.taihuoniaolibrary.utils.THNLogUtil;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
 import com.thn.erp.base.BaseUltimateRecyclerView;
+import com.thn.erp.common.constant.ExtraKey;
 import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
-import com.thn.erp.goods.add.GoodsAddActivity;
-import com.thn.erp.goods.brand.GoodsBrandActivity;
-import com.thn.erp.goods.category.GoodsCategoryActivity;
 import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
@@ -25,46 +22,62 @@ import com.thn.erp.net.URL;
 import com.thn.erp.sale.bean.GoodsData;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.ToastUtils;
-import com.thn.erp.view.common.PublicTopBar;
 import com.thn.erp.view.svprogress.WaitingDialog;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * Created by lilin on 2018/3/7.
+ * Created by Stephen on 2018/4/4 16:46
+ * Email: 895745843@qq.com
  */
 
-public class GoodsFragment extends BaseFragment {
+public class GoodsListFragment extends BaseFragment {
 
-    @BindView(R.id.publicTopBar)
-    PublicTopBar myTopbar;
-    @BindView(R.id.ry_menu_item)
-    RecyclerView ryMenuItem;
-    Unbinder unbinder;
     @BindView(R.id.ultimateRecyclerView)
     BaseUltimateRecyclerView ultimateRecyclerView;
+    Unbinder unbinder;
 
-    private TitleRecyclerViewAdapter titleRecyclerViewAdapter;
-    private WaitingDialog dialog;
 
-    private int page;
     private List<GoodsData.DataBean.ProductsBean> list;
+    private LinearLayoutManager linearLayoutManager;
     private Boolean isRefreshing = false;
     private GoodsListAdapter adapter;
-    private LinearLayoutManager linearLayoutManager;
-    private String cid = "";
+    private WaitingDialog dialog;
+    private int page;
+
+    private String brandId;
 
     @Override
     protected int getLayout() {
-        return R.layout.fragment_goods;
+        return R.layout.fragment_goods_list;
+    }
+
+    public static GoodsListFragment newInstance(String brandId) {
+        Bundle args = new Bundle();
+        args.putString(ExtraKey.BRAND_ID, brandId);
+        GoodsListFragment fragment = new GoodsListFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        brandId = getArguments().getString(ExtraKey.BRAND_ID, null);
+    }
+
+    @Override
+    protected void initView() {
+        dialog = new WaitingDialog(getActivity());
+        initListAdapter();
+        getGoodsList();
     }
 
     @Override
@@ -75,13 +88,9 @@ public class GoodsFragment extends BaseFragment {
     }
 
     @Override
-    protected void initView() {
-        super.initView();
-        initTopBar();
-        initRecyclerView();
-        initListAdapter();
-        dialog = new WaitingDialog(getActivity());
-        getGoodsList();
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     private void initListAdapter() {
@@ -126,57 +135,8 @@ public class GoodsFragment extends BaseFragment {
         });
     }
 
-    private void initTopBar() {
-        myTopbar.setTopBarCenterTextView("商品", getResources().getColor(R.color.THN_color_bgColor_white));
-    }
-
-
-    private void initRecyclerView() {
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        ryMenuItem.setLayoutManager(linearLayoutManager);
-
-        titleRecyclerViewAdapter = new TitleRecyclerViewAdapter(getActivity(), generateAdapterDatas());
-        titleRecyclerViewAdapter.setOnItemClickListener(new TitleRecyclerViewAdapter.OnItemClickListener(){
-            @Override
-            public void onClick(View view, int i) {
-                switch (i) {
-                    case 0:
-                        startActivity(new Intent(getActivity(), GoodsAddActivity.class));
-                        break;
-                    case 1:
-                        startActivity(new Intent(getActivity(), GoodsCategoryActivity.class));
-                        break;
-                    case 2: break;
-                    case 3:
-                        startActivity(new Intent(getActivity(), GoodsBrandActivity.class));
-                        break;
-                    case 4: break;
-                    case 5: break;
-                    case 6: break;
-                }
-            }
-        });
-        ryMenuItem.setAdapter(titleRecyclerViewAdapter);
-    }
-
-    private List<Map<String, Object>> generateAdapterDatas() {
-        List<Map<String, Object>> list = new ArrayList<>();
-        for (int i = 0; i < ITEMS.length; i++) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("img", IMGS[i]);
-            map.put("name", ITEMS[i]);
-            list.add(map);
-        }
-        return list;
-    }
-
-    public static final String[] ITEMS = {"新增", "分类", "搜索", "品牌", "产品组", "促销"};
-    public static final int[] IMGS = {R.mipmap.icon_goods_top_category_01, R.mipmap.icon_goods_top_category_02
-            , R.mipmap.icon_goods_top_category_03, R.mipmap.icon_goods_top_category_04
-            , R.mipmap.icon_goods_top_category_05, R.mipmap.icon_goods_top_category_06};
-
     private void getGoodsList() {
-        HashMap<String, String> params = ClientParamsAPI.getGoodsList("", page);
+        HashMap<String, String> params = ClientParamsAPI.getGoodsList(brandId, page);
         HttpRequest.sendRequest(HttpRequest.GET, URL.GOODS_LIST, params, new HttpRequestCallback() {
             @Override
             public void onStart() {

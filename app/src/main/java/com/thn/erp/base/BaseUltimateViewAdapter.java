@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.thn.erp.R;
-import com.thn.erp.common.OnRecyclerViewItemClickListener;
+import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
 
 import java.security.SecureRandom;
 import java.util.List;

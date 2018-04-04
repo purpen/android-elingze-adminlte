@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.thn.erp.R;
-import com.thn.erp.common.ImpTopbarOnClickListener;
+import com.thn.erp.common.interfaces.ImpTopbarOnClickListener;
 
 /**
  * Created by Stephen on 2018/3/12 15:35

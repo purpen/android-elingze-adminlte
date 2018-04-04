@@ -5,13 +5,12 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 
 import com.thn.erp.R;
 import com.thn.erp.base.BaseStyle2Activity;
-import com.thn.erp.common.ImpTopbarOnClickListener;
-import com.thn.erp.common.OnRecyclerViewItemClickListener;
+import com.thn.erp.common.interfaces.ImpTopbarOnClickListener;
+import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
 import com.thn.erp.view.common.PublicTopBar;
 
 import java.util.Arrays;

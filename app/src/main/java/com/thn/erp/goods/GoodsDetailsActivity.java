@@ -7,13 +7,12 @@ import android.widget.TextView;
 
 import com.thn.erp.R;
 import com.thn.erp.base.BaseStyle2Activity;
-import com.thn.erp.common.ImpTopbarOnClickListener;
+import com.thn.erp.common.interfaces.ImpTopbarOnClickListener;
 import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.sale.bean.GoodsData;
-import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.LogUtil;
 import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.autoScrollViewpager.ScrollableView;
@@ -23,7 +22,6 @@ import com.thn.erp.view.svprogress.WaitingDialog;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.function.ToDoubleBiFunction;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

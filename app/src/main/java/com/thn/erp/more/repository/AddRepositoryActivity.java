@@ -7,9 +7,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.thn.erp.R;
-import com.thn.erp.base.BaseActivity;
 import com.thn.erp.base.BaseStyle2Activity;
-import com.thn.erp.common.ImpTopbarOnClickListener;
+import com.thn.erp.common.interfaces.ImpTopbarOnClickListener;
 import com.thn.erp.view.common.PublicTopBar;
 
 import butterknife.BindView;

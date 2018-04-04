@@ -78,6 +78,7 @@
         <activity android:name=".goods.add.GoodsPriceEditActivity" />
         <activity android:name=".goods.add.GoodsSpecificationEditActivity" />
         <activity android:name=".goods.add.GoodsUnitEditActivity" />
+        <activity android:name="com.thn.erp.goods.GoodsListActivity" />
         <activity
             android:name=".zxing.activity.CaptureActivityZxing"
             android:launchMode="singleTask"

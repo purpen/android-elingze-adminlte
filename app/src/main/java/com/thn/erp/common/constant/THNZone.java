@@ -1,4 +1,4 @@
-package com.thn.erp.common;
+package com.thn.erp.common.constant;
 
 import android.util.Log;
 

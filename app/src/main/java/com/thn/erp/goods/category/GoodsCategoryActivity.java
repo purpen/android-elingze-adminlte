@@ -1,31 +1,24 @@
 package com.thn.erp.goods.category;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.LayoutInflater;
 import android.view.View;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
-import com.marshalchen.ultimaterecyclerview.itemTouchHelper.SimpleItemTouchHelperCallback;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseStyle2Activity;
 import com.thn.erp.base.BaseUltimateRecyclerView;
-import com.thn.erp.common.ImpTopbarOnClickListener;
-import com.thn.erp.common.OnRecyclerViewItemClickListener;
-import com.thn.erp.goods.brand.GoodsBrandData;
-import com.thn.erp.goods.brand.GoodsBrandListAdapter;
-import com.thn.erp.goods.brand.GoodsBrandListAdapter2;
+import com.thn.erp.common.constant.ExtraKey;
+import com.thn.erp.common.interfaces.ImpTopbarOnClickListener;
+import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
+import com.thn.erp.goods.GoodsListActivity;
+import com.thn.erp.goods.brand.GoodsBrandActivity;
 import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
-import com.thn.erp.sale.adapter.GoodsAdapter;
 import com.thn.erp.sale.bean.GoodsData;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.LogUtil;
@@ -131,10 +124,10 @@ public class GoodsCategoryActivity extends BaseStyle2Activity implements ImpTopb
         adapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onClick(View view, int i) {
-                Intent intent = new Intent();
-                intent.putExtra(GoodsData.class.getSimpleName(),list.get(i));
-                setResult(RESULT_OK, intent);
-                finish();
+                Intent intent = new Intent(GoodsCategoryActivity.this, GoodsListActivity.class);
+                intent.putExtra(ExtraKey.CATEGORY_ID,list.get(i).getId());
+                intent.putExtra(ExtraKey.CATEGORY_NAME,list.get(i).getName());
+                startActivity(intent);
             }
         });
 

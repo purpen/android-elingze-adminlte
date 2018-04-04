@@ -1,7 +1,6 @@
 package com.thn.erp.goods.add;
 
 import android.content.Context;
-import android.graphics.Point;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.thn.erp.common.OnRecyclerViewItemClickListener;
+import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
 
 import java.util.List;
 

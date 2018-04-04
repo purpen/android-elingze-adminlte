@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
-import com.thn.erp.common.GlobalCallBack;
+import com.thn.erp.common.interfaces.GlobalCallBack;
 import com.thn.erp.overview.usermanage.UserManageActivity;
 import com.thn.erp.view.autoScrollViewpager.ScrollableView;
 import com.thn.erp.view.autoScrollViewpager.ViewPagerAdapter;

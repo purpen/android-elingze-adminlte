@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.stephen.taihuoniaolibrary.utils.THNGlideUtil;
 import com.thn.erp.R;
-import com.thn.erp.common.GlobalCallBack;
+import com.thn.erp.common.interfaces.GlobalCallBack;
 
 import java.util.List;
 import java.util.Map;

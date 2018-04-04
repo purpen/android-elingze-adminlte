@@ -6,17 +6,13 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Switch;
 
-import com.stephen.taihuoniaolibrary.utils.THNQrCodeUtil;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseStyle2Activity;
-import com.thn.erp.common.ImpTopbarOnClickListener;
-import com.thn.erp.common.RequestCode;
+import com.thn.erp.common.interfaces.ImpTopbarOnClickListener;
+import com.thn.erp.common.constant.RequestCode;
 import com.thn.erp.view.common.PublicTopBar;
 import com.thn.erp.zxing.activity.CaptureActivityZxing;
-
-import org.w3c.dom.Text;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

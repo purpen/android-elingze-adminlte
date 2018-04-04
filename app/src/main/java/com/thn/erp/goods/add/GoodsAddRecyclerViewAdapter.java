@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.thn.erp.R;
-import com.thn.erp.common.OnRecyclerViewItemClickListener;
+import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
 import com.thn.erp.utils.GlideUtil;
 
 import java.util.ArrayList;
