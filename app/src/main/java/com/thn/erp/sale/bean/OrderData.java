@@ -85,7 +85,7 @@ public class OrderData implements Parcelable {
             public int total_quantity;
             public List<ItemsBean> items;
 
-            public static class ItemsBean {
+            public static class ItemsBean implements Parcelable {
                 /**
                  * cost_price : 0.10
                  * cover : https://kg.erp.taihuoniao.com/20180226/FmK-QWL6gXMGKJ1ln0WE_KSxZALc.jpg
@@ -119,6 +119,63 @@ public class OrderData implements Parcelable {
                 public String s_weight;
                 public String sale_price;
                 public int stock_count;
+
+                @Override
+                public int describeContents() {
+                    return 0;
+                }
+
+                @Override
+                public void writeToParcel(Parcel dest, int flags) {
+                    dest.writeString(this.cost_price);
+                    dest.writeString(this.cover);
+                    dest.writeDouble(this.deal_price);
+                    dest.writeDouble(this.discount_amount);
+                    dest.writeString(this.id_code);
+                    dest.writeString(this.mode);
+                    dest.writeString(this.price);
+                    dest.writeString(this.product_name);
+                    dest.writeInt(this.quantity);
+                    dest.writeString(this.rid);
+                    dest.writeString(this.s_color);
+                    dest.writeString(this.s_model);
+                    dest.writeString(this.s_weight);
+                    dest.writeString(this.sale_price);
+                    dest.writeInt(this.stock_count);
+                }
+
+                public ItemsBean() {
+                }
+
+                protected ItemsBean(Parcel in) {
+                    this.cost_price = in.readString();
+                    this.cover = in.readString();
+                    this.deal_price = in.readDouble();
+                    this.discount_amount = in.readDouble();
+                    this.id_code = in.readString();
+                    this.mode = in.readString();
+                    this.price = in.readString();
+                    this.product_name = in.readString();
+                    this.quantity = in.readInt();
+                    this.rid = in.readString();
+                    this.s_color = in.readString();
+                    this.s_model = in.readString();
+                    this.s_weight = in.readString();
+                    this.sale_price = in.readString();
+                    this.stock_count = in.readInt();
+                }
+
+                public static final Creator<ItemsBean> CREATOR = new Creator<ItemsBean>() {
+                    @Override
+                    public ItemsBean createFromParcel(Parcel source) {
+                        return new ItemsBean(source);
+                    }
+
+                    @Override
+                    public ItemsBean[] newArray(int size) {
+                        return new ItemsBean[size];
+                    }
+                };
             }
 
             @Override

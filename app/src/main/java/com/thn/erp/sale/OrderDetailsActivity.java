@@ -1,126 +1,215 @@
-//package com.thn.erp.sale;
-//
-//import android.content.Intent;
-//import android.net.Uri;
-//import android.os.Bundle;
-//import android.text.TextUtils;
-//import android.view.Gravity;
-//import android.view.LayoutInflater;
-//import android.view.View;
-//import android.widget.ImageView;
-//import android.widget.LinearLayout;
-//import android.widget.RelativeLayout;
-//import android.widget.TextView;
-//
-//import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
-//import com.thn.erp.R;
-//import com.thn.erp.base.BaseActivity;
-//import com.thn.erp.sale.bean.OrderData;
-//
-//import java.util.HashMap;
-//import java.util.List;
-//import butterknife.BindView;
-//import butterknife.ButterKnife;
-//
-//public class OrderDetailsActivity extends BaseActivity implements View.OnClickListener {
-//    @BindView(R.id.textView_sumary)
-//    TextView textViewSumary;
-//    @BindView(R.id.linearLayout_sumary)
-//    LinearLayout linearLayoutSumary;
-//
-//    private TextView mDeliverMan;
-//    private TextView mCity;
-//    private TextView mProvince;
-//    private TextView mDetailsAddress;
-//    private TextView mPhone;
-//    private TextView mOrderNum;
-//    private TextView mPayway;
-//    private TextView mTotalMoney;
-//    private TextView mPayMoney;
-//    private TextView mFreight;
-//    private TextView mRightButton;//最底部右侧按钮
-//    private TextView mLeftButton;//最底部左侧按钮
-//    private RelativeLayout mBottomLayout;//放最底部那俩按钮的布局
-//    private LinearLayout mContainerLayout;//动态容纳商品item
-//
-//    private String mRid;
-//    private String mOptFragmentFlag;//跳回碎片列表时，用该值选中跳来之前的那个碎片
-//    private RelativeLayout mLogisticsCompanyLayout;//物流公司
-//    private RelativeLayout mLogisticsNumberLayout;//物流单号
-//    private TextView mLogisticsNumber, mLogisticsCompany;
-//    private THNWaittingDialog mDialog;
-//    private TextView mCounty;
-//    private TextView mTown;
-//    private OrderData.DataBean.OrdersBean ordersBean;
-//    private RelativeLayout rlContainer;
-//
-//    private void toShopOrderListActivity() {
+package com.thn.erp.sale;
+
+import android.content.Intent;
+import android.net.Uri;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.stephen.taihuoniaolibrary.utils.THNGlideUtil;
+import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
+import com.thn.erp.R;
+import com.thn.erp.base.BaseActivity;
+import com.thn.erp.net.ClientParamsAPI;
+import com.thn.erp.net.HttpRequest;
+import com.thn.erp.net.HttpRequestCallback;
+import com.thn.erp.net.URL;
+import com.thn.erp.sale.bean.OrderData;
+import com.thn.erp.sale.bean.OrderDetailData;
+import com.thn.erp.utils.JsonUtil;
+import com.thn.erp.utils.ToastUtils;
+import com.thn.erp.view.CustomHeadView;
+import com.thn.erp.view.CustomItemLayout;
+import com.thn.erp.view.dialog.DefaultDialog;
+import com.thn.erp.view.dialog.IDialogListenerConfirmBack;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+public class OrderDetailsActivity extends BaseActivity {
+    @BindView(R.id.textView_sumary)
+    TextView textViewSumary;
+    @BindView(R.id.linearLayout_sumary)
+    LinearLayout linearLayoutSumary;
+    @BindView(R.id.customHeadView)
+    CustomHeadView customHeadView;
+    @BindView(R.id.iv)
+    ImageView iv;
+    @BindView(R.id.tvName)
+    TextView tvName;
+    @BindView(R.id.tvPhone)
+    TextView tvPhone;
+    @BindView(R.id.tvAddress)
+    TextView tvAddress;
+    @BindView(R.id.rlAddress)
+    RelativeLayout rlAddress;
+    @BindView(R.id.itemFreightCompany)
+    CustomItemLayout itemFreightCompany;
+    @BindView(R.id.itemFreightNum)
+    CustomItemLayout itemFreightNum;
+    @BindView(R.id.itemPayInfo)
+    CustomItemLayout itemPayInfo;
+    @BindView(R.id.freight)
+    CustomItemLayout freight;
+    @BindView(R.id.sumPrice)
+    CustomItemLayout sumPrice;
+    @BindView(R.id.reducedPrice)
+    CustomItemLayout reducedPrice;
+    @BindView(R.id.realPay)
+    CustomItemLayout realPay;
+    @BindView(R.id.tvCallService)
+    TextView tvCallService;
+    @BindView(R.id.tvCancelOrder)
+    TextView tvCancelOrder;
+    @BindView(R.id.tvPayOrder)
+    TextView tvPayOrder;
+    @BindView(R.id.rlBottom)
+    RelativeLayout rlBottom;
+    @BindView(R.id.llGoods)
+    LinearLayout llGoods;
+
+    private String mOptFragmentFlag;//跳回碎片列表时，用该值选中跳来之前的那个碎片
+    private RelativeLayout mLogisticsCompanyLayout;//物流公司
+    private RelativeLayout mLogisticsNumberLayout;//物流单号
+    private TextView mLogisticsNumber, mLogisticsCompany;
+    private THNWaittingDialog dialog;
+    private TextView mCounty;
+    private TextView mTown;
+    private OrderData.DataBean.OrdersBean ordersBean;
+    private RelativeLayout rlContainer;
+
+    private void toShopOrderListActivity() {
 //        Intent in = new Intent(OrderDetailsActivity.this, ShopOrderListActivity.class);
 //        in.putExtra("optFragmentFlag", mOptFragmentFlag);
 //        OrderDetailsActivity.this.startActivity(in);
 //        OrderDetailsActivity.this.finish();
-//    }
-//
-//    @Override
-//    protected int getLayout() {
-//        return R.layout.activity_order_detail;
-//    }
-//
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        initData();
-//    }
-//
-//    private void initData() {
-//        mRid = getIntent().getStringExtra("rid");
+    }
+
+    @Override
+    protected void getIntentData() {
+        ordersBean = getIntent().getParcelableExtra(OrderDetailsActivity.class.getSimpleName());
 //        mOptFragmentFlag = getIntent().getStringExtra("optFragmentFlag");
-//        requestData();
-//    }
-//
-//    private void requestData() {
-//        if (!mDialog.isShowing()) {
-//            mDialog.show();
-//        }
-//        HashMap<String, String> params = ClientDiscoverAPI.getOrderPayNetRequestParams(mRid);
-//        HttpRequest.post(params,  URL.SHOPPING_DETAILS, new GlobalDataCallBack(){
-//            @Override
-//            public void onSuccess(String json) {
-//                if (TextUtils.isEmpty(json)) return;
-//                try {
-//                    HttpResponse<OrderDetailBean> response = JsonUtil.json2Bean(json, new TypeToken<HttpResponse<OrderDetailBean>>() {
-//                    });
-//                    if (response.isError()) {
-//                        return;
-//                    }
-//                    orderDetailBean = response.getData();
-//                } catch (Exception e) {
-//                }
-//
-//                refreshUI();
-//
-//                if (mDialog != null) {
-//                    if (mDialog.isShowing()) {
-//                        mDialog.dismiss();
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(String error) {
-//                mDialog.dismiss();
-//                ToastUtils.showError("网络错误");
-//            }
-//        });
-//    }
-//
-//    private void refreshUI() {
-//        initOrderStatus();
-//        setBottomData();
-//        setOrderGoodsList();
-//    }
-//
-//    private void setOrderGoodsList() {
+    }
+
+    @Override
+    protected int getLayout() {
+        return R.layout.activity_order_detail;
+    }
+
+    protected void initView() {
+        customHeadView.setCenterTxtShow("订单详情");
+        dialog = new THNWaittingDialog(this);
+//        mBottomLayout.setOnClickListener(this);
+//        mCall.setOnClickListener(this);
+//        mRightButton.setOnClickListener(this);
+//        mLeftButton.setOnClickListener(this);
+    }
+
+
+    protected void requestNet() {
+        HashMap<String, String> params = ClientParamsAPI.getOrderDetailParams();
+        String url = URL.BASE_URL + "orders/" + ordersBean.rid;
+        HttpRequest.sendRequest(HttpRequest.GET, url, params, new HttpRequestCallback() {
+            @Override
+            public void onStart() {
+                dialog.show();
+            }
+
+            @Override
+            public void onSuccess(String json) {
+                dialog.dismiss();
+                OrderDetailData orderDetailData = JsonUtil.fromJson(json, OrderDetailData.class);
+                if (orderDetailData.success == true) {
+                    updateUI(orderDetailData.data);
+                } else {
+                    ToastUtils.showError(orderDetailData.status.message);
+                }
+            }
+
+            @Override
+            public void onFailure(IOException e) {
+                dialog.dismiss();
+                ToastUtils.showError(R.string.network_err);
+            }
+        });
+    }
+
+    /**
+     *
+     * @param data
+     */
+    private void updateUI(OrderDetailData.DataBean data) {
+        tvName.setText("收货人：" + data.buyer_name);
+        tvAddress.setText("收货地址：" + data.buyer_country+data.buyer_province + data.buyer_city + data.buyer_address);
+        tvPhone.setText(data.buyer_phone);
+        itemFreightNum.setRightMoreImgStyle(false);
+        itemFreightNum.setTVStyle(0,"订单号："+data.rid,R.color.color_222);
+
+        freight.setRightMoreImgStyle(false);
+        freight.setTVStyle(0,"运费：",R.color.color_222);
+        freight.setTVRightTxt("￥"+data.freight,R.color.color_222);
+
+        sumPrice.setRightMoreImgStyle(false);
+        sumPrice.setTVStyle(0,"商品总额：",R.color.color_222);
+        sumPrice.setTVRightTxt("￥"+data.total_amount,R.color.color_222);
+
+        reducedPrice.setRightMoreImgStyle(false);
+        reducedPrice.setTVStyle(0,"优惠总额：",R.color.color_222);
+        reducedPrice.setTVRightTxt("￥"+data.discount_amount,R.color.color_222);
+
+        realPay.setRightMoreImgStyle(false);
+        realPay.setTVStyle(0,"实付金额：",R.color.color_222);
+        realPay.setTVRightTxt("￥"+data.pay_amount,R.color.color_222);
+
+        View view = LayoutInflater.from(activity).inflate(R.layout.layout_goods_adapter, null);
+        view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,getResources().getDimensionPixelSize(R.dimen.dp120)));
+        GoodsItemHolder itemHolder = new GoodsItemHolder(view);
+        llGoods.removeAllViews();
+        for (OrderData.DataBean.OrdersBean.ItemsBean item:ordersBean.items){
+            llGoods.addView(view);
+            itemHolder.goodsName.setText(item.product_name);
+            THNGlideUtil.displayImage(item.cover,itemHolder.ivCover,R.mipmap.ic_launcher);
+            itemHolder.tvNum.setText("编号："+item.rid);
+            itemHolder.price.setText("￥"+item.sale_price);
+            itemHolder.stockNum.setText("数量："+item.quantity);
+        }
+    }
+
+    /**
+     * 订单包含的商品项
+     */
+    class GoodsItemHolder {
+        @BindView(R.id.ivCover)
+        ImageView ivCover;
+        @BindView(R.id.goodsName)
+        TextView goodsName;
+        @BindView(R.id.tvNum)
+        TextView tvNum;
+        @BindView(R.id.price)
+        TextView price;
+        @BindView(R.id.stockNum)
+        TextView stockNum;
+        public GoodsItemHolder(View itemView) {
+            ButterKnife.bind(this,itemView);
+        }
+    }
+
+
+    private void refreshUI() {
+        initOrderStatus();
+        setBottomData();
+        setOrderGoodsList();
+    }
+
+    private void setOrderGoodsList() {
 //        int exist_sub_order = orderDetailBean.getExist_sub_order();
 //        if (mContainerLayout != null) {
 //            mContainerLayout.removeAllViews();
@@ -216,16 +305,16 @@
 //            setGoodsItem(linearLayoutContainerGoods, itemsEntityList);
 //            mContainerLayout.addView(subOrderView);
 //        }
-//    }
-//
-//    private void setBottomData() {
-//        if (orderDetailBean.delivery_type==2){//自提
+    }
+
+    private void setBottomData() {
+//        if (orderDetailBean.delivery_type == 2) {//自提
 //            rlContainer.setVisibility(View.GONE);
-//        }else {//线上下单
+//        } else {//线上下单
 //            rlContainer.setVisibility(View.VISIBLE);
 //        }
 //        OrderDetailBean.ExpressInfoBean express_info = orderDetailBean.getExpress_info();
-//        if (null==express_info) return;
+//        if (null == express_info) return;
 //        mDeliverMan.setText(String.format("收货人：%s", express_info.getName()));
 //        mProvince.setText(express_info.getProvince());
 //        mCity.setText(express_info.getCity());
@@ -233,84 +322,32 @@
 //        mTown.setText(TextUtils.isEmpty(express_info.getTown()) ? "" : express_info.getTown());
 //        mDetailsAddress.setText(express_info.getAddress());
 //        mPhone.setText(express_info.getPhone());
-//    }
-//
-//    private void initView() {
-//        GlobalTitleLayout title = (GlobalTitleLayout) findViewById(R.id.title_order_details);
-//        title.setContinueTvVisible(false);
-//        title.setTitle("订单详情");
-//        mDialog = new WaittingDialog(this);
-////        alertDialog = new AlertDialog.Builder(this);
-//        mLogisticsCompany = (TextView) findViewById(R.id.tv_logistics_company_number_order_details);
-//        mLogisticsNumber = (TextView) findViewById(R.id.tv_logistics_number_order_details);
-//        mLogisticsCompanyLayout = (RelativeLayout) findViewById(R.id.layout_logistics_company);
-//        mLogisticsNumberLayout = (RelativeLayout) findViewById(R.id.layout_logistics_number);
-//        mContainerLayout = (LinearLayout) findViewById(R.id.linear_item_order_details);
-//        rlContainer = (RelativeLayout) findViewById(R.id.rlContainer);
-//        mDeliverMan = (TextView) findViewById(R.id.tv_deliver_man_order_details);
-//        mProvince = (TextView) findViewById(R.id.tv_province_order_details);
-//        mCity = (TextView) findViewById(R.id.tv_city_order_details);
-//        mCounty = (TextView) findViewById(R.id.tv_county);
-//        mTown = (TextView) findViewById(R.id.tv_town);
-//        mDetailsAddress = (TextView) findViewById(R.id.tv_address_order_details);
-//        mPhone = (TextView) findViewById(R.id.tv_phone_order_details);
-//        mOrderNum = (TextView) findViewById(R.id.tv_number_order_details);
-//        mPayway = (TextView) findViewById(R.id.tv_payway_order_details);
-//        mTotalMoney = (TextView) findViewById(R.id.tv_totalmoney_order_details);
-//        mFreight = (TextView) findViewById(R.id.tv_freight_order_details);
-//        mPayMoney = (TextView) findViewById(R.id.tv_paymoney_order_details);
-//        TextView mCall = (TextView) findViewById(R.id.bt_call_order_details);
-//        mRightButton = (TextView) findViewById(R.id.bt_right_order_details);
-//        mLeftButton = (TextView) findViewById(R.id.bt_left_order_details);
-//        mBottomLayout = (RelativeLayout) findViewById(R.id.layout_two_button_bottom_order_details);
-//        TextView mTotalMoney2 = (TextView) findViewById(R.id.tv_totalmoney_order_details2);
-//
-//        mBottomLayout.setOnClickListener(this);
-//        mCall.setOnClickListener(this);
-//        mRightButton.setOnClickListener(this);
-//        mLeftButton.setOnClickListener(this);
-//    }
-//
-//    @Override
-//    public void onClick(View v) {
-//        switch (v.getId()) {
-//            case R.id.bt_call_order_details:
-//                new DefaultDialog(OrderDetailsActivity.this, "联系客服：400-879-8751", App.getStringArray(R.array.text_dialog_button), new IDialogListenerConfirmBack() {
-//                    @Override
-//                    public void clickRight() {
-//                        Intent intent = new Intent(Intent.ACTION_DIAL);
-//                        intent.setData(Uri.parse("tel:4008798751"));
-//                        startActivity(intent);
-//                    }
-//                });
-////                alertDialog.setTitle("联系客服：400-879-8751");
-////                alertDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-////
-////                    @Override
-////                    public void onClick(DialogInterface dialog, int which) {
-////
-////                    }
-////                });
-////                alertDialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
-////                    @Override
-////                    public void onClick(DialogInterface dialog, int which) {
-////                        Intent intent = new Intent(Intent.ACTION_DIAL);
-////                        intent.setData(Uri.parse("tel:4008798751"));
-////                        startActivity(intent);
-////                    }
-////                });
-////                alertDialog.show();
-//                break;
-//        }
-//    }
-//
-//
-//    /**
-//     * 加载订单产品条目
-//     *
-//     * @param linearLayoutContainerGoods
-//     * @param itemsEntityList
-//     */
+    }
+
+
+    @OnClick({R.id.tvCallService,R.id.tvPayOrder,R.id.tvCancelOrder})
+    void PerformClick(View v){
+        switch (v.getId()){
+            case R.id.tvCallService:
+                new DefaultDialog(OrderDetailsActivity.this, "联系客服：400-879-8751", activity.getResources().getStringArray(R.array.text_dialog_button), new IDialogListenerConfirmBack() {
+                    @Override
+                    public void clickRight() {
+                        Intent intent = new Intent(Intent.ACTION_DIAL);
+                        intent.setData(Uri.parse("tel:4008798751"));
+                        startActivity(intent);
+                    }
+                });
+                break;
+        }
+    }
+
+
+    /**
+     * 加载订单产品条目
+     *
+     * @param linearLayoutContainerGoods
+     * @param itemsEntityList
+     */
 //    private void setGoodsItem(LinearLayout linearLayoutContainerGoods, final List<OrderDetailBean.ItemsBean> itemsEntityList) {
 //        for (int k = 0; k < itemsEntityList.size(); k++) {
 //            View subOrderGoodsItemView = View.inflate(OrderDetailsActivity.this, R.layout.layout_goods_details, null);
@@ -382,13 +419,11 @@
 //            linearLayoutContainerGoods.addView(subOrderGoodsItemView);
 //        }
 //    }
-//
-//    /**
-//     * 加载子订单产品条目
-//     *
-//     * @param linearLayoutContainerGoods
-//     * @param items
-//     */
+
+    /**
+     * 加载子订单产品条目
+     *
+     */
 //    private void setSubOrderGoodsItem(LinearLayout linearLayoutContainerGoods, final List<OrderDetailBean.SubOrdersBean.ItemsBean> items) {
 //        for (int k = 0; k < items.size(); k++) {
 //            View subOrderGoodsItemView = View.inflate(OrderDetailsActivity.this, R.layout.layout_goods_details, null);
@@ -451,8 +486,8 @@
 //            linearLayoutContainerGoods.addView(subOrderGoodsItemView);
 //        }
 //    }
-//
-//    private void initOrderStatus() {
+
+    private void initOrderStatus() {
 //        String rid1 = orderDetailBean.getRid();
 //        double pay_money = orderDetailBean.getPay_money();
 //        mOrderNum.setText(rid1);
@@ -499,7 +534,7 @@
 //                            @Override
 //                            public void clickRight() {
 //                                HashMap<String, String> params = ClientDiscoverAPI.getdeleteOrderNetRequestParams(rid);
-//                                HttpRequest.post(params,  URL.MY_DELETE_ORDER, new GlobalDataCallBack(){
+//                                HttpRequest.post(params, URL.MY_DELETE_ORDER, new GlobalDataCallBack() {
 //                                    @Override
 //                                    public void onSuccess(String json) {
 //                                        toShopOrderListActivity();
@@ -536,7 +571,7 @@
 //                            @Override
 //                            public void clickRight() {
 //                                HashMap<String, String> params = ClientDiscoverAPI.getcancelOrderNetRequestParams(rid);
-//                                HttpRequest.post(params,  URL.MY_CANCEL_ORDER, new GlobalDataCallBack(){
+//                                HttpRequest.post(params, URL.MY_CANCEL_ORDER, new GlobalDataCallBack() {
 //                                    @Override
 //                                    public void onSuccess(String json) {
 //                                        toShopOrderListActivity();
@@ -565,7 +600,7 @@
 //                            mDialog.show();
 //                        }
 //                        HashMap<String, String> params = ClientDiscoverAPI.gettixingFahuoRequestParams(rid);
-//                        HttpRequest.post(params, URL.SHOPPING_ALERT_SEND_GOODS, new GlobalDataCallBack(){
+//                        HttpRequest.post(params, URL.SHOPPING_ALERT_SEND_GOODS, new GlobalDataCallBack() {
 //                            @Override
 //                            public void onSuccess(String json) {
 //                                mDialog.dismiss();
@@ -597,7 +632,7 @@
 //                            @Override
 //                            public void clickRight() {
 //                                HashMap<String, String> params = ClientDiscoverAPI.getdeleteOrderNetRequestParams(rid);
-//                                HttpRequest.post(params,  URL.MY_DELETE_ORDER, new GlobalDataCallBack(){
+//                                HttpRequest.post(params, URL.MY_DELETE_ORDER, new GlobalDataCallBack() {
 //                                    @Override
 //                                    public void onSuccess(String json) {
 //                                        toShopOrderListActivity();
@@ -626,7 +661,7 @@
 //                            @Override
 //                            public void clickRight() {
 //                                HashMap<String, String> params = ClientDiscoverAPI.getconfirmReceiveNetRequestParams(rid);
-//                                HttpRequest.post(params,  URL.SHOPPING_TAKE_DELIVERY, new GlobalDataCallBack(){
+//                                HttpRequest.post(params, URL.SHOPPING_TAKE_DELIVERY, new GlobalDataCallBack() {
 //                                    @Override
 //                                    public void onSuccess(String json) {
 //                                        toShopOrderListActivity();
@@ -654,7 +689,7 @@
 //                            @Override
 //                            public void clickRight() {
 //                                HashMap<String, String> params = ClientDiscoverAPI.getdeleteOrderNetRequestParams(rid);
-//                                HttpRequest.post(params,  URL.MY_DELETE_ORDER, new GlobalDataCallBack(){
+//                                HttpRequest.post(params, URL.MY_DELETE_ORDER, new GlobalDataCallBack() {
 //                                    @Override
 //                                    public void onSuccess(String json) {
 //                                        toShopOrderListActivity();
@@ -690,7 +725,7 @@
 //                            @Override
 //                            public void clickRight() {
 //                                HashMap<String, String> params = ClientDiscoverAPI.getdeleteOrderNetRequestParams(rid);
-//                                HttpRequest.post(params,  URL.MY_DELETE_ORDER, new GlobalDataCallBack(){
+//                                HttpRequest.post(params, URL.MY_DELETE_ORDER, new GlobalDataCallBack() {
 //                                    @Override
 //                                    public void onSuccess(String json) {
 //                                        toShopOrderListActivity();
@@ -717,7 +752,7 @@
 //                            @Override
 //                            public void clickRight() {
 //                                HashMap<String, String> params = ClientDiscoverAPI.getdeleteOrderNetRequestParams(rid);
-//                                HttpRequest.post(params,  URL.MY_DELETE_ORDER, new GlobalDataCallBack(){
+//                                HttpRequest.post(params, URL.MY_DELETE_ORDER, new GlobalDataCallBack() {
 //                                    @Override
 //                                    public void onSuccess(String json) {
 //                                        toShopOrderListActivity();
@@ -735,8 +770,9 @@
 //                });
 //                break;
 //            case 12://从退货的查看详情点进来，底部那俩按钮都要消失
-//                mBottomLayout.setVisibility(View.GONE);
+//                rlBottom.setVisibility(View.GONE);
 //                break;
 //        }
-//    }
-//}
+    }
+
+}

@@ -24,6 +24,7 @@ public abstract class BaseUltimateViewAdapter<T> extends UltimateViewAdapter {
     public void setOnItemClickListener(OnRecyclerViewItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
+
     protected List<T> list;
 
     public BaseUltimateViewAdapter(List<T> list) {
@@ -34,20 +35,17 @@ public abstract class BaseUltimateViewAdapter<T> extends UltimateViewAdapter {
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
         if (position < getItemCount() && (customHeaderView != null ? position <= list.size() : position < list.size()) && (customHeaderView == null || position > 0)) {
-           final int pos = customHeaderView != null ? position - 1 : position;
-//            Object goods = list.get(pos);
+            final int pos = customHeaderView != null ? position - 1 : position;
             UltimateRecyclerviewViewHolder viewHolder = ((UltimateRecyclerviewViewHolder) holder);
             onBindItemHolder2(viewHolder, pos);
-            if (mDragStartListener != null) {
-                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (onItemClickListener!=null){
-                            onItemClickListener.onClick(view,pos);
-                        }
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onClick(view, pos);
                     }
-                });
-            }
+                }
+            });
         }
 
     }
@@ -99,7 +97,8 @@ public abstract class BaseUltimateViewAdapter<T> extends UltimateViewAdapter {
     @Override
     public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup viewGroup) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.stick_header_item, viewGroup, false);
-        return new RecyclerView.ViewHolder(view) { };
+        return new RecyclerView.ViewHolder(view) {
+        };
     }
 
     @Override
@@ -196,6 +195,7 @@ public abstract class BaseUltimateViewAdapter<T> extends UltimateViewAdapter {
 
     /************** abstract method ***************/
     public abstract void onBindItemHolder2(UltimateRecyclerviewViewHolder ultimateRecyclerviewViewHolder, int position);
+
     public abstract UltimateRecyclerviewViewHolder onCreateViewHolder2(ViewGroup parent);
 
 

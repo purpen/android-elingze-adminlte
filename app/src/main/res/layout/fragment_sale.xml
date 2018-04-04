@@ -22,6 +22,7 @@
             android:focusable="false" />
 
     </LinearLayout>
+
     <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
         android:id="@+id/ultimateRecyclerView"
         android:layout_width="match_parent"

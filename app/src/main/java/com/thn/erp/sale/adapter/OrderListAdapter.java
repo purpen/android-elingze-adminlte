@@ -38,6 +38,7 @@ public class OrderListAdapter extends BaseUltimateViewAdapter<OrderData.DataBean
         viewHolder.tvTime.setText(DateUtil.getDateByTimestamp(ordersBean.created_at));
         viewHolder.tvOrderNum.setText("订单号："+ordersBean.rid);
         View view = LayoutInflater.from(activity).inflate(R.layout.layout_goods_adapter, null);
+        view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,activity.getResources().getDimensionPixelSize(R.dimen.dp120)));
         GoodsItemHolder itemHolder = new GoodsItemHolder(view);
         viewHolder.llGoods.removeAllViews();
         for (OrderData.DataBean.OrdersBean.ItemsBean item:ordersBean.items){

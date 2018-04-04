@@ -13,33 +13,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/customHeadView"
-        android:scrollbars="none">
+        android:layout_above="@+id/rlBottom">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
+
             <RelativeLayout
                 android:id="@+id/rlAddress"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:background="@android:color/white"
                 android:layout_below="@+id/customName"
                 android:layout_marginTop="@dimen/dp5"
-                >
+                android:background="@android:color/white">
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp1"
                     android:layout_alignParentTop="true"
-                    android:background="@color/color_eee"
-                    />
+                    android:background="@color/color_eee" />
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp1"
                     android:layout_alignParentBottom="true"
-                    android:background="@color/color_eee"
-                    />
+                    android:background="@color/color_eee" />
+
                 <ImageView
                     android:id="@+id/iv"
                     android:layout_width="41dp"
@@ -47,30 +47,21 @@
                     android:paddingLeft="@dimen/sp15"
                     android:paddingRight="@dimen/dp10"
                     android:src="@mipmap/icon_address" />
-
-                <ImageView
-                    android:id="@+id/ivMore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dp15"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:src="@mipmap/icon_arrow_more" />
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:layout_toLeftOf="@+id/ivMore"
                     android:layout_toRightOf="@id/iv"
+                    android:paddingRight="@dimen/dp15"
                     android:gravity="center">
+
                     <TextView
                         android:id="@+id/tvName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:maxLines = "1"
+                        android:maxLines="1"
                         android:textColor="@color/color_222"
                         android:textSize="@dimen/sp15" />
+
                     <TextView
                         android:id="@+id/tvPhone"
                         android:layout_width="wrap_content"
@@ -79,152 +70,71 @@
                         android:maxLines="1"
                         android:textColor="@color/color_222"
                         android:textSize="@dimen/sp15" />
+
                     <TextView
                         android:id="@+id/tvAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tvName"
                         android:layout_marginTop="@dimen/dp10"
-                        android:maxLines = "1"
-                        android:textColor="@color/color_222"
-                        android:textSize="@dimen/sp12"
                         android:ellipsize="end"
-                        />
-
-                    <TextView
-                        android:id="@+id/tvNoAddressTips"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="@string/set_address"
-                        android:textColor="#999999"
-                        android:textSize="14sp"
-                        android:visibility="gone"
-                        />
-
+                        android:maxLines="1"
+                        android:textColor="@color/color_222"
+                        android:textSize="@dimen/sp12" />
                 </RelativeLayout>
             </RelativeLayout>
-            <ScrollView
+            <com.thn.erp.view.CustomItemLayout
+                android:id="@+id/itemFreightNum"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:id="@+id/linear_item_order_details"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#f4f4f4"
-                    android:orientation="vertical" />
-            </ScrollView>
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:id="@+id/llGoods"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
 
             <LinearLayout
                 android:id="@+id/linearLayout_sumary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
-                android:padding="5dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
                     android:layout_marginLeft="5dp"
-                    android:text="备注：" />
+                    android:text="备注："
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/textView_sumary"
                     android:layout_width="wrap_content"
-                    android:layout_marginTop="7dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
+                    android:layout_marginTop="7dp"
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <RelativeLayout
+
+            <com.thn.erp.view.CustomItemLayout
+                android:id="@+id/itemFreightCompany"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_number"
-                    android:text="订单号"
-                    android:textSize="14sp" />
+                android:layout_marginBottom="@dimen/dp5"
+                android:layout_marginTop="@dimen/dp5"
+                android:visibility="gone"
+                />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_number_order_details"
-                    android:layout_toRightOf="@+id/tv_number"
-                    android:textColor="@color/color_222" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/layout_logistics_company"
+            <com.thn.erp.view.CustomItemLayout
+                android:id="@+id/itemPayInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_number_logistics_company"
-                    android:text="物流公司"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_logistics_company_number_order_details"
-                    android:layout_toRightOf="@+id/tv_number_logistics_company"
-                    android:textColor="#333333" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/layout_logistics_number"
-                >
-
-                <TextView
-                    android:id="@+id/tv_number_logistics"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="物流单号："
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_logistics_number_order_details"
-                    android:layout_toRightOf="@+id/tv_number_logistics"
-                    android:textColor="#333333" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-
-                <TextView
-                    android:id="@+id/tv_payway"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="支付方式："
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tv_payway_order_details"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_toRightOf="@+id/tv_payway"
-                    android:gravity="right"
-                    android:paddingRight="10dp"
-                    android:textColor="#333333" />
-            </RelativeLayout>
-
-
+                android:layout_marginBottom="@dimen/dp5"
+                android:layout_marginTop="@dimen/dp5"
+                android:visibility="gone"
+                />
 
             <com.thn.erp.view.CustomItemLayout
                 android:id="@+id/freight"
@@ -234,7 +144,9 @@
             <com.thn.erp.view.CustomItemLayout
                 android:id="@+id/sumPrice"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp5"
+                android:layout_marginTop="@dimen/dp5" />
 
             <com.thn.erp.view.CustomItemLayout
                 android:id="@+id/reducedPrice"
@@ -245,10 +157,12 @@
             <com.thn.erp.view.CustomItemLayout
                 android:id="@+id/realPay"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp5"
+                android:layout_marginTop="@dimen/dp5" />
 
             <TextView
-                android:id="@+id/bt_call_order_details"
+                android:id="@+id/tvCallService"
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:layout_marginBottom="5dp"
@@ -262,44 +176,44 @@
         </LinearLayout>
     </ScrollView>
 
-    <!--<RelativeLayout-->
-        <!--android:id="@+id/layout_two_button_bottom_order_details"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="44dp"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:background="@color/white">-->
+    <RelativeLayout
+        android:id="@+id/rlBottom"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white">
 
-        <!--<TextView-->
-            <!--android:id="@+id/bt_left_order_details"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:layout_marginRight="10dp"-->
-            <!--android:layout_toLeftOf="@+id/bt_right_order_details"-->
-            <!--android:background="@drawable/yellow_corner_white"-->
-            <!--android:paddingBottom="8dp"-->
-            <!--android:paddingLeft="15dp"-->
-            <!--android:paddingRight="15dp"-->
-            <!--android:paddingTop="8dp"-->
-            <!--android:text="@string/cancel_order"-->
-            <!--android:textColor="@color/yellow_bd8913"-->
-            <!--android:textSize="12sp" />-->
+        <TextView
+            android:id="@+id/tvCancelOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/tvPayOrder"
+            android:background="@drawable/corner_border_27ae59"
+            android:paddingBottom="8dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="8dp"
+            android:text="取消订单"
+            android:textColor="@color/color_27AE59"
+            android:textSize="12sp" />
 
-        <!--<TextView-->
-            <!--android:id="@+id/bt_right_order_details"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:layout_marginRight="10dp"-->
-            <!--android:background="@drawable/yellow_corner_white"-->
-            <!--android:paddingBottom="8dp"-->
-            <!--android:paddingLeft="15dp"-->
-            <!--android:paddingRight="15dp"-->
-            <!--android:paddingTop="8dp"-->
-            <!--android:text="@string/pay_now"-->
-            <!--android:textColor="@color/yellow_bd8913"-->
-            <!--android:textSize="12sp" />-->
-    <!--</RelativeLayout>-->
+        <TextView
+            android:id="@+id/tvPayOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/corner_border_27ae59"
+            android:paddingBottom="8dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="8dp"
+            android:text="立即支付"
+            android:textColor="@color/color_27AE59"
+            android:textSize="12sp" />
+    </RelativeLayout>
 
 </RelativeLayout>
