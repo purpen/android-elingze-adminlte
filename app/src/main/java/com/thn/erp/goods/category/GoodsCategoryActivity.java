@@ -121,9 +121,10 @@ public class GoodsCategoryActivity extends BaseStyle2Activity implements ImpTopb
         ultimateRecyclerView.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMore(int itemsCount, final int maxLastVisiblePosition) {
+                ultimateRecyclerView.disableLoadmore();
                 isRefreshing = false;
-                getGoodsList();
                 page++;
+                getGoodsList();
             }
         });
 

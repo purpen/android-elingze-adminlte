@@ -6,7 +6,7 @@
 
     <include layout="@layout/include_public_topbar"/>
 
-    <include layout="@layout/include_view_layout_line" />
+    <include layout="@layout/include_view_line_divider_vertical" />
 
     <TextView
         android:layout_width="wrap_content"

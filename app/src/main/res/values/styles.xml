@@ -13,6 +13,28 @@
         <item name="android:fitsSystemWindows">true</item>
     </style>
 
+    <style name="CommonTextViewTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#222222</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="CommonTextViewHintStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#999999</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="CommonEditTextStyle">
+        <item name="android:gravity">left</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/THN_color_fontColor_assist</item>
+        <item name="android:textColorHint">@color/THN_color_fontColor_hint</item>
+        <item name="android:background">#0000</item>
+    </style>
+
     <!-- MainActivity中最下面RadioGroup的五个Button的样式 -->
     <style name="MainButtonStyle">
         <item name="android:layout_height">match_parent</item>
@@ -95,7 +117,7 @@
     </style>
 
 <!--    <style name="CustomCheckboxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
-        <item name="android:button">@drawable/selector_choose_category</item>
+        <item name="android:button">@drawaselector_choose_category1gory</item>
     </style>-->
 
 

@@ -5,15 +5,22 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.Switch;
 
+import com.stephen.taihuoniaolibrary.utils.THNQrCodeUtil;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseStyle2Activity;
 import com.thn.erp.common.ImpTopbarOnClickListener;
+import com.thn.erp.common.RequestCode;
 import com.thn.erp.view.common.PublicTopBar;
+import com.thn.erp.zxing.activity.CaptureActivityZxing;
+
+import org.w3c.dom.Text;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Stephen on 2018/3/29 16:43
@@ -25,10 +32,12 @@ public class GoodsCodeEditActivity extends BaseStyle2Activity implements ImpTopb
     PublicTopBar publicTopBar;
     @BindView(R.id.editText1)
     EditText editText1;
+    @BindView(R.id.imageView)
+    ImageView imageView;
 
     @Override
     protected int getLayout() {
-        return R.layout.activity_goods_code_edit;
+        return R.layout.activity_goods_add_code;
     }
 
     @Override
@@ -63,6 +72,21 @@ public class GoodsCodeEditActivity extends BaseStyle2Activity implements ImpTopb
                     this.finish();
                 }
                 break;
+        }
+    }
+
+    @OnClick(R.id.imageView)
+    public void onViewClicked() {
+//        THNQrCodeUtil.
+        startActivityForResult(new Intent(activity, CaptureActivityZxing.class), RequestCode.CODE_GOODS_ADD_QRCODE);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == -1 && requestCode == RequestCode.CODE_GOODS_ADD_QRCODE) {
+            editText1.setText(data.getStringExtra("text"));
         }
     }
 }

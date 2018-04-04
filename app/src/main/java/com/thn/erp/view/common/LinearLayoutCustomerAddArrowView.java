@@ -49,7 +49,7 @@ public class LinearLayoutCustomerAddArrowView extends LinearLayout {
 
     public void setInitKeyAndHint(String str1, String str2, OnClickListener onClickListener, int imageid) {
         textView1.setText(str1);
-        textView2.setText(str2);
+        textView2.setHint(str2);
         imageView1.setImageResource(imageid);
         setOnClickListener(onClickListener);
     }

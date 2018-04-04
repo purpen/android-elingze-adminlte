@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.thn.erp.R;
 import com.thn.erp.base.BaseStyle2Activity;
@@ -28,7 +27,7 @@ public class GoodsKeywordsEditActivity extends BaseStyle2Activity implements Imp
 
     @Override
     protected int getLayout() {
-        return R.layout.activity_goods_keys_edit;
+        return R.layout.activity_goods_add_keys;
     }
 
     @Override

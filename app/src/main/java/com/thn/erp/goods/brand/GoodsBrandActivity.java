@@ -111,9 +111,10 @@ public class GoodsBrandActivity extends BaseStyle2Activity implements ImpTopbarO
         ultimateRecyclerView.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMore(int itemsCount, final int maxLastVisiblePosition) {
+                ultimateRecyclerView.disableLoadmore();
                 isRefreshing = false;
-                getGoodsList();
                 page++;
+                getGoodsList();
             }
         });
 

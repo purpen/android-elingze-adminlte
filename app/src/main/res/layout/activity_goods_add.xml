@@ -1,52 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:zhy="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <include layout="@layout/include_public_topbar" />
 
-    <include layout="@layout/include_view_layout_line" />
+    <include layout="@layout/include_view_line_divider_vertical" />
 
-   <ScrollView
-       android:layout_width="match_parent"
-       android:layout_height="match_parent">
-       <LinearLayout
-           android:orientation="vertical"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent">
-           <android.support.v7.widget.RecyclerView
-               android:id="@+id/recyclerView1"
-               android:layout_width="match_parent"
-               android:background="#FFFFFF"
-               android:layout_height="105dp" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-           <include layout="@layout/include_view_separate_vertical_10dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-           <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/layoutItemView1"/>
-           <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView android:layout_width="wrap_content" android:layout_height="wrap_content"  android:id="@+id/layoutItemView2"/>
-           <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/layoutItemView3"/>
-           <com.zhy.view.flowlayout.TagFlowLayout
-               android:id="@+id/id_flowlayout"
-               zhy:max_select="1"
-               android:layout_width="fill_parent"
-               android:layout_height="wrap_content"
-               android:background="#FFFFFF"
-               android:padding="20dp">
-           </com.zhy.view.flowlayout.TagFlowLayout>
-           <include layout="@layout/include_view_separate_vertical_10dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="105dp"
+                android:gravity="center_vertical"
+                android:background="#FFFFFF"
+                android:padding="15dp">
 
-           <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/layoutItemView4"/>
-           <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/layoutItemView5"/>
-           <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/layoutItemView6"/>
-           <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/layoutItemView7"/>
-           <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/layoutItemView8"/>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF" />
+            </LinearLayout>
 
-           <include layout="@layout/include_view_separate_vertical_10dp" />
+            <include layout="@layout/include_view_separate_vertical_10dp" />
 
-           <com.thn.erp.view.common.LinearLayoutCustomerAddSwitchView android:layout_marginBottom="20dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/layoutItemView9"/>
+            <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView
+                android:id="@+id/layoutItemView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-       </LinearLayout>
-   </ScrollView>
+            <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView
+                android:id="@+id/layoutItemView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView
+                android:id="@+id/layoutItemView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.zhy.view.flowlayout.TagFlowLayout
+                android:id="@+id/id_flowlayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:padding="10dp"
+                zhy:tag_gravity="left"
+                zhy:max_select="1" />
+
+            <include layout="@layout/include_view_separate_vertical_10dp" />
+
+            <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView
+                android:id="@+id/layoutItemView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView
+                android:id="@+id/layoutItemView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView
+                android:id="@+id/layoutItemView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView
+                android:id="@+id/layoutItemView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView
+                android:id="@+id/layoutItemView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <include layout="@layout/include_view_separate_vertical_10dp" />
+
+            <com.thn.erp.view.common.LinearLayoutCustomerAddSwitchView
+                android:id="@+id/layoutItemView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp" />
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

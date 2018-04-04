@@ -8,7 +8,7 @@
 
     <include layout="@layout/include_public_topbar" />
 
-    <include layout="@layout/include_view_layout_line" />
+    <include layout="@layout/include_view_line_divider_vertical" />
 
     <com.thn.erp.view.SearchView
         android:id="@+id/searchView"

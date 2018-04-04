@@ -7,7 +7,7 @@
 
     <include layout="@layout/include_public_topbar" />
 
-    <include layout="@layout/include_view_layout_line" />
+    <include layout="@layout/include_view_line_divider_vertical" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,14 +41,14 @@
         </LinearLayout>
     </LinearLayout>
 
-    <include layout="@layout/include_view_layout_line" />
+    <include layout="@layout/include_view_line_divider_vertical" />
 
     <include layout="@layout/include_layout_customer" />
 
-    <include layout="@layout/include_view_layout_line" />
+    <include layout="@layout/include_view_line_divider_vertical" />
 
     <include layout="@layout/include_layout_customer" />
 
-    <include layout="@layout/include_view_layout_line" />
+    <include layout="@layout/include_view_line_divider_vertical" />
 
 </LinearLayout>

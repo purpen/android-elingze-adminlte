@@ -7,7 +7,7 @@
 
     <include layout="@layout/include_public_topbar" />
 
-    <include layout="@layout/include_view_layout_line" />
+    <include layout="@layout/include_view_line_divider_vertical" />
 
     <com.thn.erp.view.autoScrollViewpager.ScrollableView
         android:id="@+id/scrollableView"
@@ -68,7 +68,7 @@
 
     </LinearLayout>
 
-    <include layout="@layout/include_view_layout_line" />
+    <include layout="@layout/include_view_line_divider_vertical" />
 
     <include layout="@layout/include_view_separate_vertical_10dp" />
 
@@ -78,28 +78,28 @@
         android:background="#FFFFFF"
         android:orientation="vertical">
 
-        <include layout="@layout/include_view_layout_line" />
+        <include layout="@layout/include_view_line_divider_vertical" />
 
         <com.thn.erp.view.common.LinearLayoutArrowTextView
             android:id="@+id/linearLoutArrowTextView1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <include layout="@layout/include_view_layout_line" />
+        <include layout="@layout/include_view_line_divider_vertical" />
 
         <com.thn.erp.view.common.LinearLayoutCommonTextView
             android:id="@+id/linearLoutCommonTextViewTextView1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <include layout="@layout/include_view_layout_line" />
+        <include layout="@layout/include_view_line_divider_vertical" />
 
         <com.thn.erp.view.common.LinearLayoutCommonTextView
             android:layout_width="match_parent"
             android:id="@+id/linearLoutCommonTextViewTextView2"
             android:layout_height="wrap_content" />
 
-        <include layout="@layout/include_view_layout_line" />
+        <include layout="@layout/include_view_line_divider_vertical" />
     </LinearLayout>
 
     <include layout="@layout/include_view_separate_vertical_10dp" />
@@ -110,28 +110,28 @@
         android:background="#FFFFFF"
         android:orientation="vertical">
 
-        <include layout="@layout/include_view_layout_line" />
+        <include layout="@layout/include_view_line_divider_vertical" />
 
         <com.thn.erp.view.common.LinearLayoutArrowTextView
             android:layout_width="match_parent"
             android:id="@+id/linearLoutArrowTextView2"
             android:layout_height="wrap_content" />
 
-        <include layout="@layout/include_view_layout_line" />
+        <include layout="@layout/include_view_line_divider_vertical" />
 
         <com.thn.erp.view.common.LinearLayoutCommonTextView
             android:layout_width="match_parent"
             android:id="@+id/linearLoutCommonTextViewTextView3"
             android:layout_height="wrap_content" />
 
-        <include layout="@layout/include_view_layout_line" />
+        <include layout="@layout/include_view_line_divider_vertical" />
 
         <com.thn.erp.view.common.LinearLayoutCommonTextView
             android:layout_width="match_parent"
             android:id="@+id/linearLoutCommonTextViewTextView4"
             android:layout_height="wrap_content" />
 
-        <include layout="@layout/include_view_layout_line" />
+        <include layout="@layout/include_view_line_divider_vertical" />
     </LinearLayout>
 
     <LinearLayout

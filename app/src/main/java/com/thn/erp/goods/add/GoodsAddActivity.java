@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.NetReadyHandler;
@@ -19,6 +18,7 @@ import com.qiniu.android.storage.UpCancellationSignal;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UpProgressHandler;
 import com.qiniu.android.storage.UploadOptions;
+import com.stephen.taihuoniaolibrary.utils.THNDpUtil;
 import com.stephen.taihuoniaolibrary.utils.THNToastUtil;
 import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
 import com.thn.erp.AppApplication;
@@ -28,6 +28,7 @@ import com.thn.erp.album.PicturePickerUtils;
 import com.thn.erp.base.BaseStyle2Activity;
 import com.thn.erp.common.ImpTopbarOnClickListener;
 import com.thn.erp.common.OnRecyclerViewItemClickListener;
+import com.thn.erp.common.RecycleViewItemDecorationHorizontal;
 import com.thn.erp.common.RequestCode;
 import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
@@ -57,7 +58,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 
 import butterknife.BindView;
@@ -161,6 +161,7 @@ public class GoodsAddActivity extends BaseStyle2Activity implements ImpTopbarOnC
     private void initRecyclerView() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView1.setLayoutManager(layoutManager);
+        recyclerView1.addItemDecoration(new RecycleViewItemDecorationHorizontal(THNDpUtil.dp2px(this, 10)));
         mGoodsAddRecyclerViewAdapter = new GoodsAddRecyclerViewAdapter(this, new OnRecyclerViewItemClickListener() {
             @Override
             public void onClick(View view, int i) {

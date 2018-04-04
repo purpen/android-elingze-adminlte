@@ -7,11 +7,11 @@
 
     <include layout="@layout/include_public_topbar" />
 
-    <include layout="@layout/include_view_layout_line" />
+    <include layout="@layout/include_view_line_divider_vertical" />
 
     <include layout="@layout/include_view_separate_vertical_10dp" />
 
-    <include layout="@layout/include_view_layout_line" />
+    <include layout="@layout/include_view_line_divider_vertical" />
 
     <LinearLayout style="@style/ModuleMoreRepositoryLookLinearLayoutStyle">
 
@@ -30,11 +30,11 @@
             android:textCursorDrawable="@null" />
     </LinearLayout>
 
-    <include layout="@layout/include_view_layout_line" />
+    <include layout="@layout/include_view_line_divider_vertical" />
 
     <include layout="@layout/include_view_separate_vertical_10dp" />
 
-    <include layout="@layout/include_view_layout_line" />
+    <include layout="@layout/include_view_line_divider_vertical" />
 
     <LinearLayout style="@style/ModuleMoreRepositoryLookLinearLayoutStyle">
 
@@ -53,7 +53,7 @@
             android:textCursorDrawable="@null" />
     </LinearLayout>
 
-    <include layout="@layout/include_view_layout_line" />
+    <include layout="@layout/include_view_line_divider_vertical" />
 
     <LinearLayout style="@style/ModuleMoreRepositoryLookLinearLayoutStyle">
 
@@ -72,7 +72,7 @@
             android:textCursorDrawable="@null" />
     </LinearLayout>
 
-    <include layout="@layout/include_view_layout_line" />
+    <include layout="@layout/include_view_line_divider_vertical" />
 
     <LinearLayout
         android:id="@+id/linearLayout_repository_delete_repository"

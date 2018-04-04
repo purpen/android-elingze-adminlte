@@ -32,4 +32,58 @@
         <item>@color/color_27AE59</item>
         <item>@color/color_27AE59</item>
     </integer-array>
+
+
+    <string-array name="GoodsAddCategory">
+        <item>先锋智能</item>
+        <item>数码电子</item>
+        <item>户外出行</item>
+        <item>运动健康</item>
+        <item>先锋设计</item>
+        <item>家居日用</item>
+        <item>厨房卫浴</item>
+        <item>母婴成长</item>
+        <item>母婴成长</item>
+    </string-array>
+
+    <string-array name="GoodsAddUnit">
+        <item>个</item>
+        <item>瓶</item>
+        <item>包</item>
+        <item>袋</item>
+        <item>箱</item>
+        <item>克</item>
+        <item>千克</item>
+        <item>斤</item>
+        <item>公斤</item>
+        <item>只</item>
+        <item>条</item>
+        <item>根</item>
+        <item>支</item>
+        <item>本</item>
+        <item>辆</item>
+        <item>盒</item>
+        <item>颗</item>
+        <item>台</item>
+        <item>张</item>
+        <item>卷</item>
+        <item>双</item>
+        <item>套</item>
+        <item>盘</item>
+        <item>桶</item>
+        <item>筒</item>
+        <item>件</item>
+        <item>块</item>
+        <item>片</item>
+        <item>粒</item>
+        <item>副</item>
+        <item>把</item>
+        <item>升</item>
+        <item>吨</item>
+        <item>吨</item>
+        <item>米</item>
+        <item>平方</item>
+    </string-array>
+
+
 </resources>

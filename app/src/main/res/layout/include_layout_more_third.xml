@@ -8,7 +8,7 @@
     android:layout_marginBottom="5dp"
     tools:showIn="@layout/fragment_more">
 
-    <include layout="@layout/include_view_layout_line" />
+    <include layout="@layout/include_view_line_divider_vertical" />
 
     <com.thn.erp.view.common.LinearLayoutArrowTextView
         android:id="@+id/layoutItemView1"
@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:background="@color/THN_color_bgColor_white" />
 
-    <include layout="@layout/include_view_layout_line" />
+    <include layout="@layout/include_view_line_divider_vertical" />
 
     <com.thn.erp.view.common.LinearLayoutArrowTextView
         android:id="@+id/layoutItemView2"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:background="@color/THN_color_bgColor_white" />
 
-    <include layout="@layout/include_view_layout_line" />
+    <include layout="@layout/include_view_line_divider_vertical" />
 
     <com.thn.erp.view.common.LinearLayoutArrowTextView
         android:id="@+id/layoutItemView3"
@@ -34,7 +34,7 @@
 
     </com.thn.erp.view.common.LinearLayoutArrowTextView>
 
-    <include layout="@layout/include_view_layout_line" />
+    <include layout="@layout/include_view_line_divider_vertical" />
 
     <com.thn.erp.view.common.LinearLayoutArrowTextView
         android:id="@+id/layoutItemView4"
@@ -44,7 +44,7 @@
 
     </com.thn.erp.view.common.LinearLayoutArrowTextView>
 
-    <include layout="@layout/include_view_layout_line" />
+    <include layout="@layout/include_view_line_divider_vertical" />
 
     <com.thn.erp.view.common.LinearLayoutArrowTextView
         android:id="@+id/layoutItemView5"
@@ -54,7 +54,7 @@
 
     </com.thn.erp.view.common.LinearLayoutArrowTextView>
 
-    <include layout="@layout/include_view_layout_line" />
+    <include layout="@layout/include_view_line_divider_vertical" />
 
     <com.thn.erp.view.common.LinearLayoutArrowTextView
         android:id="@+id/layoutItemView6"
@@ -64,6 +64,6 @@
 
     </com.thn.erp.view.common.LinearLayoutArrowTextView>
 
-    <include layout="@layout/include_view_layout_line" />
+    <include layout="@layout/include_view_line_divider_vertical" />
 </LinearLayout>
     

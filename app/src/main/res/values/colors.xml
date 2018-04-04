@@ -48,6 +48,7 @@
     <color name="backround_black">#ff010101</color>
     <color name="white">#ffffff</color>
     <color name="color_transparent">#00000000</color>
+    <color name="white40">#40FFFFFF</color>
 
 
 </resources>

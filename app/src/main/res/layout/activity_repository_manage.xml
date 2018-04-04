@@ -9,7 +9,7 @@
 
     <include layout="@layout/include_public_topbar" />
 
-    <include layout="@layout/include_view_layout_line" />
+    <include layout="@layout/include_view_line_divider_vertical" />
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabLayout_repository_tab"
@@ -27,7 +27,7 @@
         android:background="#e2e2e2" />
 
     <include layout="@layout/include_view_separate_vertical_10dp" />
-    <include layout="@layout/include_view_layout_line" />
+    <include layout="@layout/include_view_line_divider_vertical" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager_repository_list"

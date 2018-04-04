@@ -44,7 +44,7 @@ public class GoodsAddRecyclerViewAdapter extends RecyclerView.Adapter<GoodsAddRe
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         if (stringList.size() == 0 || position == stringList.size()) {
-            GlideUtil.displayImage(R.mipmap.ic_launcher, holder.imageView);
+            GlideUtil.displayImage(R.mipmap.icon_goods_add_img, holder.imageView);
         } else {
             Bitmap uri = stringList.get(position);
             holder.imageView.setImageBitmap(uri);
@@ -64,8 +64,8 @@ public class GoodsAddRecyclerViewAdapter extends RecyclerView.Adapter<GoodsAddRe
     public int getItemCount() {
         if (stringList == null) {
             return 1;
-        } else if (stringList.size() == 3) {
-            return 3;
+        } else if (stringList.size() == pictureSize) {
+            return pictureSize;
         } else {
             return stringList.size() + 1;
         }
@@ -82,6 +82,7 @@ public class GoodsAddRecyclerViewAdapter extends RecyclerView.Adapter<GoodsAddRe
 
     class ImageBean{
         String imageResource;
+        String imamgeIndex;
         String imageId;
     }
 

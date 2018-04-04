@@ -134,5 +134,5 @@
 
     </LinearLayout>
 
-    <include layout="@layout/include_view_layout_line" />
+    <include layout="@layout/include_view_line_divider_vertical" />
 </LinearLayout>

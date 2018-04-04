@@ -7,7 +7,7 @@
 
     <include layout="@layout/include_public_topbar" />
 
-    <include layout="@layout/include_view_layout_line" />
+    <include layout="@layout/include_view_line_divider_vertical" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -21,28 +21,28 @@
             <TextView
                 style="@style/ModuleOverViewCustomerAddTabStyle"
                 android:text="基本信息" />
-            <include layout="@layout/include_view_layout_line" />
+            <include layout="@layout/include_view_line_divider_vertical" />
 
             <com.thn.erp.view.common.LinearLayoutCustomerAddEditTextView
                 android:id="@+id/editTextView_customer_add_basic_info1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-            <include layout="@layout/include_view_layout_line" />
+            <include layout="@layout/include_view_line_divider_vertical" />
             <com.thn.erp.view.common.LinearLayoutCustomerAddEditTextView
                 android:layout_width="wrap_content"
                 android:id="@+id/editTextView_customer_add_basic_info2"
                 android:layout_height="wrap_content" />
-            <include layout="@layout/include_view_layout_line" />
+            <include layout="@layout/include_view_line_divider_vertical" />
             <com.thn.erp.view.common.LinearLayoutCustomerAddEditTextView
                 android:layout_width="wrap_content"
                 android:id="@+id/editTextView_customer_add_basic_info3"
                 android:layout_height="wrap_content" />
-            <include layout="@layout/include_view_layout_line" />
+            <include layout="@layout/include_view_line_divider_vertical" />
             <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView
                 android:layout_width="wrap_content"
                 android:id="@+id/editTextView_customer_add_basic_info4"
                 android:layout_height="wrap_content" />
-            <include layout="@layout/include_view_layout_line" />
+            <include layout="@layout/include_view_line_divider_vertical" />
             <com.thn.erp.view.common.LinearLayoutCustomerAddSwitchView
                 android:layout_width="wrap_content"
                 android:id="@+id/editTextView_customer_add_basic_info5"
@@ -51,24 +51,24 @@
             <TextView
                 style="@style/ModuleOverViewCustomerAddTabStyle"
                 android:text="扩展信息" />
-            <include layout="@layout/include_view_layout_line" />
+            <include layout="@layout/include_view_line_divider_vertical" />
             <com.thn.erp.view.common.LinearLayoutCustomerAddEditTextView
                 android:layout_width="wrap_content"
                 android:id="@+id/editTextView_customer_add_additional_info1"
                 android:layout_height="wrap_content" />
-            <include layout="@layout/include_view_layout_line" />
+            <include layout="@layout/include_view_line_divider_vertical" />
             <com.thn.erp.view.common.LinearLayoutCustomerAddEditTextView
                 android:layout_width="wrap_content"
                 android:id="@+id/editTextView_customer_add_additional_info2"
                 android:layout_height="wrap_content" />
-            <include layout="@layout/include_view_layout_line" />
+            <include layout="@layout/include_view_line_divider_vertical" />
             <com.thn.erp.view.common.LinearLayoutCustomerAddEditTextView
                 android:layout_width="wrap_content"
                 android:id="@+id/editTextView_customer_add_additional_info3"
                 android:layout_height="wrap_content" />
 
             <include layout="@layout/include_view_separate_vertical_10dp" />
-            <include layout="@layout/include_view_layout_line" />
+            <include layout="@layout/include_view_line_divider_vertical" />
             <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView
                 android:layout_width="wrap_content"
                 android:id="@+id/editTextView_customer_add_additional_info4"
@@ -81,27 +81,27 @@
             <TextView
                 style="@style/ModuleOverViewCustomerAddTabStyle"
                 android:text="地址信息" />
-            <include layout="@layout/include_view_layout_line" />
+            <include layout="@layout/include_view_line_divider_vertical" />
             <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView
                 android:layout_width="wrap_content"
                 android:id="@+id/editTextView_customer_add_address_info1"
                 android:layout_height="wrap_content" />
-            <include layout="@layout/include_view_layout_line" />
+            <include layout="@layout/include_view_line_divider_vertical" />
             <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView
                 android:id="@+id/editTextView_customer_add_address_info2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-            <include layout="@layout/include_view_layout_line" />
+            <include layout="@layout/include_view_line_divider_vertical" />
             <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView
                 android:layout_width="wrap_content"
                 android:id="@+id/editTextView_customer_add_address_info3"
                 android:layout_height="wrap_content" />
-            <include layout="@layout/include_view_layout_line" />
+            <include layout="@layout/include_view_line_divider_vertical" />
             <com.thn.erp.view.common.LinearLayoutCustomerAddEditTextView
                 android:layout_width="wrap_content"
                 android:id="@+id/editTextView_customer_add_address_info4"
                 android:layout_height="wrap_content" />
-            <include layout="@layout/include_view_layout_line" />
+            <include layout="@layout/include_view_line_divider_vertical" />
             <include layout="@layout/include_view_separate_vertical_10dp" />
             <com.thn.erp.view.common.LinearLayoutCustomerAddEditTextView
                 android:layout_width="wrap_content"

@@ -29,4 +29,12 @@ public class THNApp {
     public static int getScreenWidth() {
         return mContext.getResources().getDisplayMetrics().widthPixels;
     }
+
+    public static String getString(int resourceId){
+        return mContext.getResources().getString(resourceId);
+    }
+
+    public static String[] getStringArray(int resourceId){
+        return mContext.getResources().getStringArray(resourceId);
+    }
 }

@@ -8,11 +8,8 @@
 
     <TextView
         android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
-        android:textColor="#222222"
-        android:textSize="15sp" />
+        style="@style/CommonTextViewTextStyle" />
 
     <include layout="@layout/include_view_fill_width" />
 
@@ -27,7 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#0000"
-            android:text="请选择"
+            android:hint="请选择"
+            android:gravity="center_vertical|end"
             android:textColor="#666666"
             android:textSize="15sp" />
 
