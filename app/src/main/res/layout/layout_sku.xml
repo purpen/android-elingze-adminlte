@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tvSku"
+    android:layout_width="@dimen/dp70"
+    android:layout_height="@dimen/dp30"
+    android:gravity="center"
+    android:background="@drawable/corner_border_27ae59"
+    android:textColor="@color/color_27AE59"
+    android:textSize="12sp"
+    />

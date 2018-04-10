@@ -168,4 +168,9 @@ public class URL {
      * 获取默认地址
      */
     public static String GET_DEFAULT_ADDRESS = BASE_URL+"address/is_default";
+
+    /**
+     * 获取SKU列表
+     */
+    public static String SKU_LIST = BASE_URL + "products/by_sku";
 }

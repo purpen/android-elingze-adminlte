@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/white"
     android:orientation="vertical"
-    android:paddingTop="12dp">
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp">
+        android:layout_margin="@dimen/dp10"
+        >
 
         <ImageView
             android:id="@+id/dialog_cart_productimg"
@@ -83,34 +83,22 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp5"
+        android:layout_marginBottom="@dimen/dp5"
         android:text="@string/color_category"
-        android:textColor="#212121"
+        android:textColor="@color/color_222"
         android:textSize="14sp" />
 
 
     <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
         android:id="@+id/dialogUltimateRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/dp30"
+        android:layout_marginLeft="@dimen/dp10"
         app:recyclerviewClipToPadding="true"
         app:recyclerviewScrollbars="vertical"
         />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="3dp"
-                android:background="@drawable/corner_color222"
-                android:gravity="center"
-                android:paddingLeft="25dp"
-                android:paddingRight="25dp"
-                android:text="@string/default_txt"
-                android:textColor="@android:color/white"
-                android:textSize="12sp" />
-
 
 
     <TextView

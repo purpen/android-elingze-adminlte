@@ -330,4 +330,15 @@ public class ClientParamsAPI {
     public static HashMap<String,String> getOrderDetailParams() {
         return generateCommonParams();
     }
+
+    /**
+     * 获取SKU列表
+     * @return
+     * @param rid
+     */
+    public static HashMap<String,String> getSKUListParams(String rid) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("rid",rid);
+        return params;
+    }
 }

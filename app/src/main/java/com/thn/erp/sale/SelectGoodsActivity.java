@@ -28,6 +28,7 @@ import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.overview.usermanage.AddCustomActivity;
 import com.thn.erp.sale.adapter.GoodsAdapter;
+import com.thn.erp.sale.adapter.SKUAdapter;
 import com.thn.erp.sale.bean.GoodsData;
 import com.thn.erp.sale.bean.SKUData;
 import com.thn.erp.utils.JsonUtil;
@@ -126,13 +127,13 @@ public class SelectGoodsActivity extends BaseActivity {
             @Override
             public void onClick(View view, int i) {
                 if (list.size()==0) return;
-//                getSKUList(list.get(i));
-//                showPopupWindow();
+                getSKUList(list.get(i));
+                showPopupWindow();
 
-                Intent intent = new Intent();
-                intent.putExtra(GoodsData.class.getSimpleName(),list.get(i));
-                setResult(RESULT_OK, intent);
-                finish();
+//                Intent intent = new Intent();
+//                intent.putExtra(GoodsData.class.getSimpleName(),list.get(i));
+//                setResult(RESULT_OK, intent);
+//                finish();
             }
         });
 
@@ -200,8 +201,9 @@ public class SelectGoodsActivity extends BaseActivity {
      * @param productsBean
      */
     private void getSKUList(GoodsData.DataBean.ProductsBean productsBean) {
-        HashMap<String, String> params = ClientParamsAPI.getDefaultParams();
-        HttpRequest.sendRequest(HttpRequest.GET, URL.BASE_URL+productsBean.rid+"/skus", params, new HttpRequestCallback() {
+        String rid="118260884497";
+        HashMap<String, String> params = ClientParamsAPI.getSKUListParams(rid);
+        HttpRequest.sendRequest(HttpRequest.GET, URL.SKU_LIST, params, new HttpRequestCallback() {
             @Override
             public void onStart() {
                 dialog.show();
@@ -213,7 +215,11 @@ public class SelectGoodsActivity extends BaseActivity {
                 SKUData skuData = JsonUtil.fromJson(json, SKUData.class);
                 if (skuData.success == true) {
                     List<SKUData.DataBean> datas = skuData.data;
-//TODO
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
+                    linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                    holder.dialogUltimateRecyclerView.setHasFixedSize(true);
+                    holder.dialogUltimateRecyclerView.setLayoutManager(linearLayoutManager);
+                    holder.dialogUltimateRecyclerView.setAdapter(new SKUAdapter(activity,datas));
                 } else {
                     ToastUtils.showError(skuData.status.message);
                 }
