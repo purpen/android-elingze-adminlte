@@ -116,8 +116,12 @@ public class URL {
     public static final String PRODUCT_ADD                = "products";
 
     // 品牌
-    public static final String PRODUCT_BRAND              = "brands";
-    public static final String PRODUCT_CATEGORY           = "categories";
+    public static final String PRODUCT_BRAND              = "brands";       //品牌列表
+    public static final String PRODUCT_CATEGORY           = "categories";   //分类
+    public static final String PRODUCT_BRAND_DETIALS      = "brands/<rid>"; //品牌详情
+    public static final String PRODUCT_BRAND_ADD          = "brands";       //新增品牌
+    public static final String PRODUCT_BRAND_UPDATE       = "brands/<rid>"; //更新品牌
+    public static final String PRODUCT_BRAND_DELETE       = "brands/<rid>"; //删除品牌
 
     /**
      * 分销客户列表

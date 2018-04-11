@@ -1,6 +1,8 @@
 package com.thn.erp.goods.brand;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,9 +13,11 @@ import com.thn.erp.R;
 import com.thn.erp.base.BaseStyle2Activity;
 import com.thn.erp.base.BaseUltimateRecyclerView;
 import com.thn.erp.common.constant.ExtraKey;
+import com.thn.erp.common.constant.RequestCode;
 import com.thn.erp.common.interfaces.ImpTopbarOnClickListener;
 import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
 import com.thn.erp.goods.GoodsListActivity;
+import com.thn.erp.goods.category.GoodsCategoryAddActivity;
 import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
@@ -87,6 +91,7 @@ public class GoodsBrandActivity extends BaseStyle2Activity implements ImpTopbarO
     private void initTopbar() {
         publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
         publicTopBar.setTopBarCenterTextView("品牌列表", getResources().getColor(R.color.THN_color_fontColor_primary));
+        publicTopBar.setTopBarRightTextView("添加", Color.parseColor("#27AE59"));
         publicTopBar.setTopBarLeftImageView(true);
         publicTopBar.setTopBarOnClickListener(this);
     }
@@ -123,7 +128,7 @@ public class GoodsBrandActivity extends BaseStyle2Activity implements ImpTopbarO
         adapter.setOnItemClickListener(new OnRecyclerViewItemClickListener(){
             @Override
             public void onClick(View view, int i) {
-                Intent intent = new Intent(GoodsBrandActivity.this, GoodsListActivity.class);
+                Intent intent = new Intent(GoodsBrandActivity.this, BrandDetailsActivity.class);
                 intent.putExtra(ExtraKey.BRAND_ID,list.get(i).getRid());
                 intent.putExtra(ExtraKey.BRAND_NAME,list.get(i).getName());
                 startActivity(intent);
@@ -154,7 +159,6 @@ public class GoodsBrandActivity extends BaseStyle2Activity implements ImpTopbarO
                 } else {
                     ToastUtils.showError(customerBean.getStatus().getMessage());
                 }
-
             }
 
             @Override
@@ -167,17 +171,11 @@ public class GoodsBrandActivity extends BaseStyle2Activity implements ImpTopbarO
 
     private void updateData(List<GoodsBrandData.DataEntity.BrandsEntity> goodses) {
         if (isRefreshing) {
-//            for (GoodsBrandData.DataEntity.BrandsEntity goodsBrand : goodses) {
-//                adapter.insert(goodsBrand, 0);
-//            }
             adapter.setList(goodses);
             ultimateRecyclerView.setRefreshing(false);
             linearLayoutManager.scrollToPosition(0);
             adapter.notifyDataSetChanged();
         } else {
-//            for (GoodsBrandData.DataEntity.BrandsEntity goods : goodses) {
-//                adapter.insert(goods, adapter.getAdapterItemCount());
-//            }
             adapter.addList(goodses);
         }
         dialog.dismiss();
@@ -185,6 +183,18 @@ public class GoodsBrandActivity extends BaseStyle2Activity implements ImpTopbarO
 
     @Override
     public void onTopBarClick(View view, int position) {
+        switch (position) {
+            case ImpTopbarOnClickListener.RIGHT:
+                Intent intent = new Intent(GoodsBrandActivity.this, GoodsBrandAddActivity.class);
+                startActivityForResult(intent, RequestCode.CODE_GOODS_BRAND_ADD);
+                break;
+        }
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK && requestCode == RequestCode.CODE_GOODS_BRAND_ADD) {
+            requestNet();
+        }
     }
 }

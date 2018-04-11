@@ -19,8 +19,8 @@ import butterknife.BindView;
 
 public class LinearLayoutCustomerAddEditTextView extends LinearLayout {
 
-    private TextView textView1;
-    private EditText editText1;
+    private TextView viewLinearlayoutCustomerAddEditTextView;
+    private EditText viewLinearlayoutCustomerAddEditEditText;
 
     public LinearLayoutCustomerAddEditTextView(Context context) {
         this(context, null);
@@ -37,8 +37,8 @@ public class LinearLayoutCustomerAddEditTextView extends LinearLayout {
     }
 
     private void initView() {
-        textView1 = (TextView) findViewById(R.id.textView1);
-        editText1 = (EditText) findViewById(R.id.editText1);
+        viewLinearlayoutCustomerAddEditTextView = (TextView) findViewById(R.id.view_linearlayout_customer_add_edit_textView);
+        viewLinearlayoutCustomerAddEditEditText = (EditText) findViewById(R.id.view_linearlayout_customer_add_edit_editText);
     }
 
 //    public void setInitKey(String str1) {
@@ -46,25 +46,29 @@ public class LinearLayoutCustomerAddEditTextView extends LinearLayout {
 //    }
 
     public void setInitKeyAndHint(String str1, String str2) {
-        textView1.setText(str1);
-        editText1.setHint(str2);
+        viewLinearlayoutCustomerAddEditTextView.setText(str1);
+        viewLinearlayoutCustomerAddEditEditText.setHint(str2);
     }
 
 
     public void setName(String str) {
-        textView1.setText(str);
+        viewLinearlayoutCustomerAddEditTextView.setText(str);
     }
 
     public void setValue(String str) {
-        editText1.setText(str);
+        viewLinearlayoutCustomerAddEditEditText.setText(str);
     }
 
     public void setEnabled(boolean enabled){
-        editText1.setFocusable(enabled);
-        editText1.setFocusableInTouchMode(enabled);
-        editText1.setEnabled(enabled);
+        viewLinearlayoutCustomerAddEditEditText.setFocusable(enabled);
+        viewLinearlayoutCustomerAddEditEditText.setFocusableInTouchMode(enabled);
+        viewLinearlayoutCustomerAddEditEditText.setEnabled(enabled);
         if (enabled) {
-            editText1.requestFocus();
+            viewLinearlayoutCustomerAddEditEditText.requestFocus();
         }
+    }
+
+    public String getValue(){
+        return viewLinearlayoutCustomerAddEditEditText.getText().toString();
     }
 }

@@ -18,8 +18,8 @@ import ch.ielse.view.SwitchView;
  */
 
 public class LinearLayoutCustomerAddSwitchView extends LinearLayout {
-    private TextView textView1;
-    private SwitchView switchView1;
+    private TextView viewLinearlayoutCustomerAddSwitchTextView;
+    private SwitchView viewLinearlayoutCustomerAddSwitchSwitchView;
     private boolean enabled = true;
 
 
@@ -40,8 +40,8 @@ public class LinearLayoutCustomerAddSwitchView extends LinearLayout {
     }
 
     private void initView() {
-        textView1 = (TextView) findViewById(R.id.textView1);
-        switchView1 = (SwitchView) findViewById(R.id.switchView1);
+        viewLinearlayoutCustomerAddSwitchTextView = (TextView) findViewById(R.id.view_linearlayout_customer_add_switch_textView);
+        viewLinearlayoutCustomerAddSwitchSwitchView = (SwitchView) findViewById(R.id.view_linearlayout_customer_add_switch_switchView);
     }
 
 
@@ -50,9 +50,9 @@ public class LinearLayoutCustomerAddSwitchView extends LinearLayout {
     }
 
     public void setInitKeyAndHint(String str1, final SwitchView.OnStateChangedListener onStateChangedListener, boolean defaultValue) {
-        textView1.setText(str1);
-        switchView1.setOpened(defaultValue);
-        switchView1.setOnStateChangedListener(new SwitchView.OnStateChangedListener() {
+        viewLinearlayoutCustomerAddSwitchTextView.setText(str1);
+        viewLinearlayoutCustomerAddSwitchSwitchView.setOpened(defaultValue);
+        viewLinearlayoutCustomerAddSwitchSwitchView.setOnStateChangedListener(new SwitchView.OnStateChangedListener() {
             @Override
             public void toggleToOn(SwitchView view) {
                 if (enabled) {
@@ -81,7 +81,7 @@ public class LinearLayoutCustomerAddSwitchView extends LinearLayout {
 //    }
 
     public void setValue(String str) {
-        switchView1.setOpened(false);
+        viewLinearlayoutCustomerAddSwitchSwitchView.setOpened(false);
     }
 
     public void setEnabled(boolean enabled) {
@@ -89,6 +89,6 @@ public class LinearLayoutCustomerAddSwitchView extends LinearLayout {
     }
 
     public boolean getSwitchStatus(){
-        return switchView1.isOpened();
+        return viewLinearlayoutCustomerAddSwitchSwitchView.isOpened();
     }
 }

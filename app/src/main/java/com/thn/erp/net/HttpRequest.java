@@ -45,6 +45,7 @@ public class HttpRequest {
     public static final String GET = "GET";
     public static final String PUT = "PUT";
     public static final String DELETE = "DELETE";
+
     public final static int CONNECT_TIMEOUT = 30;
     public final static int READ_TIMEOUT = 30;
     public final static int WRITE_TIMEOUT = 30;
@@ -63,35 +64,6 @@ public class HttpRequest {
             .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)//设置写的超时时间
             .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)//设置连接超时时间
             .build();
-
-    public static class TrustAllCerts implements X509TrustManager {
-        @Override
-        public void checkClientTrusted(X509Certificate[] chain, String authType) {
-        }
-
-        @Override
-        public void checkServerTrusted(X509Certificate[] chain, String authType) {
-        }
-
-        @Override
-        public X509Certificate[] getAcceptedIssuers() {
-            return new X509Certificate[0];
-        }
-    }
-
-    private static SSLSocketFactory createSSLSocketFactory() {
-        SSLSocketFactory ssfFactory = null;
-
-        try {
-            SSLContext sc = SSLContext.getInstance("TLS");
-            sc.init(null, new TrustManager[]{new TrustAllCerts()}, new SecureRandom());
-            ssfFactory = sc.getSocketFactory();
-        } catch (Exception e) {
-        }
-
-        return ssfFactory;
-    }
-
 
     public static Call sendRequest(String type, String requestUrl, HashMap params, HttpRequestCallback callback) {
         if (null == params) throw new IllegalArgumentException("argument params can not be null ");
@@ -143,14 +115,55 @@ public class HttpRequest {
         return call;
     }
 
-    /**
+    private static Request getRequest(String type, String url, HashMap params) {
+        Request request = null;
+        String str=SPUtil.read(Constants.LOGIN_INFO);
+        if (!TextUtils.isEmpty(str)){
+            str = "Basic  " + Base64.encodeToString(str.getBytes(), Base64.DEFAULT);
+        }
+        switch (type) {
+            case POST:
+                request = new Request.Builder()
+                        .url(url)
+                        .addHeader("Authorization", str.trim())
+                        .post(getRequestBody(params))
+                        .build();
+                break;
+            case GET:
+                request = new Request.Builder()
+                        .url(getUrl(url, params))
+                        .addHeader("Authorization", str.trim())
+                        .get()
+                        .build();
+                break;
+            case PUT:
+                request = new Request.Builder()
+                        .url(url)
+                        .addHeader("Authorization", str.trim())
+                        .put(getRequestBody(params))
+                        .build();
+                break;
+            case DELETE:
+                request = new Request.Builder()
+                        .url(url)
+                        .addHeader("Authorization", str.trim())
+//                        .delete()
+                        .build();
+                break;
+            default:
+                break;
+        }
+        return request;
+    }
+
+  /*  *//**
      * 包含文件参数的表单上传
      *
      * @param requestUrl
      * @param params
      * @param callback
      * @return
-     */
+     *//*
     public static Call sendRequest(String requestUrl, HashMap<String, Object> params, HttpRequestCallback callback) {
         if (null == params) throw new IllegalArgumentException("argument params can not be null ");
         if (TextUtils.isEmpty(requestUrl))
@@ -164,7 +177,7 @@ public class HttpRequest {
             url = requestUrl;
         }
 
-        Request request = getRequest(url, params);
+        Request request = getRequest(HttpRequest.POST, url, params);
 
         if (null == request) return null;
 
@@ -195,6 +208,78 @@ public class HttpRequest {
         });
 
         return call;
+    }
+
+    private static Request getRequest(String url, HashMap<String, Object> params) {
+        Request request = new Request.Builder()
+                .url(url)
+                .post(getMultipartBody(params))
+                .build();
+        return request;
+    }
+
+    private static RequestBody getMultipartBody(HashMap<String, Object> params) {
+        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        Set<Map.Entry<String, Object>> entries = params.entrySet();
+        for (Map.Entry<String, Object> entry : entries) {
+            if (entry.getValue() instanceof File) {
+                builder.addFormDataPart(entry.getKey(), "tmp.jpg", RequestBody.create(MEDIA_TYPE_JPG, (File) entry.getValue()));
+            } else if (entry.getValue() instanceof String) {
+                builder.addFormDataPart(entry.getKey(), (String) entry.getValue());
+            }
+        }
+        return builder.build();
+    }*/
+
+    /**
+     * 拼接get参数
+     *
+     * @param url
+     * @param params
+     * @return
+     */
+    private static String getUrl(String url, HashMap<String, String> params) {
+        StringBuilder builder = new StringBuilder(url);
+        if (params.isEmpty()) return builder.toString();
+        builder.append("?");
+        Set<Map.Entry<String, String>> entries = params.entrySet();
+        for (Map.Entry<String, String> entry : entries) {
+            builder.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
+        }
+        return builder.deleteCharAt(builder.lastIndexOf("&")).toString();
+    }
+
+    private static RequestBody getRequestBody(HashMap params) {
+        RequestBody requestBody = RequestBody.create(JSON, JsonUtil.toJson(params));
+        return requestBody;
+    }
+
+    public static class TrustAllCerts implements X509TrustManager {
+        @Override
+        public void checkClientTrusted(X509Certificate[] chain, String authType) {
+        }
+
+        @Override
+        public void checkServerTrusted(X509Certificate[] chain, String authType) {
+        }
+
+        @Override
+        public X509Certificate[] getAcceptedIssuers() {
+            return new X509Certificate[0];
+        }
+    }
+
+    private static SSLSocketFactory createSSLSocketFactory() {
+        SSLSocketFactory ssfFactory = null;
+
+        try {
+            SSLContext sc = SSLContext.getInstance("TLS");
+            sc.init(null, new TrustManager[]{new TrustAllCerts()}, new SecureRandom());
+            ssfFactory = sc.getSocketFactory();
+        } catch (Exception e) {
+        }
+
+        return ssfFactory;
     }
 
     /**
@@ -243,95 +328,6 @@ public class HttpRequest {
                 }
             }
         });
-
         return call;
-    }
-
-
-    private static Request getRequest(String url, HashMap<String, Object> params) {
-        Request request = new Request.Builder()
-                .url(url)
-                .post(getMultipartBody(params))
-                .build();
-        return request;
-    }
-
-    private static Request getRequest(String type, String url, HashMap params) {
-        Request request = null;
-        String str=SPUtil.read(Constants.LOGIN_INFO);
-        if (!TextUtils.isEmpty(str)){
-            str = "Basic  " + Base64.encodeToString(str.getBytes(), Base64.DEFAULT);
-        }
-        switch (type) {
-            case POST:
-                request = new Request.Builder()
-                        .url(url)
-                        .addHeader("Authorization", str.trim())
-                        .post(getRequestBody(params))
-                        .build();
-                break;
-            case GET:
-                request = new Request.Builder()
-                        .url(getUrl(url, params))
-                        .addHeader("Authorization", str.trim())
-                        .build();
-                break;
-            case PUT:
-                request = new Request.Builder()
-                        .url(url)
-                        .addHeader("Authorization", str.trim())
-                        .put(getRequestBody(params))
-                        .build();
-                break;
-            case DELETE:
-                request = new Request.Builder()
-                        .url(url)
-                        .addHeader("Authorization", str.trim())
-                        .build();
-                break;
-            default:
-                break;
-        }
-
-        return request;
-    }
-
-
-    private static RequestBody getMultipartBody(HashMap<String, Object> params) {
-        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        Set<Map.Entry<String, Object>> entries = params.entrySet();
-        for (Map.Entry<String, Object> entry : entries) {
-            if (entry.getValue() instanceof File) {
-                builder.addFormDataPart(entry.getKey(), "tmp.jpg", RequestBody.create(MEDIA_TYPE_JPG, (File) entry.getValue()));
-            } else if (entry.getValue() instanceof String) {
-                builder.addFormDataPart(entry.getKey(), (String) entry.getValue());
-            }
-        }
-        return builder.build();
-    }
-
-
-    /**
-     * 拼接get参数
-     *
-     * @param url
-     * @param params
-     * @return
-     */
-    private static String getUrl(String url, HashMap<String, String> params) {
-        StringBuilder builder = new StringBuilder(url);
-        if (params.isEmpty()) return builder.toString();
-        builder.append("?");
-        Set<Map.Entry<String, String>> entries = params.entrySet();
-        for (Map.Entry<String, String> entry : entries) {
-            builder.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
-        }
-        return builder.deleteCharAt(builder.lastIndexOf("&")).toString();
-    }
-
-
-    private static RequestBody getRequestBody(HashMap params) {
-        RequestBody requestBody = RequestBody.create(JSON, JsonUtil.toJson(params));
-        return requestBody;
     }
 }

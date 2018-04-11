@@ -84,6 +84,9 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
+        <activity android:name=".goods.brand.BrandDetailsActivity" android:windowSoftInputMode="adjustPan|adjustResize" />
+        <activity android:name=".goods.category.GoodsCategoryAddActivity" />
+        <activity android:name=".goods.brand.GoodsBrandAddActivity" />
 
     </application>
 </manifest>

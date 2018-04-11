@@ -10,7 +10,7 @@
     tools:showIn="@layout/activity_customer_add">
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/view_linearlayout_customer_add_switch_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
@@ -21,7 +21,7 @@
     <include layout="@layout/include_view_fill_width" />
 
     <ch.ielse.view.SwitchView
-        android:id="@+id/switchView1"
+        android:id="@+id/view_linearlayout_customer_add_switch_switchView"
         android:layout_width="39dp"
         android:layout_height="24dp"
         android:layout_marginRight="15dp" />

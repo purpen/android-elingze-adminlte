@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <include layout="@layout/include_public_topbar" />
+
+    <include layout="@layout/include_view_line_divider_vertical" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp" />
+
+            </LinearLayout>
+
+
+            <!-- 品牌名称 -->
+            <EditText
+                android:id="@+id/textView1"
+                style="@style/CommonEditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginLeft="15dp"
+                android:background="#FFFFFF"
+                android:gravity="center_vertical" />
+
+            <!-- 品牌亮点 -->
+            <EditText
+                android:id="@+id/textView2"
+                style="@style/CommonEditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:background="#FFFFFF"
+                android:gravity="center_vertical" />
+
+            <!-- 品牌说明 -->
+            <EditText
+                android:id="@+id/textView3"
+                style="@style/CommonEditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginLeft="15dp"
+                android:background="#FFFFFF"
+                android:hint="品牌说明"
+                android:gravity="center_vertical" />
+
+            <!-- 所属供应商 -->
+            <EditText
+                android:id="@+id/textView4"
+                style="@style/CommonEditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="#FFFFFF"
+                android:hint="所属供应商"
+                android:layout_marginLeft="15dp"
+                android:gravity="center_vertical" />
+
+
+            <!-- 是否推荐 -->
+            <com.thn.erp.view.common.LinearLayoutCustomerAddSwitchView
+                android:id="@+id/linearLayoutSwitchView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <!-- 排序，数字越大越靠前 -->
+            <EditText
+                android:id="@+id/textView5"
+                style="@style/CommonEditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginLeft="15dp"
+                android:gravity="center_vertical"
+                android:hint="排序，数字越大越靠前" />
+
+            <include layout="@layout/include_view_line_divider_vertical" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout_repository_delete_repository"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/button_edit_confirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_circle_green"
+                    android:gravity="center"
+                    android:text="保存"
+                    android:textColor="#FFFFFF"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/button_edit_cancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_circle_green"
+                    android:gravity="center"
+                    android:text="删除"
+                    android:textColor="#FFFFFF"
+                    android:textSize="17sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -13,6 +13,7 @@ import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.thn.erp.R;
 import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
+import com.thn.erp.common.interfaces.OnRecyclerViewItemLongClickListener;
 
 import java.security.SecureRandom;
 import java.util.List;
@@ -20,9 +21,14 @@ import java.util.List;
 
 public abstract class BaseUltimateViewAdapter<T> extends UltimateViewAdapter {
     private OnRecyclerViewItemClickListener onItemClickListener;
+    private OnRecyclerViewItemLongClickListener onRecyclerViewItemLongClickListener;
 
     public void setOnItemClickListener(OnRecyclerViewItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
+    }
+
+    public void setOnItemLongClickListener(OnRecyclerViewItemLongClickListener onRecyclerViewItemLongClickListener) {
+        this.onRecyclerViewItemLongClickListener = onRecyclerViewItemLongClickListener;
     }
 
     protected List<T> list;
@@ -44,6 +50,17 @@ public abstract class BaseUltimateViewAdapter<T> extends UltimateViewAdapter {
                     if (onItemClickListener != null) {
                         onItemClickListener.onClick(view, pos);
                     }
+                }
+            });
+
+            viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    if (onRecyclerViewItemLongClickListener != null) {
+                        onRecyclerViewItemLongClickListener.onLongClick(view, pos);
+                        return true;
+                    }
+                    return false;
                 }
             });
         }

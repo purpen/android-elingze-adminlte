@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/include_public_topbar" />
+
+    <include layout="@layout/include_view_line_divider_vertical" />
+
+    <com.thn.erp.view.common.LinearLayoutCustomerAddEditTextView
+        android:id="@+id/addEditText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <include layout="@layout/include_view_line_divider_vertical" />
+
+    <com.thn.erp.view.common.LinearLayoutCustomerAddEditTextView
+        android:id="@+id/addEditText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <include layout="@layout/include_view_line_divider_vertical" />
+
+    <com.thn.erp.view.common.LinearLayoutCustomerAddEditTextView
+        android:id="@+id/addEditText3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <include layout="@layout/include_view_line_divider_vertical" />
+
+    <com.thn.erp.view.common.LinearLayoutCustomerAddEditTextView
+        android:id="@+id/addEditText4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <include layout="@layout/include_view_line_divider_vertical" />
+
+
+    <com.thn.erp.view.common.LinearLayoutCustomerAddSwitchView
+        android:id="@+id/switchView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <include layout="@layout/include_view_line_divider_vertical" />
+
+    <com.thn.erp.view.common.LinearLayoutCustomerAddEditTextView
+        android:id="@+id/addEditText6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/button_edit_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_circle_green"
+            android:gravity="center"
+            android:text="保存"
+            android:textColor="#FFFFFF"
+            android:textSize="17sp" />
+    </LinearLayout>
+
+</LinearLayout>
