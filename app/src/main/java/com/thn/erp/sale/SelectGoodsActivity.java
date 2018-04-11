@@ -20,8 +20,10 @@ import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
+import com.stephen.taihuoniaolibrary.utils.THNGlideUtil;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
+import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
 import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
@@ -67,7 +69,7 @@ public class SelectGoodsActivity extends BaseActivity {
     private String cid = "";
     private PopupWindow popupWindow;
     private ViewHolder holder;
-
+    private TextView lastTv;
     @Override
     protected int getLayout() {
         return R.layout.activity_select_goods;
@@ -213,13 +215,32 @@ public class SelectGoodsActivity extends BaseActivity {
             public void onSuccess(String json) {
                 dialog.dismiss();
                 SKUData skuData = JsonUtil.fromJson(json, SKUData.class);
+
                 if (skuData.success == true) {
-                    List<SKUData.DataBean> datas = skuData.data;
+                    final List<SKUData.DataBean> datas = skuData.data;
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
                     linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
                     holder.dialogUltimateRecyclerView.setHasFixedSize(true);
                     holder.dialogUltimateRecyclerView.setLayoutManager(linearLayoutManager);
-                    holder.dialogUltimateRecyclerView.setAdapter(new SKUAdapter(activity,datas));
+                    SKUAdapter skuAdapter = new SKUAdapter(activity, datas);
+                    holder.dialogUltimateRecyclerView.setAdapter(skuAdapter);
+                    setSkuInfo(datas.get(0));
+
+                    skuAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+                        @Override
+                        public void onClick(View view, int i) {
+                            if (lastTv!=null){
+                                lastTv.setTextColor(getResources().getColor(R.color.color_27AE59));
+                                lastTv.setBackgroundResource(R.drawable.corner_border_27ae59);
+                            }
+                            TextView curTv = ((TextView)view);
+                            setSkuInfo(datas.get(i));
+                            curTv.setBackgroundResource(R.drawable.corner_bg_27ae59);
+                            curTv.setTextColor(getResources().getColor(android.R.color.white));
+                            lastTv = curTv;
+                        }
+                    });
+
                 } else {
                     ToastUtils.showError(skuData.status.message);
                 }
@@ -232,6 +253,17 @@ public class SelectGoodsActivity extends BaseActivity {
                 ToastUtils.showError(R.string.network_err);
             }
         });
+    }
+
+    /**
+     * 设置Sku的信息
+     * @param dataBean
+     */
+    private void setSkuInfo(SKUData.DataBean dataBean) {
+        THNGlideUtil.displayImageFadein(dataBean.cover,holder.dialogCartProductimg);
+        holder.dialogCartPrice.setText("￥"+dataBean.sale_price);
+        holder.dialogCartProducttitle.setText(dataBean.product_name);
+        holder.dialogCartSkusnumber.setText("库存："+dataBean.stock_count);
     }
 
     private void getGoodsList() {
