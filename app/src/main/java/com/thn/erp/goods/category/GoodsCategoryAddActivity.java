@@ -1,7 +1,6 @@
 package com.thn.erp.goods.category;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -10,6 +9,7 @@ import android.widget.TextView;
 import com.stephen.taihuoniaolibrary.utils.THNTypeConversionUtils;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
+import com.thn.erp.common.constant.ExtraKey;
 import com.thn.erp.common.interfaces.ImpTopbarOnClickListener;
 import com.thn.erp.goods.brand.entity.BrandResultBean;
 import com.thn.erp.net.ClientParamsAPI;
@@ -19,7 +19,6 @@ import com.thn.erp.net.URL;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.LogUtil;
 import com.thn.erp.utils.ToastUtils;
-import com.thn.erp.view.PopupWindowUtil;
 import com.thn.erp.view.common.LinearLayoutCustomerAddEditTextView;
 import com.thn.erp.view.common.PublicTopBar;
 import com.thn.erp.view.svprogress.WaitingDialog;
@@ -46,10 +45,12 @@ public class GoodsCategoryAddActivity extends BaseActivity implements ImpTopbarO
     LinearLayoutCustomerAddEditTextView addEditText2;
     @BindView(R.id.addEditText3)
     LinearLayoutCustomerAddEditTextView addEditText3;
-    @BindView(R.id.textView_goods_category_edit_save)
+    @BindView(R.id.textView_goods_category_edit_modify)
     TextView textViewGoodsCategoryEditSave;
 
     private WaitingDialog dialog;
+
+    private GoodsCategoryData.DataEntity.CategoriesEntity categoriesEntity;
 
     @Override
     protected int getLayout() {
@@ -71,16 +72,22 @@ public class GoodsCategoryAddActivity extends BaseActivity implements ImpTopbarO
     }
 
     private void initCategoryLayout() {
-        addEditText1.setInitKeyAndHint("分类名称", "");
-        addEditText2.setInitKeyAndHint("分类描述", "");
-        addEditText3.setInitKeyAndHint("排序(数字越大越靠前)", "");
+        if (categoriesEntity != null) {
+            addEditText1.setInitKeyAndValue("分类名称", categoriesEntity.getName());
+            addEditText2.setInitKeyAndValue("分类描述", categoriesEntity.getDescription());
+            addEditText3.setInitKeyAndValue("排序(数字越大越靠前)", "" + categoriesEntity.getSort_order());
+        } else {
+            addEditText1.setInitKeyAndHint("分类名称", "");
+            addEditText2.setInitKeyAndHint("分类描述", "");
+            addEditText3.setInitKeyAndHint("排序(数字越大越靠前)", "");
+        }
     }
 
     private void initTopbar() {
         publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
-        publicTopBar.setTopBarCenterTextView("添加分类", getResources().getColor(R.color.THN_color_fontColor_primary));
+        publicTopBar.setTopBarCenterTextView((categoriesEntity == null) ?  "添加分类": "编辑分类", getResources().getColor(R.color.THN_color_fontColor_primary));
         publicTopBar.setTopBarLeftImageView(true);
-//        publicTopBar.setTopBarRightTextView("增加", Color.parseColor("#27AE59"));
+//        publicTopBar.setTopBarRightTextView("添加", Color.parseColor("#27AE59"));
         publicTopBar.setTopBarOnClickListener(this);
     }
 
@@ -96,16 +103,40 @@ public class GoodsCategoryAddActivity extends BaseActivity implements ImpTopbarO
         return new UpdateCetegoryBean(name, description, sortOrder);
     }
 
+    @OnClick(R.id.textView_goods_category_edit_modify)
+    public void onViewClicked() {
+        save(checkCategoryParams());
+    }
+
+    @Override
+    public void onTopBarClick(View view, int position) {
+
+    }
+
+    @Override
+    protected void getIntentData() {
+        categoriesEntity = getIntent().getParcelableExtra(ExtraKey.CATEGORY_BEAN);
+    }
+
     /**
-     * 更新
+     * 请求接口
+     * @param categoryBean
      */
     private void save(UpdateCetegoryBean categoryBean) {
         if (categoryBean == null) {
             return;
         }
-        String url = URL.PRODUCT_CATEGORY;
-        HashMap<String, Object> brandUpdateParams = ClientParamsAPI.getCategoryUpdateParams(categoryBean);
-        HttpRequest.sendRequest(HttpRequest.POST, url, brandUpdateParams, new HttpRequestCallback() {
+        String url;
+        String method;
+        boolean b = categoriesEntity == null;
+        if (b) {
+            url = URL.PRODUCT_CATEGORY;
+            method = HttpRequest.POST;
+        } else {
+            url = URL.PRODUCT_CATEGORY + "/" + categoriesEntity.getId();
+            method = HttpRequest.PUT;
+        }
+        HttpRequest.sendRequest(method, url, ClientParamsAPI.getCategoryUpdateParams(categoryBean), new HttpRequestCallback() {
             @Override
             public void onStart() {
                 dialog.show();
@@ -131,15 +162,5 @@ public class GoodsCategoryAddActivity extends BaseActivity implements ImpTopbarO
                 ToastUtils.showError(R.string.network_err);
             }
         });
-    }
-
-    @OnClick(R.id.textView_goods_category_edit_save)
-    public void onViewClicked() {
-        save(checkCategoryParams());
-    }
-
-    @Override
-    public void onTopBarClick(View view, int position) {
-
     }
 }

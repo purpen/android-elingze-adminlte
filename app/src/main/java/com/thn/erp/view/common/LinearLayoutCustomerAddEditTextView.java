@@ -2,13 +2,17 @@ package com.thn.erp.view.common;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.thn.erp.R;
+import com.thn.erp.utils.LogUtil;
 
 import butterknife.BindView;
 
@@ -50,7 +54,10 @@ public class LinearLayoutCustomerAddEditTextView extends LinearLayout {
         viewLinearlayoutCustomerAddEditEditText.setHint(str2);
     }
 
-
+    public void setInitKeyAndValue(String str1, String str2) {
+        viewLinearlayoutCustomerAddEditTextView.setText(str1);
+        viewLinearlayoutCustomerAddEditEditText.setText(str2);
+    }
     public void setName(String str) {
         viewLinearlayoutCustomerAddEditTextView.setText(str);
     }

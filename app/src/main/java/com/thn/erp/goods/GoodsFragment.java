@@ -185,7 +185,6 @@ public class GoodsFragment extends BaseFragment {
 
             @Override
             public void onSuccess(String json) {
-                THNLogUtil.e("json -----", json);
                 dialog.dismiss();
                 GoodsData customerBean = JsonUtil.fromJson(json, GoodsData.class);
                 if (customerBean.success) {

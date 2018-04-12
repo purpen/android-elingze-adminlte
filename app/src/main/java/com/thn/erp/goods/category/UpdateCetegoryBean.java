@@ -15,5 +15,4 @@ public class UpdateCetegoryBean {
         this.description = description;
         this.sort_order = sort_order;
     }
-
 }

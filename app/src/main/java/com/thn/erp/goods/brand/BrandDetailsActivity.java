@@ -28,8 +28,8 @@ import com.thn.erp.view.common.LinearLayoutCustomerAddSwitchView;
 import com.thn.erp.view.common.PublicTopBar;
 import com.thn.erp.view.svprogress.WaitingDialog;
 
+import java.io.File;
 import java.io.IOException;
-import java.text.NumberFormat;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -196,6 +196,8 @@ public class BrandDetailsActivity extends BaseActivity implements ImpTopbarOnCli
                 BrandResultBean customerBean = JsonUtil.fromJson(json, BrandResultBean.class);
                 if (customerBean.getSuccess()) {
                     ToastUtils.showSuccess(customerBean.getStatus().getMessage());
+                    setResult(-1);
+                    BrandDetailsActivity.this.finish();
                 } else {
                     ToastUtils.showError(customerBean.getStatus().getMessage());
                 }
@@ -239,6 +241,8 @@ public class BrandDetailsActivity extends BaseActivity implements ImpTopbarOnCli
                 BrandResultBean customerBean = JsonUtil.fromJson(json, BrandResultBean.class);
                 if (customerBean.getSuccess()) {
                     ToastUtils.showSuccess(customerBean.getStatus().getMessage());
+                    setResult(-1);
+                    BrandDetailsActivity.this.finish();
                 } else {
                     ToastUtils.showError(customerBean.getStatus().getMessage());
                 }

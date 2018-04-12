@@ -73,7 +73,6 @@ public class GoodsDetailsActivity extends BaseStyle2Activity implements ImpTopba
         if (extra instanceof GoodsData.DataBean.ProductsBean) {
             mProductsBean = (GoodsData.DataBean.ProductsBean) extra;
         }
-
     }
 
     @Override
@@ -111,7 +110,32 @@ public class GoodsDetailsActivity extends BaseStyle2Activity implements ImpTopba
     }
 
     private void getGoodsList() {
-        HashMap<String, String> params = ClientParamsAPI.generateCommonParams();
+        HttpRequest.getRequest(URL.PRODUCT_DETAILS, new HttpRequestCallback() {
+
+            @Override
+            public void onStart() {
+                dialog.show();
+            }
+
+            @Override
+            public void onSuccess(String json) {
+                LogUtil.e(json);
+                dialog.dismiss();
+//                GoodsData customerBean = JsonUtil.fromJson(json, GoodsData.class);
+//                if (customerBean.success == true) {
+//                    updateData(customerBean.data.products);
+//                } else {
+//                    ToastUtils.showError(customerBean.status.message);
+//                }
+
+            }
+
+            @Override
+            public void onFailure(IOException e) {
+
+            }
+        });
+        HashMap<String, String> params = ClientParamsAPI.getDefaultParams();
         HttpRequest.sendRequest(HttpRequest.GET, URL.PRODUCT_DETAILS, params, new HttpRequestCallback() {
             @Override
             public void onStart() {

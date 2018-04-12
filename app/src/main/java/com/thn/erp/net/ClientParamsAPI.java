@@ -20,7 +20,7 @@ public class ClientParamsAPI {
     public static final String app_key = "fi2N0mZVRUjzCkwtKWbM";
     public static final String app_secret = "cc3c36db353b4543aba12db6bbcff6cb53a592b2";
 
-    public static HashMap<String, String> generateCommonParams() {
+    private static HashMap<String, String> generateCommonParams() {
         HashMap<String, String> params = new HashMap<>();
         String timeStamp = String.valueOf(System.currentTimeMillis() / 1000);
         String nonceStr = generateRandomString();

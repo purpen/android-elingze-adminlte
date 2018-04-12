@@ -6,6 +6,7 @@ package com.thn.erp;
 
 public class Constants {
 
+    public static final String AUTHORIZATION = "Authorization";
     public static final String LOGIN_INFO="login_info";
     public static final String PAGE_SIZE= "10";
     public static final String TOKEN= "TOKEN";
