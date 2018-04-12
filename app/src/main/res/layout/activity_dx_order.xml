@@ -104,7 +104,9 @@
             android:gravity="center_vertical"
             android:textColor="@color/color_27AE59"
             android:paddingLeft="@dimen/dp15"
-            android:text="@string/all_money" />
+            android:text="@string/all_money"
+            android:visibility="gone"
+            />
 
         <TextView
             android:id="@+id/sumPrice"
@@ -114,7 +116,9 @@
             android:layout_toLeftOf="@+id/submitOrder"
             android:gravity="center_vertical"
             android:paddingRight="@dimen/dp10"
-            android:textColor="@color/color_27AE59" />
+            android:textColor="@color/color_27AE59"
+            android:visibility="gone"
+            />
 
         <Button
             android:id="@+id/submitOrder"

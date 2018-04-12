@@ -172,5 +172,15 @@ public class URL {
     /**
      * 获取SKU列表
      */
-    public static String SKU_LIST = BASE_URL + "products/by_sku";
+    public static String SKU_LIST = BASE_URL + "products/skus";
+
+    /**
+     * 获取sku信息
+     */
+    public static String SKU_INFO = BASE_URL + "products/by_sku";
+
+    /**
+     * 添加购物车
+     */
+    public static String ADD_SHOPCART=BASE_URL + "cart";
 }

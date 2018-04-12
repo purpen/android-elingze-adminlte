@@ -341,4 +341,15 @@ public class ClientParamsAPI {
         params.put("rid",rid);
         return params;
     }
+
+    /**
+     * 添加购物车
+     * @return
+     */
+    public static HashMap<String,String> getShopCartParams(String rid,int quantity) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("rid",rid);
+        params.put("quantity",String.valueOf(quantity));
+        return params;
+    }
 }

@@ -22,7 +22,7 @@ public class CounterView extends LinearLayout {
     private EditText etAmount;
     private final int defaultNum = 1;
     private int num = 1;
-    private int storageNum = 100;
+    private int storageNum;
 
     public CounterView(Context context) {
         super(context, null);
@@ -75,17 +75,41 @@ public class CounterView extends LinearLayout {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (editable.toString().isEmpty()) return; //输入框为空设置为默认数量
+                String s = editable.toString();
+                if (s.isEmpty()) return; //输入框为空设置为默认数量
 
-                int curNum = Integer.valueOf(editable.toString());
-                if (curNum > storageNum) {  //大于库存数量时设置为库存数量
-                    etAmount.setText(String.valueOf(storageNum));
-                    num = storageNum;
-                } else if (curNum <= 0) {
+                int curNum = Integer.valueOf(s);
+
+                if (curNum==0) {
                     etAmount.setText(String.valueOf(defaultNum));
                     num = defaultNum;
-                } else {
-                    num = curNum;
+                }
+//                if (curNum > storageNum) {  //大于库存数量时设置为库存数量
+//                    etAmount.setText(String.valueOf(storageNum));
+//                    num = storageNum;
+//                } else if (curNum <= 0) {
+//                    etAmount.setText(String.valueOf(defaultNum));
+//                    num = defaultNum;
+//                } else {
+//                    num = curNum;
+//                }
+                if (listener!=null){
+                    listener.onChange(Integer.valueOf(etAmount.getText().toString()));
+                }
+//               每次获取EditText内容的长度
+                etAmount.setSelection(etAmount.getText().length());
+            }
+        });
+
+        etAmount.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b){
+                    String s = etAmount.getText().toString();
+                    if (s.isEmpty() || Integer.valueOf(s)==0){
+                        etAmount.setText(String.valueOf(defaultNum));
+                        num = defaultNum;
+                    }
                 }
             }
         });
@@ -101,11 +125,28 @@ public class CounterView extends LinearLayout {
     }
 
     /**
+     * 设置文本编辑框的值
+     * @param value
+     */
+    public void setValue(String value){
+        num = Integer.valueOf(value);
+        etAmount.setText(value);
+    }
+
+    /**
      * 获取数量
      *
      * @return
      */
     public int getNum() {
         return num;
+    }
+
+    public interface OnValueChangedListener{
+        void onChange(int value);
+    }
+    private OnValueChangedListener listener;
+    public void setOnValueChangedListener(OnValueChangedListener listener){
+        this.listener = listener;
     }
 }

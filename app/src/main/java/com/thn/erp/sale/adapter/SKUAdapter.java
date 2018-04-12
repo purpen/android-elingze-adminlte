@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseUltimateViewAdapter;
-import com.thn.erp.sale.bean.SKUData;
+import com.thn.erp.sale.bean.SKUListData;
 
 import java.util.List;
 
@@ -21,9 +21,9 @@ import butterknife.ButterKnife;
  *         created at 2016/9/27 9:37
  */
 
-public class SKUAdapter extends BaseUltimateViewAdapter<SKUData.DataBean> {
+public class SKUAdapter extends BaseUltimateViewAdapter<SKUListData.DataBean.ItemsBean> {
     private Activity activity;
-    public SKUAdapter(Activity activity, List<SKUData.DataBean> list) {
+    public SKUAdapter(Activity activity, List<SKUListData.DataBean.ItemsBean> list) {
         super(list);
         this.activity = activity;
         this.list = list;
@@ -37,7 +37,7 @@ public class SKUAdapter extends BaseUltimateViewAdapter<SKUData.DataBean> {
 
     @Override
     public void onBindItemHolder2(UltimateRecyclerviewViewHolder ultimateRecyclerviewViewHolder, int position) {
-        SKUData.DataBean sku = list.get(position);
+        SKUListData.DataBean.ItemsBean sku = list.get(position);
         ViewHolder viewHolder = (ViewHolder) ultimateRecyclerviewViewHolder;
         viewHolder.tvSku.setText(sku.s_color);
     }

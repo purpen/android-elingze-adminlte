@@ -10,7 +10,7 @@
         android:layout_width="@dimen/dp90"
         android:layout_height="@dimen/dp90"
         android:layout_marginLeft="@dimen/dp15"
-        android:layout_marginRight="@dimen/dp15"
+        android:layout_marginRight="@dimen/dp10"
         android:src="@mipmap/ic_launcher"
         />
     <TextView
@@ -18,7 +18,7 @@
         android:layout_toRightOf="@+id/ivCover"
         android:layout_width="wrap_content"
         android:textSize="@dimen/sp17"
-        android:layout_marginLeft="@dimen/dp15"
+        android:layout_marginLeft="@dimen/dp10"
         android:textColor="@color/color_222"
         android:layout_height="wrap_content"
         android:text="test2"/>
@@ -34,26 +34,28 @@
         android:text="test2"/>
 
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvNum"
         android:layout_alignLeft="@+id/goodsName"
         android:layout_alignBottom="@+id/ivCover"
-        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
         >
         <TextView
             android:id="@+id/tvPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="单价："
-            android:textSize="@dimen/sp14"
+            android:text="单价：￥"
+            android:textSize="@dimen/sp12"
             android:textColor="@color/color_222"
             />
         <EditText
             android:id="@+id/price"
             android:layout_toRightOf="@+id/tvPrice"
             android:textSize="@dimen/sp14"
+            android:layout_gravity="center_vertical"
             android:textColor="@color/color_222"
             style="@style/StyleReactBorder"
             android:inputType="numberDecimal"
@@ -64,17 +66,15 @@
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/stockNum"
             android:text="数量："
-            android:textSize="@dimen/sp14"
+            android:textSize="@dimen/sp12"
             android:textColor="@color/color_222"
             />
-        <EditText
-            android:id="@+id/stockNum"
-            style="@style/StyleReactBorder"
+
+        <com.thn.erp.view.CounterView
+            android:id="@+id/counterView"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/dp15"
-            android:textColor="@color/color_222"
-            android:textSize="@dimen/sp14"
-            android:inputType="number"
-            />
-    </RelativeLayout>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </RelativeLayout>

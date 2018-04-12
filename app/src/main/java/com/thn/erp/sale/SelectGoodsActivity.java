@@ -1,5 +1,6 @@
 package com.thn.erp.sale;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -32,9 +34,10 @@ import com.thn.erp.overview.usermanage.AddCustomActivity;
 import com.thn.erp.sale.adapter.GoodsAdapter;
 import com.thn.erp.sale.adapter.SKUAdapter;
 import com.thn.erp.sale.bean.GoodsData;
-import com.thn.erp.sale.bean.SKUData;
+import com.thn.erp.sale.bean.SKUListData;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.ToastUtils;
+import com.thn.erp.view.CounterView;
 import com.thn.erp.view.CustomHeadView;
 import com.thn.erp.view.SearchView;
 import com.thn.erp.view.svprogress.WaitingDialog;
@@ -70,6 +73,7 @@ public class SelectGoodsActivity extends BaseActivity {
     private PopupWindow popupWindow;
     private ViewHolder holder;
     private TextView lastTv;
+    private SKUListData.DataBean.ItemsBean dataBean;
     @Override
     protected int getLayout() {
         return R.layout.activity_select_goods;
@@ -132,10 +136,7 @@ public class SelectGoodsActivity extends BaseActivity {
                 getSKUList(list.get(i));
                 showPopupWindow();
 
-//                Intent intent = new Intent();
-//                intent.putExtra(GoodsData.class.getSimpleName(),list.get(i));
-//                setResult(RESULT_OK, intent);
-//                finish();
+
             }
         });
 
@@ -151,14 +152,13 @@ public class SelectGoodsActivity extends BaseActivity {
     }
 
     private void initPopWindow() {
-        View popupView = LayoutInflater.from(activity).inflate(R.layout.dialog_select_goods, null);
+        final View popupView = LayoutInflater.from(activity).inflate(R.layout.dialog_select_goods, null);
         holder = new ViewHolder(popupView);
         popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         // 设置动画效果
         popupWindow.setAnimationStyle(R.style.popupwindow_style);
         popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
-//        confirmBtn.setOnClickListener(this);
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
@@ -168,10 +168,13 @@ public class SelectGoodsActivity extends BaseActivity {
                 getWindow().setAttributes(params);
             }
         });
-        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
 
+        popupView.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                popupView.requestFocus();
+                InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(popupView.getWindowToken(), 0);
                 return false;
             }
         });
@@ -195,16 +198,14 @@ public class SelectGoodsActivity extends BaseActivity {
     @Override
     protected void requestNet() {
         getGoodsList();
-
     }
 
     /**
      * 获取SKU列表
      * @param productsBean
      */
-    private void getSKUList(GoodsData.DataBean.ProductsBean productsBean) {
-        String rid="118260884497";
-        HashMap<String, String> params = ClientParamsAPI.getSKUListParams(rid);
+    private void getSKUList(final GoodsData.DataBean.ProductsBean productsBean) {
+        HashMap<String, String> params = ClientParamsAPI.getSKUListParams(productsBean.rid);
         HttpRequest.sendRequest(HttpRequest.GET, URL.SKU_LIST, params, new HttpRequestCallback() {
             @Override
             public void onStart() {
@@ -214,35 +215,12 @@ public class SelectGoodsActivity extends BaseActivity {
             @Override
             public void onSuccess(String json) {
                 dialog.dismiss();
-                SKUData skuData = JsonUtil.fromJson(json, SKUData.class);
+                SKUListData skuListData = JsonUtil.fromJson(json, SKUListData.class);
 
-                if (skuData.success == true) {
-                    final List<SKUData.DataBean> datas = skuData.data;
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
-                    linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-                    holder.dialogUltimateRecyclerView.setHasFixedSize(true);
-                    holder.dialogUltimateRecyclerView.setLayoutManager(linearLayoutManager);
-                    SKUAdapter skuAdapter = new SKUAdapter(activity, datas);
-                    holder.dialogUltimateRecyclerView.setAdapter(skuAdapter);
-                    setSkuInfo(datas.get(0));
-
-                    skuAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-                        @Override
-                        public void onClick(View view, int i) {
-                            if (lastTv!=null){
-                                lastTv.setTextColor(getResources().getColor(R.color.color_27AE59));
-                                lastTv.setBackgroundResource(R.drawable.corner_border_27ae59);
-                            }
-                            TextView curTv = ((TextView)view);
-                            setSkuInfo(datas.get(i));
-                            curTv.setBackgroundResource(R.drawable.corner_bg_27ae59);
-                            curTv.setTextColor(getResources().getColor(android.R.color.white));
-                            lastTv = curTv;
-                        }
-                    });
-
+                if (skuListData.success == true) {
+                    setDialogData(skuListData);
                 } else {
-                    ToastUtils.showError(skuData.status.message);
+                    ToastUtils.showError(skuListData.status.message);
                 }
 
             }
@@ -256,16 +234,96 @@ public class SelectGoodsActivity extends BaseActivity {
     }
 
     /**
+     * 设置商品采购的商品sku信息
+     * @param skuListData
+     */
+    private void setDialogData(SKUListData skuListData) {
+        final List<SKUListData.DataBean.ItemsBean> items = skuListData.data.items;
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        holder.dialogUltimateRecyclerView.setHasFixedSize(true);
+        holder.dialogUltimateRecyclerView.setLayoutManager(linearLayoutManager);
+        SKUAdapter skuAdapter = new SKUAdapter(activity, items);
+        holder.dialogUltimateRecyclerView.setAdapter(skuAdapter);
+         dataBean = items.get(0);
+
+        setSkuInfo(dataBean);
+        skuAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+            @Override
+            public void onClick(View view, int i) {
+                dataBean = items.get(i);
+                if (lastTv!=null){
+                    lastTv.setTextColor(getResources().getColor(R.color.color_27AE59));
+                    lastTv.setBackgroundResource(R.drawable.corner_border_27ae59);
+                }
+                TextView curTv = ((TextView)view);
+                setSkuInfo(dataBean);
+                curTv.setBackgroundResource(R.drawable.corner_bg_27ae59);
+                curTv.setTextColor(getResources().getColor(android.R.color.white));
+                lastTv = curTv;
+            }
+        });
+
+        holder.dialogConfirmBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dataBean.buyNum= holder.counterView.getNum();
+                popupWindow.dismiss();
+                Intent intent = new Intent();
+                intent.putExtra(SKUListData.class.getSimpleName(),dataBean);
+                setResult(RESULT_OK,intent);
+                finish();
+//                addShopCart(dataBean);
+            }
+        });
+    }
+
+    /**
+     * 添加代下单界面购物车
+     * @param dataBean
+     */
+//    private void addShopCart(SKUListData.DataBean.ItemsBean dataBean) {
+//        HashMap<String, String> params = ClientParamsAPI.getShopCartParams(dataBean.rid,dataBean.buyNum);
+//        HttpRequest.sendRequest(HttpRequest.POST, URL.ADD_SHOPCART, params, new HttpRequestCallback() {
+//            @Override
+//            public void onStart() {
+//                if (!isRefreshing) dialog.show();
+//            }
+//
+//            @Override
+//            public void onSuccess(String json) {
+//                dialog.dismiss();
+//                AddShopCartData addShopCartData = JsonUtil.fromJson(json, AddShopCartData.class);
+//                if (addShopCartData.success == true) {
+//
+//                } else {
+//                    ToastUtils.showError(addShopCartData.status.message);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(IOException e) {
+//                dialog.dismiss();
+//                ToastUtils.showError(R.string.network_err);
+//            }
+//        });
+//    }
+
+    /**
      * 设置Sku的信息
      * @param dataBean
      */
-    private void setSkuInfo(SKUData.DataBean dataBean) {
+    private void setSkuInfo(SKUListData.DataBean.ItemsBean dataBean) {
+        holder.counterView.setStorageNum(dataBean.stock_count);
         THNGlideUtil.displayImageFadein(dataBean.cover,holder.dialogCartProductimg);
         holder.dialogCartPrice.setText("￥"+dataBean.sale_price);
         holder.dialogCartProducttitle.setText(dataBean.product_name);
         holder.dialogCartSkusnumber.setText("库存："+dataBean.stock_count);
     }
 
+    /**
+     * 获取商品列表
+     */
     private void getGoodsList() {
         HashMap<String, String> params = ClientParamsAPI.getGoodsList(cid, page);
         HttpRequest.sendRequest(HttpRequest.GET, URL.GOODS_LIST, params, new HttpRequestCallback() {
@@ -328,7 +386,8 @@ public class SelectGoodsActivity extends BaseActivity {
         TextView dialogCartPrice;
         @BindView(R.id.dialog_cart_skusnumber)
         TextView dialogCartSkusnumber;
-
+        @BindView(R.id.counterView)
+        CounterView counterView;
         @BindView(R.id.dialog_confirm_btn)
         Button dialogConfirmBtn;
 

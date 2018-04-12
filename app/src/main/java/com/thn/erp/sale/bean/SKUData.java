@@ -91,6 +91,9 @@ public class SKUData implements Parcelable {
         public String sale_price;
         public int stock_count;
 
+        public DataBean() {
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -109,9 +112,6 @@ public class SKUData implements Parcelable {
             dest.writeString(this.s_weight);
             dest.writeString(this.sale_price);
             dest.writeInt(this.stock_count);
-        }
-
-        public DataBean() {
         }
 
         protected DataBean(Parcel in) {

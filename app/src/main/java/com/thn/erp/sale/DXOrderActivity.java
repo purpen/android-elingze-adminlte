@@ -15,7 +15,7 @@ import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.overview.usermanage.bean.CustomerData;
 import com.thn.erp.sale.adapter.DXOrderGoodsAdapter;
-import com.thn.erp.sale.bean.GoodsData;
+import com.thn.erp.sale.bean.SKUListData;
 import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.CustomHeadView;
 
@@ -43,7 +43,7 @@ public class DXOrderActivity extends BaseActivity {
     Button submitOrder;
 
     private DXOrderGoodsAdapter adapter;
-    private ArrayList<GoodsData.DataBean.ProductsBean> list;
+    private ArrayList<SKUListData.DataBean.ItemsBean> list;
     private THNWaittingDialog dialog;
 
     @Override
@@ -91,6 +91,19 @@ public class DXOrderActivity extends BaseActivity {
                     return;
                 }
 
+                String perPrice = adapter.getPerPrice();
+                if (TextUtils.isEmpty(perPrice)){
+                    ToastUtils.showInfo("请输入单价");
+                    return;
+                }
+
+                int quantity = adapter.getQuantity();
+
+                if (quantity==0){
+                    ToastUtils.showInfo("请输入数量");
+                    return;
+                }
+
                 Intent intent = new Intent(activity, CreateOrderActivity.class);
                 intent.putParcelableArrayListExtra(DXOrderActivity.class.getSimpleName(),list);
                 startActivity(intent);
@@ -110,8 +123,8 @@ public class DXOrderActivity extends BaseActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_GOODS_CODE:
-                    GoodsData.DataBean.ProductsBean goods = data.getParcelableExtra(GoodsData.class.getSimpleName());
-                    adapter.insert(goods,adapter.getAdapterItemCount());
+                    SKUListData.DataBean.ItemsBean dataBean = data.getParcelableExtra(SKUListData.class.getSimpleName());
+                    adapter.insert(dataBean,adapter.getAdapterItemCount());
                     break;
                 case REQUEST_CUSTOMER_CODE:
                     CustomerData.DataBean.CustomersBean customersBean = data.getParcelableExtra(CustomerData.class.getSimpleName());

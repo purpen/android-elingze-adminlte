@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:background="@android:color/white"
     android:orientation="vertical"
     >
@@ -96,15 +98,19 @@
         android:textSize="14sp" />
 
     <com.thn.erp.view.CounterView
+        android:id="@+id/counterView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp5"
+        />
     <Button
         android:id="@+id/dialog_confirm_btn"
         style="?android:attr/buttonBarButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginTop="80dp"
-        android:background="#212121"
+        android:background="@color/color_27AE59"
         android:text="确定"
         android:textColor="@android:color/white"
         android:textSize="16sp" />

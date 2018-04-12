@@ -7,5 +7,6 @@
     android:gravity="center"
     android:background="@drawable/corner_border_27ae59"
     android:textColor="@color/color_27AE59"
+    android:layout_marginRight="@dimen/dp10"
     android:textSize="12sp"
     />

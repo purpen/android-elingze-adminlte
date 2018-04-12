@@ -22,7 +22,7 @@ public class OrderGoodsItem implements Parcelable {
 
     public String rid;
     public int quantity;
-    public double deal_price;
+    public String deal_price;
     public double discount_amount;
     public long warehouse_id;
 
@@ -38,7 +38,7 @@ public class OrderGoodsItem implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.rid);
         dest.writeInt(this.quantity);
-        dest.writeDouble(this.deal_price);
+        dest.writeString(this.deal_price);
         dest.writeDouble(this.discount_amount);
         dest.writeLong(this.warehouse_id);
     }
@@ -46,7 +46,7 @@ public class OrderGoodsItem implements Parcelable {
     protected OrderGoodsItem(Parcel in) {
         this.rid = in.readString();
         this.quantity = in.readInt();
-        this.deal_price = in.readDouble();
+        this.deal_price = in.readString();
         this.discount_amount = in.readDouble();
         this.warehouse_id = in.readLong();
     }

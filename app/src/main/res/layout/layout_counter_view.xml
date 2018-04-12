@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/dp30"
     android:focusable="true"
     android:divider="@drawable/btn_counter_divider"
     android:showDividers="middle"
@@ -9,9 +9,8 @@
     >
     <Button
         android:id="@+id/btnDecrease"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp30"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:gravity="center"
         android:background="@drawable/bg_counter_btn"
@@ -20,19 +19,19 @@
 
     <EditText
         android:id="@+id/etAmount"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp40"
         android:layout_height="match_parent"
-        android:minWidth="60dp"
-        android:layout_weight="2"
         android:background="@drawable/bg_counter_btn"
         android:textSize="@dimen/sp14"
         android:inputType="number"
         android:gravity="center"
+        android:layout_marginLeft="@dimen/dp1"
+        android:layout_marginRight="@dimen/dp1"
         android:text="1"/>
 
     <Button
         android:id="@+id/btnIncrease"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp30"
         android:layout_height="match_parent"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:layout_weight="1"

@@ -17,13 +17,13 @@ import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
-import com.thn.erp.sale.adapter.GoodsAdapter;
+import com.thn.erp.sale.adapter.DXOrderGoodsAdapter;
 import com.thn.erp.sale.bean.AddressData;
 import com.thn.erp.sale.bean.CreateOrderData;
 import com.thn.erp.sale.bean.DefaultAddressData;
 import com.thn.erp.sale.bean.FreightData;
-import com.thn.erp.sale.bean.GoodsData;
 import com.thn.erp.sale.bean.OrderGoodsItem;
+import com.thn.erp.sale.bean.SKUListData;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.CustomHeadView;
@@ -72,15 +72,15 @@ public class CreateOrderActivity extends BaseActivity {
     TextView tvPhone;
     //    运费
     private int freight;
-    private GoodsAdapter adapter;
-    private List<GoodsData.DataBean.ProductsBean> list;
+    private DXOrderGoodsAdapter adapter;
+    private List<SKUListData.DataBean.ItemsBean> list;
     private THNWaittingDialog dialog;
     private DefaultAddressData.DataBean address;
 
     @Override
     protected void getIntentData() {
         list = new ArrayList<>();
-        ArrayList<GoodsData.DataBean.ProductsBean> extra = getIntent().getParcelableArrayListExtra(DXOrderActivity.class.getSimpleName());
+        ArrayList<SKUListData.DataBean.ItemsBean> extra = getIntent().getParcelableArrayListExtra(DXOrderActivity.class.getSimpleName());
         if (null != extra) list.addAll(extra);
     }
 
@@ -93,7 +93,7 @@ public class CreateOrderActivity extends BaseActivity {
     protected void initView() {
         dialog = new THNWaittingDialog(activity);
         customHeadView.setHeadCenterTxtShow(true, R.string.create_order_title);
-        adapter = new GoodsAdapter(list);
+        adapter = new DXOrderGoodsAdapter(list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         ultimateRecyclerView.setHasFixedSize(true);
         ultimateRecyclerView.setLayoutManager(linearLayoutManager);
@@ -132,13 +132,13 @@ public class CreateOrderActivity extends BaseActivity {
         String addressId = address.rid;
         ArrayList<OrderGoodsItem> items = new ArrayList<>();
         OrderGoodsItem item;
-        for (GoodsData.DataBean.ProductsBean goodsData : list) {
+        for (SKUListData.DataBean.ItemsBean itemsBean : list) {
             item = new OrderGoodsItem();
-            item.rid = goodsData.rid;
+            item.rid = itemsBean.rid;
 //            TODO 这是测试数据
             item.rid = "118260884497";
             item.quantity = 1;
-            item.deal_price = goodsData.sale_price;
+            item.deal_price = itemsBean.sale_price;
             items.add(item);
         }
         HashMap params = ClientParamsAPI.createOrderParams(storeId, addressId, freight, items);
