@@ -1,23 +1,14 @@
 package com.thn.erp.overview.usermanage;
-
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.IBinder;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
-import com.marshalchen.ultimaterecyclerview.itemTouchHelper.SimpleItemTouchHelperCallback;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
+import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
 import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
@@ -29,7 +20,6 @@ import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.CustomHeadView;
 import com.thn.erp.view.SearchView;
 import com.thn.erp.view.svprogress.WaitingDialog;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,23 +33,23 @@ import butterknife.BindView;
  */
 
 public class UserManageActivity extends BaseActivity {
+    public static final int REQUEST_EDIT_CUSTOMER=0x00010;
     @BindView(R.id.customHeadView)
     CustomHeadView customHeadView;
-    @BindView(R.id.ultimateRecyclerView)
-    UltimateRecyclerView ultimateRecyclerView;
     @BindView(R.id.searchView)
     SearchView searchView;
-    private CustomerListAdapter simpleRecyclerViewAdapter;
-    private LinearLayoutManager linearLayoutManager;
-    private ItemTouchHelper mItemTouchHelper;
+    @BindView(R.id.ultimateRecyclerView)
+    UltimateRecyclerView ultimateRecyclerView;
     private WaitingDialog dialog;
     private int page;
     private List<CustomerData.DataBean.CustomersBean> list;
     private Boolean isRefreshing = false;
+    private CustomerListAdapter adapter;
+    private LinearLayoutManager linearLayoutManager;
 
     @Override
     protected int getLayout() {
-        return R.layout.activity_user_manage;
+        return R.layout.activity_select_customer;
     }
 
     @Override
@@ -67,75 +57,22 @@ public class UserManageActivity extends BaseActivity {
         page = 1;
         dialog = new WaitingDialog(activity);
         list = new ArrayList<>();
-//        CustomerData.DataBean.CustomersBean bean = new CustomerData.DataBean.CustomersBean();
-//        bean.name="1212";
-//        list.add(bean);
         customHeadView.setHeadCenterTxtShow(true, R.string.user_manage_title);
         customHeadView.setHeadRightTxtShow(true, R.string.add_customer);
-        simpleRecyclerViewAdapter = new CustomerListAdapter(list);
+        adapter = new CustomerListAdapter(list);
         linearLayoutManager = new LinearLayoutManager(this);
         ultimateRecyclerView.setHasFixedSize(true);
         ultimateRecyclerView.setLayoutManager(linearLayoutManager);
         ultimateRecyclerView.setLoadMoreView(LayoutInflater.from(this)
                 .inflate(R.layout.custom_bottom_progressbar, null));
         ultimateRecyclerView.setRecylerViewBackgroundColor(Color.WHITE);
-//        ultimateRecyclerView.setEmptyView(R.layout.empty_view,UltimateRecyclerView.EMPTY_CLEAR_ALL);
         ultimateRecyclerView.setEmptyView(
                 R.layout.empty_view,
                 UltimateRecyclerView.EMPTY_CLEAR_ALL,
                 UltimateRecyclerView.STARTWITH_ONLINE_ITEMS);
         ultimateRecyclerView.reenableLoadmore();
-        ultimateRecyclerView.setAdapter(simpleRecyclerViewAdapter);
+        ultimateRecyclerView.setAdapter(adapter);
         ultimateRecyclerView.addItemDividerDecoration(activity);
-    }
-
-    @Override
-    protected void requestNet() {
-        getCustomers();
-    }
-
-    private void getCustomers() {
-        HashMap<String, String> params = ClientParamsAPI.getCustomerList(page);
-        HttpRequest.sendRequest(HttpRequest.GET, URL.CUSTOMER_LIST, params, new HttpRequestCallback() {
-            @Override
-            public void onStart() {
-                dialog.show();
-            }
-
-            @Override
-            public void onSuccess(String json) {
-                dialog.dismiss();
-                CustomerData customerBean = JsonUtil.fromJson(json, CustomerData.class);
-                if (customerBean.success == true) {
-                    updateData(customerBean.data.customers);
-                } else {
-                    ToastUtils.showError(customerBean.status.message);
-                }
-
-            }
-
-            @Override
-            public void onFailure(IOException e) {
-                dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
-            }
-        });
-    }
-
-    private void updateData(List<CustomerData.DataBean.CustomersBean> customers) {
-        if (isRefreshing) {
-            for (CustomerData.DataBean.CustomersBean customer : customers) {
-                simpleRecyclerViewAdapter.insert(customer, 0);
-            }
-            ultimateRecyclerView.setRefreshing(false);
-            linearLayoutManager.scrollToPosition(0);
-            simpleRecyclerViewAdapter.notifyDataSetChanged();
-        } else {
-            for (CustomerData.DataBean.CustomersBean customer : customers) {
-                simpleRecyclerViewAdapter.insert(customer, simpleRecyclerViewAdapter.getAdapterItemCount());
-            }
-        }
-        dialog.dismiss();
     }
 
     @Override
@@ -163,122 +100,89 @@ public class UserManageActivity extends BaseActivity {
             }
         });
 
-        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(simpleRecyclerViewAdapter);
-        mItemTouchHelper = new ItemTouchHelper(callback);
-        mItemTouchHelper.attachToRecyclerView(ultimateRecyclerView.mRecyclerView);
-        simpleRecyclerViewAdapter.setOnDragStartListener(new CustomerListAdapter.OnStartDragListener() {
+        adapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
-            public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
-                mItemTouchHelper.startDrag(viewHolder);
+            public void onClick(View view, int i) {
+                if (list.size()==0) return;
+                CustomerData.DataBean.CustomersBean customersBean = list.get(i);
+                Intent intent = new Intent(activity, AddCustomActivity.class);
+                intent.putExtra(AddCustomActivity.class.getSimpleName(), customersBean);
+                startActivityForResult(intent, REQUEST_EDIT_CUSTOMER);
             }
         });
-
 
         ultimateRecyclerView.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMore(int itemsCount, final int maxLastVisiblePosition) {
                 isRefreshing = false;
-                getCustomers();
                 page++;
+                getCustomers();
             }
         });
-
     }
-
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            View v = getCurrentFocus();
-            if (isShouldHideKeyboard(v, ev)) {
-                hideKeyboard(v.getWindowToken());
+    protected void requestNet() {
+        getCustomers();
+    }
+
+    private void getCustomers() {
+        HashMap<String, String> params = ClientParamsAPI.getCustomerList(page);
+        HttpRequest.sendRequest(HttpRequest.GET, URL.CUSTOMER_LIST, params, new HttpRequestCallback() {
+            @Override
+            public void onStart() {
+                if (!isRefreshing) dialog.show();
+            }
+
+            @Override
+            public void onSuccess(String json) {
+                dialog.dismiss();
+                CustomerData customerBean = JsonUtil.fromJson(json, CustomerData.class);
+                if (customerBean.success == true) {
+                    List<CustomerData.DataBean.CustomersBean> customers = customerBean.data.customers;
+                    if (customers.size()==0) ultimateRecyclerView.disableLoadmore();
+                    updateData(customers);
+                } else {
+                    ToastUtils.showError(customerBean.status.message);
+                }
+
+            }
+
+            @Override
+            public void onFailure(IOException e) {
+                dialog.dismiss();
+                ToastUtils.showError(R.string.network_err);
+            }
+        });
+    }
+
+    private void updateData(List<CustomerData.DataBean.CustomersBean> customers) {
+        if (isRefreshing) {
+            adapter.clear();
+            for (CustomerData.DataBean.CustomersBean customer : customers) {
+                adapter.insert(customer, 0);
+            }
+            ultimateRecyclerView.setRefreshing(false);
+            linearLayoutManager.scrollToPosition(0);
+            adapter.notifyDataSetChanged();
+        } else {
+            for (CustomerData.DataBean.CustomersBean customer : customers) {
+                adapter.insert(customer, adapter.getAdapterItemCount());
             }
         }
-        return super.dispatchTouchEvent(ev);
+        if (adapter.getAdapterItemCount()==0) ultimateRecyclerView.showEmptyView();
     }
 
-    /**
-     * 根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘，因为当用户点击EditText时则不能隐藏
-     *
-     * @param v
-     * @param event
-     * @return
-     */
-    private boolean isShouldHideKeyboard(View v, MotionEvent event) {
-        if (v != null && (v instanceof EditText)) {
-            int[] l = {0, 0};
-            v.getLocationInWindow(l);
-            int left = l[0],
-                    top = l[1],
-                    bottom = top + v.getHeight(),
-                    right = left + v.getWidth();
-            if (event.getX() > left && event.getX() < right
-                    && event.getY() > top && event.getY() < bottom) {
-                // 点击EditText的事件，忽略它。
-                return false;
-            } else {
-                v.clearFocus();
-                return true;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_EDIT_CUSTOMER:
+                    CustomerData.DataBean.CustomersBean customersBean = data.getParcelableExtra(AddCustomActivity.class.getSimpleName());
+//                    TODO
+                    break;
             }
         }
-        // 如果焦点不是EditText则忽略，这个发生在视图刚绘制完，第一个焦点不在EditText上，和用户用轨迹球选择其他的焦点
-        return false;
     }
-
-    /**
-     * 获取InputMethodManager，隐藏软键盘
-     *
-     * @param token
-     */
-    private void hideKeyboard(IBinder token) {
-        if (token != null) {
-            InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            im.hideSoftInputFromWindow(token, InputMethodManager.HIDE_NOT_ALWAYS);
-        }
-    }
-
-    //    @OnClick({R.id.btnCheckCode, R.id.btnSubmit})
-//    public void onViewClicked(View view) {
-//        switch (view.getId()) {
-//            case R.id.btnCheckCode:
-//                break;
-//            case R.id.btnSubmit:
-//                updatePassword();
-//                break;
-//        }
-//    }
-
-    /**
-     * 重置密码
-     */
-//    private void updatePassword() {
-//        HashMap<String, String> params = ClientParamsAPI.getResetPasswordRequestParams(account, userPsw, checkCode);
-//        HttpRequest.sendRequest(HttpRequest.POST, URL.RESET_PASSWORD, params, new HttpRequestCallback() {
-//            @Override
-//            public void onStart() {
-//                btnSubmit.setEnabled(false);
-//            }
-//
-//            @Override
-//            public void onSuccess(String json) {
-//                btnSubmit.setEnabled(true);
-//                ResetPasswordBean resetPasswordBean = JsonUtil.fromJson(json, ResetPasswordBean.class);
-//                if (resetPasswordBean.meta.status_code == Constants.SUCCESS) {
-//                    ToastUtils.showSuccess(resetPasswordBean.meta.message);
-//                    finish();
-//                } else {
-//                    ToastUtils.showError(resetPasswordBean.meta.message);
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(IOException e) {
-//                btnSubmit.setEnabled(true);
-//                ToastUtils.showError(R.string.network_err);
-//            }
-//        });
-//    }
-
-
 }

@@ -67,7 +67,6 @@ public abstract class BaseUltimateViewAdapter<T> extends UltimateViewAdapter {
 
     @Override
     public UltimateRecyclerviewViewHolder onCreateViewHolder(ViewGroup parent) {
-//        View v = LayoutInflater.from(parent.getContext()) .inflate(R.layout.layout_goods_adapter, parent, false);
         return onCreateViewHolder2(parent);
     }
 
@@ -105,8 +104,6 @@ public abstract class BaseUltimateViewAdapter<T> extends UltimateViewAdapter {
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
 
         TextView textView = (TextView) viewHolder.itemView.findViewById(R.id.stick_text);
-//        textView.setText(String.valueOf(getItem(position).charAt(0)));
-//        viewHolder.itemView.setBackgroundColor(Color.parseColor("#AA70DB93"));
         viewHolder.itemView.setBackgroundColor(Color.parseColor("#AAffffff"));
         ImageView imageView = (ImageView) viewHolder.itemView.findViewById(R.id.stick_img);
 
@@ -129,7 +126,6 @@ public abstract class BaseUltimateViewAdapter<T> extends UltimateViewAdapter {
     public void onItemMove(int fromPosition, int toPosition) {
         if (fromPosition > 0 && toPosition > 0) {
             swapPositions(fromPosition, toPosition);
-//        notifyItemMoved(fromPosition, toPosition);
             super.onItemMove(fromPosition, toPosition);
         }
 
@@ -139,8 +135,6 @@ public abstract class BaseUltimateViewAdapter<T> extends UltimateViewAdapter {
     public void onItemDismiss(int position) {
         if (position > 0) {
             remove(position);
-            // notifyItemRemoved(position);
-//        notifyDataSetChanged();
             super.onItemDismiss(position);
         }
 
@@ -152,40 +146,10 @@ public abstract class BaseUltimateViewAdapter<T> extends UltimateViewAdapter {
 
     }
 
-//    class ViewHolder extends UltimateRecyclerviewViewHolder {
-//        @BindView(R.id.itemview)
-//        RelativeLayout itemView;
-//        @BindView(R.id.ivCover)
-//        ImageView ivCover;
-//        @BindView(R.id.goodsName)
-//        TextView goodsName;
-//        @BindView(R.id.tvNum)
-//        TextView tvNum;
-//        @BindView(R.id.price)
-//        TextView price;
-//        @BindView(R.id.stockNum)
-//        TextView stockNum;
-//
-//        public ViewHolder(View itemView) {
-//            super(itemView);
-//            ButterKnife.bind(this,itemView);
-//        }
-//
-//        @Override
-//        public void onItemSelected() {
-//            itemView.setBackgroundColor(Color.LTGRAY);
-//        }
-//
-//        @Override
-//        public void onItemClear() {
-//            itemView.setBackgroundColor(0);
-//        }
-//    }
 
     public T getItem(int position) {
         if (customHeaderView != null)
             position--;
-        // URLogs.d("position----"+position);
         if (position >= 0 && position < list.size()) {
             return list.get(position);
         } else {

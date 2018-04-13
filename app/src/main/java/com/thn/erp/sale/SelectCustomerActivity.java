@@ -10,6 +10,7 @@ import android.view.View;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
+import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
 import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
@@ -100,7 +101,7 @@ public class SelectCustomerActivity extends BaseActivity {
             }
         });
 
-        adapter.setOnItemClickListener(new CustomerListAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onClick(View view, int i) {
                 Intent intent = new Intent();

@@ -14,6 +14,7 @@ import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.overview.usermanage.bean.AddCustomerData;
+import com.thn.erp.overview.usermanage.bean.CustomerData;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.CustomHeadView;
@@ -73,17 +74,25 @@ public class AddCustomActivity extends BaseActivity {
     private String mobile="";
     private String phone="";
     private String email="";
+    private CustomerData.DataBean.CustomersBean customerBean;
+    @Override
+    protected void getIntentData() {
+        Intent intent =getIntent();
+        customerBean=intent.getParcelableExtra(AddCustomActivity.class.getSimpleName());
+    }
 
     @Override
     protected int getLayout() {
         return R.layout.activity_add_custom;
     }
 
+
     @Override
     protected void initView() {
         dialog = new WaitingDialog(this);
         customHeadView.setHeadCenterTxtShow(true, R.string.add_customer_title);
         customHeadView.setHeadRightTxtShow(true, R.string.save);
+
         itemUserName.setTVStyle(0, R.string.custom_name, R.color.color_222);
         itemUserName.setRightMoreImgStyle(false);
         itemUserName.setRightETStyle(R.string.please_input, R.color.color_666, InputType.TYPE_CLASS_TEXT, true);
@@ -134,6 +143,12 @@ public class AddCustomActivity extends BaseActivity {
         itemComment.setTVStyle(0, R.string.custom_comment, R.color.color_222);
         itemComment.setRightMoreImgStyle(false);
         itemComment.setRightETStyle(R.string.please_input, R.color.color_666, InputType.TYPE_CLASS_TEXT, true);
+
+
+        if (customerBean!=null){
+            itemUserName.setEditTextContent(customerBean.name);
+            itemPhone.setEditTextContent(customerBean.mobile);
+        }
     }
 
     @Override

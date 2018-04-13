@@ -1,9 +1,7 @@
 package com.thn.erp.sale;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.stephen.taihuoniaolibrary.utils.THNGlideUtil;
@@ -37,18 +34,15 @@ import com.thn.erp.sale.adapter.SKUAdapter;
 import com.thn.erp.sale.bean.GoodsData;
 import com.thn.erp.sale.bean.SKUListData;
 import com.thn.erp.utils.JsonUtil;
-import com.thn.erp.utils.LogUtil;
 import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.CounterView;
 import com.thn.erp.view.CustomHeadView;
 import com.thn.erp.view.SearchView;
 import com.thn.erp.view.svprogress.WaitingDialog;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -164,6 +158,7 @@ public class SelectGoodsActivity extends BaseActivity {
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
+                clickedTv =null;
                 WindowManager.LayoutParams params = getWindow().getAttributes();
                 params.alpha = 1f;
                 getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);

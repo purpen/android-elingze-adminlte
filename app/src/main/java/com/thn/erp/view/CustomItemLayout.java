@@ -156,6 +156,10 @@ public class CustomItemLayout extends RelativeLayout {
         return et_right;
     }
 
+    public void setEditTextContent(String content){
+        et_right.setText(content);
+    }
+
     public String getRightETTxt(){
         return et_right.getText().toString();
     }
