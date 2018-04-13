@@ -2,7 +2,9 @@ package com.thn.erp.user;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +17,7 @@ import com.thn.erp.base.BaseFragment;
 import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
+import com.thn.erp.net.URL;
 import com.thn.erp.user.bean.LoginBean;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.SPUtil;
@@ -78,7 +81,8 @@ public class LoginFragment extends BaseFragment {
         if (TextUtils.isEmpty(userName)) return;
         if (TextUtils.isEmpty(userPsw)) return;
         HashMap<String, String> params = ClientParamsAPI.getLoginRequestParams(userName, userPsw);
-        HttpRequest.sendRequest(params,new HttpRequestCallback() {
+        final String authorzationCode = getTempAuthorzationCode(params);
+        HttpRequest.sendRequest(HttpRequest.POST, URL.AUTH_LOGIN, authorzationCode, params, new HttpRequestCallback() {
             @Override
             public void onStart() {
                 dialog.show();
@@ -88,9 +92,9 @@ public class LoginFragment extends BaseFragment {
             public void onSuccess(String json) {
                 dialog.dismiss();
                 LoginBean loginBean = JsonUtil.fromJson(json, LoginBean.class);
-                if (loginBean.success == true) {
+                if (loginBean.success) {
                     SPUtil.write(Constants.TOKEN, loginBean.data.token);
-                    SPUtil.write(Constants.LOGIN_INFO,userName+":"+userPsw);
+                    SPUtil.write(Constants.AUTHORIZATION, authorzationCode);
                     jump2MainPage();
                 }else {
                     ToastUtils.showError(loginBean.status.message);
@@ -138,4 +142,10 @@ public class LoginFragment extends BaseFragment {
         return true;
     }
 
+    @NonNull
+    private String getTempAuthorzationCode(HashMap<String, String> params) {
+        String str = params.get("email") + ":" + params.get("password");
+        str = "Basic  " + Base64.encodeToString(str.getBytes(), Base64.DEFAULT);
+        return str.trim();
+    }
 }

@@ -13,13 +13,16 @@ import java.util.List;
 
 public class GoodsCategoryData implements Parcelable {
 
+
     /**
-     * data : {"categories":[{"description":"","id":1,"name":"家居","sort_order":1,"status":1},{"description":"","id":3,"name":"创意设计","sort_order":3,"status":1},{"description":"","id":4,"name":"杯子","sort_order":2,"status":1},{"description":"","id":5,"name":"智能硬件","sort_order":1,"status":1}],"count":17,"next":"http://127.0.0.1:9000/api/v1.0/categories?page=2","prev":null}
+     * data : {"categories":[{"cover":"https://kg.erp.taihuoniao.com/static/img/default-logo-180x180.png","description":"数码产品、消费电子","id":1,"name":"","pid":0,"sort_order":1,"status":1},{"cover":"https://kg.erp.taihuoniao.com/static/img/default-logo-180x180.png","description":"","id":5,"name":"家居日用","pid":0,"sort_order":2,"status":1},{"cover":"https://kg.erp.taihuoniao.com/static/img/default-logo-180x180.png","description":"","id":7,"name":"程序员最爱","pid":0,"sort_order":3,"status":1}],"count":3,"next":null,"prev":null}
      * status : {"code":200,"message":"Ok all right."}
+     * success : true
      */
 
     private DataEntity data;
     private StatusEntity status;
+    private boolean success;
 
     public void setData(DataEntity data) {
         this.data = data;
@@ -27,6 +30,10 @@ public class GoodsCategoryData implements Parcelable {
 
     public void setStatus(StatusEntity status) {
         this.status = status;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 
     public DataEntity getData() {
@@ -37,11 +44,15 @@ public class GoodsCategoryData implements Parcelable {
         return status;
     }
 
+    public boolean getSuccess() {
+        return success;
+    }
+
     public static class DataEntity implements Parcelable {
         /**
-         * categories : [{"description":"","id":1,"name":"家居","sort_order":1,"status":1},{"description":"","id":3,"name":"创意设计","sort_order":3,"status":1},{"description":"","id":4,"name":"杯子","sort_order":2,"status":1},{"description":"","id":5,"name":"智能硬件","sort_order":1,"status":1}]
-         * count : 17
-         * next : http://127.0.0.1:9000/api/v1.0/categories?page=2
+         * categories : [{"cover":"https://kg.erp.taihuoniao.com/static/img/default-logo-180x180.png","description":"数码产品、消费电子","id":1,"name":"","pid":0,"sort_order":1,"status":1},{"cover":"https://kg.erp.taihuoniao.com/static/img/default-logo-180x180.png","description":"","id":5,"name":"家居日用","pid":0,"sort_order":2,"status":1},{"cover":"https://kg.erp.taihuoniao.com/static/img/default-logo-180x180.png","description":"","id":7,"name":"程序员最爱","pid":0,"sort_order":3,"status":1}]
+         * count : 3
+         * next : null
          * prev : null
          */
 
@@ -74,7 +85,7 @@ public class GoodsCategoryData implements Parcelable {
             return next;
         }
 
-        public Object getPrev() {
+        public String getPrev() {
             return prev;
         }
 
@@ -84,18 +95,26 @@ public class GoodsCategoryData implements Parcelable {
 
         public static class CategoriesEntity implements Parcelable {
             /**
-             * description :
+             * cover : https://kg.erp.taihuoniao.com/static/img/default-logo-180x180.png
+             * description : 数码产品、消费电子
              * id : 1
-             * name : 家居
+             * name : 
+             * pid : 0
              * sort_order : 1
              * status : 1
              */
 
+            private String cover;
             private String description;
             private int id;
             private String name;
+            private int pid;
             private int sort_order;
             private int status;
+
+            public void setCover(String cover) {
+                this.cover = cover;
+            }
 
             public void setDescription(String description) {
                 this.description = description;
@@ -109,12 +128,20 @@ public class GoodsCategoryData implements Parcelable {
                 this.name = name;
             }
 
+            public void setPid(int pid) {
+                this.pid = pid;
+            }
+
             public void setSort_order(int sort_order) {
                 this.sort_order = sort_order;
             }
 
             public void setStatus(int status) {
                 this.status = status;
+            }
+
+            public String getCover() {
+                return cover;
             }
 
             public String getDescription() {
@@ -127,6 +154,10 @@ public class GoodsCategoryData implements Parcelable {
 
             public String getName() {
                 return name;
+            }
+
+            public int getPid() {
+                return pid;
             }
 
             public int getSort_order() {
@@ -144,9 +175,11 @@ public class GoodsCategoryData implements Parcelable {
 
             @Override
             public void writeToParcel(Parcel dest, int flags) {
+                dest.writeString(this.cover);
                 dest.writeString(this.description);
                 dest.writeInt(this.id);
                 dest.writeString(this.name);
+                dest.writeInt(this.pid);
                 dest.writeInt(this.sort_order);
                 dest.writeInt(this.status);
             }
@@ -155,9 +188,11 @@ public class GoodsCategoryData implements Parcelable {
             }
 
             protected CategoriesEntity(Parcel in) {
+                this.cover = in.readString();
                 this.description = in.readString();
                 this.id = in.readInt();
                 this.name = in.readString();
+                this.pid = in.readInt();
                 this.sort_order = in.readInt();
                 this.status = in.readInt();
             }
@@ -199,7 +234,7 @@ public class GoodsCategoryData implements Parcelable {
             in.readList(this.categories, CategoriesEntity.class.getClassLoader());
         }
 
-        public static final Parcelable.Creator<DataEntity> CREATOR = new Parcelable.Creator<DataEntity>() {
+        public static final Creator<DataEntity> CREATOR = new Creator<DataEntity>() {
             @Override
             public DataEntity createFromParcel(Parcel source) {
                 return new DataEntity(source);
@@ -278,6 +313,7 @@ public class GoodsCategoryData implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeParcelable(this.data, flags);
         dest.writeParcelable(this.status, flags);
+        dest.writeByte(this.success ? (byte) 1 : (byte) 0);
     }
 
     public GoodsCategoryData() {
@@ -286,6 +322,7 @@ public class GoodsCategoryData implements Parcelable {
     protected GoodsCategoryData(Parcel in) {
         this.data = in.readParcelable(DataEntity.class.getClassLoader());
         this.status = in.readParcelable(StatusEntity.class.getClassLoader());
+        this.success = in.readByte() != 0;
     }
 
     public static final Parcelable.Creator<GoodsCategoryData> CREATOR = new Parcelable.Creator<GoodsCategoryData>() {

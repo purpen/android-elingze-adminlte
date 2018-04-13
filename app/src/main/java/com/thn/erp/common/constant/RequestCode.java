@@ -19,4 +19,8 @@ public class RequestCode {
     public static final int CODE_GOODS_UNIT                 = 20007;
     public static final int CODE_GOODS_KEYWORDS             = 20008;
     public static final int CODE_GOODS_ADD_QRCODE           = 20009;
+
+
+    public static final int CODE_GOODS_CATEGORY_ADD         = 20011;
+    public static final int CODE_GOODS_BRAND_ADD            = 20012;
 }

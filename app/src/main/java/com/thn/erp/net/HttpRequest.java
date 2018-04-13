@@ -4,6 +4,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Base64;
 
+import com.stephen.taihuoniaolibrary.utils.THNLogUtil;
 import com.thn.erp.Constants;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.LogUtil;
@@ -28,7 +29,6 @@ import javax.net.ssl.X509TrustManager;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
-import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -45,9 +45,10 @@ public class HttpRequest {
     public static final String GET = "GET";
     public static final String PUT = "PUT";
     public static final String DELETE = "DELETE";
-    public final static int CONNECT_TIMEOUT = 30;
-    public final static int READ_TIMEOUT = 30;
-    public final static int WRITE_TIMEOUT = 30;
+
+    private final static int CONNECT_TIMEOUT = 30;
+    private final static int READ_TIMEOUT = 30;
+    private final static int WRITE_TIMEOUT = 30;
 
     private static final MediaType MEDIA_TYPE_JPG = MediaType.parse("image/jpg");
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -64,54 +65,51 @@ public class HttpRequest {
             .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)//设置连接超时时间
             .build();
 
-    public static class TrustAllCerts implements X509TrustManager {
-        @Override
-        public void checkClientTrusted(X509Certificate[] chain, String authType) {
-        }
-
-        @Override
-        public void checkServerTrusted(X509Certificate[] chain, String authType) {
-        }
-
-        @Override
-        public X509Certificate[] getAcceptedIssuers() {
-            return new X509Certificate[0];
-        }
+    /**
+     * 以GET 方式单独请求数据
+     * @param requestUrl 请求Url
+     * @param callback callback
+     * @return call
+     */
+    public static Call getRequest(String requestUrl, HttpRequestCallback callback){
+        return getRequest(requestUrl, null, callback);
     }
 
-    private static SSLSocketFactory createSSLSocketFactory() {
-        SSLSocketFactory ssfFactory = null;
-
-        try {
-            SSLContext sc = SSLContext.getInstance("TLS");
-            sc.init(null, new TrustManager[]{new TrustAllCerts()}, new SecureRandom());
-            ssfFactory = sc.getSocketFactory();
-        } catch (Exception e) {
-        }
-
-        return ssfFactory;
+    public static Call getRequest(String requestUrl, String urlSuffix, HttpRequestCallback callback){
+        HashMap<String, String> defaultParams = ClientParamsAPI.getDefaultParams();
+        return getRequest(requestUrl, urlSuffix, defaultParams, callback);
     }
 
+    public static Call getRequest(String requestUrl, String urlSuffix, HashMap params, HttpRequestCallback callback){
+        String requestUrl1 = requestUrl + File.separator + urlSuffix;
+        return sendRequest(GET, requestUrl1, params, callback);
+    }
+
+    /**
+     * 接口请求方法
+     * @param type 请求类型
+     * @param requestUrl url
+     * @param callback callback
+     * @return call
+     */
+    public static Call sendRequest(String type, String requestUrl, HttpRequestCallback callback) {
+        return sendRequest(type, requestUrl, null, ClientParamsAPI.getDefaultParams(), callback);
+    }
 
     public static Call sendRequest(String type, String requestUrl, HashMap params, HttpRequestCallback callback) {
-        if (null == params) throw new IllegalArgumentException("argument params can not be null ");
-        if (TextUtils.isEmpty(requestUrl))
-            throw new IllegalArgumentException("argument requestUrl can not be null");
-        if (null == callback)
-            throw new IllegalArgumentException("argument callback can not be null");
-        final String url;
-        if (!requestUrl.contains("http")) {
-            url = URL.BASE_URL + requestUrl;
-        } else {
-            url = requestUrl;
-        }
+        return sendRequest(type, requestUrl, null, params, callback);
+    }
 
-        Request request = getRequest(type, url, params);
+    public static Call sendRequest(String type, String requestUrl, String authorization, HashMap params, HttpRequestCallback callback) {
+        if (type == null || TextUtils.isEmpty(requestUrl) || null == params || callback == null) throw new IllegalArgumentException("request params can not be null ");
+        final String url = requestUrl.contains("http") ? requestUrl: URL.BASE_URL + requestUrl;
+        authorization = TextUtils.isEmpty(authorization) ? SPUtil.read(Constants.AUTHORIZATION) : authorization;
 
+        THNLogUtil.e("----------sendRequest: "+ "\n Type:" + type + "\n URL: "+ url  + "\n Authorization: " + authorization + "\n Params: " + params );
+
+        Request request = getRequest(type, url, authorization, params);
         if (null == request) return null;
-
         Call call = mOkHttpClient.newCall(request);
-
         callback.onStart();
         final NetWorkHandler handler = new NetWorkHandler(callback);
         call.enqueue(new Callback() {
@@ -139,177 +137,46 @@ public class HttpRequest {
                 }
             }
         });
-
         return call;
     }
 
     /**
-     * 包含文件参数的表单上传
-     *
-     * @param requestUrl
-     * @param params
-     * @param callback
-     * @return
+     * 获取 OkHttpRequest
+     * @param type type
+     * @param url url
+     * @param authorization authorization
+     * @param params params
+     * @return request
      */
-    public static Call sendRequest(String requestUrl, HashMap<String, Object> params, HttpRequestCallback callback) {
-        if (null == params) throw new IllegalArgumentException("argument params can not be null ");
-        if (TextUtils.isEmpty(requestUrl))
-            throw new IllegalArgumentException("argument requestUrl can not be null");
-        if (null == callback)
-            throw new IllegalArgumentException("argument callback can not be null");
-        String url;
-        if (!requestUrl.contains("http")) {
-            url = URL.BASE_URL + requestUrl;
-        } else {
-            url = requestUrl;
-        }
-
-        Request request = getRequest(url, params);
-
-        if (null == request) return null;
-
-        Call call = mOkHttpClient.newCall(request);
-
-        callback.onStart();
-        final NetWorkHandler handler = new NetWorkHandler(callback);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Message message = Message.obtain();
-                message.what = NetWorkHandler.CALLBACK_FAILURE;
-                message.obj = e;
-                handler.sendMessage(message);
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    Message message = Message.obtain();
-                    message.what = NetWorkHandler.CALLBACK_SUCCESS;
-                    message.obj = response.body().string();
-                    handler.sendMessage(message);
-                } else {
-                    LogUtil.e("response.isSuccessful()==false");
-                }
-            }
-        });
-
-        return call;
-    }
-
-    /**
-     * 登录请求
-     *
-     * @param callback
-     * @return
-     */
-    public static Call sendRequest(HashMap<String, String> params, HttpRequestCallback callback) {
-        if (null == params)
-            throw new IllegalArgumentException("argument callback can not be null");
-
-        if (null == callback)
-            throw new IllegalArgumentException("argument callback can not be null");
-
-        String str = params.get("email") + ":" + params.get("password");
-        str = "Basic  " + Base64.encodeToString(str.getBytes(), Base64.DEFAULT);
-        Request request = null;
-        request = new Request.Builder()
-                .url(URL.AUTH_LOGIN)
-                .addHeader("Authorization", str.trim())
-                .post(getRequestBody(params))
-                .build();
-        Call call = mOkHttpClient.newCall(request);
-
-        callback.onStart();
-        final NetWorkHandler handler = new NetWorkHandler(callback);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Message message = Message.obtain();
-                message.what = NetWorkHandler.CALLBACK_FAILURE;
-                message.obj = e;
-                handler.sendMessage(message);
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    Message message = Message.obtain();
-                    message.what = NetWorkHandler.CALLBACK_SUCCESS;
-                    message.obj = response.body().string();
-                    handler.sendMessage(message);
-                } else {
-                    LogUtil.e("response.isSuccessful()==false");
-                }
-            }
-        });
-
-        return call;
-    }
-
-
-    private static Request getRequest(String url, HashMap<String, Object> params) {
-        Request request = new Request.Builder()
-                .url(url)
-                .post(getMultipartBody(params))
-                .build();
-        return request;
-    }
-
-    private static Request getRequest(String type, String url, HashMap params) {
-        Request request = null;
-        String str=SPUtil.read(Constants.LOGIN_INFO);
-        if (!TextUtils.isEmpty(str)){
-            str = "Basic  " + Base64.encodeToString(str.getBytes(), Base64.DEFAULT);
-        }
+    private static Request getRequest(String type, String url, String authorization, HashMap params) {
         switch (type) {
             case POST:
-                request = new Request.Builder()
+                return new Request.Builder()
                         .url(url)
-                        .addHeader("Authorization", str.trim())
+                        .addHeader("Authorization", authorization)
                         .post(getRequestBody(params))
                         .build();
-                break;
             case GET:
-                request = new Request.Builder()
+                return new Request.Builder()
                         .url(getUrl(url, params))
-                        .addHeader("Authorization", str.trim())
+                        .addHeader("Authorization", authorization)
+                        .get()
                         .build();
-                break;
             case PUT:
-                request = new Request.Builder()
+                return new Request.Builder()
                         .url(url)
-                        .addHeader("Authorization", str.trim())
+                        .addHeader("Authorization", authorization)
                         .put(getRequestBody(params))
                         .build();
-                break;
             case DELETE:
-                request = new Request.Builder()
+                return new Request.Builder()
                         .url(url)
-                        .addHeader("Authorization", str.trim())
+                        .addHeader("Authorization", authorization)
+                        .delete(getRequestBody(params))
                         .build();
-                break;
-            default:
-                break;
         }
-
-        return request;
+        return null;
     }
-
-
-    private static RequestBody getMultipartBody(HashMap<String, Object> params) {
-        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        Set<Map.Entry<String, Object>> entries = params.entrySet();
-        for (Map.Entry<String, Object> entry : entries) {
-            if (entry.getValue() instanceof File) {
-                builder.addFormDataPart(entry.getKey(), "tmp.jpg", RequestBody.create(MEDIA_TYPE_JPG, (File) entry.getValue()));
-            } else if (entry.getValue() instanceof String) {
-                builder.addFormDataPart(entry.getKey(), (String) entry.getValue());
-            }
-        }
-        return builder.build();
-    }
-
 
     /**
      * 拼接get参数
@@ -329,9 +196,40 @@ public class HttpRequest {
         return builder.deleteCharAt(builder.lastIndexOf("&")).toString();
     }
 
-
+    /**
+     *  获取RequestBody 参数
+     * @param params
+     * @return
+     */
     private static RequestBody getRequestBody(HashMap params) {
-        RequestBody requestBody = RequestBody.create(JSON, JsonUtil.toJson(params));
-        return requestBody;
+        return RequestBody.create(JSON, JsonUtil.toJson(params));
+    }
+
+    public static class TrustAllCerts implements X509TrustManager {
+        @Override
+        public void checkClientTrusted(X509Certificate[] chain, String authType) {
+        }
+
+        @Override
+        public void checkServerTrusted(X509Certificate[] chain, String authType) {
+        }
+
+        @Override
+        public X509Certificate[] getAcceptedIssuers() {
+            return new X509Certificate[0];
+        }
+    }
+
+    private static SSLSocketFactory createSSLSocketFactory() {
+        SSLSocketFactory ssfFactory = null;
+
+        try {
+            SSLContext sc = SSLContext.getInstance("TLS");
+            sc.init(null, new TrustManager[]{new TrustAllCerts()}, new SecureRandom());
+            ssfFactory = sc.getSocketFactory();
+        } catch (Exception e) {
+        }
+
+        return ssfFactory;
     }
 }

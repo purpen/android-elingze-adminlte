@@ -315,7 +315,7 @@ public class GoodsAddActivity extends BaseStyle2Activity implements ImpTopbarOnC
 
     private void getQiNiuToken(final String imgPath, final UpLoadCallBack globalCallBack) {
 
-        HashMap<String, String> params = ClientParamsAPI.generateCommonParams();
+        HashMap<String, String> params = ClientParamsAPI.getDefaultParams();
         HttpRequest.sendRequest(HttpRequest.GET, URL.QINIU_TOKEN, params, new HttpRequestCallback() {
             @Override
             public void onStart() {
@@ -424,7 +424,7 @@ public class GoodsAddActivity extends BaseStyle2Activity implements ImpTopbarOnC
     };
 
     private void uploadGoods(String name, String coverId, String price) {
-        HashMap<String, String> params = ClientParamsAPI.generateCommonParams();
+        HashMap<String, String> params = ClientParamsAPI.getDefaultParams();
         params.put("name",name );
         params.put("cover_id", coverId);
         params.put("price", price);
