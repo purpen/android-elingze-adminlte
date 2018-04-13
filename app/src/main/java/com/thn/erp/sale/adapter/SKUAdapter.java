@@ -1,6 +1,7 @@
 package com.thn.erp.sale.adapter;
 
 import android.app.Activity;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import butterknife.ButterKnife;
 
 public class SKUAdapter extends BaseUltimateViewAdapter<SKUListData.DataBean.ItemsBean> {
     private Activity activity;
+    private SparseArray<TextView> mViews;
     public SKUAdapter(Activity activity, List<SKUListData.DataBean.ItemsBean> list) {
         super(list);
         this.activity = activity;
@@ -39,6 +41,12 @@ public class SKUAdapter extends BaseUltimateViewAdapter<SKUListData.DataBean.Ite
     public void onBindItemHolder2(UltimateRecyclerviewViewHolder ultimateRecyclerviewViewHolder, int position) {
         SKUListData.DataBean.ItemsBean sku = list.get(position);
         ViewHolder viewHolder = (ViewHolder) ultimateRecyclerviewViewHolder;
+        if (position==0){
+            viewHolder.tvSku.setTextColor(activity.getResources().getColor(R.color.color_27AE59));
+            viewHolder.tvSku.setBackgroundResource(R.drawable.corner_border_27ae59);
+        }else {
+
+        }
         viewHolder.tvSku.setText(sku.s_color);
     }
 

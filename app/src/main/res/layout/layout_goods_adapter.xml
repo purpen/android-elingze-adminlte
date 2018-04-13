@@ -18,7 +18,6 @@
         android:layout_toRightOf="@+id/ivCover"
         android:layout_width="wrap_content"
         android:textSize="@dimen/sp17"
-        android:layout_marginLeft="@dimen/dp15"
         android:textColor="@color/color_222"
         android:layout_height="wrap_content"
         android:text="test2"/>

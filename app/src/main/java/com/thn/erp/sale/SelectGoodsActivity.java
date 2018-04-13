@@ -3,6 +3,7 @@ package com.thn.erp.sale;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,6 +37,7 @@ import com.thn.erp.sale.adapter.SKUAdapter;
 import com.thn.erp.sale.bean.GoodsData;
 import com.thn.erp.sale.bean.SKUListData;
 import com.thn.erp.utils.JsonUtil;
+import com.thn.erp.utils.LogUtil;
 import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.CounterView;
 import com.thn.erp.view.CustomHeadView;
@@ -72,7 +74,7 @@ public class SelectGoodsActivity extends BaseActivity {
     private String cid = "";
     private PopupWindow popupWindow;
     private ViewHolder holder;
-    private TextView lastTv;
+    private TextView clickedTv;
     private SKUListData.DataBean.ItemsBean dataBean;
     @Override
     protected int getLayout() {
@@ -239,34 +241,36 @@ public class SelectGoodsActivity extends BaseActivity {
      */
     private void setDialogData(SKUListData skuListData) {
         final List<SKUListData.DataBean.ItemsBean> items = skuListData.data.items;
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         holder.dialogUltimateRecyclerView.setHasFixedSize(true);
         holder.dialogUltimateRecyclerView.setLayoutManager(linearLayoutManager);
         SKUAdapter skuAdapter = new SKUAdapter(activity, items);
         holder.dialogUltimateRecyclerView.setAdapter(skuAdapter);
-         dataBean = items.get(0);
-
+        dataBean = items.get(0);
         setSkuInfo(dataBean);
         skuAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onClick(View view, int i) {
-                dataBean = items.get(i);
-                if (lastTv!=null){
-                    lastTv.setTextColor(getResources().getColor(R.color.color_27AE59));
-                    lastTv.setBackgroundResource(R.drawable.corner_border_27ae59);
+                if (clickedTv!=null){
+                    clickedTv.setTextColor(getResources().getColor(R.color.color_27AE59));
+                    clickedTv.setBackgroundResource(R.drawable.corner_border_27ae59);
                 }
                 TextView curTv = ((TextView)view);
                 setSkuInfo(dataBean);
                 curTv.setBackgroundResource(R.drawable.corner_bg_27ae59);
                 curTv.setTextColor(getResources().getColor(android.R.color.white));
-                lastTv = curTv;
+                clickedTv = curTv;
             }
         });
 
         holder.dialogConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (clickedTv==null){
+                    ToastUtils.showInfo("请选择颜色分类");
+                    return;
+                }
                 dataBean.buyNum= holder.counterView.getNum();
                 popupWindow.dismiss();
                 Intent intent = new Intent();

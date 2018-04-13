@@ -17,7 +17,7 @@ import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
-import com.thn.erp.sale.adapter.DXOrderGoodsAdapter;
+import com.thn.erp.sale.adapter.CreateOrderAdapter;
 import com.thn.erp.sale.bean.AddressData;
 import com.thn.erp.sale.bean.CreateOrderData;
 import com.thn.erp.sale.bean.DefaultAddressData;
@@ -72,7 +72,7 @@ public class CreateOrderActivity extends BaseActivity {
     TextView tvPhone;
     //    运费
     private int freight;
-    private DXOrderGoodsAdapter adapter;
+    private CreateOrderAdapter adapter;
     private List<SKUListData.DataBean.ItemsBean> list;
     private THNWaittingDialog dialog;
     private DefaultAddressData.DataBean address;
@@ -93,7 +93,7 @@ public class CreateOrderActivity extends BaseActivity {
     protected void initView() {
         dialog = new THNWaittingDialog(activity);
         customHeadView.setHeadCenterTxtShow(true, R.string.create_order_title);
-        adapter = new DXOrderGoodsAdapter(list);
+        adapter = new CreateOrderAdapter(list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         ultimateRecyclerView.setHasFixedSize(true);
         ultimateRecyclerView.setLayoutManager(linearLayoutManager);
