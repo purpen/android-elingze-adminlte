@@ -34,7 +34,8 @@ public class GoodsCategoryListAdapter2 extends BaseUltimateViewAdapter {
         GoodsCategoryData.DataEntity.CategoriesEntity goods = (GoodsCategoryData.DataEntity.CategoriesEntity) list.get(position);
         GoodsCategoryListAdapter2.ViewHolder viewHolder = ((GoodsCategoryListAdapter2.ViewHolder) ultimateRecyclerviewViewHolder);
         viewHolder.goodsName.setText(goods.getName());
-        THNGlideUtil.displayImage(goods.getCover(),viewHolder.ivCover, R.mipmap.ic_launcher);
+        String cover = goods.getCover();
+        THNGlideUtil.displayImage(cover,viewHolder.ivCover, R.mipmap.ic_launcher);
     }
 
     @Override

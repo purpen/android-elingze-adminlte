@@ -86,6 +86,7 @@ public class GoodsCategoryActivity extends BaseStyle2Activity implements ImpTopb
         adapter = new GoodsCategoryListAdapter2(list);
         linearLayoutManager = new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
         ultimateRecyclerView.setHasFixedSize(true);
+        ultimateRecyclerView.removeItemDividerDecoration();
         ultimateRecyclerView.setLayoutManager(linearLayoutManager);
         ultimateRecyclerView.setAdapter(adapter);
     }
@@ -111,15 +112,18 @@ public class GoodsCategoryActivity extends BaseStyle2Activity implements ImpTopb
         ultimateRecyclerView.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                LogUtil.e("---------------onRefresh()");
                 page = 1;
                 isRefreshing = true;
                 getGoodsList();
             }
         });
+        ultimateRecyclerView.disableLoadmore();
 
         ultimateRecyclerView.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMore(int itemsCount, final int maxLastVisiblePosition) {
+                LogUtil.e("---------------loadMore()");
                 ultimateRecyclerView.disableLoadmore();
                 isRefreshing = false;
                 page++;
@@ -174,6 +178,7 @@ public class GoodsCategoryActivity extends BaseStyle2Activity implements ImpTopb
     }
 
     private void getGoodsList() {
+        LogUtil.e("---------------getGoodsList()");
         HashMap<String, String> params = ClientParamsAPI.getGoodsList(cid,page);
         HttpRequest.sendRequest(HttpRequest.GET, URL.PRODUCT_CATEGORY, params, new HttpRequestCallback() {
             @Override
@@ -183,7 +188,6 @@ public class GoodsCategoryActivity extends BaseStyle2Activity implements ImpTopb
 
             @Override
             public void onSuccess(String json) {
-                LogUtil.e(json);
                 dialog.dismiss();
                 GoodsCategoryData customerBean = JsonUtil.fromJson(json, GoodsCategoryData.class);
                 if (customerBean.getStatus().getCode() == 200) {

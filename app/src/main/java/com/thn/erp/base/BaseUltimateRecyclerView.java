@@ -2,10 +2,12 @@ package com.thn.erp.base;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import com.marshalchen.ultimaterecyclerview.ui.DividerItemDecoration;
 import com.thn.erp.R;
 
 /**
@@ -14,6 +16,7 @@ import com.thn.erp.R;
  */
 
 public class BaseUltimateRecyclerView extends UltimateRecyclerView {
+    private RecyclerView.ItemDecoration itemDecoration;
 
     public BaseUltimateRecyclerView(Context context) {
         super(context);
@@ -35,7 +38,18 @@ public class BaseUltimateRecyclerView extends UltimateRecyclerView {
         setEmptyView( R.layout.empty_view,
                 UltimateRecyclerView.EMPTY_CLEAR_ALL,
                 UltimateRecyclerView.STARTWITH_ONLINE_ITEMS);
-        reenableLoadmore();
-        addItemDividerDecoration(mContext);
+//        reenableLoadmore();
+        itemDecoration = new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST);
+        addItemDecoration(itemDecoration);
+    }
+
+    /**
+     * 去掉分割线
+     */
+    public void removeItemDividerDecoration() {
+        if (itemDecoration != null) {
+            mRecyclerView.removeItemDecoration(itemDecoration);
+            itemDecoration = null;
+        }
     }
 }
