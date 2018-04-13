@@ -101,6 +101,11 @@ public class CreateOrderActivity extends BaseActivity {
         ultimateRecyclerView.setRecylerViewBackgroundColor(Color.WHITE);
         ultimateRecyclerView.setAdapter(adapter);
         ultimateRecyclerView.addItemDividerDecoration(activity);
+        double sum=0;
+        for (SKUListData.DataBean.ItemsBean itemsBean : list){
+            sum+=itemsBean.buyNum*Double.parseDouble(itemsBean.sale_price);
+        }
+        sumPrice.setText(String.format("￥%s",sum));
     }
 
     @Override
