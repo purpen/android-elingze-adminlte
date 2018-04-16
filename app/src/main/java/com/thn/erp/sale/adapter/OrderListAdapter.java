@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.stephen.taihuoniaolibrary.utils.THNGlideUtil;
+import com.thn.erp.AppApplication;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseUltimateViewAdapter;
 import com.thn.erp.sale.bean.OrderData;
@@ -37,11 +38,10 @@ public class OrderListAdapter extends BaseUltimateViewAdapter<OrderData.DataBean
         viewHolder.tvOrderStatus.setText(""+ordersBean.status);
         viewHolder.tvTime.setText(DateUtil.getDateByTimestamp(ordersBean.created_at));
         viewHolder.tvOrderNum.setText("订单号："+ordersBean.rid);
-        View view = LayoutInflater.from(activity).inflate(R.layout.layout_goods_adapter, null);
-        view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,activity.getResources().getDimensionPixelSize(R.dimen.dp120)));
-        GoodsItemHolder itemHolder = new GoodsItemHolder(view);
         viewHolder.llGoods.removeAllViews();
         for (OrderData.DataBean.OrdersBean.ItemsBean item:ordersBean.items){
+            View view = getOrderGoodsLayout();
+            GoodsItemHolder itemHolder = new GoodsItemHolder(view);
             viewHolder.llGoods.addView(view);
             itemHolder.goodsName.setText(item.product_name);
             THNGlideUtil.displayImage(item.cover,itemHolder.ivCover,R.mipmap.ic_launcher);
@@ -51,9 +51,15 @@ public class OrderListAdapter extends BaseUltimateViewAdapter<OrderData.DataBean
         }
     }
 
+    private View getOrderGoodsLayout(){
+        View view = LayoutInflater.from(AppApplication.getContext()).inflate(R.layout.layout_goods_adapter, null);
+        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,AppApplication.getContext().getResources().getDimensionPixelSize(R.dimen.dp120)));
+        return view;
+    }
+
     @Override
     public UltimateRecyclerviewViewHolder onCreateViewHolder2(ViewGroup parent) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_order_adapter, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_order_adapter, null);
         return new ViewHolder(v);
     }
 
