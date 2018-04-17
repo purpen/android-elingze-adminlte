@@ -97,11 +97,11 @@
     <string name="inventory">库存</string>
     <string name="color_category">颜色分类</string>
     <string name="default_txt">颜色分类</string>
-
-
+    <string name="default_color">默认</string>
     <string name="qr_scan_tips">将二维码/条码放入框内，即可自动扫描</string>
     <string name="actionbar_title_qr_scan">二维码/条码</string>
     <string name="loading">加载中…</string>
     <string name="hint_dialog_open_camera_fail_content">相机打开出错，请稍后重试</string>
     <string name="hint_dialog_scan_success_title">扫描成功，是否进行网页登陆</string>
+    <string name="tvSpecification">规格</string>
 </resources>

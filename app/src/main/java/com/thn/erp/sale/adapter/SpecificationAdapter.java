@@ -1,6 +1,7 @@
 package com.thn.erp.sale.adapter;
 
 import android.app.Activity;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +22,11 @@ import butterknife.ButterKnife;
  * created at 2016/9/27 9:37
  */
 
-public class SKUAdapter extends BaseUltimateViewAdapter<SKUListData.DataBean.ColorsBean> {
+public class SpecificationAdapter extends BaseUltimateViewAdapter<SKUListData.DataBean.ModesBean> {
     private Activity activity;
+    private SparseArray<TextView> mViews;
 
-    public SKUAdapter(Activity activity, List<SKUListData.DataBean.ColorsBean> list) {
+    public SpecificationAdapter(Activity activity, List<SKUListData.DataBean.ModesBean> list) {
         super(list);
         this.activity = activity;
         this.list = list;
@@ -38,18 +40,18 @@ public class SKUAdapter extends BaseUltimateViewAdapter<SKUListData.DataBean.Col
 
     @Override
     public void onBindItemHolder2(UltimateRecyclerviewViewHolder ultimateRecyclerviewViewHolder, int position) {
-        SKUListData.DataBean.ColorsBean colorsBean = list.get(position);
+        SKUListData.DataBean.ModesBean modesBean = list.get(position);
         ViewHolder viewHolder = (ViewHolder) ultimateRecyclerviewViewHolder;
-        if (colorsBean.valid){
+        if (modesBean.valid){
             viewHolder.tvSku.setEnabled(true);
             viewHolder.tvSku.setTextColor(activity.getResources().getColor(R.color.color_27AE59));
             viewHolder.tvSku.setBackgroundResource(R.drawable.corner_border_27ae59);
-            viewHolder.tvSku.setText(colorsBean.name);
+            viewHolder.tvSku.setText(modesBean.name);
         }else {
             viewHolder.tvSku.setEnabled(false);
             viewHolder.tvSku.setTextColor(activity.getResources().getColor(R.color.color_ddd));
             viewHolder.tvSku.setBackgroundResource(R.drawable.corner_bg_eee);
-            viewHolder.tvSku.setText(colorsBean.name);
+            viewHolder.tvSku.setText(modesBean.name);
         }
     }
 

@@ -8,8 +8,9 @@ import java.util.List;
 
 public class SKUListData implements Parcelable {
 
+
     /**
-     * data : {"colors":[{"name":"深红色","valid":true}],"items":[{"cover":"http://xxx/_uploads/photos/180302/496886303714e7e.jpg","mode":"深红色","price":"45.00","product_name":"测试供应商方式","rid":"118130473518","s_color":"深红色","s_model":"","s_weight":"0.00","sale_price":"0.00","stock_count":8},{"cover":"http://xxx/_uploads/photos/180202/a653192ecd0ec6f.jpg","mode":"","price":"45.00","product_name":"测试供应商方式","rid":"118150444328","s_color":"","s_model":"","s_weight":"0.00","sale_price":"0.00","stock_count":0}],"modes":[]}
+     * data : {"colors":[{"name":"白色","valid":true},{"name":"红色","valid":true},{"name":"绿色","valid":true}],"items":[{"cover":"https://kg.erp.taihuoniao.com/20180410/FoebF2ucsx2EU84V33U2FGtvO2C6.jpeg","mode":"1M 白色","price":"999.99","product_name":"万能椅","rid":"118140440378","s_color":"白色","s_model":"1M","s_weight":"0.00","sale_price":"0.00","stock_count":20},{"cover":"https://kg.erp.taihuoniao.com/20180224/Fqa9EYltcqM7Owd6IMcbhnGFT2yO.jpg","mode":"2M 红色","price":"999.99","product_name":"万能椅","rid":"118140856553","s_color":"红色","s_model":"2M","s_weight":"0.00","sale_price":"0.00","stock_count":39},{"cover":"https://kg.erp.taihuoniao.com/20180225/Fu6j3cNL6uFXkxnChUvnnStup34h.jpg","mode":"1M 绿色","price":"999.99","product_name":"万能椅","rid":"118140762730","s_color":"绿色","s_model":"1M","s_weight":"0.00","sale_price":"0.00","stock_count":40}],"modes":[{"name":"1M","valid":true},{"name":"2M","valid":true}]}
      * status : {"code":200,"message":"Ok all right."}
      * success : true
      */
@@ -21,10 +22,11 @@ public class SKUListData implements Parcelable {
     public static class DataBean implements Parcelable {
         public List<ColorsBean> colors;
         public List<ItemsBean> items;
+        public List<ModesBean> modes;
 
         public static class ColorsBean implements Parcelable {
             /**
-             * name : 深红色
+             * name : 白色
              * valid : true
              */
 
@@ -65,16 +67,16 @@ public class SKUListData implements Parcelable {
 
         public static class ItemsBean implements Parcelable {
             /**
-             * cover : http://xxx/_uploads/photos/180302/496886303714e7e.jpg
-             * mode : 深红色
-             * price : 45.00
-             * product_name : 测试供应商方式
-             * rid : 118130473518
-             * s_color : 深红色
-             * s_model :
+             * cover : https://kg.erp.taihuoniao.com/20180410/FoebF2ucsx2EU84V33U2FGtvO2C6.jpeg
+             * mode : 1M 白色
+             * price : 999.99
+             * product_name : 万能椅
+             * rid : 118140440378
+             * s_color : 白色
+             * s_model : 1M
              * s_weight : 0.00
              * sale_price : 0.00
-             * stock_count : 8
+             * stock_count : 20
              */
 
             public String cover;
@@ -139,6 +141,47 @@ public class SKUListData implements Parcelable {
             };
         }
 
+        public static class ModesBean implements Parcelable {
+            /**
+             * name : 1M
+             * valid : true
+             */
+
+            public String name;
+            public boolean valid;
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeString(this.name);
+                dest.writeByte(this.valid ? (byte) 1 : (byte) 0);
+            }
+
+            public ModesBean() {
+            }
+
+            protected ModesBean(Parcel in) {
+                this.name = in.readString();
+                this.valid = in.readByte() != 0;
+            }
+
+            public static final Creator<ModesBean> CREATOR = new Creator<ModesBean>() {
+                @Override
+                public ModesBean createFromParcel(Parcel source) {
+                    return new ModesBean(source);
+                }
+
+                @Override
+                public ModesBean[] newArray(int size) {
+                    return new ModesBean[size];
+                }
+            };
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -148,6 +191,7 @@ public class SKUListData implements Parcelable {
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeList(this.colors);
             dest.writeList(this.items);
+            dest.writeList(this.modes);
         }
 
         public DataBean() {
@@ -158,6 +202,8 @@ public class SKUListData implements Parcelable {
             in.readList(this.colors, ColorsBean.class.getClassLoader());
             this.items = new ArrayList<ItemsBean>();
             in.readList(this.items, ItemsBean.class.getClassLoader());
+            this.modes = new ArrayList<ModesBean>();
+            in.readList(this.modes, ModesBean.class.getClassLoader());
         }
 
         public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {
@@ -235,7 +281,7 @@ public class SKUListData implements Parcelable {
         this.success = in.readByte() != 0;
     }
 
-    public static final Parcelable.Creator<SKUListData> CREATOR = new Parcelable.Creator<SKUListData>() {
+    public static final Creator<SKUListData> CREATOR = new Creator<SKUListData>() {
         @Override
         public SKUListData createFromParcel(Parcel source) {
             return new SKUListData(source);

@@ -1,12 +1,10 @@
 package com.thn.erp.overview.usermanage;
-
 import android.content.Intent;
 import android.support.v7.widget.SwitchCompat;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CompoundButton;
-
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.net.ClientParamsAPI;
@@ -20,10 +18,8 @@ import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.CustomHeadView;
 import com.thn.erp.view.CustomItemLayout;
 import com.thn.erp.view.svprogress.WaitingDialog;
-
 import java.io.IOException;
 import java.util.HashMap;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 

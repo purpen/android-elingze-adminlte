@@ -69,6 +69,7 @@
         android:background="#f4f4f4" />
 
     <TextView
+        android:id="@+id/tvColorSpec"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp10"
@@ -76,16 +77,42 @@
         android:layout_marginBottom="@dimen/dp5"
         android:text="@string/color_category"
         android:textColor="@color/color_222"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:visibility="gone"
+        />
 
 
     <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
-        android:id="@+id/dialogUltimateRecyclerView"
+        android:id="@+id/colorSpecUltimateRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp30"
         android:layout_marginLeft="@dimen/dp10"
         app:recyclerviewClipToPadding="true"
         app:recyclerviewScrollbars="vertical"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:id="@+id/tvSpecification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp5"
+        android:layout_marginBottom="@dimen/dp5"
+        android:text="@string/tvSpecification"
+        android:textColor="@color/color_222"
+        android:visibility="gone"
+        android:textSize="14sp" />
+
+
+    <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
+        android:id="@+id/specificUltimateRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp30"
+        android:layout_marginLeft="@dimen/dp10"
+        app:recyclerviewClipToPadding="true"
+        app:recyclerviewScrollbars="vertical"
+        android:visibility="gone"
         />
 
     <TextView

@@ -1,10 +1,12 @@
 package com.thn.erp.sale;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.stephen.taihuoniaolibrary.utils.THNGlideUtil;
+import com.thn.erp.AppApplication;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
@@ -32,6 +35,7 @@ import com.thn.erp.net.URL;
 import com.thn.erp.overview.usermanage.AddCustomActivity;
 import com.thn.erp.sale.adapter.GoodsAdapter;
 import com.thn.erp.sale.adapter.SKUAdapter;
+import com.thn.erp.sale.adapter.SpecificationAdapter;
 import com.thn.erp.sale.bean.GoodsData;
 import com.thn.erp.sale.bean.SKUListData;
 import com.thn.erp.utils.JsonUtil;
@@ -71,8 +75,16 @@ public class SelectGoodsActivity extends BaseActivity {
     private String cid = "";
     private PopupWindow popupWindow;
     private ViewHolder holder;
-    private TextView clickedTv;
     private SKUListData.DataBean.ItemsBean dataBean;
+    /**
+     * 选中的颜色
+     */
+    private TextView selectedColorTv;
+    /**
+     * 选中的规格
+     */
+    private TextView selectedSpecTv;
+
     @Override
     protected int getLayout() {
         return R.layout.activity_select_goods;
@@ -131,7 +143,7 @@ public class SelectGoodsActivity extends BaseActivity {
         adapter.setOnItemClickListener(new GoodsAdapter.OnItemClickListener() {
             @Override
             public void onClick(View view, int i) {
-                if (list.size()==0) return;
+                if (list.size() == 0) return;
                 getSKUList(list.get(i));
                 showPopupWindow();
 
@@ -161,7 +173,8 @@ public class SelectGoodsActivity extends BaseActivity {
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                clickedTv =null;
+                selectedColorTv = null;
+                selectedSpecTv = null;
                 WindowManager.LayoutParams params = getWindow().getAttributes();
                 params.alpha = 1f;
                 getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
@@ -202,6 +215,7 @@ public class SelectGoodsActivity extends BaseActivity {
 
     /**
      * 获取SKU列表
+     *
      * @param productsBean
      */
     private void getSKUList(final GoodsData.DataBean.ProductsBean productsBean) {
@@ -235,92 +249,223 @@ public class SelectGoodsActivity extends BaseActivity {
 
     /**
      * 设置商品采购的商品sku信息
+     *
      * @param skuListData
      */
     private void setDialogData(SKUListData skuListData) {
         final List<SKUListData.DataBean.ItemsBean> items = skuListData.data.items;
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
+        final List<SKUListData.DataBean.ColorsBean> colors = skuListData.data.colors;
+        final List<SKUListData.DataBean.ModesBean> modes = skuListData.data.modes;
+
+        if (colors.size() == 0) {
+            holder.colorSpecUltimateRecyclerView.setVisibility(View.GONE);
+            holder.tvColorSpec.setVisibility(View.GONE);
+        } else {
+            holder.colorSpecUltimateRecyclerView.setVisibility(View.VISIBLE);
+            holder.tvColorSpec.setVisibility(View.VISIBLE);
+        }
+
+        if (modes.size() == 0) {
+            holder.specificUltimateRecyclerView.setVisibility(View.GONE);
+            holder.tvSpecification.setVisibility(View.GONE);
+        } else {
+            holder.specificUltimateRecyclerView.setVisibility(View.VISIBLE);
+            holder.tvSpecification.setVisibility(View.VISIBLE);
+        }
+
+
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(AppApplication.getContext());
+        final LinearLayoutManager modesLayoutManager = new LinearLayoutManager(AppApplication.getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        holder.dialogUltimateRecyclerView.setHasFixedSize(true);
-        holder.dialogUltimateRecyclerView.setLayoutManager(linearLayoutManager);
-        SKUAdapter skuAdapter = new SKUAdapter(activity, items);
-        holder.dialogUltimateRecyclerView.setAdapter(skuAdapter);
+        modesLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        holder.specificUltimateRecyclerView.setHasFixedSize(true);
+        holder.colorSpecUltimateRecyclerView.setHasFixedSize(true);
+        holder.colorSpecUltimateRecyclerView.setLayoutManager(linearLayoutManager);
+        holder.specificUltimateRecyclerView.setLayoutManager(modesLayoutManager);
+        final SKUAdapter skuAdapter = new SKUAdapter(activity, colors);
+        final SpecificationAdapter specificationAdapter = new SpecificationAdapter(activity, modes);
+        holder.colorSpecUltimateRecyclerView.setAdapter(skuAdapter);
+        holder.specificUltimateRecyclerView.setAdapter(specificationAdapter);
         dataBean = items.get(0);
         setSkuInfo(dataBean);
         skuAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onClick(View view, int i) {
-                if (clickedTv!=null){
-                    clickedTv.setTextColor(getResources().getColor(R.color.color_27AE59));
-                    clickedTv.setBackgroundResource(R.drawable.corner_border_27ae59);
+                if (selectedColorTv != null) {
+                    selectedColorTv.setTextColor(getResources().getColor(R.color.color_27AE59));
+                    selectedColorTv.setBackgroundResource(R.drawable.corner_border_27ae59);
                 }
-                TextView curTv = ((TextView)view);
-                setSkuInfo(dataBean);
-                curTv.setBackgroundResource(R.drawable.corner_bg_27ae59);
-                curTv.setTextColor(getResources().getColor(android.R.color.white));
-                clickedTv = curTv;
+                selectedColorTv = ((TextView) view);
+                setSkuInfoByAttr(items);
+                selectedColorTv.setBackgroundResource(R.drawable.corner_bg_27ae59);
+                selectedColorTv.setTextColor(getResources().getColor(android.R.color.white));
+//                更新规格列表可选状态
+                setSpecSelectableState(items, specificationAdapter, modes);
             }
         });
+
+        specificationAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+            @Override
+            public void onClick(View view, int i) {
+                if (selectedSpecTv != null) {//恢复上次选中为默认样式
+                    selectedSpecTv.setTextColor(getResources().getColor(R.color.color_27AE59));
+                    selectedSpecTv.setBackgroundResource(R.drawable.corner_border_27ae59);
+                }
+                selectedSpecTv = ((TextView) view);
+                setSkuInfoByAttr(items);
+                selectedSpecTv.setBackgroundResource(R.drawable.corner_bg_27ae59);
+                selectedSpecTv.setTextColor(getResources().getColor(android.R.color.white));
+//                更新颜色列表可选状态
+                setColorSelectableState(items, skuAdapter, colors);
+            }
+        });
+
 
         holder.dialogConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (clickedTv==null){
+                if (colors.size() > 0 && selectedColorTv == null) {
                     ToastUtils.showInfo("请选择颜色分类");
                     return;
                 }
-                dataBean.buyNum= holder.counterView.getNum();
+
+                if (modes.size() > 0 && selectedSpecTv == null) {
+                    ToastUtils.showInfo("请选择规格");
+                    return;
+                }
+
+                dataBean.buyNum = holder.counterView.getNum();
                 popupWindow.dismiss();
                 Intent intent = new Intent();
-                intent.putExtra(SKUListData.class.getSimpleName(),dataBean);
-                setResult(RESULT_OK,intent);
+                intent.putExtra(SKUListData.class.getSimpleName(), dataBean);
+                setResult(RESULT_OK, intent);
                 finish();
-//                addShopCart(dataBean);
             }
         });
     }
 
     /**
-     * 添加代下单界面购物车
-     * @param dataBean
+     * 根据规格找出库存为0的颜色，更新颜色列表
+     * @param items
+     * @param adapter
+     * @param colors
      */
-//    private void addShopCart(SKUListData.DataBean.ItemsBean dataBean) {
-//        HashMap<String, String> params = ClientParamsAPI.getShopCartParams(dataBean.rid,dataBean.buyNum);
-//        HttpRequest.sendRequest(HttpRequest.POST, URL.ADD_SHOPCART, params, new HttpRequestCallback() {
-//            @Override
-//            public void onStart() {
-//                if (!isRefreshing) dialog.show();
-//            }
-//
-//            @Override
-//            public void onSuccess(String json) {
-//                dialog.dismiss();
-//                AddShopCartData addShopCartData = JsonUtil.fromJson(json, AddShopCartData.class);
-//                if (addShopCartData.success == true) {
-//
-//                } else {
-//                    ToastUtils.showError(addShopCartData.status.message);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(IOException e) {
-//                dialog.dismiss();
-//                ToastUtils.showError(R.string.network_err);
-//            }
-//        });
-//    }
+    private void setColorSelectableState(List<SKUListData.DataBean.ItemsBean> items, SKUAdapter adapter, List<SKUListData.DataBean.ColorsBean> colors) {
+        if (!holder.colorSpecUltimateRecyclerView.isShown()) return;
+        CharSequence specTvText = selectedSpecTv.getText();
+        for (SKUListData.DataBean.ItemsBean item : items) {
+            if (TextUtils.equals(item.s_model, specTvText)) {
+//                找出某种规格并且对应颜色的库存为0
+                if (item.stock_count ==0){
+                    for (SKUListData.DataBean.ColorsBean color : colors) {
+                        if (TextUtils.equals(item.s_color, color.name)) {
+                            color.valid = false;
+                        }
+                    }
+
+                }else {
+                    for (SKUListData.DataBean.ColorsBean color : colors) {
+                        if (TextUtils.equals(item.s_color, color.name)) {
+                            color.valid = true;
+                        }
+                    }
+
+                }
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 根据颜色找出库存为0的规格，更新规格列表
+     * @param items
+     * @param adapter
+     * @param modes
+     */
+    private void setSpecSelectableState(List<SKUListData.DataBean.ItemsBean> items, SpecificationAdapter adapter, List<SKUListData.DataBean.ModesBean> modes) {
+        if (!holder.specificUltimateRecyclerView.isShown()) return;
+        CharSequence colorTvText = selectedColorTv.getText();
+        for (SKUListData.DataBean.ItemsBean item : items) {
+            if (TextUtils.equals(item.s_color, colorTvText)) {
+//                如果库存为0，找出对应的规格，更新规格列表状态
+                if (item.stock_count ==0){
+                    for (SKUListData.DataBean.ModesBean mode : modes) {
+                        if (TextUtils.equals(item.s_model, mode.name)) {
+                            mode.valid = false;
+                        }
+                    }
+
+                }else {
+                    for (SKUListData.DataBean.ModesBean mode : modes) {
+                        if (TextUtils.equals(item.s_model, mode.name)) {
+                            mode.valid = true;
+                        }
+                    }
+                }
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 根据颜色/规格获取指定SKU
+     *
+     * @param items
+     * @return
+     */
+    private void setSkuInfoByAttr(List<SKUListData.DataBean.ItemsBean> items) {
+//        只显示颜色列表
+        if (holder.colorSpecUltimateRecyclerView.isShown() && !holder.specificUltimateRecyclerView.isShown()) {
+            if (selectedColorTv == null) return;
+            CharSequence colorTvText = selectedColorTv.getText();
+            if (TextUtils.isEmpty(colorTvText)) return;
+            for (SKUListData.DataBean.ItemsBean item : items) {
+                if (TextUtils.equals(item.s_color, colorTvText)) {
+                    setSkuInfo(item);
+                    return;
+                }
+            }
+//            只显示规格列表
+        } else if (!holder.colorSpecUltimateRecyclerView.isShown() && holder.specificUltimateRecyclerView.isShown()) {
+            if (selectedSpecTv == null) return;
+            CharSequence specTvText = selectedSpecTv.getText();
+            if (TextUtils.isEmpty(specTvText)) return;
+            for (SKUListData.DataBean.ItemsBean item : items) {
+                if (TextUtils.equals(item.s_model, specTvText)) {
+                    setSkuInfo(item);
+                    return;
+                }
+            }
+//            颜色规格列表都显示
+        } else if (holder.colorSpecUltimateRecyclerView.isShown() && holder.specificUltimateRecyclerView.isShown()) {
+            if (selectedColorTv == null || selectedSpecTv == null) return;
+            CharSequence colorTvText = selectedColorTv.getText();
+            CharSequence specTvText = selectedSpecTv.getText();
+            if (TextUtils.isEmpty(colorTvText) || TextUtils.isEmpty(specTvText)) return;
+
+            for (SKUListData.DataBean.ItemsBean item : items) {
+                if (TextUtils.equals(item.s_color, colorTvText) && TextUtils.equals(item.s_model, specTvText)) {
+                    setSkuInfo(item);
+                    return;
+                }
+            }
+        }
+
+
+    }
 
     /**
      * 设置Sku的信息
+     *
      * @param dataBean
      */
     private void setSkuInfo(SKUListData.DataBean.ItemsBean dataBean) {
+        this.dataBean = dataBean;
         holder.counterView.setStorageNum(dataBean.stock_count);
-        THNGlideUtil.displayImageFadein(dataBean.cover,holder.dialogCartProductimg);
-        holder.dialogCartPrice.setText("￥"+dataBean.sale_price);
+        THNGlideUtil.displayImageFadein(dataBean.cover, holder.dialogCartProductimg);
+        holder.dialogCartPrice.setText("￥" + dataBean.sale_price);
         holder.dialogCartProducttitle.setText(dataBean.product_name);
-        holder.dialogCartSkusnumber.setText("库存："+dataBean.stock_count);
+        holder.dialogCartSkusnumber.setText("库存：" + dataBean.stock_count);
     }
 
     /**
@@ -378,8 +523,14 @@ public class SelectGoodsActivity extends BaseActivity {
      * 商品选择数量对话框
      */
     class ViewHolder extends UltimateRecyclerviewViewHolder {
-        @BindView(R.id.dialogUltimateRecyclerView)
-        UltimateRecyclerView dialogUltimateRecyclerView;
+        @BindView(R.id.colorSpecUltimateRecyclerView)
+        UltimateRecyclerView colorSpecUltimateRecyclerView;
+        @BindView(R.id.specificUltimateRecyclerView)
+        UltimateRecyclerView specificUltimateRecyclerView;
+        @BindView(R.id.tvSpecification)
+        TextView tvSpecification;
+        @BindView(R.id.tvColorSpec)
+        TextView tvColorSpec;
         @BindView(R.id.dialog_cart_productimg)
         ImageView dialogCartProductimg;
         @BindView(R.id.dialog_cart_producttitle)

@@ -51,6 +51,10 @@ public class OrderListAdapter extends BaseUltimateViewAdapter<OrderData.DataBean
         }
     }
 
+    /**
+     * 获取商品item
+     * @return
+     */
     private View getOrderGoodsLayout(){
         View view = LayoutInflater.from(AppApplication.getContext()).inflate(R.layout.layout_goods_adapter, null);
         view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,AppApplication.getContext().getResources().getDimensionPixelSize(R.dimen.dp120)));
