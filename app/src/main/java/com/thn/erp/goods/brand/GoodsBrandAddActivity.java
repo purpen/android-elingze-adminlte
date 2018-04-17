@@ -140,6 +140,8 @@ public class GoodsBrandAddActivity extends BaseActivity implements ImpTopbarOnCl
                 dialog.dismiss();
                 BrandResultBean customerBean = JsonUtil.fromJson(json, BrandResultBean.class);
                 if (customerBean.getSuccess()) {
+                    setResult(-1);
+                    finish();
                     ToastUtils.showSuccess(customerBean.getStatus().getMessage());
                 } else {
                     ToastUtils.showError(customerBean.getStatus().getMessage());
