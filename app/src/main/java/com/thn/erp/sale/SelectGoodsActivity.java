@@ -183,6 +183,7 @@ public class SelectGoodsActivity extends BaseActivity {
             public void onDismiss() {
                 selectedColorTv = null;
                 selectedSpecTv = null;
+                dataBean = null;
                 SPUtil.clear(SKUListData.class.getName());
                 WindowManager.LayoutParams params = getWindow().getAttributes();
                 params.alpha = 1f;
@@ -288,16 +289,22 @@ public class SelectGoodsActivity extends BaseActivity {
             holder.tvSpecification.setVisibility(View.VISIBLE);
             specificationAdapter.notifyDataSetChanged();
         }
-//
-//        for (SKUListData.DataBean.ItemsBean item:items){
-//            if (item.stock_count!=0){
-//                dataBean = item;
-//                setSkuInfo(dataBean);
-//                break;
-//            }
-//        }
-        dataBean = items.get(0);
-        setSkuInfo(dataBean);
+
+
+        for (SKUListData.DataBean.ItemsBean item:items){
+            if (item.stock_count>0){
+                dataBean = item;
+                setSkuInfo(item);
+                return;
+            }
+        }
+
+        if (dataBean==null){
+            dataBean = items.get(0);
+            LogUtil.e(dataBean.cover);
+            setSkuInfo(dataBean);
+        }
+
     }
 
     /**
