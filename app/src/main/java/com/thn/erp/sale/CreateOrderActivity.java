@@ -141,7 +141,7 @@ public class CreateOrderActivity extends BaseActivity {
             item = new OrderGoodsItem();
             item.rid = itemsBean.rid;
 //            TODO 这是测试数据
-            item.rid = "118260884497";
+//            item.rid = "118260884497";
             item.quantity = 1;
             item.deal_price = itemsBean.sale_price;
             items.add(item);

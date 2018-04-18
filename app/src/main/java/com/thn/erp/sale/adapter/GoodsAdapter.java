@@ -51,7 +51,7 @@ public class GoodsAdapter extends UltimateViewAdapter {
             THNGlideUtil.displayImage(goods.cover,viewHolder.ivCover,R.mipmap.ic_launcher);
             viewHolder.tvNum.setText("编号："+goods.rid);
             viewHolder.price.setText("￥"+goods.sale_price);
-            viewHolder.stockNum.setText("库存："+position);
+//            viewHolder.stockNum.setText("库存："+position);
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

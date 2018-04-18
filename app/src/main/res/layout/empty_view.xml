@@ -9,5 +9,5 @@
         android:layout_centerInParent="true"
         android:textColor="@color/color_27AE59"
         android:textSize="@dimen/sp12"
-        android:text="No data here - This is the custom empty view" />
+        android:text="@string/no_chart_data" />
 </RelativeLayout>
