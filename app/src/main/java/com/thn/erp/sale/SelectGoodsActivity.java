@@ -40,6 +40,7 @@ import com.thn.erp.sale.bean.GoodsData;
 import com.thn.erp.sale.bean.SKUListData;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.LogUtil;
+import com.thn.erp.utils.SPUtil;
 import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.CounterView;
 import com.thn.erp.view.CustomHeadView;
@@ -77,6 +78,11 @@ public class SelectGoodsActivity extends BaseActivity {
     private PopupWindow popupWindow;
     private ViewHolder holder;
     private SKUListData.DataBean.ItemsBean dataBean;
+    private List<SKUListData.DataBean.ItemsBean> items;
+    private List<SKUListData.DataBean.ColorsBean> colors;
+    private List<SKUListData.DataBean.ModesBean> modes;
+    private SKUAdapter colorAdapter;
+    private SpecificationAdapter specificationAdapter;
     /**
      * 选中的颜色
      */
@@ -111,7 +117,6 @@ public class SelectGoodsActivity extends BaseActivity {
         ultimateRecyclerView.reenableLoadmore();
         ultimateRecyclerView.setAdapter(adapter);
         ultimateRecyclerView.addItemDividerDecoration(activity);
-        initPopWindow();
     }
 
 
@@ -146,9 +151,8 @@ public class SelectGoodsActivity extends BaseActivity {
             public void onClick(View view, int i) {
                 if (list.size() == 0) return;
                 getSKUList(list.get(i));
+                initPopWindow();
                 showPopupWindow();
-
-
             }
         });
 
@@ -164,6 +168,9 @@ public class SelectGoodsActivity extends BaseActivity {
     }
 
     private void initPopWindow() {
+        items = new ArrayList<>();
+        colors =new ArrayList<>();
+        modes =new ArrayList<>();
         final View popupView = LayoutInflater.from(activity).inflate(R.layout.dialog_select_goods, null);
         holder = new ViewHolder(popupView);
         popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
@@ -176,6 +183,7 @@ public class SelectGoodsActivity extends BaseActivity {
             public void onDismiss() {
                 selectedColorTv = null;
                 selectedSpecTv = null;
+                SPUtil.clear(SKUListData.class.getName());
                 WindowManager.LayoutParams params = getWindow().getAttributes();
                 params.alpha = 1f;
                 getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
@@ -192,7 +200,7 @@ public class SelectGoodsActivity extends BaseActivity {
                 return false;
             }
         });
-
+        initDialogContent();
     }
 
     /**
@@ -233,6 +241,7 @@ public class SelectGoodsActivity extends BaseActivity {
                 SKUListData skuListData = JsonUtil.fromJson(json, SKUListData.class);
                 if (skuListData.success == true) {
                     setDialogData(skuListData);
+                    SPUtil.write(SKUListData.class.getName(),json);
                 } else {
                     ToastUtils.showError(skuListData.status.message);
                 }
@@ -253,16 +262,22 @@ public class SelectGoodsActivity extends BaseActivity {
      * @param skuListData
      */
     private void setDialogData(SKUListData skuListData) {
-        final List<SKUListData.DataBean.ItemsBean> items = skuListData.data.items;
-        final List<SKUListData.DataBean.ColorsBean> colors = skuListData.data.colors;
-        final List<SKUListData.DataBean.ModesBean> modes = skuListData.data.modes;
-        initSkuAttrState(items,colors,modes);
+        items.clear();
+        colors.clear();
+        modes.clear();
+        items.addAll(skuListData.data.items);
+        colors.addAll(skuListData.data.colors);
+        modes.addAll(skuListData.data.modes);
+        initColorListState();
+        initSpecListState();
+
         if (colors.size() == 0) {
             holder.colorSpecUltimateRecyclerView.setVisibility(View.GONE);
             holder.tvColorSpec.setVisibility(View.GONE);
         } else {
             holder.colorSpecUltimateRecyclerView.setVisibility(View.VISIBLE);
             holder.tvColorSpec.setVisibility(View.VISIBLE);
+            colorAdapter.notifyDataSetChanged();
         }
 
         if (modes.size() == 0) {
@@ -271,28 +286,34 @@ public class SelectGoodsActivity extends BaseActivity {
         } else {
             holder.specificUltimateRecyclerView.setVisibility(View.VISIBLE);
             holder.tvSpecification.setVisibility(View.VISIBLE);
+            specificationAdapter.notifyDataSetChanged();
         }
 
+        dataBean = items.get(0);
+        setSkuInfo(dataBean);
+    }
 
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(AppApplication.getContext());
-        final LinearLayoutManager modesLayoutManager = new LinearLayoutManager(AppApplication.getContext());
+    /**
+     * 初始化对话框控件
+     */
+    private void initDialogContent() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(AppApplication.getContext());
+        LinearLayoutManager modesLayoutManager = new LinearLayoutManager(AppApplication.getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         modesLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         holder.specificUltimateRecyclerView.setHasFixedSize(true);
         holder.colorSpecUltimateRecyclerView.setHasFixedSize(true);
         holder.colorSpecUltimateRecyclerView.setLayoutManager(linearLayoutManager);
         holder.specificUltimateRecyclerView.setLayoutManager(modesLayoutManager);
-        final SKUAdapter skuAdapter = new SKUAdapter(activity, colors);
-        final SpecificationAdapter specificationAdapter = new SpecificationAdapter(activity, modes);
-        holder.colorSpecUltimateRecyclerView.setAdapter(skuAdapter);
+        colorAdapter = new SKUAdapter(activity, colors);
+        holder.colorSpecUltimateRecyclerView.setAdapter(colorAdapter);
+        specificationAdapter = new SpecificationAdapter(activity, modes);
         holder.specificUltimateRecyclerView.setAdapter(specificationAdapter);
-        dataBean = items.get(0);
-        setSkuInfo(dataBean);
-        skuAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+        colorAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onClick(View view, int i) {
                 int size = colors.size();
-                SKUListData.DataBean.ColorsBean colorsBean;
+                SKUListData.DataBean.ColorsBean colorsBean=null;
                 for (int j=0;j<size;j++){
                     colorsBean = colors.get(j);
                     if (j==i){
@@ -301,13 +322,11 @@ public class SelectGoodsActivity extends BaseActivity {
                         colorsBean.selected =false;
                     }
                 }
-
-                skuAdapter.notifyDataSetChanged();
-
+                colorAdapter.notifyDataSetChanged();
                 selectedColorTv = ((TextView) view);
-                setSkuSpecInfoByAttr(items);
+                setSkuSpecInfoByAttr();
 //                更新规格列表可选状态
-                setSpecSelectableState(items, specificationAdapter, modes);
+                setSpecSelectableState();
             }
         });
 
@@ -326,9 +345,9 @@ public class SelectGoodsActivity extends BaseActivity {
                 }
                 specificationAdapter.notifyDataSetChanged();
                 selectedSpecTv = ((TextView) view);
-                setSkuSpecInfoByAttr(items);
+                setSkuSpecInfoByAttr();
 //                更新颜色列表可选状态
-                setColorSelectableState(items, skuAdapter, colors);
+                setColorSelectableState();
             }
         });
 
@@ -357,12 +376,9 @@ public class SelectGoodsActivity extends BaseActivity {
     }
 
     /**
-     * 初始化sku属性状态
-     * @param items
-     * @param colors
-     * @param modes
+     * 初始化颜色列表
      */
-    private void initSkuAttrState(List<SKUListData.DataBean.ItemsBean> items, List<SKUListData.DataBean.ColorsBean> colors, List<SKUListData.DataBean.ModesBean> modes) {
+    private void initColorListState() {
         long stockCount = 0;
         for (SKUListData.DataBean.ColorsBean color:colors){
             for (SKUListData.DataBean.ItemsBean item:items){
@@ -377,9 +393,13 @@ public class SelectGoodsActivity extends BaseActivity {
             }
         }
 
-//        重置库存
-        stockCount =0;
+    }
 
+    /**
+     * 初始化规格列表
+     */
+    private void initSpecListState() {
+        int stockCount =0;
         for (SKUListData.DataBean.ModesBean mode:modes){
             for (SKUListData.DataBean.ItemsBean item:items){
                 if (TextUtils.equals(item.s_model, mode.name)){
@@ -396,12 +416,26 @@ public class SelectGoodsActivity extends BaseActivity {
 
     /**
      * 根据规格找出库存为0的颜色，更新颜色列表
-     * @param items
-     * @param adapter
-     * @param colors
      */
-    private void setColorSelectableState(List<SKUListData.DataBean.ItemsBean> items, SKUAdapter adapter, List<SKUListData.DataBean.ColorsBean> colors) {
+    private void setColorSelectableState() {
         if (!holder.colorSpecUltimateRecyclerView.isShown()) return;
+
+//        判断是否有规格为选中
+        boolean allUnselected=true;
+        for (SKUListData.DataBean.ModesBean mode:modes){
+            if (mode.selected){
+                allUnselected = false;
+                break;
+            }
+        }
+//如果没有规格被选
+        if (allUnselected){
+            String s = SPUtil.read(SKUListData.class.getName());
+            SKUListData skuListData = JsonUtil.fromJson(s, SKUListData.class);
+            setDialogData(skuListData);
+            return;
+        }
+
         String specTvText = selectedSpecTv.getText().toString();
         HashMap<String,SKUListData.DataBean.ItemsBean> existItems=new HashMap<>();
         for (SKUListData.DataBean.ItemsBean item : items) {
@@ -422,19 +456,32 @@ public class SelectGoodsActivity extends BaseActivity {
                 }
             }
         }
-        adapter.notifyDataSetChanged();
+        colorAdapter.notifyDataSetChanged();
     }
 
     /**
      * 根据颜色找出库存为0的规格，更新规格列表
-     * @param items
-     * @param adapter
-     * @param modes
      */
-    private void setSpecSelectableState(List<SKUListData.DataBean.ItemsBean> items, SpecificationAdapter adapter, List<SKUListData.DataBean.ModesBean> modes) {
+    private void setSpecSelectableState() {
         if (!holder.specificUltimateRecyclerView.isShown()) return;
-        String colorTvText = selectedColorTv.getText().toString();
 
+        //        判断是否有颜色被选中
+        boolean allUnselected=true;
+        for (SKUListData.DataBean.ColorsBean color:colors){
+            if (color.selected){
+                allUnselected = false;
+                break;
+            }
+        }
+//如果没有颜色被选中
+        if (allUnselected){
+            String s = SPUtil.read(SKUListData.class.getName());
+            SKUListData skuListData = JsonUtil.fromJson(s, SKUListData.class);
+            setDialogData(skuListData);
+            return;
+        }
+
+        String colorTvText = selectedColorTv.getText().toString();
 //       得到选中颜色的所有规格
         HashMap<String,SKUListData.DataBean.ItemsBean> existItems=new HashMap<>();
         for (SKUListData.DataBean.ItemsBean item : items) {
@@ -457,15 +504,14 @@ public class SelectGoodsActivity extends BaseActivity {
             }
         }
 //        更新规格列表
-        adapter.notifyDataSetChanged();
+        specificationAdapter.notifyDataSetChanged();
     }
 
     /**
      * 根据颜色/规格显示指定SKU
-     * @param items
      * @return
      */
-    private void setSkuSpecInfoByAttr(List<SKUListData.DataBean.ItemsBean> items) {
+    private void setSkuSpecInfoByAttr() {
 //        只显示颜色列表
         if (holder.colorSpecUltimateRecyclerView.isShown() && !holder.specificUltimateRecyclerView.isShown()) {
             if (selectedColorTv == null) return;
