@@ -288,7 +288,14 @@ public class SelectGoodsActivity extends BaseActivity {
             holder.tvSpecification.setVisibility(View.VISIBLE);
             specificationAdapter.notifyDataSetChanged();
         }
-
+//
+//        for (SKUListData.DataBean.ItemsBean item:items){
+//            if (item.stock_count!=0){
+//                dataBean = item;
+//                setSkuInfo(dataBean);
+//                break;
+//            }
+//        }
         dataBean = items.get(0);
         setSkuInfo(dataBean);
     }
@@ -430,9 +437,7 @@ public class SelectGoodsActivity extends BaseActivity {
         }
 //如果没有规格被选
         if (allUnselected){
-            String s = SPUtil.read(SKUListData.class.getName());
-            SKUListData skuListData = JsonUtil.fromJson(s, SKUListData.class);
-            setDialogData(skuListData);
+            resetDialogData();
             return;
         }
 
@@ -460,6 +465,17 @@ public class SelectGoodsActivity extends BaseActivity {
     }
 
     /**
+     * 还原数据
+     */
+    private void resetDialogData() {
+        selectedColorTv = null;
+        selectedSpecTv = null;
+        String s = SPUtil.read(SKUListData.class.getName());
+        SKUListData skuListData = JsonUtil.fromJson(s, SKUListData.class);
+        setDialogData(skuListData);
+    }
+
+    /**
      * 根据颜色找出库存为0的规格，更新规格列表
      */
     private void setSpecSelectableState() {
@@ -475,9 +491,7 @@ public class SelectGoodsActivity extends BaseActivity {
         }
 //如果没有颜色被选中
         if (allUnselected){
-            String s = SPUtil.read(SKUListData.class.getName());
-            SKUListData skuListData = JsonUtil.fromJson(s, SKUListData.class);
-            setDialogData(skuListData);
+            resetDialogData();
             return;
         }
 
@@ -503,7 +517,6 @@ public class SelectGoodsActivity extends BaseActivity {
                 }
             }
         }
-//        更新规格列表
         specificationAdapter.notifyDataSetChanged();
     }
 
