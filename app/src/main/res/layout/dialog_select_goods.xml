@@ -136,7 +136,7 @@
         style="?android:attr/buttonBarButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="60dp"
         android:background="@color/color_27AE59"
         android:text="确定"
         android:textColor="@android:color/white"

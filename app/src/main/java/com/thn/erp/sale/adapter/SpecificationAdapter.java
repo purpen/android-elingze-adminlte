@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
+import com.thn.erp.AppApplication;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseUltimateViewAdapter;
 import com.thn.erp.sale.bean.SKUListData;
@@ -44,15 +45,19 @@ public class SpecificationAdapter extends BaseUltimateViewAdapter<SKUListData.Da
         ViewHolder viewHolder = (ViewHolder) ultimateRecyclerviewViewHolder;
         if (modesBean.valid){
             viewHolder.tvSku.setEnabled(true);
-            viewHolder.tvSku.setTextColor(activity.getResources().getColor(R.color.color_27AE59));
-            viewHolder.tvSku.setBackgroundResource(R.drawable.corner_border_27ae59);
-            viewHolder.tvSku.setText(modesBean.name);
+            if (modesBean.selected){
+                viewHolder.tvSku.setBackgroundResource(R.drawable.corner_bg_27ae59);
+                viewHolder.tvSku.setTextColor(AppApplication.getContext().getResources().getColor(android.R.color.white));
+            }else {
+                viewHolder.tvSku.setTextColor(activity.getResources().getColor(R.color.color_27AE59));
+                viewHolder.tvSku.setBackgroundResource(R.drawable.corner_border_27ae59);
+            }
         }else {
             viewHolder.tvSku.setEnabled(false);
             viewHolder.tvSku.setTextColor(activity.getResources().getColor(R.color.color_ddd));
             viewHolder.tvSku.setBackgroundResource(R.drawable.corner_bg_eee);
-            viewHolder.tvSku.setText(modesBean.name);
         }
+        viewHolder.tvSku.setText(modesBean.name);
     }
 
     static class ViewHolder extends UltimateRecyclerviewViewHolder {

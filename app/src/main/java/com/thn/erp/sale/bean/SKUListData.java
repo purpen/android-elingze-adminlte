@@ -32,6 +32,10 @@ public class SKUListData implements Parcelable {
 
             public String name;
             public boolean valid;
+            public boolean selected;
+
+            public ColorsBean() {
+            }
 
             @Override
             public int describeContents() {
@@ -42,14 +46,13 @@ public class SKUListData implements Parcelable {
             public void writeToParcel(Parcel dest, int flags) {
                 dest.writeString(this.name);
                 dest.writeByte(this.valid ? (byte) 1 : (byte) 0);
-            }
-
-            public ColorsBean() {
+                dest.writeByte(this.selected ? (byte) 1 : (byte) 0);
             }
 
             protected ColorsBean(Parcel in) {
                 this.name = in.readString();
                 this.valid = in.readByte() != 0;
+                this.selected = in.readByte() != 0;
             }
 
             public static final Creator<ColorsBean> CREATOR = new Creator<ColorsBean>() {
@@ -149,6 +152,7 @@ public class SKUListData implements Parcelable {
 
             public String name;
             public boolean valid;
+            public boolean selected;
 
             @Override
             public int describeContents() {
