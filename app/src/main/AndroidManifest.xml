@@ -8,6 +8,11 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
         android:name=".AppApplication"
@@ -87,6 +92,9 @@
         <activity android:name=".goods.brand.BrandDetailsActivity" android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity android:name=".goods.category.GoodsCategoryAddActivity" />
         <activity android:name=".goods.brand.GoodsBrandAddActivity" />
+        <activity android:name=".more.PrepareExportStockActivity" />
+        <activity android:name=".more.PrepareOrderingActivity" />
+        <activity android:name=".more.ScanExportStockActivity" />
 
     </application>
 </manifest>

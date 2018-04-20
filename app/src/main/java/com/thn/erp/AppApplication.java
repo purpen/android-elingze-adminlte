@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
+import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
 import com.qiniu.android.storage.Configuration;
@@ -12,6 +13,7 @@ import com.squareup.leakcanary.LeakCanary;
 import com.stephen.taihuoniaolibrary.common.THNApp;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.common.constant.THNZone;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -60,6 +62,7 @@ public class AppApplication extends MultiDexApplication {
 
         THNApp.init(this);
         initQiNiu();
+        ZXingLibrary.initDisplayOpinion(this);
     }
 
     public boolean isSD() {
@@ -103,7 +106,7 @@ public class AppApplication extends MultiDexApplication {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-//        MultiDex.install(base);
+        MultiDex.install(base);
     }
 
     public void addActivity(BaseActivity activity){

@@ -476,7 +476,7 @@ public class UltimateRecyclerView extends FrameLayout implements Scrollable {
         if (bottomEdgeHit) {
             if (mIsLoadMoreWidgetEnabled) {
                 /**auto activate load more**/
-                if (!automaticLoadMoreEnabled) {
+                if (!automaticLoadMoreEnabled && onLoadMoreListener != null) {
                     onLoadMoreListener.loadMore(mRecyclerView.getAdapter().getItemCount(), lastVisibleItemPosition);
                     automaticLoadMoreEnabled = true;
                 }

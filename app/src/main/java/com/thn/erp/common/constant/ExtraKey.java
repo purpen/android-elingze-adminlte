@@ -13,4 +13,7 @@ public class ExtraKey {
     public static final String CATEGORY_NAME = "categoryName";
 
     public static final String CATEGORY_BEAN = "categoryBean";
+
+
+   public static final String PARCElABLE = "PARCElABLE";
 }

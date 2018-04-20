@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_public_topbar" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout_container"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="#88000000">
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:text="对准条形码立刻扫描出库发货"-->
+            <!--android:textSize="12sp"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_marginTop="15dp"-->
+            <!--android:textColor="#FFFFFF" />-->
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginLeft="15dp"
+        android:gravity="center_vertical"
+        android:text="待出库商品清单" />
+
+    <include layout="@layout/include_view_line_divider_vertical" />
+
+    <com.thn.erp.base.BaseUltimateRecyclerView
+        android:id="@+id/recyclerview1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="商品：NULL" />
+
+            <TextView
+                android:id="@+id/textView_more_can_export_stock_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="数量：" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:text="下一步"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+</LinearLayout>
