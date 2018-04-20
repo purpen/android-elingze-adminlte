@@ -43,12 +43,14 @@ import butterknife.OnClick;
  * Email: 895745843@qq.com
  */
 
-public class ScanExportStockActivity extends BaseStyle2Activity implements ImpTopbarOnClickListener {
-    private static final String TAG = ScanExportStockActivity.class.getSimpleName();
+public class ScanOrderingActivity extends BaseStyle2Activity implements ImpTopbarOnClickListener {
+    private static final String TAG = ScanOrderingActivity.class.getSimpleName();
     @BindView(R.id.textView_more_can_export_stock_total)
     TextView textViewMoreCanExportStockTotal;
     @BindView(R.id.textView_more_can_export_stock_confirm)
     TextView textViewMoreCanExportStockConfirm;
+    @BindView(R.id.textView_more_scan_export_list_title)
+    TextView textViewMoreScanExportListTitle;
     private PrepareExportStockBean bean;
     private PublicTopBar publicTopBar;
     private BaseUltimateRecyclerView recyclerview1;
@@ -84,13 +86,14 @@ public class ScanExportStockActivity extends BaseStyle2Activity implements ImpTo
         mStockProductListAdapter = new StockProductListAdapter(mObjects);
         setLinearLayoutManagerVertical(recyclerview1);
         recyclerview1.setAdapter(mStockProductListAdapter);
-        textViewMoreCanExportStockConfirm.setText("确认出库");
+        textViewMoreScanExportListTitle.setText("待下单商品清单");
+        textViewMoreCanExportStockConfirm.setText("确认下单");
     }
 
     private void initTopBar() {
         publicTopBar = (PublicTopBar) findViewById(R.id.publicTopBar);
         publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
-        publicTopBar.setTopBarCenterTextView("待出库订单", getResources().getColor(R.color.THN_color_fontColor_primary));
+        publicTopBar.setTopBarCenterTextView("选择客户下单", getResources().getColor(R.color.THN_color_fontColor_primary));
         publicTopBar.setTopBarLeftImageView(true);
         publicTopBar.setTopBarOnClickListener(this);
     }
@@ -177,18 +180,18 @@ public class ScanExportStockActivity extends BaseStyle2Activity implements ImpTo
 
     @OnClick(R.id.textView_more_can_export_stock_confirm)
     public void onViewClicked() {
-        confirmDialog = DialogHelp.getConfirmDialog(ScanExportStockActivity.this, "1. 本次出库：商品 1 数量 " + mObjects.size() + " \n " + "2. 未出库：商品 4 数量 8", new DialogInterface.OnClickListener() {
+        confirmDialog = DialogHelp.getConfirmDialog(ScanOrderingActivity.this, "1. 客户名称：佛山市伟志成诚机械有限公司" + "\n2. 本次出库：商品 1 数量 " + mObjects.size(), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 confirmDialog.dismiss();
-                waitDialog = DialogHelp.getWaitDialog(ScanExportStockActivity.this, "出库中···");
+                waitDialog = DialogHelp.getWaitDialog(ScanOrderingActivity.this, "下单中···");
                 waitDialog.show();
                 new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         waitDialog.cancel();
-                        ToastUtils.showSuccess("出库成功");
-                        ScanExportStockActivity.this.startActivity(new Intent(ScanExportStockActivity.this, MainActivity.class));
+                        ToastUtils.showSuccess("下单成功");
+                        ScanOrderingActivity.this.startActivity(new Intent(ScanOrderingActivity.this, MainActivity.class));
                     }
                 }, 3000);
             }

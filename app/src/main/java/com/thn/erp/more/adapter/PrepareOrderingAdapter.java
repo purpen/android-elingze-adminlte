@@ -21,6 +21,7 @@ import java.util.List;
 
 public class PrepareOrderingAdapter extends BaseUltimateViewAdapter {
     private Context mContext;
+    private View.OnClickListener mOnClickListener;
 
     public PrepareOrderingAdapter(Context context, List list) {
         super(list);
@@ -31,44 +32,40 @@ public class PrepareOrderingAdapter extends BaseUltimateViewAdapter {
         super(list);
     }
 
+    public PrepareOrderingAdapter(Context context, List list, View.OnClickListener onClickListener) {
+        super(list);
+        mContext = context;
+        this.mOnClickListener = onClickListener;
+    }
+
     @Override
     public void onBindItemHolder2(UltimateRecyclerviewViewHolder ultimateRecyclerviewViewHolder, int position) {
         ViewHoler viewHoler = (ViewHoler) ultimateRecyclerviewViewHolder;
         PrepareExportStockBean bean = (PrepareExportStockBean) list.get(position);
-        viewHoler.textViewStockOrderId.setText(bean.getOrderId());
         viewHoler.textViewStockOrderCusomerName.setText(bean.getCustomerName());
         viewHoler.textViewStockOrderAmount.setText(bean.getOrderAmount());
         viewHoler.textViewStockOrderProduct.setText(bean.getOrderProduct());
-        viewHoler.textViewStockOrderTime.setText(bean.getOrderingTime());
-        viewHoler.textViewStockOrderExport.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ToastUtils.showInfo("出库");
-            }
-        });
+        viewHoler.textViewStockOrderExport.setOnClickListener(mOnClickListener);
+        viewHoler.textViewStockOrderExport.setTag(R.id.textView_stock_order_export, bean);
     }
 
     @Override
     public UltimateRecyclerviewViewHolder onCreateViewHolder2(ViewGroup parent) {
-        return new ViewHoler(LayoutInflater.from(mContext).inflate(R.layout.item_recyclerview_more_stock_export, null));
+        return new ViewHoler(LayoutInflater.from(mContext).inflate(R.layout.item_recyclerview_more_stock_customer_list, null));
     }
 
     class ViewHoler extends UltimateRecyclerviewViewHolder{
-        private TextView textViewStockOrderId;
         private TextView textViewStockOrderCusomerName;
         private TextView textViewStockOrderAmount;
         private TextView textViewStockOrderProduct;
-        private TextView textViewStockOrderTime;
         private TextView textViewStockOrderExport;
 
         public ViewHoler(View itemView) {
             super(itemView);
-            textViewStockOrderId = (TextView) itemView.findViewById(R.id.textView_stock_order_id);
-            textViewStockOrderCusomerName = (TextView) itemView.findViewById(R.id.textView_stock_order_cusomer_name);
+            textViewStockOrderCusomerName = (TextView)itemView. findViewById(R.id.textView_stock_order_cusomer_name);
             textViewStockOrderAmount = (TextView) itemView.findViewById(R.id.textView_stock_order_amount);
             textViewStockOrderProduct = (TextView) itemView.findViewById(R.id.textView_stock_order_product);
-            textViewStockOrderTime = (TextView) itemView.findViewById(R.id.textView_stock_order_time);
-            textViewStockOrderExport = (TextView) itemView.findViewById(R.id.textView_stock_order_export);
+            textViewStockOrderExport = (TextView)itemView. findViewById(R.id.textView_stock_order_export);
         }
     }
 }

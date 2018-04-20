@@ -24,6 +24,7 @@
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/textView_more_scan_export_list_title"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:layout_marginLeft="15dp"
@@ -65,11 +66,12 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/textView_more_can_export_stock_confirm"
             android:layout_width="80dp"
             android:layout_height="match_parent"
             android:background="@color/colorPrimary"
             android:gravity="center"
-            android:text="下一步"
+            android:text="确认出库"
             android:textColor="#FFFFFF" />
     </LinearLayout>
 
