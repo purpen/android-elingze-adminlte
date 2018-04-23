@@ -16,6 +16,12 @@ public class PrepareExportStockBean implements Parcelable {
     private String orderProduct;
     private String orderingTime;
 
+    public PrepareExportStockBean( String customerName, String orderAmount, String orderProduct) {
+        this.customerName = customerName;
+        this.orderAmount = orderAmount;
+        this.orderProduct = orderProduct;
+    }
+
     public PrepareExportStockBean(String orderId, String customerName, String orderAmount, String orderProduct, String orderingTime) {
         this.orderId = orderId;
         this.customerName = customerName;

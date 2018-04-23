@@ -95,6 +95,7 @@
         <activity android:name=".more.PrepareExportStockActivity" />
         <activity android:name=".more.PrepareOrderingActivity" />
         <activity android:name=".more.ScanExportStockActivity" />
+        <activity android:name=".more.ScanOrderingActivity" />
 
     </application>
 </manifest>
