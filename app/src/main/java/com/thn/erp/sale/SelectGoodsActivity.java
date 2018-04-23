@@ -183,7 +183,6 @@ public class SelectGoodsActivity extends BaseActivity {
             public void onDismiss() {
                 selectedColorTv = null;
                 selectedSpecTv = null;
-                dataBean = null;
                 SPUtil.clear(SKUListData.class.getName());
                 WindowManager.LayoutParams params = getWindow().getAttributes();
                 params.alpha = 1f;
@@ -296,6 +295,8 @@ public class SelectGoodsActivity extends BaseActivity {
                 dataBean = item;
                 setSkuInfo(item);
                 return;
+            }else {
+                dataBean = null;
             }
         }
 
@@ -380,6 +381,7 @@ public class SelectGoodsActivity extends BaseActivity {
                 }
 
                 dataBean.buyNum = holder.counterView.getNum();
+                popupWindow.dismiss();
                 Intent intent = new Intent();
                 intent.putExtra(SKUListData.class.getSimpleName(), dataBean);
                 setResult(RESULT_OK, intent);
@@ -431,8 +433,6 @@ public class SelectGoodsActivity extends BaseActivity {
      * 根据规格找出库存为0的颜色，更新颜色列表
      */
     private void setColorSelectableState() {
-        if (!holder.colorSpecUltimateRecyclerView.isShown()) return;
-
 //        判断是否有规格为选中
         boolean allUnselected=true;
         for (SKUListData.DataBean.ModesBean mode:modes){
@@ -446,6 +446,8 @@ public class SelectGoodsActivity extends BaseActivity {
             resetDialogData();
             return;
         }
+
+        if (!holder.colorSpecUltimateRecyclerView.isShown()) return;
 
         String specTvText = selectedSpecTv.getText().toString();
         HashMap<String,SKUListData.DataBean.ItemsBean> existItems=new HashMap<>();
@@ -485,8 +487,6 @@ public class SelectGoodsActivity extends BaseActivity {
      * 根据颜色找出库存为0的规格，更新规格列表
      */
     private void setSpecSelectableState() {
-        if (!holder.specificUltimateRecyclerView.isShown()) return;
-
         //        判断是否有颜色被选中
         boolean allUnselected=true;
         for (SKUListData.DataBean.ColorsBean color:colors){
@@ -500,6 +500,9 @@ public class SelectGoodsActivity extends BaseActivity {
             resetDialogData();
             return;
         }
+
+        if (!holder.specificUltimateRecyclerView.isShown()) return;
+
 
         String colorTvText = selectedColorTv.getText().toString();
 //       得到选中颜色的所有规格
