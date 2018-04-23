@@ -380,7 +380,6 @@ public class SelectGoodsActivity extends BaseActivity {
                 }
 
                 dataBean.buyNum = holder.counterView.getNum();
-                popupWindow.dismiss();
                 Intent intent = new Intent();
                 intent.putExtra(SKUListData.class.getSimpleName(), dataBean);
                 setResult(RESULT_OK, intent);
