@@ -193,7 +193,7 @@ public class RegisterFragment extends BaseFragment {
     private boolean isWorking=true;
     private int timeInterval = Constants.CHECK_CODE_INTERVAL;
 
-    private final Handler handler = new Handler() {
+    private  final Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 1) {

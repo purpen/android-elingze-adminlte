@@ -9,7 +9,6 @@
         android:id="@+id/tvContent"
         android:layout_width="@dimen/dp50"
         android:layout_height="@dimen/dp100"
-        android:layout_centerHorizontal="true"
         android:textSize="12dp"
         android:textColor="@android:color/white"
         android:visibility="gone"

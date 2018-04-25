@@ -53,7 +53,6 @@
             />
         <EditText
             android:id="@+id/price"
-            android:layout_toRightOf="@+id/tvPrice"
             android:textSize="@dimen/sp14"
             android:layout_gravity="center_vertical"
             android:textColor="@color/color_222"
@@ -64,7 +63,6 @@
             android:id="@+id/tvCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/stockNum"
             android:text="数量："
             android:textSize="@dimen/sp12"
             android:textColor="@color/color_222"
@@ -72,7 +70,6 @@
 
         <com.thn.erp.view.CounterView
             android:id="@+id/counterView"
-            android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/dp15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

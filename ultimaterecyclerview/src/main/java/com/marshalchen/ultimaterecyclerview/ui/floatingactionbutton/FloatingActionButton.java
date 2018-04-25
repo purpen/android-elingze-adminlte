@@ -25,18 +25,18 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.DrawableRes;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.AppCompatImageButton;
 import android.util.AttributeSet;
 import android.view.Display;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
-import android.widget.ImageButton;
 
 import com.marshalchen.ultimaterecyclerview.R;
 
 
 
-public class FloatingActionButton extends ImageButton {
+public class FloatingActionButton extends AppCompatImageButton {
 
     public static final int SIZE_NORMAL = 0;
     public static final int SIZE_NOSHADOW = 2;

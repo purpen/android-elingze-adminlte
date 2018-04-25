@@ -15,6 +15,8 @@ import android.widget.FrameLayout;
 
 import com.thn.erp.R;
 
+import java.lang.ref.WeakReference;
+
 
 /**
  * Created by Sai on 15/8/15.
@@ -227,6 +229,7 @@ public class SVProgressHUD {
         //消失动画
         outAnim.setAnimationListener(outAnimListener);
         mSharedView.startAnimation(outAnim);
+        mHandler.removeCallbacksAndMessages(null);
     }
 
     public void dismissImmediately() {
@@ -256,13 +259,7 @@ public class SVProgressHUD {
         }
     }
 
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            dismiss();
-        }
-    };
+    private Handler mHandler = new MyHandler(this);
 
     private void scheduleDismiss() {
         mHandler.removeCallbacksAndMessages(null);
@@ -299,4 +296,18 @@ public class SVProgressHUD {
 
         }
     };
+
+    private static class MyHandler extends Handler{
+        private final WeakReference<SVProgressHUD> mSVProgressHUD;
+
+        public MyHandler(SVProgressHUD hud) {
+            mSVProgressHUD = new WeakReference(hud);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            if (mSVProgressHUD.get() == null) return;
+            mSVProgressHUD.get().dismiss();
+        }
+    }
 }

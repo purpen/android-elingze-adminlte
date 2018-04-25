@@ -12,7 +12,6 @@
 
     <com.thn.erp.view.SearchView
         android:id="@+id/searchView"
-        android:layout_below="@+id/customHeadView"
         style="@style/StyleSearchView"
         android:hint="商品名"
         android:layout_marginTop="@dimen/dp9"
@@ -23,7 +22,6 @@
         android:id="@+id/ultimateRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/searchView"
         app:recyclerviewClipToPadding="true"
         app:recyclerviewScrollbars="vertical"
         />

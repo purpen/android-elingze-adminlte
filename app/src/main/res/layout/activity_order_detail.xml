@@ -24,7 +24,6 @@
                 android:id="@+id/rlAddress"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:layout_below="@+id/customName"
                 android:layout_marginTop="@dimen/dp5"
                 android:background="@android:color/white">
 

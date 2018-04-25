@@ -35,7 +35,6 @@
             android:id="@+id/tvDefaultAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/item_address_nametv"
             android:background="@drawable/bg_yellow_corner"
             android:text="@string/default_address"
             android:paddingTop="@dimen/dp2"
