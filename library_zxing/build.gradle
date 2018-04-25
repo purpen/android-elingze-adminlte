@@ -37,4 +37,4 @@ ext {
     PUBLISH_VERSION = '2.2'
 }
 
-apply from: 'config.gradle'
+//apply from: 'config.gradle'
