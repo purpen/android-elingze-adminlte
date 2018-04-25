@@ -37,4 +37,4 @@ ext {
     PUBLISH_VERSION = '2.2'
 }
 
-apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
+apply from: 'config.gradle'
