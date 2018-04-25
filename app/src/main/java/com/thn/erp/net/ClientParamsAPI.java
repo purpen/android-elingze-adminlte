@@ -399,4 +399,16 @@ public class ClientParamsAPI {
         params.put("quantity",String.valueOf(quantity));
         return params;
     }
+
+    /**
+     * 获取客户等级列表
+     * @param page
+     * @return
+     */
+    public static HashMap<String,String> getCustomerGradeParams(int page) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("page",String.valueOf(page));
+        params.put("per_page",Constants.PAGE_SIZE);
+        return params;
+    }
 }

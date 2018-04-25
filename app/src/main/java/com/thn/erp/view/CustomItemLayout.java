@@ -46,7 +46,7 @@ public class CustomItemLayout extends RelativeLayout {
 
     private void inflatelayout(Context context){
         View view = View.inflate(context,R.layout.custom_item_layout, this);
-        rl_item_box = (RelativeLayout) view.findViewById(R.id.rl_item_box);
+        rl_item_box = (RelativeLayout) findViewById(R.id.rl_item_box);
         tv_content = (TextView) view.findViewById(R.id.tv_content);
         tv_tip_num = (BadgeView) view.findViewById(R.id.tv_tip_num);
         iv_more_arrow = (ImageView) view.findViewById(R.id.iv_more_arrow);
@@ -126,7 +126,7 @@ public class CustomItemLayout extends RelativeLayout {
         return  tv_arrow_left1.getText().toString();
     }
 
-    public void sertTVRightTxt(String txt){
+    public void setTVRightTxt(String txt){
         if (!TextUtils.isEmpty(txt)){
             tv_right_txt.setVisibility(VISIBLE);
             tv_right_txt.setText(txt);

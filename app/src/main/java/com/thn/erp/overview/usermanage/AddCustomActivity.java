@@ -13,6 +13,9 @@ import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.overview.usermanage.bean.AddCustomerData;
 import com.thn.erp.overview.usermanage.bean.CustomerData;
+import com.thn.erp.sale.AddressSelectFragment;
+import com.thn.erp.sale.bean.ProvinceCityRestrict;
+import com.thn.erp.sale.bean.TownsData;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.CustomHeadView;
@@ -51,12 +54,14 @@ public class AddCustomActivity extends BaseActivity {
     CustomItemLayout itemGender;
     @BindView(R.id.itemBirth)
     CustomItemLayout itemBirth;
-    @BindView(R.id.itemProvince)
-    CustomItemLayout itemProvince;
-    @BindView(R.id.itemCity)
-    CustomItemLayout itemCity;
-    @BindView(R.id.itemCounty)
-    CustomItemLayout itemCounty;
+//    @BindView(R.id.itemProvince)
+//    CustomItemLayout itemProvince;
+//    @BindView(R.id.itemCity)
+//    CustomItemLayout itemCity;
+//    @BindView(R.id.itemCounty)
+//    CustomItemLayout itemCounty;
+    @BindView(R.id.itemAddress)
+    CustomItemLayout itemAddress;
     @BindView(R.id.itemDetail)
     CustomItemLayout itemDetail;
     @BindView(R.id.itemComment)
@@ -71,6 +76,12 @@ public class AddCustomActivity extends BaseActivity {
     private String phone="";
     private String email="";
     private CustomerData.DataBean.CustomersBean customerBean;
+    private AddressSelectFragment addressSelectFragment;
+    private ProvinceCityRestrict.DataBean curProvince;
+    private ProvinceCityRestrict.DataBean curCity;
+    private ProvinceCityRestrict.DataBean curCounty;
+    private TownsData.DataBean curTown;
+
     @Override
     protected void getIntentData() {
         Intent intent =getIntent();
@@ -123,14 +134,17 @@ public class AddCustomActivity extends BaseActivity {
         itemBirth.setTVStyle(0, R.string.custom_birth, R.color.color_222);
         itemBirth.setTvArrowLeftStyle(true, R.string.please_select);
 
-        itemProvince.setTVStyle(0, R.string.custom_province, R.color.color_222);
-        itemProvince.setTvArrowLeftStyle(true, R.string.please_select);
+//        itemProvince.setTVStyle(0, R.string.custom_province, R.color.color_222);
+//        itemProvince.setTvArrowLeftStyle(true, R.string.please_select);
+//
+//        itemCity.setTVStyle(0, R.string.custom_city, R.color.color_222);
+//        itemCity.setTvArrowLeftStyle(true, R.string.please_select);
+//
+//        itemCounty.setTVStyle(0, R.string.custom_county, R.color.color_222);
+//        itemCounty.setTvArrowLeftStyle(true, R.string.please_select);
 
-        itemCity.setTVStyle(0, R.string.custom_city, R.color.color_222);
-        itemCity.setTvArrowLeftStyle(true, R.string.please_select);
-
-        itemCounty.setTVStyle(0, R.string.custom_county, R.color.color_222);
-        itemCounty.setTvArrowLeftStyle(true, R.string.please_select);
+        itemAddress.setTVStyle(0, R.string.address, R.color.color_222);
+        itemAddress.setTvArrowLeftStyle(true, R.string.please_select);
 
         itemDetail.setTVStyle(0, R.string.custom_detail_addr, R.color.color_222);
         itemDetail.setRightMoreImgStyle(false);
@@ -163,6 +177,45 @@ public class AddCustomActivity extends BaseActivity {
                     ToastUtils.showInfo("开");
                 } else {
                     ToastUtils.showInfo("关");
+                }
+            }
+        });
+
+        itemAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (addressSelectFragment == null) {
+                    addressSelectFragment = new AddressSelectFragment();
+                    addressSelectFragment.show(activity.getFragmentManager(), AddressSelectFragment.class.getSimpleName());
+                    addressSelectFragment.setOnAddressChoosedListener(new AddressSelectFragment.OnAddressChoosedListener() {
+                        @Override
+                        public void onAddressChoosed(ProvinceCityRestrict.DataBean province, ProvinceCityRestrict.DataBean city, ProvinceCityRestrict.DataBean county, TownsData.DataBean towns) {
+                            StringBuilder builder = new StringBuilder();
+                            if (province != null) {
+                                builder.append(province.name);
+                                builder.append(" ");
+                                curProvince = province;
+                            }
+                            if (city != null) {
+                                builder.append(city.name);
+                                builder.append(" ");
+                                curCity = city;
+                            }
+                            if (county != null) {
+                                builder.append(county.name);
+                                builder.append(" ");
+                                curCounty = county;
+                            }
+                            if (towns != null) {
+                                builder.append(towns.name);
+                                builder.append(" ");
+                                curTown = towns;
+                            }
+                            itemAddress.setTvArrowLeftStyle(true,builder.toString(), R.color.color_222);
+                        }
+                    });
+                } else {
+                    addressSelectFragment.show(activity.getFragmentManager(), AddressSelectFragment.class.getSimpleName());
                 }
             }
         });
@@ -226,9 +279,6 @@ public class AddCustomActivity extends BaseActivity {
             return false;
         }
 
-        province = itemProvince.getTvarrowLeftTxt();
-        city = itemCity.getTvarrowLeftTxt();
-        area = itemCounty.getTvarrowLeftTxt();
         street_address = itemDetail.getRightETTxt();
         email = itemEmail.getRightETTxt();
 //        座机

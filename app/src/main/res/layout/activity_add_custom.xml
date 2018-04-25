@@ -105,18 +105,23 @@
             <com.thn.erp.view.CustomItemLayout
                 android:id="@+id/itemFoxmail"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                />
 
             <com.thn.erp.view.CustomItemLayout
                 android:id="@+id/itemGender"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                />
 
             <com.thn.erp.view.CustomItemLayout
                 android:id="@+id/itemBirth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp5"
+                android:visibility="gone"
                 />
 
             <!--地址信息-->
@@ -132,17 +137,7 @@
                 />
 
             <com.thn.erp.view.CustomItemLayout
-                android:id="@+id/itemProvince"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <com.thn.erp.view.CustomItemLayout
-                android:id="@+id/itemCity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <com.thn.erp.view.CustomItemLayout
-                android:id="@+id/itemCounty"
+                android:id="@+id/itemAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

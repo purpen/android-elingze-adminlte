@@ -104,4 +104,5 @@
     <string name="hint_dialog_open_camera_fail_content">相机打开出错，请稍后重试</string>
     <string name="hint_dialog_scan_success_title">扫描成功，是否进行网页登陆</string>
     <string name="tvSpecification">规格</string>
+    <string name="address">地址</string>
 </resources>

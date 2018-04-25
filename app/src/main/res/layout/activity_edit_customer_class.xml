@@ -22,12 +22,29 @@
     <Button
         android:id="@+id/addClassBtn"
         style="?android:attr/borderlessButtonStyle"
-        android:layout_width="@dimen/dp300"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/dp35"
-        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dp35"
+        android:layout_marginRight="@dimen/dp35"
+        android:layout_marginBottom="@dimen/dp15"
+        android:layout_above="@+id/manageClassBtn"
         android:layout_centerHorizontal="true"
         android:background="@drawable/shape_radius35_corner"
         android:text="添加分类"
+        android:textColor="@color/color_27AE59"
+        android:textSize="@dimen/sp12" />
+    <Button
+        android:id="@+id/manageClassBtn"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp35"
+        android:layout_marginLeft="@dimen/dp35"
+        android:layout_marginRight="@dimen/dp35"
+        android:layout_marginBottom="@dimen/dp15"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/shape_radius35_corner"
+        android:text="管理分类"
         android:textColor="@color/color_27AE59"
         android:textSize="@dimen/sp12" />
 </RelativeLayout>
