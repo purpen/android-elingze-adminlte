@@ -15,7 +15,7 @@ import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
-import com.thn.erp.overview.usermanage.adapter.CustomerClassAdapter;
+import com.thn.erp.overview.usermanage.adapter.ManageCustomerClassAdapter;
 import com.thn.erp.overview.usermanage.bean.CustomerClassData;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.ToastUtils;
@@ -31,23 +31,22 @@ import butterknife.OnClick;
 
 
 /**
- * 编辑客户分类
+ * 管理客户分类
  */
 
-public class EditCustomerClassActivity extends BaseActivity {
+public class ManageCustomerClassActivity extends BaseActivity {
     @BindView(R.id.customHeadView)
     CustomHeadView customHeadView;
     @BindView(R.id.ultimateRecyclerView)
     UltimateRecyclerView ultimateRecyclerView;
     private LinearLayoutManager linearLayoutManager;
-    private CustomerClassAdapter adapter;
+    private ManageCustomerClassAdapter adapter;
     private List<CustomerClassData.DataBean.GradesBean> list;
     private int page=1;
     private boolean isRefreshing =false;
     private THNWaittingDialog dialog;
     private boolean isLoadMore=false;
-//    是否首次进入本界面
-    private boolean firstLoad=true;
+
     @Override
     protected int getLayout() {
         return R.layout.activity_edit_customer_class;
@@ -56,10 +55,9 @@ public class EditCustomerClassActivity extends BaseActivity {
     @Override
     protected void initView() {
         dialog =new THNWaittingDialog(this);
-        customHeadView.setHeadCenterTxtShow(true, R.string.select_class_title);
-        customHeadView.setHeadRightTxtShow(true, R.string.manage_grade);
+        customHeadView.setHeadCenterTxtShow(true, R.string.manage_class_title);
         list = new ArrayList<>();
-        adapter = new CustomerClassAdapter(list);
+        adapter = new ManageCustomerClassAdapter(list);
         linearLayoutManager = new LinearLayoutManager(this);
         ultimateRecyclerView.setHasFixedSize(true);
         ultimateRecyclerView.setLayoutManager(linearLayoutManager);
@@ -77,13 +75,6 @@ public class EditCustomerClassActivity extends BaseActivity {
 
     @Override
     protected void installListener() {
-        customHeadView.getHeadRightTV().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(activity,ManageCustomerClassActivity.class));
-            }
-        });
-
         ultimateRecyclerView.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -120,26 +111,11 @@ public class EditCustomerClassActivity extends BaseActivity {
                 }
                 adapter.notifyDataSetChanged();
                 Intent intent = new Intent();
-                intent.putExtra(EditCustomerClassActivity.class.getSimpleName(),list.get(i));
+                intent.putExtra(ManageCustomerClassActivity.class.getSimpleName(),list.get(i));
                 setResult(RESULT_OK, intent);
                 finish();
             }
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (firstLoad) return;
-        page = 1;
-        isRefreshing =true;
-        getCustomerGrades();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        firstLoad = false;
     }
 
     @Override

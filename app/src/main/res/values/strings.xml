@@ -108,4 +108,7 @@
     <string name="manage_grade">管理</string>
     <string name="input_grade_name">请输入客户等级</string>
     <string name="add_customer_grade">新增分类</string>
+    <string name="manage_class_title">管理分类</string>
+    <string name="edit_customer_grade">编辑分类</string>
+    <string name="hint_dialog_delete_grade_title">确认删除分类？</string>
 </resources>

@@ -17,6 +17,8 @@ import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.overview.usermanage.bean.AddCustomerGradeData;
+import com.thn.erp.overview.usermanage.bean.CustomerClassData;
+import com.thn.erp.overview.usermanage.bean.EditGradeData;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.CustomHeadView;
@@ -38,6 +40,12 @@ public class AddGradeActivity extends BaseActivity {
     EditText et;
     THNWaittingDialog dialog;
     private MyHandler myHandler;
+    private CustomerClassData.DataBean.GradesBean grade;
+    @Override
+    protected void getIntentData() {
+        grade = getIntent().getParcelableExtra(AddGradeActivity.class.getSimpleName());
+    }
+
     @Override
     protected int getLayout() {
         return R.layout.activity_add_grade;
@@ -47,7 +55,14 @@ public class AddGradeActivity extends BaseActivity {
     protected void initView() {
         dialog = new THNWaittingDialog(this);
         myHandler = new MyHandler(activity);
-        customHeadView.setHeadCenterTxtShow(true, R.string.add_customer_grade);
+        int titleId;
+        if (grade==null){
+            titleId = R.string.add_customer_grade;
+        }else {
+            titleId = R.string.edit_customer_grade;
+            et.setText(grade.name);
+        }
+        customHeadView.setHeadCenterTxtShow(true, titleId);
         customHeadView.setHeadRightTxtShow(true, R.string.save);
     }
 
@@ -61,7 +76,13 @@ public class AddGradeActivity extends BaseActivity {
                     THNToastUtil.showInfo("请输入客户分类");
                     return;
                 }
-                addGrade(text.toString());
+
+                if (grade==null){
+                    addGrade(text.toString());
+                }else {
+                    editGrade(text.toString());
+                }
+
             }
         });
     }
@@ -81,6 +102,39 @@ public class AddGradeActivity extends BaseActivity {
             public void onSuccess(String json) {
                 dialog.dismiss();
                 AddCustomerGradeData data = JsonUtil.fromJson(json, AddCustomerGradeData.class);
+                if (data.success == true) {
+                    ToastUtils.showSuccess(R.string.submit_success);
+                    myHandler.sendEmptyMessageDelayed(0, 1000);
+                } else {
+                    ToastUtils.showError(data.status.message);
+                }
+
+            }
+
+            @Override
+            public void onFailure(IOException e) {
+                dialog.dismiss();
+                ToastUtils.showError(R.string.network_err);
+            }
+        });
+    }
+
+    /**
+     * 编辑分类
+     */
+    private void editGrade(String text){
+        HashMap<String, String> params = ClientParamsAPI.getAddGradeParams(text);
+        String url=URL.BASE_URL+"customer_grades/"+grade.rid;
+        HttpRequest.sendRequest(HttpRequest.PUT, url, params, new HttpRequestCallback() {
+            @Override
+            public void onStart() {
+                dialog.show();
+            }
+
+            @Override
+            public void onSuccess(String json) {
+                dialog.dismiss();
+                EditGradeData data = JsonUtil.fromJson(json, EditGradeData.class);
                 if (data.success == true) {
                     ToastUtils.showSuccess(R.string.submit_success);
                     myHandler.sendEmptyMessageDelayed(0, 1000);
