@@ -105,4 +105,7 @@
     <string name="hint_dialog_scan_success_title">扫描成功，是否进行网页登陆</string>
     <string name="tvSpecification">规格</string>
     <string name="address">地址</string>
+    <string name="manage_grade">管理</string>
+    <string name="input_grade_name">请输入客户等级</string>
+    <string name="add_customer_grade">新增分类</string>
 </resources>

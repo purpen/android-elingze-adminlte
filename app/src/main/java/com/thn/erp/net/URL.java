@@ -129,6 +129,11 @@ public class URL {
     public static final String CUSTOMER_LIST = BASE_URL+"customers";
 
     /**
+     * 客户等级列表
+     */
+    public static final String CUSTOMER_GRADE_LIST = BASE_URL+"customer_grades";
+
+    /**
      * 所有商品列表
      */
     public static final String GOODS_LIST = BASE_URL+"products";

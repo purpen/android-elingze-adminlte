@@ -411,4 +411,15 @@ public class ClientParamsAPI {
         params.put("per_page",Constants.PAGE_SIZE);
         return params;
     }
+
+    /**
+     * 新增客户分类
+     * @param text
+     * @return
+     */
+    public static HashMap<String,String> getAddGradeParams(String text) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("name",text);
+        return params;
+    }
 }

@@ -5,6 +5,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CompoundButton;
+
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.net.ClientParamsAPI;
@@ -12,6 +13,7 @@ import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.overview.usermanage.bean.AddCustomerData;
+import com.thn.erp.overview.usermanage.bean.CustomerClassData;
 import com.thn.erp.overview.usermanage.bean.CustomerData;
 import com.thn.erp.sale.AddressSelectFragment;
 import com.thn.erp.sale.bean.ProvinceCityRestrict;
@@ -21,8 +23,10 @@ import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.CustomHeadView;
 import com.thn.erp.view.CustomItemLayout;
 import com.thn.erp.view.svprogress.WaitingDialog;
+
 import java.io.IOException;
 import java.util.HashMap;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -32,6 +36,9 @@ import butterknife.OnClick;
  */
 
 public class AddCustomActivity extends BaseActivity {
+
+    private static final int REQUEST_GRADE_CODE=0x00011;
+
     @BindView(R.id.customHeadView)
     CustomHeadView customHeadView;
     @BindView(R.id.itemUserName)
@@ -226,7 +233,7 @@ public class AddCustomActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.itemUserClass:
-                startActivity(new Intent(activity,EditCustomerClassActivity.class));
+                startActivityForResult(new Intent(activity,EditCustomerClassActivity.class),REQUEST_GRADE_CODE);
                 break;
             default:
                 break;
@@ -284,5 +291,21 @@ public class AddCustomActivity extends BaseActivity {
 //        座机
         phone = itemTel.getRightETTxt();
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_GRADE_CODE:
+                    CustomerClassData.DataBean.GradesBean gradesBean = data.getParcelableExtra(EditCustomerClassActivity.class.getSimpleName());
+                    if (gradesBean==null) return;
+                    itemUserClass.setTvArrowLeftStyle(true, gradesBean.name, R.color.color_222);
+                    break;
+                    default:
+                        break;
+            }
+        }
     }
 }

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/color_f8f8f8"
     android:orientation="vertical">
     <com.thn.erp.view.CustomHeadView
         android:id="@+id/customHeadView"
@@ -15,8 +16,10 @@
         android:layout_above="@+id/addClassBtn"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:recyclerviewDefaultSwipeColor="@array/google_colors"
         app:recyclerviewClipToPadding="true"
         app:recyclerviewScrollbars="vertical"
+        android:layout_marginTop="@dimen/dp10"
         />
 
     <Button
@@ -27,8 +30,8 @@
         android:layout_marginLeft="@dimen/dp35"
         android:layout_marginRight="@dimen/dp35"
         android:layout_marginBottom="@dimen/dp15"
-        android:layout_above="@+id/manageClassBtn"
         android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
         android:background="@drawable/shape_radius35_corner"
         android:text="添加分类"
         android:textColor="@color/color_27AE59"
@@ -46,5 +49,6 @@
         android:background="@drawable/shape_radius35_corner"
         android:text="管理分类"
         android:textColor="@color/color_27AE59"
+        android:visibility="gone"
         android:textSize="@dimen/sp12" />
 </RelativeLayout>

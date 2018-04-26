@@ -1,5 +1,6 @@
 package com.thn.erp.overview.usermanage;
 
+import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -7,9 +8,11 @@ import android.view.View;
 import android.widget.Button;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import com.stephen.taihuoniaolibrary.utils.THNLogUtil;
 import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
+import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
 import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
@@ -46,6 +49,9 @@ public class EditCustomerClassActivity extends BaseActivity {
     private int page=1;
     private boolean isRefreshing =false;
     private THNWaittingDialog dialog;
+    private boolean isLoadMore=false;
+//    是否首次进入本界面
+    private boolean firstLoad=true;
     @Override
     protected int getLayout() {
         return R.layout.activity_edit_customer_class;
@@ -55,7 +61,7 @@ public class EditCustomerClassActivity extends BaseActivity {
     protected void initView() {
         dialog =new THNWaittingDialog(this);
         customHeadView.setHeadCenterTxtShow(true, R.string.select_class_title);
-        customHeadView.setHeadRightTxtShow(true, R.string.confirm);
+        customHeadView.setHeadRightTxtShow(true, R.string.manage_grade);
         list = new ArrayList<>();
         adapter = new CustomerClassAdapter(list);
         linearLayoutManager = new LinearLayoutManager(this);
@@ -63,6 +69,11 @@ public class EditCustomerClassActivity extends BaseActivity {
         ultimateRecyclerView.setLayoutManager(linearLayoutManager);
         ultimateRecyclerView.setLoadMoreView(LayoutInflater.from(this)
                 .inflate(R.layout.custom_bottom_progressbar, null));
+
+        ultimateRecyclerView.setEmptyView(
+                R.layout.empty_view,
+                UltimateRecyclerView.EMPTY_CLEAR_ALL,
+                UltimateRecyclerView.STARTWITH_ONLINE_ITEMS);
         ultimateRecyclerView.reenableLoadmore();
         ultimateRecyclerView.setAdapter(adapter);
         ultimateRecyclerView.addItemDividerDecoration(activity);
@@ -73,14 +84,16 @@ public class EditCustomerClassActivity extends BaseActivity {
         customHeadView.getHeadRightTV().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtils.showInfo("保存");
+
             }
         });
 
         ultimateRecyclerView.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                page = 1;
+                isRefreshing = true;
+                getCustomerGrades();
             }
         });
 
@@ -88,11 +101,50 @@ public class EditCustomerClassActivity extends BaseActivity {
         ultimateRecyclerView.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMore(int itemsCount, final int maxLastVisiblePosition) {
-
+                isRefreshing = false;
+                isLoadMore = true;
+                page++;
+                getCustomerGrades();
+                THNLogUtil.e("setOnLoadMoreListener");
             }
         });
 
+        adapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+            @Override
+            public void onClick(View view, int i) {
+                int size = list.size();
+                if (size==0) return;
+                CustomerClassData.DataBean.GradesBean gradesBean;
+                for (int j=0;j<size;j++){
+                    gradesBean = list.get(j);
+                    if (j==i){
+                        gradesBean.checked=true;
+                    }else {
+                        gradesBean.checked=false;
+                    }
+                }
+                adapter.notifyDataSetChanged();
+                Intent intent = new Intent();
+                intent.putExtra(EditCustomerClassActivity.class.getSimpleName(),list.get(i));
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (firstLoad) return;
+        page = 1;
+        isRefreshing =true;
+        getCustomerGrades();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        firstLoad = false;
     }
 
     @Override
@@ -102,10 +154,10 @@ public class EditCustomerClassActivity extends BaseActivity {
 
     private void getCustomerGrades() {
         HashMap<String, String> params = ClientParamsAPI.getCustomerGradeParams(page);
-        HttpRequest.sendRequest(HttpRequest.GET, URL.CUSTOMER_LIST, params, new HttpRequestCallback() {
+        HttpRequest.sendRequest(HttpRequest.GET, URL.CUSTOMER_GRADE_LIST, params, new HttpRequestCallback() {
             @Override
             public void onStart() {
-                if (!isRefreshing) dialog.show();
+                if (!isRefreshing || !isLoadMore) dialog.show();
             }
 
             @Override
@@ -138,7 +190,6 @@ public class EditCustomerClassActivity extends BaseActivity {
             }
             ultimateRecyclerView.setRefreshing(false);
             linearLayoutManager.scrollToPosition(0);
-            adapter.notifyDataSetChanged();
         } else {
             for (CustomerClassData.DataBean.GradesBean gradesBean : gradesBeans) {
                 adapter.insert(gradesBean, adapter.getAdapterItemCount());
@@ -147,14 +198,11 @@ public class EditCustomerClassActivity extends BaseActivity {
         if (adapter.getAdapterItemCount()==0) ultimateRecyclerView.showEmptyView();
     }
 
-    @OnClick({R.id.addClassBtn,R.id.manageClassBtn})
+    @OnClick(R.id.addClassBtn)
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.addClassBtn:
-
-                break;
-            case R.id.manageClassBtn:
-
+                startActivity(new Intent(this,AddGradeActivity.class));
                 break;
             default:
                 break;

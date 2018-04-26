@@ -44,8 +44,9 @@
         <activity android:name=".sale.SelectGoodsActivity"></activity>
         <activity android:name=".sale.SelectAddressActivity"></activity>
         <activity android:name=".sale.AddNewAddressActivity"></activity>
-        <activity android:name=".sale.ManageAddressActivity"></activity>
         <activity android:name=".sale.OrderDetailsActivity"></activity>
+        <activity android:name=".sale.ManageAddressActivity"></activity>
+        <activity android:name=".overview.usermanage.AddGradeActivity"></activity>
 
         <!-- 仓库管理 -->
         <activity android:name="com.thn.erp.more.repository.RepositoryManageActivity" />
