@@ -61,6 +61,7 @@ public class AddGradeActivity extends BaseActivity {
         }else {
             titleId = R.string.edit_customer_grade;
             et.setText(grade.name);
+            et.setSelection(grade.name.length());
         }
         customHeadView.setHeadCenterTxtShow(true, titleId);
         customHeadView.setHeadRightTxtShow(true, R.string.save);
