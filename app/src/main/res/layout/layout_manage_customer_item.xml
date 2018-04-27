@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/dp5"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/dp5"
+    android:paddingLeft="@dimen/dp15"
+    android:paddingRight="@dimen/dp15"
+    android:background="@android:color/white"
+    >
+    <TextView
+        android:id="@+id/company"
+        android:layout_width="wrap_content"
+        android:textSize="@dimen/sp16"
+        android:layout_height="wrap_content"
+        android:text="test2"/>
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_below="@+id/company"
+        android:layout_width="wrap_content"
+        android:textSize="@dimen/sp16"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/company"
+        android:text="test2"/>
+
+    <TextView
+        android:id="@+id/classify"
+        android:layout_below="@+id/name"
+        android:layout_width="wrap_content"
+        android:textSize="@dimen/sp15"
+        android:layout_alignLeft="@+id/company"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp5"
+        android:text="test2"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp05"
+        android:background="@color/color_eee"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:paddingTop="@dimen/dp5"
+        >
+        <TextView
+            android:id="@+id/tvEdit"
+            android:layout_width="@dimen/dp70"
+            android:layout_height="@dimen/dp30"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/tvDelete"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/corner_border_27ae59"
+            android:text="编辑"
+            android:textColor="@color/color_27AE59"
+            android:textSize="@dimen/sp12" />
+        <TextView
+            android:id="@+id/tvDelete"
+            android:layout_width="@dimen/dp70"
+            android:layout_height="@dimen/dp30"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/corner_border_27ae59"
+            android:text="删除"
+            android:textColor="@color/color_27AE59"
+            android:textSize="12sp" />
+    </LinearLayout>
+</LinearLayout>

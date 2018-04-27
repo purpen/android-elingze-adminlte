@@ -113,4 +113,7 @@
     <string name="hint_dialog_delete_grade_title">确认删除分类？</string>
     <string name="add_goods_title">添加商品</string>
     <string name="edit_customer_title">编辑客户</string>
+    <string name="manage_customer">管理</string>
+    <string name="manage_customer_title">管理客户</string>
+    <string name="hint_dialog_delete_customer_title">确认删除该客户吗？</string>
 </resources>

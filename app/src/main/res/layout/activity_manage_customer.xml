@@ -2,33 +2,24 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusableInTouchMode="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/color_f8f8f8"
     android:orientation="vertical">
     <com.thn.erp.view.CustomHeadView
         android:id="@+id/customHeadView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
-
-    <com.thn.erp.view.SearchView
-        android:id="@+id/searchView"
-        android:layout_below="@+id/customHeadView"
-        style="@style/StyleSearchView"
-        android:hint="客户名"
-        android:layout_marginTop="@dimen/dp9"
-        android:layout_marginBottom="@dimen/dp9"
-        />
+        android:layout_height="wrap_content" />
 
     <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
         android:id="@+id/ultimateRecyclerView"
+        android:layout_below="@+id/customHeadView"
+        android:layout_above="@+id/addClassBtn"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/searchView"
-        android:layout_above="@+id/addBtn"
         app:recyclerviewDefaultSwipeColor="@array/google_colors"
         app:recyclerviewClipToPadding="true"
         app:recyclerviewScrollbars="vertical"
+        android:layout_marginTop="@dimen/dp10"
         />
 
     <Button
@@ -42,7 +33,6 @@
         android:layout_marginBottom="@dimen/dp15"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:visibility="gone"
         android:background="@drawable/shape_radius35_corner"
         android:text="添加客户"
         android:textColor="@color/color_27AE59"

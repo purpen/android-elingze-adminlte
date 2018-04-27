@@ -243,10 +243,22 @@ public class AddCustomActivity extends BaseActivity {
     }
 
 
+    /**
+     * 新增客户
+     */
     private void addCustomer() {
         if (!checkUserInput()) return;
         HashMap<String, String> params = ClientParamsAPI.addCustomer(1,name,province,city,area,street_address,mobile,phone,email);
-        HttpRequest.sendRequest(HttpRequest.POST, URL.CUSTOMER_LIST, params, new HttpRequestCallback() {
+
+        String method;
+
+        if (customerBean==null){//新增客户
+            method = HttpRequest.POST;
+        }else {//更新客户
+            method = HttpRequest.PUT;
+        }
+
+        HttpRequest.sendRequest(method, URL.CUSTOMER_LIST, params, new HttpRequestCallback() {
             @Override
             public void onStart() {
                 dialog.show();
@@ -258,6 +270,7 @@ public class AddCustomActivity extends BaseActivity {
                 AddCustomerData data = JsonUtil.fromJson(json, AddCustomerData.class);
                 if (data.success == true) {
                     ToastUtils.showSuccess(R.string.submit_success);
+                    finish();
                 } else {
                     ToastUtils.showError(data.status.message);
                 }
@@ -271,6 +284,7 @@ public class AddCustomActivity extends BaseActivity {
             }
         });
     }
+
 
     /**
      * 检查用户输入

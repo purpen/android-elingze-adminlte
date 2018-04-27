@@ -1,10 +1,13 @@
 package com.thn.erp.overview.usermanage;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
@@ -20,32 +23,39 @@ import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.CustomHeadView;
 import com.thn.erp.view.SearchView;
 import com.thn.erp.view.svprogress.WaitingDialog;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 
 /**
  * 用户管理
  */
 
-public class UserManageActivity extends BaseActivity {
-    public static final int REQUEST_EDIT_CUSTOMER=0x00010;
+public class CustomerListActivity extends BaseActivity {
+    public static final int REQUEST_EDIT_CUSTOMER = 0x00010;
     @BindView(R.id.customHeadView)
     CustomHeadView customHeadView;
     @BindView(R.id.searchView)
     SearchView searchView;
+    @BindView(R.id.addBtn)
+    Button addBtn;
     @BindView(R.id.ultimateRecyclerView)
     UltimateRecyclerView ultimateRecyclerView;
+
     private WaitingDialog dialog;
     private int page;
     private List<CustomerData.DataBean.CustomersBean> list;
     private Boolean isRefreshing = false;
     private CustomerListAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
+    //    是否是第一次创建
+    private boolean isFirstCreateActivity = true;
 
     @Override
     protected int getLayout() {
@@ -56,9 +66,10 @@ public class UserManageActivity extends BaseActivity {
     protected void initView() {
         page = 1;
         dialog = new WaitingDialog(activity);
+        addBtn.setVisibility(View.VISIBLE);
         list = new ArrayList<>();
         customHeadView.setHeadCenterTxtShow(true, R.string.user_manage_title);
-        customHeadView.setHeadRightTxtShow(true, R.string.add_customer);
+        customHeadView.setHeadRightTxtShow(true, R.string.manage_customer);
         adapter = new CustomerListAdapter(list);
         linearLayoutManager = new LinearLayoutManager(this);
         ultimateRecyclerView.setHasFixedSize(true);
@@ -87,7 +98,7 @@ public class UserManageActivity extends BaseActivity {
         customHeadView.getHeadRightTV().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(activity, AddCustomActivity.class));
+                startActivity(new Intent(activity,ManageCustomerActivity.class));
             }
         });
 
@@ -103,7 +114,7 @@ public class UserManageActivity extends BaseActivity {
         adapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onClick(View view, int i) {
-                if (list.size()==0) return;
+                if (list.size() == 0) return;
                 CustomerData.DataBean.CustomersBean customersBean = list.get(i);
                 Intent intent = new Intent(activity, AddCustomActivity.class);
                 intent.putExtra(AddCustomActivity.class.getSimpleName(), customersBean);
@@ -119,6 +130,21 @@ public class UserManageActivity extends BaseActivity {
                 getCustomers();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (isFirstCreateActivity) return;
+        page = 1;
+        isRefreshing = true;
+        getCustomers();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        isFirstCreateActivity = false;
     }
 
     @Override
@@ -140,7 +166,7 @@ public class UserManageActivity extends BaseActivity {
                 CustomerData customerBean = JsonUtil.fromJson(json, CustomerData.class);
                 if (customerBean.success == true) {
                     List<CustomerData.DataBean.CustomersBean> customers = customerBean.data.customers;
-                    if (customers.size()==0) ultimateRecyclerView.disableLoadmore();
+                    if (customers.size() == 0) ultimateRecyclerView.disableLoadmore();
                     updateData(customers);
                 } else {
                     ToastUtils.showError(customerBean.status.message);
@@ -170,7 +196,18 @@ public class UserManageActivity extends BaseActivity {
                 adapter.insert(customer, adapter.getAdapterItemCount());
             }
         }
-        if (adapter.getAdapterItemCount()==0) ultimateRecyclerView.showEmptyView();
+        if (adapter.getAdapterItemCount() == 0) ultimateRecyclerView.showEmptyView();
+    }
+
+    @OnClick(R.id.addBtn)
+    void performClick(View v) {
+        switch (v.getId()) {
+            case R.id.addBtn: //添加客户
+                startActivity(new Intent(this, AddCustomActivity.class));
+                break;
+            default:
+                break;
+        }
     }
 
     @Override

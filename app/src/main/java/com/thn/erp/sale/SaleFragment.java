@@ -18,7 +18,7 @@ import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
-import com.thn.erp.overview.usermanage.UserManageActivity;
+import com.thn.erp.overview.usermanage.CustomerListActivity;
 import com.thn.erp.sale.adapter.OrderListAdapter;
 import com.thn.erp.sale.bean.OrderData;
 import com.thn.erp.utils.JsonUtil;
@@ -89,7 +89,7 @@ public class SaleFragment extends BaseFragment {
             public void onClick(View view, int i) {
                 switch (i){
                     case 0:
-                        startActivity(new Intent(activity,UserManageActivity.class));
+                        startActivity(new Intent(activity,CustomerListActivity.class));
                         break;
                     case 1:
                         break;
