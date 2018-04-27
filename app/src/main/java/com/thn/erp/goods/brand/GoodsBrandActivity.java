@@ -2,7 +2,6 @@ package com.thn.erp.goods.brand;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,13 +15,10 @@ import com.thn.erp.common.constant.ExtraKey;
 import com.thn.erp.common.constant.RequestCode;
 import com.thn.erp.common.interfaces.ImpTopbarOnClickListener;
 import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
-import com.thn.erp.goods.GoodsListActivity;
-import com.thn.erp.goods.category.GoodsCategoryAddActivity;
 import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
-import com.thn.erp.sale.bean.GoodsData;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.LogUtil;
 import com.thn.erp.utils.ToastUtils;
@@ -89,9 +85,8 @@ public class GoodsBrandActivity extends BaseStyle2Activity implements ImpTopbarO
     }
 
     private void initTopbar() {
-        publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
-        publicTopBar.setTopBarCenterTextView("品牌列表", getResources().getColor(R.color.THN_color_fontColor_primary));
-        publicTopBar.setTopBarRightTextView("添加", Color.parseColor("#27AE59"));
+        publicTopBar.setTopBarCenterTextView("品牌列表", getResources().getColor(R.color.white));
+        publicTopBar.setTopBarRightTextView("添加", getResources().getColor(R.color.white));
         publicTopBar.setTopBarLeftImageView(true);
         publicTopBar.setTopBarOnClickListener(this);
     }

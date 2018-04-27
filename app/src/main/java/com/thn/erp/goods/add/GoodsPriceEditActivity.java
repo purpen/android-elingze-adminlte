@@ -36,9 +36,8 @@ public class GoodsPriceEditActivity extends BaseStyle2Activity implements ImpTop
     }
 
     private void initTopbar() {
-        publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
-        publicTopBar.setTopBarCenterTextView("商品价格", getResources().getColor(R.color.THN_color_fontColor_primary));
-        publicTopBar.setTopBarRightTextView("保存", getResources().getColor(R.color.THN_color_fontColor_assist));
+        publicTopBar.setTopBarCenterTextView("商品价格", getResources().getColor(R.color.white));
+        publicTopBar.setTopBarRightTextView("保存", getResources().getColor(R.color.white));
         publicTopBar.setTopBarLeftImageView(true);
         publicTopBar.setTopBarOnClickListener(this);
     }

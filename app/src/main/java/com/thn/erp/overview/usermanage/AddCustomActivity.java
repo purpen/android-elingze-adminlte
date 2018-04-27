@@ -104,7 +104,15 @@ public class AddCustomActivity extends BaseActivity {
     @Override
     protected void initView() {
         dialog = new WaitingDialog(this);
-        customHeadView.setHeadCenterTxtShow(true, R.string.add_customer_title);
+
+        if (customerBean==null){
+            customHeadView.setHeadCenterTxtShow(true, R.string.add_customer_title);
+        }else {
+            customHeadView.setHeadCenterTxtShow(true, R.string.edit_customer_title);
+            itemUserName.setEditTextContent(customerBean.name);
+            itemPhone.setEditTextContent(customerBean.mobile);
+        }
+
         customHeadView.setHeadRightTxtShow(true, R.string.save);
 
         itemUserName.setTVStyle(0, R.string.custom_name, R.color.color_222);
@@ -160,12 +168,6 @@ public class AddCustomActivity extends BaseActivity {
         itemComment.setTVStyle(0, R.string.custom_comment, R.color.color_222);
         itemComment.setRightMoreImgStyle(false);
         itemComment.setRightETStyle(R.string.please_input, R.color.color_666, InputType.TYPE_CLASS_TEXT, true);
-
-
-        if (customerBean!=null){
-            itemUserName.setEditTextContent(customerBean.name);
-            itemPhone.setEditTextContent(customerBean.mobile);
-        }
     }
 
     @Override

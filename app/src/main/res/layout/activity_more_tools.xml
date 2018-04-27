@@ -14,7 +14,7 @@
         android:layout_height="200dp"
         android:background="#287ff0f0"
         android:scaleType="fitCenter"
-        android:src="@mipmap/ic_launcher_round" />
+        />
 
     <include layout="@layout/include_view_line_divider_vertical" />
 

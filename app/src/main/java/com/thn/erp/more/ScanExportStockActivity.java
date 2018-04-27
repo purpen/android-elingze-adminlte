@@ -89,8 +89,7 @@ public class ScanExportStockActivity extends BaseStyle2Activity implements ImpTo
 
     private void initTopBar() {
         publicTopBar = (PublicTopBar) findViewById(R.id.publicTopBar);
-        publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
-        publicTopBar.setTopBarCenterTextView("待出库订单", getResources().getColor(R.color.THN_color_fontColor_primary));
+        publicTopBar.setTopBarCenterTextView("待出库订单", getResources().getColor(R.color.white));
         publicTopBar.setTopBarLeftImageView(true);
         publicTopBar.setTopBarOnClickListener(this);
     }

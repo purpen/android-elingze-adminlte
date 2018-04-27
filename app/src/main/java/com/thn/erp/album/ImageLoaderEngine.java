@@ -4,8 +4,8 @@ import android.os.Parcel;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.stephen.taihuoniaolibrary.utils.THNGlideUtil;
 import com.thn.erp.R;
-import com.thn.erp.utils.GlideUtil;
 
 
 public class ImageLoaderEngine implements LoadEngine {
@@ -21,7 +21,7 @@ public class ImageLoaderEngine implements LoadEngine {
 
     public ImageLoaderEngine(int img_loading, int img_camera) {
         if (img_loading == 0)
-            this.img_loading = R.mipmap.default_load;
+            this.img_loading = 0;
         else
             this.img_loading = img_loading;
         if (img_camera == 0)
@@ -32,12 +32,12 @@ public class ImageLoaderEngine implements LoadEngine {
 
     @Override
     public void displayImage(String path, ImageView imageView) {
-        GlideUtil.displayImageFadein(path, imageView);
+        THNGlideUtil.displayImageFadein(path, imageView);
     }
 
     @Override
     public void displayCameraItem(ImageView imageView) {
-        GlideUtil.displayImageFadein(img_camera, imageView);
+        THNGlideUtil.displayImageFadein(img_camera, imageView);
     }
 
     @Override

@@ -1,8 +1,6 @@
 package com.thn.erp.overview;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -13,7 +11,6 @@ import com.thn.erp.common.interfaces.ImpTopbarOnClickListener;
 import com.thn.erp.view.common.PublicTopBar;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -34,18 +31,10 @@ public class CustomerManageActivity extends BaseStyle2Activity implements ImpTop
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
-
-    @Override
     protected void initView() {
-        publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
-        publicTopBar.setTopBarCenterTextView("客户管理", getResources().getColor(R.color.THN_color_fontColor_primary));
+        publicTopBar.setTopBarCenterTextView("客户管理", getResources().getColor(R.color.white));
         publicTopBar.setTopBarLeftImageView(true);
-        publicTopBar.setTopBarRightTextView("添加客户", Color.parseColor("#27AE59"));
+        publicTopBar.setTopBarRightTextView("添加客户", getResources().getColor(R.color.white));
         publicTopBar.setTopBarOnClickListener(this);
     }
 

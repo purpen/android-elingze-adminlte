@@ -5,7 +5,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/include_public_topbar" />
+    <!--<include layout="@layout/include_public_topbar" />-->
+    <com.thn.erp.view.CustomHeadView
+        android:id="@+id/customHeadView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <include layout="@layout/include_view_line_divider_vertical" />
 

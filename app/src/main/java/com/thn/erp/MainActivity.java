@@ -12,9 +12,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.stephen.taihuoniaolibrary.utils.THNStatusBarUtils;
+import com.stephen.taihuoniaolibrary.utils.THNToastUtil;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.bean.TabItem;
 import com.thn.erp.goods.GoodsFragment;
@@ -334,7 +334,7 @@ public class MainActivity extends BaseActivity {
         Timer tExit;
         if (!isExit) {
             isExit = true;
-            Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+            THNToastUtil.showInfo("再按一次退出程序");
             tExit = new Timer();
             tExit.schedule(new TimerTask() {
                 @Override

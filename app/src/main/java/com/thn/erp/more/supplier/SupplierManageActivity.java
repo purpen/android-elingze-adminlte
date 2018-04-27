@@ -1,7 +1,6 @@
 package com.thn.erp.more.supplier;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -45,10 +44,9 @@ public class SupplierManageActivity extends BaseStyle2Activity implements ImpTop
 
     @Override
     protected void initView() {
-        publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
-        publicTopBar.setTopBarCenterTextView("供应商管理", getResources().getColor(R.color.THN_color_fontColor_primary));
+        publicTopBar.setTopBarCenterTextView("供应商管理", getResources().getColor(R.color.white));
         publicTopBar.setTopBarLeftImageView(true);
-        publicTopBar.setTopBarRightTextView("新增供应商", Color.parseColor("#27AE59"));
+        publicTopBar.setTopBarRightTextView("新增供应商", getResources().getColor(R.color.white));
         publicTopBar.setTopBarOnClickListener(this);
     }
 

@@ -44,8 +44,7 @@ public class GoodsUnitEditActivity extends BaseStyle2Activity implements ImpTopb
     }
 
     private void initTopbar() {
-        publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
-        publicTopBar.setTopBarCenterTextView("商品销售单位", getResources().getColor(R.color.THN_color_fontColor_primary));
+        publicTopBar.setTopBarCenterTextView("商品销售单位", getResources().getColor(R.color.white));
 //        publicTopBar.setTopBarRightTextView("保存", getResources().getColor(R.color.THN_color_fontColor_assist));
         publicTopBar.setTopBarLeftImageView(true);
         publicTopBar.setTopBarOnClickListener(this);

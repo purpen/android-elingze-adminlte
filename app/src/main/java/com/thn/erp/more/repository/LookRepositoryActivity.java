@@ -47,10 +47,9 @@ public class LookRepositoryActivity extends BaseStyle2Activity implements ImpTop
     }
 
     private void initTopBar() {
-        publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
-        publicTopBar.setTopBarCenterTextView("查看仓库", getResources().getColor(R.color.THN_color_fontColor_primary));
+        publicTopBar.setTopBarCenterTextView("查看仓库", getResources().getColor(R.color.white));
         publicTopBar.setTopBarLeftImageView(true);
-        publicTopBar.setTopBarRightTextView("编辑", Color.parseColor("#27AE59"));
+        publicTopBar.setTopBarRightTextView("编辑", getResources().getColor(R.color.white));
         publicTopBar.setTopBarOnClickListener(this);
     }
 

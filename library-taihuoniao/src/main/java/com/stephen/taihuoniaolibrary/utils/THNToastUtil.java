@@ -7,7 +7,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.load.engine.Resource;
 import com.stephen.taihuoniaolibrary.R;
 import com.stephen.taihuoniaolibrary.common.THNApp;
 

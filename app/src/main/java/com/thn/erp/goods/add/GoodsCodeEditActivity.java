@@ -42,9 +42,8 @@ public class GoodsCodeEditActivity extends BaseStyle2Activity implements ImpTopb
     }
 
     private void initTopbar() {
-        publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
-        publicTopBar.setTopBarCenterTextView("商品编码/条形码", getResources().getColor(R.color.THN_color_fontColor_primary));
-        publicTopBar.setTopBarRightTextView("保存", getResources().getColor(R.color.THN_color_fontColor_assist));
+        publicTopBar.setTopBarCenterTextView("商品编码/条形码", getResources().getColor(R.color.white));
+        publicTopBar.setTopBarRightTextView("保存", getResources().getColor(R.color.white));
         publicTopBar.setTopBarLeftImageView(true);
         publicTopBar.setTopBarOnClickListener(this);
     }

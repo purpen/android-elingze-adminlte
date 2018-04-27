@@ -15,8 +15,8 @@ import com.stephen.taihuoniaolibrary.common.THNApp;
  * Emial: 895745843@qq.com
  */
 public class THNGlideUtil {
-    private static final Integer DEFAULT_IMAGEID = R.drawable.img_thn_default_load;
-    private static final Integer ERROR_IMAGEID = R.drawable.img_thn_default_load;
+    private static final int DEFAULT_IMAGEID = R.drawable.default_error_load;
+    private static final int ERROR_IMAGEID = R.drawable.default_error_load;
     private static final int FADE_IN_DURATION = 300;
 
     public static Context getContext() {
@@ -63,7 +63,7 @@ public class THNGlideUtil {
 
     public static <T> void displayGifImage(T T, ImageView imageView, Integer defaultImageId, Integer errorId) {
         Glide.with(getContext()).load(T).asGif()
-                .placeholder((defaultImageId == null) ? DEFAULT_IMAGEID : defaultImageId)
+                .placeholder((defaultImageId == 0) ? DEFAULT_IMAGEID : defaultImageId)
                 .error((errorId == null) ? ERROR_IMAGEID : errorId)
                 .into(imageView);
     }
@@ -75,28 +75,36 @@ public class THNGlideUtil {
      * @param <T>
      */
     public static <T> void displayImageFadein(T T, ImageView imageView) {
-        displayImageFadein(T, imageView, null);
+        displayImageFadein(T, imageView, 0);
     }
 
-    public static <T> void displayImageFadein(T T, ImageView imageView, Integer defaultImageId) {
-        displayImageFadein(T, imageView, defaultImageId, null);
+    public static <T> void displayImageFadein(T T, ImageView imageView, int defaultImageId) {
+        displayImageFadein(T, imageView, defaultImageId, 0);
     }
 
-    public static <T> void displayImageFadein(T T, ImageView imageView, Integer defaultImageId, Integer errorId) {
+    public static <T> void displayImageFadein(T T, ImageView imageView, int defaultImageId, int errorId) {
         displayImageFadein(T, imageView, defaultImageId, errorId, FADE_IN_DURATION);
     }
 
 
 
-    public static  <T> void displayImageFadein(T T, ImageView imageView, Integer defaultImageId, Integer errorId, int durationMillis) {
+    public static  <T> void displayImageFadein(T T, ImageView imageView, int defaultImageId, int errorId, int durationMillis) {
         Glide.with(getContext()).load(T).
-                placeholder((defaultImageId == null) ? DEFAULT_IMAGEID : defaultImageId).
-                error((errorId == null) ? ERROR_IMAGEID : errorId).
+                placeholder((defaultImageId == 0) ? DEFAULT_IMAGEID : defaultImageId).
+                error((errorId == 0) ? ERROR_IMAGEID : errorId).
                 crossFade().crossFade(durationMillis).
                 into(imageView);
     }
 
-    public static  <T> void displayImageFadein(T T, ImageView imageView, int width, int height) {
+    /**
+     * 指定加载尺寸
+     * @param T
+     * @param imageView
+     * @param width
+     * @param height
+     * @param <T>
+     */
+    public static  <T> void displayImageFadeinWithDimen(T T, ImageView imageView, int width, int height) {
         Glide.with(getContext()).load(T).
                 placeholder(DEFAULT_IMAGEID).
                 error(ERROR_IMAGEID).crossFade().crossFade(FADE_IN_DURATION).override(width, height).

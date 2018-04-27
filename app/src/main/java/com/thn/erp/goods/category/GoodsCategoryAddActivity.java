@@ -24,7 +24,6 @@ import com.thn.erp.view.common.PublicTopBar;
 import com.thn.erp.view.svprogress.WaitingDialog;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -84,8 +83,7 @@ public class GoodsCategoryAddActivity extends BaseActivity implements ImpTopbarO
     }
 
     private void initTopbar() {
-        publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
-        publicTopBar.setTopBarCenterTextView((categoriesEntity == null) ?  "添加分类": "编辑分类", getResources().getColor(R.color.THN_color_fontColor_primary));
+        publicTopBar.setTopBarCenterTextView((categoriesEntity == null) ?  "添加分类": "编辑分类", getResources().getColor(R.color.white));
         publicTopBar.setTopBarLeftImageView(true);
 //        publicTopBar.setTopBarRightTextView("添加", Color.parseColor("#27AE59"));
         publicTopBar.setTopBarOnClickListener(this);

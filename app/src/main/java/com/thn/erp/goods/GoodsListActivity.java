@@ -71,7 +71,7 @@ public class GoodsListActivity extends BaseActivity {
 
     private void initTopbar() {
         publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
-        publicTopBar.setTopBarCenterTextView(titleName, getResources().getColor(R.color.THN_color_fontColor_primary));
+        publicTopBar.setTopBarCenterTextView(titleName, getResources().getColor(R.color.white));
         publicTopBar.setTopBarLeftImageView(true);
         publicTopBar.setTopBarOnClickListener(new ImpTopbarOnClickListener() {
             @Override

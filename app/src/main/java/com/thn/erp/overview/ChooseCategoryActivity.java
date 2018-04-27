@@ -5,10 +5,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.thn.erp.R;
-import com.thn.erp.base.BaseActivity;
 import com.thn.erp.base.BaseStyle2Activity;
 import com.thn.erp.view.common.LinearLayoutSingleChoiceTextView;
 import com.thn.erp.view.common.PublicTopBar;
@@ -55,8 +53,7 @@ public class ChooseCategoryActivity extends BaseStyle2Activity {
     }
 
     private void initTopbar() {
-        publicTopBar.setBackgroundColor(Color.parseColor("#FFFFFF"));
-        publicTopBar.setTopBarCenterTextView("选择分类", getResources().getColor(R.color.THN_color_fontColor_primary));
+        publicTopBar.setTopBarCenterTextView("选择分类", getResources().getColor(R.color.white));
         publicTopBar.setTopBarRightTextView("确认", Color.parseColor("#27AE59"));
     }
 

@@ -9,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.stephen.taihuoniaolibrary.utils.THNGlideUtil;
 import com.thn.erp.R;
 import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
-import com.thn.erp.utils.GlideUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,7 @@ public class GoodsAddRecyclerViewAdapter extends RecyclerView.Adapter<GoodsAddRe
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         if (stringList.size() == 0 || position == stringList.size()) {
-            GlideUtil.displayImage(R.mipmap.icon_goods_add_img, holder.imageView);
+            THNGlideUtil.displayImage(R.mipmap.icon_goods_add_img, holder.imageView);
         } else {
             Bitmap uri = stringList.get(position);
             holder.imageView.setImageBitmap(uri);

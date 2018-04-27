@@ -12,7 +12,6 @@ import com.thn.erp.common.constant.ExtraKey;
 import com.thn.erp.common.interfaces.ImpTopbarOnClickListener;
 import com.thn.erp.more.adapter.PrepareExportStockAdapter;
 import com.thn.erp.more.bean.PrepareExportStockBean;
-import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.common.PublicTopBar;
 
 import java.util.ArrayList;
@@ -60,8 +59,7 @@ public class PrepareExportStockActivity extends BaseStyle2Activity implements Im
     }
 
     private void initTopBar() {
-        publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
-        publicTopBar.setTopBarCenterTextView("待出库订单", getResources().getColor(R.color.THN_color_fontColor_primary));
+        publicTopBar.setTopBarCenterTextView("待出库订单", getResources().getColor(R.color.white));
         publicTopBar.setTopBarLeftImageView(true);
         publicTopBar.setTopBarOnClickListener(this);
     }

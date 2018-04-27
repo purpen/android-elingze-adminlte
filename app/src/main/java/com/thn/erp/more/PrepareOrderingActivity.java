@@ -5,13 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.thn.erp.R;
-import com.thn.erp.base.BaseActivity;
 import com.thn.erp.base.BaseStyle2Activity;
 import com.thn.erp.base.BaseUltimateRecyclerView;
 import com.thn.erp.base.BaseUltimateViewAdapter;
 import com.thn.erp.common.constant.ExtraKey;
 import com.thn.erp.common.interfaces.ImpTopbarOnClickListener;
-import com.thn.erp.more.adapter.PrepareExportStockAdapter;
 import com.thn.erp.more.adapter.PrepareOrderingAdapter;
 import com.thn.erp.more.bean.PrepareExportStockBean;
 import com.thn.erp.view.common.PublicTopBar;
@@ -55,8 +53,7 @@ public class PrepareOrderingActivity extends BaseStyle2Activity implements ImpTo
     }
 
     private void initTopBar() {
-        publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
-        publicTopBar.setTopBarCenterTextView("选择客户", getResources().getColor(R.color.THN_color_fontColor_primary));
+        publicTopBar.setTopBarCenterTextView("选择客户", getResources().getColor(R.color.white));
         publicTopBar.setTopBarLeftImageView(true);
         publicTopBar.setTopBarOnClickListener(this);
     }

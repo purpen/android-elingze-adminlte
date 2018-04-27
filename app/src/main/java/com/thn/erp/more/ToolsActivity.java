@@ -12,11 +12,8 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 
 import com.thn.erp.R;
 import com.thn.erp.base.BaseStyle2Activity;
@@ -25,13 +22,10 @@ import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
 import com.thn.erp.more.adapter.ToolsAdapter;
 import com.thn.erp.view.common.PublicTopBar;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by Stephen on 2018/3/21 15:22
@@ -98,8 +92,7 @@ public class ToolsActivity extends BaseStyle2Activity implements ImpTopbarOnClic
     }
 
     private void initTopBar() {
-        publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
-        publicTopBar.setTopBarCenterTextView("工具箱", getResources().getColor(R.color.THN_color_fontColor_primary));
+        publicTopBar.setTopBarCenterTextView("工具箱", getResources().getColor(R.color.white));
         publicTopBar.setTopBarLeftImageView(true);
         publicTopBar.setTopBarOnClickListener(this);
     }

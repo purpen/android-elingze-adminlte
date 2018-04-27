@@ -247,6 +247,7 @@ public class CustomHeadView extends RelativeLayout {
         setCenterTxtShow(string, 0);
     }
 
+
     public void setCenterTxtShow(String string, int color) {
         head_center_tv.setText(string);
         head_center_tv.setVisibility(View.VISIBLE);

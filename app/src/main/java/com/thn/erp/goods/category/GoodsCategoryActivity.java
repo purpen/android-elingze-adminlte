@@ -2,7 +2,6 @@ package com.thn.erp.goods.category;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -37,6 +36,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -92,10 +92,9 @@ public class GoodsCategoryActivity extends BaseStyle2Activity implements ImpTopb
     }
 
     private void initTopbar() {
-        publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
-        publicTopBar.setTopBarCenterTextView("分类列表", getResources().getColor(R.color.THN_color_fontColor_primary));
+        publicTopBar.setTopBarCenterTextView("分类列表", getResources().getColor(R.color.white));
         publicTopBar.setTopBarLeftImageView(true);
-        publicTopBar.setTopBarRightTextView("添加", Color.parseColor("#27AE59"));
+        publicTopBar.setTopBarRightTextView("添加", getResources().getColor(R.color.white));
         publicTopBar.setTopBarOnClickListener(this);
     }
 

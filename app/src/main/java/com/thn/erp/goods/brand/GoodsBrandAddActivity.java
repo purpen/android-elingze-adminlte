@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.stephen.taihuoniaolibrary.utils.THNTypeConversionUtils;
 import com.thn.erp.R;
@@ -30,7 +29,6 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import ch.ielse.view.SwitchView;
 
 /**
  * Created by Stephen on 2018/4/11 19:03
@@ -88,8 +86,7 @@ public class GoodsBrandAddActivity extends BaseActivity implements ImpTopbarOnCl
     }
 
     private void initTopbar() {
-        publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
-        publicTopBar.setTopBarCenterTextView("添加品牌", getResources().getColor(R.color.THN_color_fontColor_primary));
+        publicTopBar.setTopBarCenterTextView("添加品牌", getResources().getColor(R.color.white));
         publicTopBar.setTopBarLeftImageView(true);
         publicTopBar.setTopBarOnClickListener(this);
     }

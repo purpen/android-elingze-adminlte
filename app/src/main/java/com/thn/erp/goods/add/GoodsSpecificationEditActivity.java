@@ -66,9 +66,8 @@ public class GoodsSpecificationEditActivity extends BaseStyle2Activity implement
     }
 
     private void initTopbar() {
-        publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
-        publicTopBar.setTopBarCenterTextView("商品规格参数", getResources().getColor(R.color.THN_color_fontColor_primary));
-        publicTopBar.setTopBarRightTextView("保存", getResources().getColor(R.color.THN_color_fontColor_assist));
+        publicTopBar.setTopBarCenterTextView("商品规格参数", getResources().getColor(R.color.white));
+        publicTopBar.setTopBarRightTextView("保存", getResources().getColor(R.color.white));
         publicTopBar.setTopBarLeftImageView(true);
         publicTopBar.setTopBarOnClickListener(this);
     }

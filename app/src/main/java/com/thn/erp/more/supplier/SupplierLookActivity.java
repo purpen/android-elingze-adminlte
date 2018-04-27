@@ -95,10 +95,9 @@ public class SupplierLookActivity extends BaseStyle2Activity implements ImpTopba
     }
 
     private void initTopbar() {
-        publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
-        publicTopBar.setTopBarCenterTextView("新增供应商", getResources().getColor(R.color.THN_color_fontColor_primary));
+        publicTopBar.setTopBarCenterTextView("新增供应商", getResources().getColor(R.color.white));
         publicTopBar.setTopBarLeftImageView(true);
-        publicTopBar.setTopBarRightTextView("编辑", Color.parseColor("#27AE59"));
+        publicTopBar.setTopBarRightTextView("编辑",getResources().getColor(R.color.white));
         publicTopBar.setTopBarOnClickListener(this);
     }
 

@@ -1,6 +1,5 @@
 package com.thn.erp.more.repository;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -56,10 +55,9 @@ public class AddRepositoryActivity extends BaseStyle2Activity implements ImpTopb
     }
 
     private void initTopBar() {
-        publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
-        publicTopBar.setTopBarCenterTextView("新增仓库", getResources().getColor(R.color.THN_color_fontColor_primary));
+        publicTopBar.setTopBarCenterTextView("新增仓库", getResources().getColor(R.color.white));
         publicTopBar.setTopBarLeftImageView(true);
-        publicTopBar.setTopBarRightTextView("保存", Color.parseColor("#27AE59"));
+        publicTopBar.setTopBarRightTextView("保存", getResources().getColor(R.color.white));
         publicTopBar.setTopBarOnClickListener(this);
     }
 

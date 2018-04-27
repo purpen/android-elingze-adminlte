@@ -1,11 +1,9 @@
 package com.thn.erp.more.repository;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.Toast;
 
 import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
@@ -56,10 +54,9 @@ public class RepositoryManageActivity extends BaseStyle2Activity implements View
     }
 
     private void initTopBar() {
-        publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
-        publicTopBar.setTopBarCenterTextView("仓库管理", getResources().getColor(R.color.THN_color_fontColor_primary));
+        publicTopBar.setTopBarCenterTextView("仓库管理", getResources().getColor(R.color.white));
         publicTopBar.setTopBarLeftImageView(true);
-        publicTopBar.setTopBarRightTextView("添加", Color.parseColor("#27AE59"));
+        publicTopBar.setTopBarRightTextView("添加", getResources().getColor(R.color.white));
         publicTopBar.setTopBarOnClickListener(this);
     }
 
@@ -99,7 +96,6 @@ public class RepositoryManageActivity extends BaseStyle2Activity implements View
             case ImpTopbarOnClickListener.CENTER:
                 break;
             case ImpTopbarOnClickListener.RIGHT:
-                Toast.makeText(activity, "Right", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(this, AddRepositoryActivity.class));
                 break;
         }

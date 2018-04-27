@@ -1,7 +1,6 @@
 package com.thn.erp.goods.add;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -12,7 +11,6 @@ import com.thn.erp.common.interfaces.ImpTopbarOnClickListener;
 import com.thn.erp.view.common.PublicTopBar;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by Stephen on 2018/3/29 16:43
@@ -36,18 +34,10 @@ public class GoodsIntroductionEditActivity extends BaseStyle2Activity implements
     }
 
     private void initTopbar() {
-        publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
-        publicTopBar.setTopBarCenterTextView("商品介绍", getResources().getColor(R.color.THN_color_fontColor_primary));
-        publicTopBar.setTopBarRightTextView("保存", getResources().getColor(R.color.THN_color_fontColor_assist));
+        publicTopBar.setTopBarCenterTextView("商品介绍", getResources().getColor(R.color.white));
+        publicTopBar.setTopBarRightTextView("保存", getResources().getColor(R.color.white));
         publicTopBar.setTopBarLeftImageView(true);
         publicTopBar.setTopBarOnClickListener(this);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 
     @Override

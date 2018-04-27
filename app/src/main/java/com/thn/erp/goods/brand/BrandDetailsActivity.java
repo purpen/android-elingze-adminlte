@@ -8,7 +8,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.stephen.taihuoniaolibrary.utils.THNGlideUtil;
 import com.thn.erp.R;
@@ -28,7 +27,6 @@ import com.thn.erp.view.common.LinearLayoutCustomerAddSwitchView;
 import com.thn.erp.view.common.PublicTopBar;
 import com.thn.erp.view.svprogress.WaitingDialog;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -98,10 +96,9 @@ public class BrandDetailsActivity extends BaseActivity implements ImpTopbarOnCli
     }
 
     private void initTopBar() {
-        publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
-        publicTopBar.setTopBarCenterTextView("品牌详情", getResources().getColor(R.color.THN_color_fontColor_primary));
+        publicTopBar.setTopBarCenterTextView("品牌详情", getResources().getColor(R.color.white));
         publicTopBar.setTopBarLeftImageView(true);
-        publicTopBar.setTopBarRightTextView("编辑", Color.parseColor("#27AE59"));
+        publicTopBar.setTopBarRightTextView("编辑", getResources().getColor(R.color.white));
         publicTopBar.setTopBarOnClickListener(this);
     }
 

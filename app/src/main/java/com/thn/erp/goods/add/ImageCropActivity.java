@@ -8,10 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
+import com.stephen.taihuoniaolibrary.utils.THNGlideUtil;
 import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
-import com.thn.erp.utils.GlideUtil;
 import com.thn.erp.view.ImageCrop.ClipSquareImageView;
 
 import butterknife.BindView;
@@ -81,7 +81,7 @@ public class ImageCropActivity extends BaseActivity {
     protected void initView() {
         if (uri == null) return;
         dialog = new THNWaittingDialog(this);
-        GlideUtil.displayImage(uri, csiv);
+        THNGlideUtil.displayImage(uri, csiv);
     }
 
 

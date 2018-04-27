@@ -111,4 +111,6 @@
     <string name="manage_class_title">管理分类</string>
     <string name="edit_customer_grade">编辑分类</string>
     <string name="hint_dialog_delete_grade_title">确认删除分类？</string>
+    <string name="add_goods_title">添加商品</string>
+    <string name="edit_customer_title">编辑客户</string>
 </resources>

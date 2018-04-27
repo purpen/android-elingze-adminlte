@@ -37,7 +37,6 @@ public class StatisticsFragment extends BaseFragment {
     protected void initView() {
         customHeadView.setHeadGoBackShow(false);
         customHeadView.setCenterTxtShow(getString(R.string.statistics_title),getResources().getColor(android.R.color.white));
-        customHeadView.setBackgroundColor(getResources().getColor(R.color.color_27AE59));
         ArrayList<Class> classes = new ArrayList<>();
         classes.add(SaleAmountFragment.class);
         classes.add(SaleAmountFragment.class);

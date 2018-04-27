@@ -30,5 +30,6 @@
         android:layout_height="match_parent"
         app:recyclerviewClipToPadding="true"
         app:recyclerviewScrollbars="vertical"
+        app:recyclerviewDefaultSwipeColor="@array/google_colors"
         />
 </LinearLayout>

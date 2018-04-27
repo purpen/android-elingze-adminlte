@@ -84,7 +84,7 @@ public class PublicTopBar extends RelativeLayout implements View.OnClickListener
         if (!imgBack) {
             return;
         }
-        imageViewTopBarLeft.setImageResource(R.mipmap.icon_topbar_back);
+        imageViewTopBarLeft.setImageResource(R.mipmap.back_white);
         imageViewTopBarLeft.setVisibility(VISIBLE);
     }
 

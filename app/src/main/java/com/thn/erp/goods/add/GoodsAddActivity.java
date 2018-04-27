@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,10 +25,9 @@ import com.thn.erp.Constants;
 import com.thn.erp.R;
 import com.thn.erp.album.PicturePickerUtils;
 import com.thn.erp.base.BaseStyle2Activity;
-import com.thn.erp.common.interfaces.ImpTopbarOnClickListener;
-import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
 import com.thn.erp.common.RecycleViewItemDecorationHorizontal;
 import com.thn.erp.common.constant.RequestCode;
+import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
 import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
@@ -39,10 +37,10 @@ import com.thn.erp.utils.ImageUtils;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.LogUtil;
 import com.thn.erp.utils.ToastUtils;
+import com.thn.erp.view.CustomHeadView;
 import com.thn.erp.view.PopupWindowUtil;
 import com.thn.erp.view.common.LinearLayoutCustomerAddArrowView;
 import com.thn.erp.view.common.LinearLayoutCustomerAddSwitchView;
-import com.thn.erp.view.common.PublicTopBar;
 import com.yanzhenjie.permission.AndPermission;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
@@ -61,16 +59,15 @@ import java.util.Map;
 import java.util.Set;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by Stephen on 2018/3/26 22:33
  * Email: 895745843@qq.com
  */
 
-public class GoodsAddActivity extends BaseStyle2Activity implements ImpTopbarOnClickListener {
-    @BindView(R.id.publicTopBar)
-    PublicTopBar publicTopBar;
+public class GoodsAddActivity extends BaseStyle2Activity {
+    @BindView(R.id.customHeadView)
+    CustomHeadView customHeadView;
     @BindView(R.id.recyclerView1)
     RecyclerView recyclerView1;
     @BindView(R.id.layoutItemView1)
@@ -111,12 +108,7 @@ public class GoodsAddActivity extends BaseStyle2Activity implements ImpTopbarOnC
         return R.layout.activity_goods_add;
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+
 
     @Override
     protected void initView() {
@@ -178,22 +170,20 @@ public class GoodsAddActivity extends BaseStyle2Activity implements ImpTopbarOnC
     }
 
     private void initTopbar() {
-        publicTopBar.setBackgroundColor(getResources().getColor(R.color.THN_color_bgColor_white));
-        publicTopBar.setTopBarCenterTextView("添加商品", getResources().getColor(R.color.THN_color_fontColor_primary));
-        publicTopBar.setTopBarRightTextView("保存", getResources().getColor(R.color.THN_color_fontColor_assist));
-        publicTopBar.setTopBarLeftImageView(true);
-        publicTopBar.setTopBarOnClickListener(this);
+        customHeadView.setCenterTxtShow(getResources().getString(R.string.add_goods_title));
+        customHeadView.setHeadRightTxtShow(true, R.string.save);
     }
 
     @Override
-    public void onTopBarClick(View view, int position) {
-        switch (position) {
-            case ImpTopbarOnClickListener.RIGHT:
+    protected void installListener() {
+        customHeadView.getHeadRightTV().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 if (coverIds.size() > 0 && layoutItemView1.getValue() != null && layoutItemView4.getValue() != null) {
                     uploadGoods(layoutItemView1.getValue().toString(), coverIds.get(0), layoutItemView4.getValue().toString());
                 }
-                break;
-        }
+            }
+        });
     }
 
 

@@ -7,11 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.stephen.taihuoniaolibrary.utils.THNGlideUtil;
 import com.thn.erp.Constants;
 import com.thn.erp.MainActivity;
 import com.thn.erp.UserGuideActivity;
 import com.thn.erp.user.LoginRegisterActivity;
-import com.thn.erp.utils.GlideUtil;
 import com.thn.erp.utils.SPUtil;
 import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.svprogress.WaitingDialog;
@@ -80,7 +80,7 @@ public class ViewPagerAdapter<T> extends RecyclingPagerAdapter {
             if (TextUtils.isEmpty((String) content)) {
                 ToastUtils.showError("图片链接为空");
             } else {
-                GlideUtil.displayImage(content, holder.imageView);
+                THNGlideUtil.displayImage(content, holder.imageView);
             }
         }
 
