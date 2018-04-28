@@ -53,6 +53,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -133,7 +134,7 @@ public class GoodsAddActivity extends BaseStyle2Activity {
 
         layoutInflater = LayoutInflater.from(this);
         String[] mVals = {"新品上架", "热卖推荐", "清仓优惠"};
-        idFlowlayout.setAdapter(new TagAdapter<String>(mVals) {
+        idFlowlayout.setAdapter(new TagAdapter<String>(Arrays.asList(mVals)) {
             @Override
             public View getView(FlowLayout parent, int position, String s) {
                 TextView tv = (TextView) layoutInflater.inflate(R.layout.layout_flowlayout_tv, idFlowlayout, false);

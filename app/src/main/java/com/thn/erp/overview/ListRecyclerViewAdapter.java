@@ -50,12 +50,11 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
             }
         });
         if (list.size() != 0) {
-            THNGlideUtil.displayImage(/*list.get(adapterPosition).getCover_url()*/"", holder.productImg);
             Object o1 = list.get(adapterPosition);
             if (o1 instanceof Map) {
                 Map<String, String> map = (Map<String,String>) o1;
                 holder.name.setText(map.get("name"));
-                holder.productImg.setImageResource(Integer.valueOf(map.get("img")));
+                THNGlideUtil.displayImage(Integer.valueOf(map.get("img")), holder.productImg);
             }
         }
     }

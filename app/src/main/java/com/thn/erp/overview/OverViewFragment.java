@@ -68,12 +68,6 @@ public class OverViewFragment extends BaseFragment {
         return rootView;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
     private void initScrollView() {
         if (viewPagerAdapter == null) {
             List<String> asset = new ArrayList<>();

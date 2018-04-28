@@ -176,7 +176,6 @@ public class SaleFragment extends BaseFragment {
             for (OrderData.DataBean.OrdersBean order : ordersBeans) {
                 adapter.insert(order, adapter.getAdapterItemCount());
             }
-            ultimateRecyclerView.setRefreshing(false);
             linearLayoutManager.scrollToPosition(0);
             adapter.notifyDataSetChanged();
         } else {
@@ -184,6 +183,7 @@ public class SaleFragment extends BaseFragment {
                 adapter.insert(order, adapter.getAdapterItemCount());
             }
         }
+        ultimateRecyclerView.setRefreshing(false);
         if (ordersBeans.size() == 0 && adapter.getAdapterItemCount()>0) ultimateRecyclerView.disableLoadmore();
         if (adapter.getAdapterItemCount() == 0) ultimateRecyclerView.showEmptyView();
     }
