@@ -78,7 +78,6 @@ public class OverViewFragment extends BaseFragment {
             scrollableView.setAdapter(viewPagerAdapter.setInfiniteLoop(true));
 //            scrollableView.setOnPageChangeListener(this);
             scrollableView.setAutoScrollDurationFactor(8);
-            scrollableView.setInterval(4000);
             scrollableView.showIndicators();
             scrollableView.start();
         } else {

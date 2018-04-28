@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
-import com.stephen.taihuoniaolibrary.utils.THNLogUtil;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
 import com.thn.erp.base.BaseUltimateRecyclerView;
@@ -76,17 +75,15 @@ public class GoodsFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        super.initView();
         initTopBar();
         initRecyclerView();
         initListAdapter();
-        dialog = new WaitingDialog(getActivity());
+        dialog = new WaitingDialog(activity);
         getGoodsList();
     }
 
     private void initListAdapter() {
         page = 1;
-        dialog = new WaitingDialog(activity);
         list = new ArrayList<>();
         adapter = new GoodsListAdapter(list);
 
@@ -110,7 +107,7 @@ public class GoodsFragment extends BaseFragment {
                 GoodsData.DataBean.ProductsBean productsBean = list.get(i);
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), GoodsDetailsActivity.class);
-                intent.putExtra("Extra",productsBean);
+                intent.putExtra(GoodsDetailsActivity.class.getSimpleName(),productsBean);
                 getActivity().startActivity(intent);
             }
         } );
@@ -180,7 +177,7 @@ public class GoodsFragment extends BaseFragment {
         HttpRequest.sendRequest(HttpRequest.GET, URL.GOODS_LIST, params, new HttpRequestCallback() {
             @Override
             public void onStart() {
-//                dialog.show();
+                dialog.show();
             }
 
             @Override
@@ -197,7 +194,7 @@ public class GoodsFragment extends BaseFragment {
 
             @Override
             public void onFailure(IOException e) {
-//                dialog.dismiss();
+                dialog.dismiss();
                 ToastUtils.showError(R.string.network_err);
             }
         });

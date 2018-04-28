@@ -89,6 +89,7 @@ public class ScrollableView extends RelativeLayout {
     }
 
     public void showIndicators() {
+        if (size<=1) return;
         imageViews = new ArrayList<>();
         LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         llp.gravity = Gravity.CENTER_HORIZONTAL;

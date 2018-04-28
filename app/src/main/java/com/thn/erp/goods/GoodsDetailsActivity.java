@@ -1,30 +1,29 @@
 package com.thn.erp.goods;
 
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.TextView;
 
 import com.thn.erp.R;
 import com.thn.erp.base.BaseStyle2Activity;
 import com.thn.erp.common.interfaces.ImpTopbarOnClickListener;
-import com.thn.erp.net.ClientParamsAPI;
+import com.thn.erp.goods.beans.GoodsDetailData;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.sale.bean.GoodsData;
-import com.thn.erp.utils.LogUtil;
+import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.autoScrollViewpager.ScrollableView;
+import com.thn.erp.view.autoScrollViewpager.ViewPagerAdapter;
 import com.thn.erp.view.common.LinearLayoutArrowTextView;
 import com.thn.erp.view.common.PublicTopBar;
 import com.thn.erp.view.svprogress.WaitingDialog;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by Stephen on 2018/3/26 10:47
@@ -69,32 +68,26 @@ public class GoodsDetailsActivity extends BaseStyle2Activity implements ImpTopba
 
     @Override
     protected void getIntentData() {
-        Parcelable extra = getIntent().getParcelableExtra("Extra");
-        if (extra instanceof GoodsData.DataBean.ProductsBean) {
-            mProductsBean = (GoodsData.DataBean.ProductsBean) extra;
-        }
+        mProductsBean = getIntent().getParcelableExtra(GoodsDetailsActivity.class.getSimpleName());
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
+    protected void onStart() {
+        super.onStart();
+        if (scrollableView!=null) scrollableView.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (scrollableView!=null) scrollableView.stop();
     }
 
     @Override
     protected void initView() {
-        // TODO: 2018/3/26
         initTopbar();
         dialog = new WaitingDialog(this);
         setBasicDat0a();
-    }
-
-    private void setBasicDat0a() {
-        textView1.setText(mProductsBean.name);
-        textView2.setText("编号: " +mProductsBean.rid);
-        textView3.setText("单位: 件");
-        textView4.setText("￥ " +String.valueOf(mProductsBean.sale_price));
     }
 
     private void initTopbar() {
@@ -103,13 +96,22 @@ public class GoodsDetailsActivity extends BaseStyle2Activity implements ImpTopba
         publicTopBar.setTopBarOnClickListener(this);
     }
 
-    @Override
-    protected void requestNet() {
-        getGoodsList();
+    private void setBasicDat0a() {
+        textView1.setText(mProductsBean.name);
+        textView2.setText("编号: " + mProductsBean.rid);
+        textView3.setText("单位: "+10+"件");
+        textView4.setText("￥ " + String.valueOf(mProductsBean.sale_price));
     }
 
-    private void getGoodsList() {
-        HttpRequest.getRequest(URL.PRODUCT_DETAILS, new HttpRequestCallback() {
+
+    @Override
+    protected void requestNet() {
+        getGoodsDetail();
+    }
+
+    private void getGoodsDetail() {
+        String url = URL.BASE_URL + "products/" + mProductsBean.rid + "/detail";
+        HttpRequest.sendRequest(HttpRequest.GET, url, new HttpRequestCallback() {
 
             @Override
             public void onStart() {
@@ -118,39 +120,13 @@ public class GoodsDetailsActivity extends BaseStyle2Activity implements ImpTopba
 
             @Override
             public void onSuccess(String json) {
-                LogUtil.e(json);
                 dialog.dismiss();
-//                GoodsData customerBean = JsonUtil.fromJson(json, GoodsData.class);
-//                if (customerBean.success == true) {
-//                    updateData(customerBean.data.products);
-//                } else {
-//                    ToastUtils.showError(customerBean.status.message);
-//                }
-
-            }
-
-            @Override
-            public void onFailure(IOException e) {
-
-            }
-        });
-        HashMap<String, String> params = ClientParamsAPI.getDefaultParams();
-        HttpRequest.sendRequest(HttpRequest.GET, URL.PRODUCT_DETAILS, params, new HttpRequestCallback() {
-            @Override
-            public void onStart() {
-                dialog.show();
-            }
-
-            @Override
-            public void onSuccess(String json) {
-                LogUtil.e(json);
-                dialog.dismiss();
-//                GoodsData customerBean = JsonUtil.fromJson(json, GoodsData.class);
-//                if (customerBean.success == true) {
-//                    updateData(customerBean.data.products);
-//                } else {
-//                    ToastUtils.showError(customerBean.status.message);
-//                }
+                GoodsDetailData data = JsonUtil.fromJson(json, GoodsDetailData.class);
+                if (data.success == true) {
+                    updateData(data);
+                } else {
+                    ToastUtils.showError(data.status.message);
+                }
 
             }
 
@@ -161,6 +137,19 @@ public class GoodsDetailsActivity extends BaseStyle2Activity implements ImpTopba
             }
         });
     }
+
+    private void updateData(GoodsDetailData data) {
+        List<GoodsDetailData.DataBean.ImagesBean> images = data.data.images;
+        List<String> list = new ArrayList<>();
+        for (GoodsDetailData.DataBean.ImagesBean image : images) {
+            list.add(image.view_url);
+        }
+        scrollableView.setAdapter(new ViewPagerAdapter(activity, list));
+        scrollableView.setAutoScrollDurationFactor(8);
+        scrollableView.showIndicators();
+        scrollableView.start();
+    }
+
 
     @Override
     public void onTopBarClick(View view, int position) {
