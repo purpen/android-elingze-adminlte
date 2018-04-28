@@ -183,7 +183,7 @@ public abstract class BaseUltimateViewAdapter<T> extends UltimateViewAdapter {
     public void setList(List<T> lists) {
         clear();
         for (T t : lists) {
-            insert(t, 0);
+            insert(t, getAdapterItemCount());
         }
     }
 

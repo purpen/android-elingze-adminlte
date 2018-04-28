@@ -57,6 +57,7 @@ public class GoodsFragment extends BaseFragment {
     private int page;
     private List<GoodsData.DataBean.ProductsBean> list;
     private Boolean isRefreshing = false;
+    private Boolean isLoadingMore =false;
     private GoodsListAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
     private String cid = "";
@@ -116,7 +117,7 @@ public class GoodsFragment extends BaseFragment {
             @Override
             public void loadMore(int itemsCount, final int maxLastVisiblePosition) {
                 ultimateRecyclerView.disableLoadmore();
-                isRefreshing = false;
+                isLoadingMore = true;
                 page++;
                 getGoodsList();
             }
@@ -177,7 +178,7 @@ public class GoodsFragment extends BaseFragment {
         HttpRequest.sendRequest(HttpRequest.GET, URL.GOODS_LIST, params, new HttpRequestCallback() {
             @Override
             public void onStart() {
-                dialog.show();
+               if (!isRefreshing || !isLoadingMore)dialog.show();
             }
 
             @Override

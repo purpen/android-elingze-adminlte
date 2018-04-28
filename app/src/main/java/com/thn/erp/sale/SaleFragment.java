@@ -53,6 +53,7 @@ public class SaleFragment extends BaseFragment {
     private String status = "";
     private LinearLayoutManager linearLayoutManager;
     private List<OrderData.DataBean.OrdersBean> list;
+    private boolean isLoadingMore = false;
 
     @Override
     protected int getLayout() {
@@ -125,7 +126,7 @@ public class SaleFragment extends BaseFragment {
         ultimateRecyclerView.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMore(int itemsCount, final int maxLastVisiblePosition) {
-                isRefreshing = false;
+                isLoadingMore=true;
                 page++;
                 getOrderList();
             }
@@ -145,7 +146,7 @@ public class SaleFragment extends BaseFragment {
         HttpRequest.sendRequest(HttpRequest.GET, URL.ORDER_LIST, params, new HttpRequestCallback() {
             @Override
             public void onStart() {
-                if (!isRefreshing) dialog.show();
+                if (!isRefreshing || !isLoadingMore) dialog.show();
             }
 
             @Override

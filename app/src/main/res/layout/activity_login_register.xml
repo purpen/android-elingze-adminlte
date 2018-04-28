@@ -24,11 +24,10 @@
 
     <ImageView
         android:id="@+id/iv_logo"
-        android:layout_width="@dimen/dp65"
-        android:layout_height="@dimen/dp35"
+        android:layout_width="@dimen/dp70"
+        android:layout_height="@dimen/dp70"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp110"
-        android:scaleType="fitCenter"
         android:src="@mipmap/ic_launcher" />
 
     <com.thn.erp.view.WrapContentHeightViewPager
