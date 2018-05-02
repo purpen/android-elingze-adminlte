@@ -1,27 +1,30 @@
 package com.thn.erp.overview;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
+import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
 import com.thn.erp.common.interfaces.GlobalCallBack;
+import com.thn.erp.net.ClientParamsAPI;
+import com.thn.erp.net.HttpRequest;
+import com.thn.erp.net.HttpRequestCallback;
+import com.thn.erp.net.URL;
 import com.thn.erp.overview.usermanage.CustomerListActivity;
+import com.thn.erp.utils.JsonUtil;
+import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.autoScrollViewpager.ScrollableView;
 import com.thn.erp.view.autoScrollViewpager.ViewPagerAdapter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
@@ -29,11 +32,6 @@ import butterknife.Unbinder;
  */
 
 public class OverViewFragment extends BaseFragment {
-
-    public static final String URL1 = "https://p4.taihuoniao.com/asset/180125/5a69ae57fc8b12b0488c1133-1";
-    public static final String URL2 = "https://p4.taihuoniao.com/asset/180125/5a698874fc8b129c418b6c46-1";
-    public static final String URL3 = "https://p4.taihuoniao.com/asset/171106/5a0039f3fc8b12a94b8b6223-1";
-
     public static final String LINK1 = "https://www.taihuoniao.com/tracker?kid=183561214";
     public static final String LINK2 = "https://www.taihuoniao.com/tracker?kid=183548689";
     public static final String LINK3 = "https://www.taihuoniao.com/tracker?kid=178066260";
@@ -46,7 +44,8 @@ public class OverViewFragment extends BaseFragment {
 
     private ViewPagerAdapter<String> viewPagerAdapter;
     private ListRecyclerViewAdapter mListAdapter;
-
+    private THNWaittingDialog dialog;
+    List<String> slideList;
 
     @Override
     protected int getLayout() {
@@ -55,27 +54,59 @@ public class OverViewFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        super.initView();
-        initScrollView();
+        dialog=new THNWaittingDialog(getContext());
+        slideList= new ArrayList<>();
         initRecyclerView();
         initListAdapter();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
-        return rootView;
+    protected void requestNet() {
+        getSlides();
+    }
+
+    /**
+     * 获取轮播图
+     */
+    private void getSlides() {
+        HashMap<String, String> params = ClientParamsAPI.slideParam("erpapp_index_slide",1);
+        HttpRequest.sendRequest(HttpRequest.GET, URL.SLIDES, params, new HttpRequestCallback() {
+            @Override
+            public void onStart() {
+                 dialog.show();
+            }
+
+            @Override
+            public void onSuccess(String json) {
+                dialog.dismiss();
+                SlidesData slidesData = JsonUtil.fromJson(json, SlidesData.class);
+                if (slidesData.success == true) {
+                    updateData(slidesData.data.slides);
+                } else {
+                    ToastUtils.showError(slidesData.status.message);
+                }
+
+            }
+
+            @Override
+            public void onFailure(IOException e) {
+                dialog.dismiss();
+                ToastUtils.showError(R.string.network_err);
+            }
+        });
+    }
+
+    private void updateData(List<SlidesData.DataBean.SlidesBean> slides) {
+        for (SlidesData.DataBean.SlidesBean slidesBean:slides){
+            slideList.add(slidesBean.image);
+        }
+        initScrollView();
     }
 
     private void initScrollView() {
         if (viewPagerAdapter == null) {
-            List<String> asset = new ArrayList<>();
-            asset.add(URL1);
-            asset.add(URL2);
-            asset.add(URL3);
-            viewPagerAdapter = new ViewPagerAdapter<>(activity, asset);
-            scrollableView.setAdapter(viewPagerAdapter.setInfiniteLoop(true));
+            viewPagerAdapter = new ViewPagerAdapter<>(activity, slideList);
+            scrollableView.setAdapter(viewPagerAdapter);
 //            scrollableView.setOnPageChangeListener(this);
             scrollableView.setAutoScrollDurationFactor(8);
             scrollableView.showIndicators();

@@ -422,4 +422,18 @@ public class ClientParamsAPI {
         params.put("name",text);
         return params;
     }
+
+    /**
+     * 轮播图
+     * @param spot
+     * @param page
+     * @return
+     */
+    public static HashMap<String,String> slideParam(String spot,int page) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("spot",spot);
+        params.put("page",String.valueOf(page));
+        params.put("per_page",Constants.PAGE_SIZE);
+        return params;
+    }
 }

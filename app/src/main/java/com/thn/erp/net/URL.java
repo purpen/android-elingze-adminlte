@@ -191,4 +191,9 @@ public class URL {
      * 添加购物车
      */
     public static String ADD_SHOPCART=BASE_URL + "cart";
+
+    /**
+     * 轮播图
+     */
+    public static String SLIDES = BASE_URL + "common/slides";
 }
