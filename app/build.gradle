@@ -54,8 +54,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 
     implementation files('libs/commons-codec-1.11.jar')
 
@@ -85,4 +85,5 @@ dependencies {
     implementation 'com.qiniu:qiniu-android-sdk:7.3.11'
     implementation 'com.hyman:flowlayout-lib:1.1.2'
     implementation 'com.google.code.gson:gson:2.8.0'
+    implementation 'com.google.zxing:core:3.0.1'
 }

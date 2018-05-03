@@ -3,6 +3,8 @@ package com.thn.erp.overview;
 import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
 import com.thn.erp.R;
@@ -12,6 +14,7 @@ import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
+import com.thn.erp.overview.bean.SlidesData;
 import com.thn.erp.overview.usermanage.CustomerListActivity;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.ToastUtils;
@@ -25,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.Unbinder;
+import butterknife.OnClick;
 
 /**
  * Created by lilin on 2018/3/7.
@@ -38,10 +41,8 @@ public class OverViewFragment extends BaseFragment {
 
     @BindView(R.id.scrollableView)
     ScrollableView scrollableView;
-    Unbinder unbinder;
     @BindView(R.id.list_fragment)
-    android.support.v7.widget.RecyclerView listFragment;
-
+    RecyclerView listFragment;
     private ViewPagerAdapter<String> viewPagerAdapter;
     private ListRecyclerViewAdapter mListAdapter;
     private THNWaittingDialog dialog;
@@ -162,6 +163,17 @@ public class OverViewFragment extends BaseFragment {
         }
         mListAdapter.putList(list);
     }
+
+    @OnClick(R.id.llSearchGoods)
+    void performClick(View v){
+        switch (v.getId()){
+            case R.id.llSearchGoods:
+                Intent intent=new Intent(activity,SearchGoodsActivity.class);
+                startActivity(intent);
+                break;
+        }
+    }
+
 
     public static final String[] ITEMS = {"商品管理", "采购单", "销售单", "库存查询", "客户管理", "经营概况","推荐有奖", "增值服务"};
     public static final int[] IMGS = {R.mipmap.icon_overview_main_category_01, R.mipmap.icon_overview_main_category_02,

@@ -436,4 +436,28 @@ public class ClientParamsAPI {
         params.put("per_page",Constants.PAGE_SIZE);
         return params;
     }
+
+    /**
+     * 搜索历史
+     * @param page
+     * @return
+     */
+    public static HashMap<String,String> searchHistoryParams(int page) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("page",String.valueOf(page));
+        params.put("per_page",Constants.PAGE_SIZE);
+        return params;
+    }
+
+    /**
+     * 搜索结果页
+     * @return
+     */
+    public static HashMap<String,String> searchResultParam(int page,String qk) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("page",String.valueOf(page));
+        params.put("per_page",Constants.PAGE_SIZE);
+        params.put("qk",qk);
+        return params;
+    }
 }

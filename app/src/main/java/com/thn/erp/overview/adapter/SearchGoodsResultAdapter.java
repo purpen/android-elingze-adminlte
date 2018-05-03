@@ -1,5 +1,4 @@
-package com.thn.erp.sale.adapter;
-import android.graphics.Color;
+package com.thn.erp.overview.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,16 +10,18 @@ import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.stephen.taihuoniaolibrary.utils.THNGlideUtil;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseUltimateViewAdapter;
-import com.thn.erp.sale.bean.GoodsData;
+import com.thn.erp.overview.bean.SearchResultData;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
-public class GoodsAdapter extends BaseUltimateViewAdapter<GoodsData.DataBean.ProductsBean> {
-    public GoodsAdapter(List<GoodsData.DataBean.ProductsBean> list) {
+/**
+ * 搜索商品结果列表
+ */
+public class SearchGoodsResultAdapter extends BaseUltimateViewAdapter<SearchResultData.DataBean.ProductsBean> {
+    public SearchGoodsResultAdapter(List<SearchResultData.DataBean.ProductsBean> list) {
         super(list);
         this.list = list;
     }
@@ -34,7 +35,7 @@ public class GoodsAdapter extends BaseUltimateViewAdapter<GoodsData.DataBean.Pro
 
     @Override
     public void onBindItemHolder2(UltimateRecyclerviewViewHolder ultimateRecyclerviewViewHolder, int position) {
-        GoodsData.DataBean.ProductsBean goods = list.get(position);
+        SearchResultData.DataBean.ProductsBean goods = list.get(position);
         ViewHolder viewHolder = ((ViewHolder) ultimateRecyclerviewViewHolder);
         viewHolder.goodsName.setText(goods.name);
         THNGlideUtil.displayImage(goods.cover,viewHolder.ivCover,R.mipmap.default_load);
@@ -61,16 +62,6 @@ public class GoodsAdapter extends BaseUltimateViewAdapter<GoodsData.DataBean.Pro
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
-        }
-
-        @Override
-        public void onItemSelected() {
-            itemView.setBackgroundColor(Color.LTGRAY);
-        }
-
-        @Override
-        public void onItemClear() {
-            itemView.setBackgroundColor(0);
         }
     }
 

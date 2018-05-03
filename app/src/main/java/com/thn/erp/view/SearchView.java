@@ -115,14 +115,14 @@ public class SearchView extends AppCompatEditText implements View.OnFocusChangeL
                 imm.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
             }
             if (event.getAction() == KeyEvent.ACTION_UP) {
-                listener.onSearchClick(v);
+                listener.onSearchClick(getText().toString().trim());
             }
         }
         return false;
     }
 
     public interface OnSearchClickListener {
-        void onSearchClick(View view);
+        void onSearchClick(String s);
     }
 
 }

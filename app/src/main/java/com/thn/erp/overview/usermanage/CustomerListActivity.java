@@ -91,7 +91,7 @@ public class CustomerListActivity extends BaseActivity {
         // 实现TextWatcher监听即可
         searchView.setOnSearchClickListener(new SearchView.OnSearchClickListener() {
             @Override
-            public void onSearchClick(View view) {
+            public void onSearchClick(String s) {
                 ToastUtils.showInfo("going search");
             }
         });

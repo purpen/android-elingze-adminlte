@@ -103,7 +103,7 @@ public class GoodsCategoryActivity extends BaseStyle2Activity implements ImpTopb
         // 实现TextWatcher监听即可
         searchView.setOnSearchClickListener(new SearchView.OnSearchClickListener() {
             @Override
-            public void onSearchClick(View view) {
+            public void onSearchClick(String s) {
                 ToastUtils.showInfo("going search");
             }
         });

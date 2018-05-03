@@ -11,7 +11,7 @@
         android:layout_height="@dimen/dp90"
         android:layout_marginLeft="@dimen/dp15"
         android:layout_marginRight="@dimen/dp15"
-        android:src="@mipmap/ic_launcher"
+        android:src="@mipmap/default_load"
         />
     <TextView
         android:id="@+id/goodsName"

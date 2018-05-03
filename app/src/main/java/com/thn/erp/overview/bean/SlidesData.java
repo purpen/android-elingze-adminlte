@@ -1,4 +1,4 @@
-package com.thn.erp.overview;
+package com.thn.erp.overview.bean;
 
 import java.util.List;
 

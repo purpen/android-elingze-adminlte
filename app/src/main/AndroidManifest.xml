@@ -3,11 +3,11 @@
     package="com.thn.erp">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
 
@@ -21,62 +21,61 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/CommonActivityTheme">
-        <activity android:name=".UserGuideActivity"
-            android:theme="@style/NoTitleFullscreen"
-            android:screenOrientation="portrait">
+        <activity
+            android:name=".UserGuideActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleFullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".user.LoginRegisterActivity"></activity>
-        <activity android:name=".user.ForgetPasswordActivity"></activity>
-        <activity android:name=".overview.usermanage.CustomerListActivity"></activity>
-        <activity android:name=".overview.usermanage.AddCustomActivity"></activity>
-        <activity android:name=".overview.usermanage.EditCustomerClassActivity"></activity>
-        <activity android:name=".sale.DXOrderActivity"></activity>
-        <activity android:name=".sale.SelectCustomerActivity"></activity>
-        <activity android:name=".sale.CreateOrderActivity"></activity>
-        <activity android:name=".sale.SelectGoodsActivity"></activity>
-        <activity android:name=".sale.SelectAddressActivity"></activity>
-        <activity android:name=".sale.AddNewAddressActivity"></activity>
-        <activity android:name=".sale.OrderDetailsActivity"></activity>
-        <activity android:name=".sale.ManageAddressActivity"></activity>
-        <activity android:name=".overview.usermanage.AddGradeActivity"></activity>
-        <activity android:name=".overview.usermanage.ManageCustomerClassActivity"></activity>
-        <activity android:name=".overview.usermanage.ManageCustomerActivity"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".user.LoginRegisterActivity" />
+        <activity android:name=".user.ForgetPasswordActivity" />
+        <activity android:name=".overview.usermanage.CustomerListActivity" />
+        <activity android:name=".overview.usermanage.AddCustomActivity" />
+        <activity android:name=".overview.usermanage.EditCustomerClassActivity" />
+        <activity android:name=".sale.DXOrderActivity" />
+        <activity android:name=".sale.SelectCustomerActivity" />
+        <activity android:name=".sale.CreateOrderActivity" />
+        <activity android:name=".sale.SelectGoodsActivity" />
+        <activity android:name=".sale.SelectAddressActivity" />
+        <activity android:name=".sale.AddNewAddressActivity" />
+        <activity android:name=".sale.OrderDetailsActivity" />
+        <activity android:name=".sale.ManageAddressActivity" />
+        <activity android:name=".overview.usermanage.AddGradeActivity" />
+        <activity android:name=".overview.usermanage.ManageCustomerClassActivity" />
+        <activity android:name=".overview.usermanage.ManageCustomerActivity" />
 
         <!-- 仓库管理 -->
-        <activity android:name="com.thn.erp.more.repository.RepositoryManageActivity" />
-        <activity android:name="com.thn.erp.more.repository.LookRepositoryActivity" />
-        <activity android:name="com.thn.erp.more.repository.AddRepositoryActivity" />
+        <activity android:name=".more.repository.RepositoryManageActivity" />
+        <activity android:name=".more.repository.LookRepositoryActivity" />
+        <activity android:name=".more.repository.AddRepositoryActivity" />
 
         <!-- 供应商管理 -->
-        <activity android:name="com.thn.erp.more.supplier.SupplierManageActivity"/>
-        <activity android:name="com.thn.erp.more.supplier.SupplierAddActivity"/>
-        <activity android:name="com.thn.erp.more.supplier.SupplierLookActivity"/>
-
-        <activity android:name="com.thn.erp.more.DemoActivity"/>
-        <activity android:name="com.thn.erp.more.ToolsActivity"/>
-        <activity android:name="com.thn.erp.more.SettingActivity"/>
-        <activity android:name="com.thn.erp.more.AccountManageActivity"/>
+        <activity android:name=".more.supplier.SupplierManageActivity" />
+        <activity android:name=".more.supplier.SupplierAddActivity" />
+        <activity android:name=".more.supplier.SupplierLookActivity" />
+        <activity android:name=".more.DemoActivity" />
+        <activity android:name=".more.ToolsActivity" />
+        <activity android:name=".more.SettingActivity" />
+        <activity android:name=".more.AccountManageActivity" />
 
         <!-- 客户管理 -->
-        <activity android:name="com.thn.erp.overview.CustomerManageActivity" />
-        <activity android:name="com.thn.erp.overview.AddCustomerActivity" />
-        <activity android:name="com.thn.erp.overview.ChooseCategoryActivity" />
-        <activity android:name="com.thn.erp.overview.AddCategoryActivity" />
+        <activity android:name=".overview.CustomerManageActivity" />
+        <activity android:name=".overview.AddCustomerActivity" />
+        <activity android:name=".overview.ChooseCategoryActivity" />
+        <activity android:name=".overview.AddCategoryActivity" />
 
         <!-- 商品 -->
-        <activity android:name="com.thn.erp.goods.GoodsDetailsActivity" />
-        <activity android:name="com.thn.erp.goods.brand.GoodsBrandActivity" />
-        <activity android:name="com.thn.erp.goods.category.GoodsCategoryActivity" />
-        <activity android:name="com.thn.erp.goods.add.GoodsAddActivity" />
-        <activity android:name="com.thn.erp.album.ImageSelectActivity" />
-        <activity android:name="com.thn.erp.goods.add.ImageCropActivity" />
+        <activity android:name=".goods.GoodsDetailsActivity" />
+        <activity android:name=".goods.brand.GoodsBrandActivity" />
+        <activity android:name=".goods.category.GoodsCategoryActivity" />
+        <activity android:name=".goods.add.GoodsAddActivity" />
+        <activity android:name=".album.ImageSelectActivity" />
+        <activity android:name=".goods.add.ImageCropActivity" />
         <activity android:name=".goods.add.GoodsNameEditActivity" />
         <activity android:name=".goods.add.GoodsCategoryEditActivity" />
         <activity android:name=".goods.add.GoodsCodeEditActivity" />
@@ -85,13 +84,15 @@
         <activity android:name=".goods.add.GoodsPriceEditActivity" />
         <activity android:name=".goods.add.GoodsSpecificationEditActivity" />
         <activity android:name=".goods.add.GoodsUnitEditActivity" />
-        <activity android:name="com.thn.erp.goods.GoodsListActivity" />
+        <activity android:name=".goods.GoodsListActivity" />
         <activity
             android:name=".zxing.activity.CaptureActivityZxing"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <activity android:name=".goods.brand.BrandDetailsActivity" android:windowSoftInputMode="adjustPan|adjustResize" />
+        <activity
+            android:name=".goods.brand.BrandDetailsActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity android:name=".goods.category.GoodsCategoryAddActivity" />
         <activity android:name=".goods.brand.GoodsBrandAddActivity" />
         <activity android:name=".more.PrepareExportStockActivity" />
@@ -99,5 +100,9 @@
         <activity android:name=".more.ScanExportStockActivity" />
         <activity android:name=".more.ScanOrderingActivity" />
 
+        <!--搜索商品-->
+        <activity android:name=".overview.SearchGoodsActivity" />
+        <activity android:name=".overview.SearchGoodsResultActivity"></activity>
     </application>
+
 </manifest>

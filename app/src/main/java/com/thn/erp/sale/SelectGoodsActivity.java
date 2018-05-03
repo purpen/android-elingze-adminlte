@@ -125,7 +125,7 @@ public class SelectGoodsActivity extends BaseActivity {
         // 实现TextWatcher监听即可
         searchView.setOnSearchClickListener(new SearchView.OnSearchClickListener() {
             @Override
-            public void onSearchClick(View view) {
+            public void onSearchClick(String s) {
                 ToastUtils.showInfo("going search");
             }
         });
@@ -146,7 +146,7 @@ public class SelectGoodsActivity extends BaseActivity {
             }
         });
 
-        adapter.setOnItemClickListener(new GoodsAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onClick(View view, int i) {
                 if (list.size() == 0) return;
@@ -155,6 +155,13 @@ public class SelectGoodsActivity extends BaseActivity {
                 showPopupWindow();
             }
         });
+
+//        adapter.setOnItemClickListener(new GoodsAdapter.OnItemClickListener() {
+//            @Override
+//            public void onClick(View view, int i) {
+//
+//            }
+//        });
 
 
         ultimateRecyclerView.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {

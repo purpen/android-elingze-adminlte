@@ -196,4 +196,9 @@ public class URL {
      * 轮播图
      */
     public static String SLIDES = BASE_URL + "common/slides";
+
+    /**
+     * 搜索历史
+     */
+    public static String SEARCH_HISTORY = BASE_URL+"search/history";
 }
