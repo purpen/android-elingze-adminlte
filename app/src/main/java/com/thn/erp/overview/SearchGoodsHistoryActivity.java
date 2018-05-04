@@ -30,7 +30,7 @@ import butterknife.BindView;
 /**
  * 商品搜索界面
  */
-public class SearchGoodsActivity extends BaseActivity {
+public class SearchGoodsHistoryActivity extends BaseActivity {
     @BindView(R.id.flowLayout)
     TagFlowLayout flowLayout;
     @BindView(R.id.customSearchHeadView)
@@ -48,7 +48,15 @@ public class SearchGoodsActivity extends BaseActivity {
     protected void initView() {
         dialog = new THNWaittingDialog(this);
         list = new ArrayList<>();
+    }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        String stringExtra = intent.getStringExtra(SearchGoodsHistoryActivity.class.getSimpleName());
+        if(!TextUtils.isEmpty(stringExtra)){
+            customSearchHeadView.setContent(stringExtra);
+        }
     }
 
     @Override

@@ -168,7 +168,7 @@ public class OverViewFragment extends BaseFragment {
     void performClick(View v){
         switch (v.getId()){
             case R.id.llSearchGoods:
-                Intent intent=new Intent(activity,SearchGoodsActivity.class);
+                Intent intent=new Intent(activity,SearchGoodsHistoryActivity.class);
                 startActivity(intent);
                 break;
         }

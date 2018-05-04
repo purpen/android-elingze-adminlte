@@ -44,7 +44,7 @@ public class OrderListAdapter extends BaseUltimateViewAdapter<OrderData.DataBean
             GoodsItemHolder itemHolder = new GoodsItemHolder(view);
             viewHolder.llGoods.addView(view);
             itemHolder.goodsName.setText(item.product_name);
-            THNGlideUtil.displayImage(item.cover,itemHolder.ivCover,R.mipmap.ic_launcher);
+            THNGlideUtil.displayImage(item.cover,itemHolder.ivCover,R.mipmap.default_load);
             itemHolder.tvNum.setText("编号："+item.rid);
             itemHolder.price.setText("￥"+item.sale_price);
             itemHolder.stockNum.setText("数量："+item.quantity);

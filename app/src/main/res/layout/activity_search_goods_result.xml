@@ -4,16 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
     android:orientation="vertical"
     tools:context=".overview.SearchGoodsResultActivity">
 
-    <com.thn.erp.view.CustomSearchHeadView
-        android:id="@+id/customSearchHeadView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <include layout="@layout/include_head_search_left_fake" />
 
     <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
         android:id="@+id/ultimateRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:recyclerviewDefaultSwipeColor="@array/google_colors" />
 </LinearLayout>

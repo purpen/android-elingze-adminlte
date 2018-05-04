@@ -101,8 +101,8 @@
         <activity android:name=".more.ScanOrderingActivity" />
 
         <!--搜索商品-->
-        <activity android:name=".overview.SearchGoodsActivity" />
-        <activity android:name=".overview.SearchGoodsResultActivity"></activity>
+        <activity android:name=".overview.SearchGoodsHistoryActivity" android:launchMode="singleTask"/>
+        <activity android:name=".overview.SearchGoodsResultActivity"/>
     </application>
 
 </manifest>

@@ -20,6 +20,7 @@
         android:hint="商品名"
         android:layout_marginTop="@dimen/dp9"
         android:layout_marginBottom="@dimen/dp9"
+        android:visibility="gone"
         />
 
     <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView

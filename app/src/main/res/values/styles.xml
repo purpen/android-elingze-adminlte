@@ -135,7 +135,6 @@
         <item name="android:singleLine">true</item>
         <item name="android:textColorHint">@color/color_999</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:hint">名称/手机号</item>
     </style>
 
     <!-- popupWindow弹出弹入动画-->

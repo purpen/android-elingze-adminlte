@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp45"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:background="@color/color_27AE59"
+    android:paddingRight="@dimen/dp45"
+    >
+
+    <ImageButton
+        android:id="@+id/ibBack"
+        android:layout_width="@dimen/dp45"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:padding="@dimen/dp8"
+        android:scaleType="fitXY"
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+        android:src="@mipmap/back_white" />
+
+    <LinearLayout
+        android:id="@+id/llSearch"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_circle_green_dark"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp15">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/search_white" />
+
+        <TextView
+            android:id="@+id/tvSearchText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="请输入商品名"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+    </LinearLayout>
+</LinearLayout>
+
+    

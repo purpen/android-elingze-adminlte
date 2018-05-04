@@ -1,10 +1,12 @@
 package com.thn.erp.overview;
 
+import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.stephen.taihuoniaolibrary.utils.THNLogUtil;
@@ -19,7 +21,6 @@ import com.thn.erp.net.URL;
 import com.thn.erp.overview.adapter.SearchGoodsResultAdapter;
 import com.thn.erp.overview.bean.SearchResultData;
 import com.thn.erp.utils.JsonUtil;
-import com.thn.erp.view.CustomSearchHeadView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,26 +28,27 @@ import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * 搜索结果页
  */
 public class SearchGoodsResultActivity extends BaseActivity {
-
-    @BindView(R.id.customSearchHeadView)
-    CustomSearchHeadView customSearchHeadView;
+    @BindView(R.id.tvSearchText)
+    TextView tvSearchText;
     @BindView(R.id.ultimateRecyclerView)
     UltimateRecyclerView ultimateRecyclerView;
     private String keyWords;
     private THNWaittingDialog dialog;
-    private int page=1;
+    private int page = 1;
     private ArrayList<SearchResultData.DataBean.ProductsBean> list;
     private SearchGoodsResultAdapter adapter;
     private boolean isRefreshing;
     private LinearLayoutManager linearLayoutManager;
+
     @Override
     protected void getIntentData() {
-        keyWords=getIntent().getStringExtra(SearchGoodsResultActivity.class.getSimpleName());
+        keyWords = getIntent().getStringExtra(SearchGoodsResultActivity.class.getSimpleName());
     }
 
     @Override
@@ -56,10 +58,12 @@ public class SearchGoodsResultActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        dialog =new THNWaittingDialog(this);
-        list=new ArrayList<>();
+        if (!TextUtils.isEmpty(keyWords)) {
+            tvSearchText.setText(keyWords);
+        }
+        dialog = new THNWaittingDialog(this);
+        list = new ArrayList<>();
         adapter = new SearchGoodsResultAdapter(list);
-
         linearLayoutManager = new LinearLayoutManager(this);
         ultimateRecyclerView.setHasFixedSize(true);
         ultimateRecyclerView.setLayoutManager(linearLayoutManager);
@@ -77,8 +81,8 @@ public class SearchGoodsResultActivity extends BaseActivity {
 
     @Override
     protected void requestNet() {
-        if (TextUtils.isEmpty(keyWords)){
-            THNLogUtil.e("搜索关键为空");
+        if (TextUtils.isEmpty(keyWords)) {
+            THNLogUtil.e("搜索内容为空");
             return;
         }
         getSearchResult();
@@ -88,11 +92,11 @@ public class SearchGoodsResultActivity extends BaseActivity {
      * 获取搜索结果
      */
     private void getSearchResult() {
-        HashMap<String, String> params = ClientParamsAPI.searchResultParam(page,keyWords);
+        HashMap<String, String> params = ClientParamsAPI.searchResultParam(page, keyWords);
         HttpRequest.sendRequest(HttpRequest.GET, URL.GOODS_LIST, params, new HttpRequestCallback() {
             @Override
             public void onStart() {
-                dialog.show();
+                if (!isRefreshing) dialog.show();
             }
 
             @Override
@@ -149,21 +153,22 @@ public class SearchGoodsResultActivity extends BaseActivity {
                 getSearchResult();
             }
         });
-
-        customSearchHeadView.setOnLeftButtonClickListener(new CustomSearchHeadView.OnLeftButtonClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        customSearchHeadView.setOnSearchClickListener(new CustomSearchHeadView.OnSearchClickListener() {
-            @Override
-            public void onSearch(String s) {
-                if(TextUtils.isEmpty(s)){
-                    THNToastUtil.showInfo("请输入关键字");
-                }
-            }
-        });
     }
+
+    @OnClick({R.id.ibBack,R.id.llSearch})
+    void performClick(View v) {
+        switch (v.getId()) {
+            case R.id.ibBack:
+                finish();
+                break;
+            case R.id.llSearch:
+                Intent intent=new Intent(getApplicationContext(),SearchGoodsHistoryActivity.class);
+                intent.putExtra(SearchGoodsHistoryActivity.class.getSimpleName(),keyWords);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
+    }
+
 }
