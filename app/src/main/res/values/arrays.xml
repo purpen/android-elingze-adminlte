@@ -85,5 +85,24 @@
         <item>平方</item>
     </string-array>
 
+    <!--分类-->
+    <string-array name="classify">
+        <item>分类0</item>
+        <item>分类1</item>
+    </string-array>
 
+    <!--排序-->
+    <string-array name="sort">
+        <item>价格</item>
+        <item>名称</item>
+        <item>货号</item>
+        <item>默认</item>
+    </string-array>
+
+    <!--上架状态-->
+    <string-array name="putaway">
+        <item>已上架</item>
+        <item>未上架</item>
+        <item>全部</item>
+    </string-array>
 </resources>

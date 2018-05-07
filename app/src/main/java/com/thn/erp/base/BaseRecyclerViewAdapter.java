@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
  * Email: 895745843@qq.com
  */
 
-public abstract class BaseRecyclerViewAdapter<BaseViewHolder extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<BaseViewHolder> {
+public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter<BaseRecyclerViewViewHolder> {
 
     public BaseRecyclerViewAdapter() {
         super();
@@ -16,7 +16,7 @@ public abstract class BaseRecyclerViewAdapter<BaseViewHolder extends RecyclerVie
 
     @NonNull
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(BaseRecyclerViewViewHolder holder, int position) {
         onBindBaseViewHolder((BaseRecyclerViewViewHolder)holder, position);
     }
 

@@ -1,15 +1,14 @@
 package com.thn.erp.goods;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import com.stephen.taihuoniaolibrary.utils.THNToastUtil;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
 import com.thn.erp.base.BaseUltimateRecyclerView;
@@ -21,21 +20,23 @@ import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
+import com.thn.erp.overview.SearchGoodsHistoryActivity;
 import com.thn.erp.sale.bean.GoodsData;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.ToastUtils;
+import com.thn.erp.view.DropdownMenu.DropdownMenu;
+import com.thn.erp.view.DropdownMenu.DropdownMenuAdapter;
 import com.thn.erp.view.common.PublicTopBar;
 import com.thn.erp.view.svprogress.WaitingDialog;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * Created by lilin on 2018/3/7.
@@ -47,17 +48,21 @@ public class GoodsFragment extends BaseFragment {
     PublicTopBar myTopbar;
     @BindView(R.id.ry_menu_item)
     RecyclerView ryMenuItem;
-    Unbinder unbinder;
     @BindView(R.id.ultimateRecyclerView)
     BaseUltimateRecyclerView ultimateRecyclerView;
-
+    @BindView(R.id.menu0)
+    DropdownMenu menu0;
+    @BindView(R.id.menu1)
+    DropdownMenu menu1;
+    @BindView(R.id.menu2)
+    DropdownMenu menu2;
     private TitleRecyclerViewAdapter titleRecyclerViewAdapter;
     private WaitingDialog dialog;
 
     private int page;
     private List<GoodsData.DataBean.ProductsBean> list;
     private Boolean isRefreshing = false;
-    private Boolean isLoadingMore =false;
+    private Boolean isLoadingMore = false;
     private GoodsListAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
     private String cid = "";
@@ -68,19 +73,76 @@ public class GoodsFragment extends BaseFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
-        return rootView;
-    }
-
-    @Override
     protected void initView() {
         initTopBar();
         initRecyclerView();
+        initDropdownMenu();
         initListAdapter();
         dialog = new WaitingDialog(activity);
         getGoodsList();
+    }
+
+
+    private void initDropdownMenu() {
+        String[] classifyArr = getResources().getStringArray(R.array.classify);
+        DropdownMenuAdapter adapter0 = new DropdownMenuAdapter(Arrays.asList(classifyArr));
+        menu0.setTitle("分类");
+        menu0.setAdapter(adapter0);
+
+        String[] sortArr = getResources().getStringArray(R.array.sort);
+        DropdownMenuAdapter adapter1 = new DropdownMenuAdapter(Arrays.asList(sortArr));
+        menu1.setTitle("排序");
+        menu1.setAdapter(adapter1);
+
+        String[] putawayArr = getResources().getStringArray(R.array.putaway);
+        DropdownMenuAdapter adapter2 = new DropdownMenuAdapter(Arrays.asList(putawayArr));
+        menu2.setTitle("筛选");
+        menu2.setAdapter(adapter2);
+    }
+
+    @Override
+    protected void installListener() {
+        menu0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menu0.show();
+            }
+        });
+        menu0.setOnItemClickListener(new DropdownMenuAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(View v, int position) {
+                THNToastUtil.showInfo(((TextView)v).getText().toString());
+                menu0.dismiss();
+            }
+        });
+
+        menu1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menu1.show();
+            }
+        });
+        menu1.setOnItemClickListener(new DropdownMenuAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(View v, int position) {
+                THNToastUtil.showInfo(((TextView)v).getText().toString());
+                menu1.dismiss();
+            }
+        });
+
+        menu2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menu2.show();
+            }
+        });
+        menu2.setOnItemClickListener(new DropdownMenuAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(View v, int position) {
+                THNToastUtil.showInfo(((TextView)v).getText().toString());
+                menu2.dismiss();
+            }
+        });
     }
 
     private void initListAdapter() {
@@ -108,10 +170,10 @@ public class GoodsFragment extends BaseFragment {
                 GoodsData.DataBean.ProductsBean productsBean = list.get(i);
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), GoodsDetailsActivity.class);
-                intent.putExtra(GoodsDetailsActivity.class.getSimpleName(),productsBean);
+                intent.putExtra(GoodsDetailsActivity.class.getSimpleName(), productsBean);
                 getActivity().startActivity(intent);
             }
-        } );
+        });
 
         ultimateRecyclerView.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
@@ -134,7 +196,7 @@ public class GoodsFragment extends BaseFragment {
         ryMenuItem.setLayoutManager(linearLayoutManager);
 
         titleRecyclerViewAdapter = new TitleRecyclerViewAdapter(getActivity(), generateAdapterDatas());
-        titleRecyclerViewAdapter.setOnItemClickListener(new TitleRecyclerViewAdapter.OnItemClickListener(){
+        titleRecyclerViewAdapter.setOnItemClickListener(new TitleRecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onClick(View view, int i) {
                 switch (i) {
@@ -144,13 +206,18 @@ public class GoodsFragment extends BaseFragment {
                     case 1:
                         startActivity(new Intent(getActivity(), GoodsCategoryActivity.class));
                         break;
-                    case 2: break;
+                    case 2:
+                        startActivity(new Intent(getActivity(), SearchGoodsHistoryActivity.class));
+                        break;
                     case 3:
                         startActivity(new Intent(getActivity(), GoodsBrandActivity.class));
                         break;
-                    case 4: break;
-                    case 5: break;
-                    case 6: break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
                 }
             }
         });
@@ -174,11 +241,12 @@ public class GoodsFragment extends BaseFragment {
             , R.mipmap.icon_goods_top_category_05, R.mipmap.icon_goods_top_category_06};
 
     private void getGoodsList() {
+
         HashMap<String, String> params = ClientParamsAPI.getGoodsList("", page);
         HttpRequest.sendRequest(HttpRequest.GET, URL.GOODS_LIST, params, new HttpRequestCallback() {
             @Override
             public void onStart() {
-               if (!isRefreshing || !isLoadingMore)dialog.show();
+                if (!isRefreshing || !isLoadingMore) dialog.show();
             }
 
             @Override

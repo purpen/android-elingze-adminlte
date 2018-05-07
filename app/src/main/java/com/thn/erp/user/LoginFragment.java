@@ -82,6 +82,7 @@ public class LoginFragment extends BaseFragment {
         if (TextUtils.isEmpty(userPsw)) return;
         HashMap<String, String> params = ClientParamsAPI.getLoginRequestParams(userName, userPsw);
         final String authorzationCode = getTempAuthorzationCode(params);
+        //换成商家登录URL,根据返回的storeid换app_key和app_secrete
         HttpRequest.sendRequest(HttpRequest.POST, URL.AUTH_LOGIN, authorzationCode, params, new HttpRequestCallback() {
             @Override
             public void onStart() {

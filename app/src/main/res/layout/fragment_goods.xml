@@ -23,6 +23,30 @@
             android:focusable="false" />
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp40"
+        android:orientation="horizontal"
+        >
+       <com.thn.erp.view.DropdownMenu.DropdownMenu
+           android:id="@+id/menu0"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           />
+        <com.thn.erp.view.DropdownMenu.DropdownMenu
+            android:id="@+id/menu1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+        <com.thn.erp.view.DropdownMenu.DropdownMenu
+            android:id="@+id/menu2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
 
     <com.thn.erp.base.BaseUltimateRecyclerView
         android:id="@+id/ultimateRecyclerView"
