@@ -32,4 +32,6 @@ public class Constants {
 
     public static final String NOTIFICATION_RECEIVED_MESSAGE = "1";
     public static final String INFO_ID = "info_id";
+    public static final String APP_KEY = "app_key";
+    public static final String APP_SECRET = "app_secret";
 }

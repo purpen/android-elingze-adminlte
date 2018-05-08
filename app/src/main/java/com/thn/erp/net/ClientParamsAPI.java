@@ -17,13 +17,14 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class ClientParamsAPI {
-    public static final String app_key = "fi2N0mZVRUjzCkwtKWbM";
-    public static final String app_secret = "cc3c36db353b4543aba12db6bbcff6cb53a592b2";
+//    public static final String app_key = "fi2N0mZVRUjzCkwtKWbM";
+//    public static final String app_secret = "cc3c36db353b4543aba12db6bbcff6cb53a592b2";
 
     private static HashMap<String, String> generateCommonParams() {
         HashMap<String, String> params = new HashMap<>();
         String timeStamp = String.valueOf(System.currentTimeMillis() / 1000);
         String nonceStr = generateRandomString();
+        String app_key=SPUtil.read(Constants.APP_KEY);
         params.put("app_key", app_key);
         params.put("timestamp", timeStamp);
         params.put("nonce_str", nonceStr);
@@ -66,7 +67,7 @@ public class ClientParamsAPI {
             sb.append(key + "=" + value + "&");
         }
         sb.deleteCharAt(sb.lastIndexOf("&"));
-        sb.append(app_secret);
+        sb.append(SPUtil.read(Constants.APP_SECRET));
         return new String(Hex.encodeHex(DigestUtils.sha1(sb.toString())));
     }
 
@@ -459,5 +460,16 @@ public class ClientParamsAPI {
         params.put("per_page",Constants.PAGE_SIZE);
         params.put("qk",qk);
         return params;
+    }
+
+    /**
+     * 商户appkey和appSecret
+     * @param storeId
+     * @return
+     */
+    public static HashMap<String,String> appKeyAndSecretParams(String storeId) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("store_rid",storeId);
+        return  params;
     }
 }

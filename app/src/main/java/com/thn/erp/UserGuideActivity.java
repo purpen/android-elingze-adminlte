@@ -98,7 +98,7 @@ public class UserGuideActivity extends BaseActivity {
     }
 
     private void goMainPage() {
-        if (TextUtils.isEmpty(SPUtil.read(Constants.TOKEN))){
+        if (TextUtils.isEmpty(SPUtil.read(Constants.AUTHORIZATION))){
             startActivity(new Intent(activity, LoginRegisterActivity.class));
         }else {
             startActivity(new Intent(activity, MainActivity.class));

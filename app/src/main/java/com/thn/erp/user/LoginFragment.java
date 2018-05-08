@@ -18,6 +18,7 @@ import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
+import com.thn.erp.user.bean.AppKeyData;
 import com.thn.erp.user.bean.LoginBean;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.SPUtil;
@@ -80,10 +81,10 @@ public class LoginFragment extends BaseFragment {
     private void loginUser() {
         if (TextUtils.isEmpty(userName)) return;
         if (TextUtils.isEmpty(userPsw)) return;
-        HashMap<String, String> params = ClientParamsAPI.getLoginRequestParams(userName, userPsw);
+        final HashMap<String, String> params = ClientParamsAPI.getLoginRequestParams(userName, userPsw);
         final String authorzationCode = getTempAuthorzationCode(params);
         //换成商家登录URL,根据返回的storeid换app_key和app_secrete
-        HttpRequest.sendRequest(HttpRequest.POST, URL.AUTH_LOGIN, authorzationCode, params, new HttpRequestCallback() {
+        HttpRequest.sendRequest(HttpRequest.POST, URL.AUTH_LOGIN,authorzationCode,params, new HttpRequestCallback() {
             @Override
             public void onStart() {
                 dialog.show();
@@ -94,11 +95,42 @@ public class LoginFragment extends BaseFragment {
                 dialog.dismiss();
                 LoginBean loginBean = JsonUtil.fromJson(json, LoginBean.class);
                 if (loginBean.success) {
-                    SPUtil.write(Constants.TOKEN, loginBean.data.token);
-                    SPUtil.write(Constants.AUTHORIZATION, authorzationCode);
-                    jump2MainPage();
+                    getAppKeyAndSecret(loginBean.data.store_rid,authorzationCode);
+                   // SPUtil.write(Constants.TOKEN, loginBean.data.token);
                 }else {
                     ToastUtils.showError(loginBean.status.message);
+                }
+            }
+
+            @Override
+            public void onFailure(IOException e) {
+                dialog.dismiss();
+                ToastUtils.showError(R.string.network_err);
+            }
+        });
+    }
+
+    private void getAppKeyAndSecret(String storeId, final String authorzationCode) {
+        final HashMap<String, String> params = ClientParamsAPI.appKeyAndSecretParams(storeId);
+
+        //换成商家登录URL,根据返回的storeid换app_key和app_secrete
+        HttpRequest.sendRequest(HttpRequest.POST, URL.APPKEY_APPSECRET,authorzationCode,params, new HttpRequestCallback() {
+            @Override
+            public void onStart() {
+                dialog.show();
+            }
+
+            @Override
+            public void onSuccess(String json) {
+                dialog.dismiss();
+                AppKeyData appKeyData = JsonUtil.fromJson(json, AppKeyData.class);
+                if (appKeyData.success) {
+                    SPUtil.write(Constants.AUTHORIZATION, authorzationCode);
+                    SPUtil.write(Constants.APP_KEY,appKeyData.data.app_key);
+                    SPUtil.write(Constants.APP_SECRET,appKeyData.data.access_token);
+                    jump2MainPage();
+                }else {
+                    ToastUtils.showError(appKeyData.status.message);
                 }
             }
 

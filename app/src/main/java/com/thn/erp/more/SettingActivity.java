@@ -121,7 +121,6 @@ public class SettingActivity extends BaseStyle2Activity {
                 ToastUtils.showError(R.string.network_err);
             }
         });
-        SPUtil.clear(Constants.TOKEN);
         SPUtil.clear(Constants.AUTHORIZATION);
         startActivity(new Intent(activity, LoginRegisterActivity.class));
         activity.finish();

@@ -6,8 +6,9 @@ package com.thn.erp.user.bean;
 
 public class LoginBean {
 
+
     /**
-     * data : {"expiration":7200,"token":"eyJhbGciOiJIUzI1NJpZtZS5HkISmEqq113c7nyp_hdIo-mU"}
+     * data : {"created_at":1523927428,"expiration":2592000,"store_rid":"Q4209136","token":"eyJhbGciOiJIUzI1NiIsIPuVGBJ7bUPTJklWBJZOdZXKzCVCfxQxHlhA"}
      * status : {"code":200,"message":"Ok all right."}
      * success : true
      */
@@ -18,11 +19,15 @@ public class LoginBean {
 
     public static class DataBean {
         /**
-         * expiration : 7200
-         * token : eyJhbGciOiJIUzI1NJpZtZS5HkISmEqq113c7nyp_hdIo-mU
+         * created_at : 1523927428
+         * expiration : 2592000
+         * store_rid : Q4209136
+         * token : eyJhbGciOiJIUzI1NiIsIPuVGBJ7bUPTJklWBJZOdZXKzCVCfxQxHlhA
          */
 
+        public int created_at;
         public int expiration;
+        public String store_rid;
         public String token;
     }
 
