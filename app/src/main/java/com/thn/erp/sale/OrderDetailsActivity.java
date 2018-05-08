@@ -143,43 +143,42 @@ public class OrderDetailsActivity extends BaseActivity {
     }
 
     /**
-     *
      * @param data
      */
     private void updateUI(OrderDetailData.DataBean data) {
         tvName.setText("收货人：" + data.buyer_name);
-        tvAddress.setText("收货地址：" + data.buyer_country+data.buyer_province + data.buyer_city + data.buyer_address);
+        tvAddress.setText("收货地址：" + data.buyer_country + data.buyer_province + data.buyer_city + data.buyer_address);
         tvPhone.setText(data.buyer_phone);
         itemFreightNum.setRightMoreImgStyle(false);
-        itemFreightNum.setTVStyle(0,"订单号："+data.rid,R.color.color_222);
+        itemFreightNum.setTVStyle(0, "订单号：" + data.rid, R.color.color_222);
 
         freight.setRightMoreImgStyle(false);
-        freight.setTVStyle(0,"运费：",R.color.color_222);
-        freight.setTVRightTxt("￥"+data.freight,R.color.color_222);
+        freight.setTVStyle(0, "运费：", R.color.color_222);
+        freight.setTVRightTxt("￥" + data.freight, R.color.color_222);
 
         sumPrice.setRightMoreImgStyle(false);
-        sumPrice.setTVStyle(0,"商品总额：",R.color.color_222);
-        sumPrice.setTVRightTxt("￥"+data.total_amount,R.color.color_222);
+        sumPrice.setTVStyle(0, "商品总额：", R.color.color_222);
+        sumPrice.setTVRightTxt("￥" + data.total_amount, R.color.color_222);
 
         reducedPrice.setRightMoreImgStyle(false);
-        reducedPrice.setTVStyle(0,"优惠总额：",R.color.color_222);
-        reducedPrice.setTVRightTxt("￥"+data.discount_amount,R.color.color_222);
+        reducedPrice.setTVStyle(0, "优惠总额：", R.color.color_222);
+        reducedPrice.setTVRightTxt("￥" + data.discount_amount, R.color.color_222);
 
         realPay.setRightMoreImgStyle(false);
-        realPay.setTVStyle(0,"实付金额：",R.color.color_222);
-        realPay.setTVRightTxt("￥"+data.pay_amount,R.color.color_222);
-
-        View view = LayoutInflater.from(activity).inflate(R.layout.layout_goods_adapter, null);
-        view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,getResources().getDimensionPixelSize(R.dimen.dp120)));
-        GoodsItemHolder itemHolder = new GoodsItemHolder(view);
+        realPay.setTVStyle(0, "实付金额：", R.color.color_222);
+        realPay.setTVRightTxt("￥" + data.pay_amount, R.color.color_222);
         llGoods.removeAllViews();
-        for (OrderData.DataBean.OrdersBean.ItemsBean item:ordersBean.items){
+        View view;
+        for (OrderData.DataBean.OrdersBean.ItemsBean item : ordersBean.items) {
+            view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_goods_adapter, null);
+            GoodsItemHolder itemHolder = new GoodsItemHolder(view);
+            view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getResources().getDimensionPixelSize(R.dimen.dp120)));
             llGoods.addView(view);
             itemHolder.goodsName.setText(item.product_name);
-            THNGlideUtil.displayImage(item.cover,itemHolder.ivCover,R.mipmap.ic_launcher);
-            itemHolder.tvNum.setText("编号："+item.rid);
-            itemHolder.price.setText("￥"+item.sale_price);
-            itemHolder.stockNum.setText("数量："+item.quantity);
+            THNGlideUtil.displayImage(item.cover, itemHolder.ivCover, R.mipmap.ic_launcher);
+            itemHolder.tvNum.setText("编号：" + item.rid);
+            itemHolder.price.setText("￥" + item.sale_price);
+            itemHolder.stockNum.setText("数量：" + item.quantity);
         }
     }
 
@@ -197,8 +196,9 @@ public class OrderDetailsActivity extends BaseActivity {
         TextView price;
         @BindView(R.id.stockNum)
         TextView stockNum;
+
         public GoodsItemHolder(View itemView) {
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 
@@ -325,9 +325,9 @@ public class OrderDetailsActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.tvCallService,R.id.tvPayOrder,R.id.tvCancelOrder})
-    void PerformClick(View v){
-        switch (v.getId()){
+    @OnClick({R.id.tvCallService, R.id.tvPayOrder, R.id.tvCancelOrder})
+    void PerformClick(View v) {
+        switch (v.getId()) {
             case R.id.tvCallService:
                 new DefaultDialog(OrderDetailsActivity.this, "联系客服：400-879-8751", activity.getResources().getStringArray(R.array.text_dialog_button), new IDialogListenerConfirmBack() {
                     @Override
@@ -422,7 +422,6 @@ public class OrderDetailsActivity extends BaseActivity {
 
     /**
      * 加载子订单产品条目
-     *
      */
 //    private void setSubOrderGoodsItem(LinearLayout linearLayoutContainerGoods, final List<OrderDetailBean.SubOrdersBean.ItemsBean> items) {
 //        for (int k = 0; k < items.size(); k++) {
@@ -486,7 +485,6 @@ public class OrderDetailsActivity extends BaseActivity {
 //            linearLayoutContainerGoods.addView(subOrderGoodsItemView);
 //        }
 //    }
-
     private void initOrderStatus() {
 //        String rid1 = orderDetailBean.getRid();
 //        double pay_money = orderDetailBean.getPay_money();
