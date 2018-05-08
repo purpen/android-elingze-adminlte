@@ -3,7 +3,6 @@ package com.thn.erp.goods.add;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -14,15 +13,27 @@ import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.view.ImageCrop.ClipSquareImageView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * @author lilin
- *         created at 2016/5/18 18:01
+ * created at 2016/5/18 18:01
  */
 public class ImageCropActivity extends BaseActivity {
+    /**
+     * 消息
+     */
+    public static class Message {
+        public final Bitmap bitmap;
+
+        public Message(Bitmap bitmap) {
+            this.bitmap = bitmap;
+        }
+    }
+
     @BindView(R.id.csiv)
     ClipSquareImageView csiv;
     @BindView(R.id.bt_cancel)
@@ -32,18 +43,6 @@ public class ImageCropActivity extends BaseActivity {
     @BindView(R.id.rl)
     RelativeLayout rl;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
-    }
-
-    public interface OnClipCompleteListener {
-        void onClipComplete(Bitmap bitmap);
-    }
-
-    private static OnClipCompleteListener listener;
-
     private Uri uri;
 
     Button bt_clip;
@@ -51,13 +50,6 @@ public class ImageCropActivity extends BaseActivity {
     private String zoneId;
     private THNWaittingDialog dialog;
 
-    public ImageCropActivity() {
-        super();
-    }
-
-    public static void setOnClipCompleteListener(OnClipCompleteListener listener) {
-        ImageCropActivity.listener = listener;
-    }
 
     @Override
     protected void getIntentData() {
@@ -71,6 +63,7 @@ public class ImageCropActivity extends BaseActivity {
 //            zoneId = intent.getStringExtra(ZoneManagementActivity.class.getSimpleName());
         }
     }
+
 
     @Override
     protected int getLayout() {
@@ -94,10 +87,8 @@ public class ImageCropActivity extends BaseActivity {
                 break;
             case R.id.bt_clip:
                 Bitmap bitmap = csiv.clip();
-                if (listener != null) {
-                    listener.onClipComplete(bitmap);
-                    finish();
-                }
+                EventBus.getDefault().post(new Message(bitmap));
+                finish();
                 /*
                 if (TextUtils.isEmpty(page)) {//认证图片
                     if (listener != null) {

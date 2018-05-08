@@ -86,4 +86,5 @@ dependencies {
     implementation 'com.hyman:flowlayout-lib:1.1.2'
     implementation 'com.google.code.gson:gson:2.8.0'
     implementation 'com.google.zxing:core:3.0.1'
+    implementation 'org.greenrobot:eventbus:3.1.1'
 }

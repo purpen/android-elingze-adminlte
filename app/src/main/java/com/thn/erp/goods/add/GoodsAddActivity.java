@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -46,6 +47,9 @@ import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -117,6 +121,18 @@ public class GoodsAddActivity extends BaseStyle2Activity {
         initRecyclerView();
         initLinearLayaout();
         dialog = new THNWaittingDialog(this);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 
     private void initLinearLayaout() {
@@ -282,26 +298,28 @@ public class GoodsAddActivity extends BaseStyle2Activity {
 
 
     private void toCropActivity(Uri uri) {
-        ImageCropActivity.setOnClipCompleteListener(new ImageCropActivity.OnClipCompleteListener() {
-            @Override
-            public void onClipComplete(final Bitmap bitmap) {
-//                custom_user_avatar.getAvatarIV().setImageBitmap(bitmap);
-                String imgPath = absolutePath + File.separator + "elingze-adminlte" + File.separator + "products" + File.separator + System.currentTimeMillis() + ".png";
-                boolean bitmapToFile = FileUtil.bitmapToFile(bitmap, imgPath);
-                if (bitmapToFile) {
-                    getQiNiuToken(imgPath, new UpLoadCallBack() {
-                        @Override
-                        public void complete() {
-                            mGoodsAddRecyclerViewAdapter.addList(bitmap);
-                        }
-                    });
-                }
-            }
-        });
         Intent intent = new Intent(activity, ImageCropActivity.class);
         intent.putExtra(ImageCropActivity.class.getSimpleName(), uri);
         intent.putExtra(ImageCropActivity.class.getName(), TAG);
         startActivity(intent);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onClipComplete(final ImageCropActivity.Message message) {
+        if (message.bitmap!=null){
+            String imgPath = absolutePath + File.separator + "elingze-adminlte" + File.separator + "products" + File.separator + System.currentTimeMillis() + ".png";
+            boolean bitmapToFile = FileUtil.bitmapToFile(message.bitmap, imgPath);
+            if (bitmapToFile) {
+                getQiNiuToken(imgPath, new UpLoadCallBack() {
+                    @Override
+                    public void complete() {
+                        mGoodsAddRecyclerViewAdapter.addList(message.bitmap);
+                    }
+                });
+            }
+        }else {
+            THNToastUtil.showInfo("添加图片失败");
+        }
     }
 
     private void getQiNiuToken(final String imgPath, final UpLoadCallBack globalCallBack) {
