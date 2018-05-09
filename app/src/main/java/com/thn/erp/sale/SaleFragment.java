@@ -13,7 +13,7 @@ import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
 import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
-import com.thn.erp.goods.TitleRecyclerViewAdapter;
+import com.thn.erp.goods.adapter.TitleRecyclerViewAdapter;
 import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;

@@ -1,6 +1,7 @@
 package com.thn.erp.goods;
 
 import android.view.View;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.thn.erp.R;
@@ -13,14 +14,15 @@ import com.thn.erp.net.URL;
 import com.thn.erp.sale.bean.GoodsData;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.ToastUtils;
+import com.thn.erp.view.MyExpandableListAdapter;
 import com.thn.erp.view.autoScrollViewpager.ScrollableView;
 import com.thn.erp.view.autoScrollViewpager.ViewPagerAdapter;
-import com.thn.erp.view.common.LinearLayoutArrowTextView;
 import com.thn.erp.view.common.PublicTopBar;
 import com.thn.erp.view.svprogress.WaitingDialog;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -43,18 +45,11 @@ public class GoodsDetailsActivity extends BaseStyle2Activity implements ImpTopba
     TextView textView3;
     @BindView(R.id.textView4)
     TextView textView4;
-    @BindView(R.id.linearLoutArrowTextView1)
-    LinearLayoutArrowTextView linearLoutArrowTextView1;
-    @BindView(R.id.linearLoutCommonTextViewTextView1)
-    com.thn.erp.view.common.LinearLayoutCommonTextView linearLoutCommonTextViewTextView1;
-    @BindView(R.id.linearLoutCommonTextViewTextView2)
-    com.thn.erp.view.common.LinearLayoutCommonTextView linearLoutCommonTextViewTextView2;
-    @BindView(R.id.linearLoutArrowTextView2)
-    LinearLayoutArrowTextView linearLoutArrowTextView2;
-    @BindView(R.id.linearLoutCommonTextViewTextView3)
-    com.thn.erp.view.common.LinearLayoutCommonTextView linearLoutCommonTextViewTextView3;
-    @BindView(R.id.linearLoutCommonTextViewTextView4)
-    com.thn.erp.view.common.LinearLayoutCommonTextView linearLoutCommonTextViewTextView4;
+    @BindView(R.id.expandableListView0)
+    ExpandableListView expandableListView0;
+    @BindView(R.id.expandableListView1)
+    ExpandableListView expandableListView1;
+
     @BindView(R.id.textView5)
     TextView textView5;
 
@@ -74,13 +69,13 @@ public class GoodsDetailsActivity extends BaseStyle2Activity implements ImpTopba
     @Override
     protected void onStart() {
         super.onStart();
-        if (scrollableView!=null) scrollableView.start();
+        if (scrollableView != null) scrollableView.start();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if (scrollableView!=null) scrollableView.stop();
+        if (scrollableView != null) scrollableView.stop();
     }
 
     @Override
@@ -148,11 +143,47 @@ public class GoodsDetailsActivity extends BaseStyle2Activity implements ImpTopba
         scrollableView.setAutoScrollDurationFactor(8);
         scrollableView.showIndicators();
         scrollableView.start();
+        initExpandable();
     }
 
+    public static class HomeType {
+        public String name;
+        public String value;
+
+        public HomeType(String name, String value) {
+            this.name = name;
+            this.value = value;
+        }
+    }
+
+    private void initExpandable() {
+        ArrayList<String> groupArray0 = new ArrayList<>();
+        groupArray0.add("库存100件");
+        HashMap<String, ArrayList<HomeType>> hashMap0 = new HashMap<>();
+        ArrayList<HomeType> ta0 = new ArrayList<>();
+        ta0.add(new HomeType("默认仓", "25"));
+        ta0.add(new HomeType("北京仓", "35"));
+        ta0.add(new HomeType("杭州仓", "40"));
+        hashMap0.put("库存100件", ta0);
+        MyExpandableListAdapter adapter0 = new MyExpandableListAdapter(groupArray0, hashMap0);
+        expandableListView0.setAdapter(adapter0);
+
+
+        ArrayList<String> groupArray1 = new ArrayList<>();
+        groupArray1.add("预购数量100件");
+        HashMap<String, ArrayList<HomeType>> hashMap1 = new HashMap<>();
+        ArrayList<HomeType> ta1 = new ArrayList<>();
+        ta1.add(new HomeType("默认仓", "25"));
+        ta1.add(new HomeType("北京仓", "35"));
+        ta1.add(new HomeType("杭州仓", "40"));
+        hashMap1.put("预购数量100件", ta1);
+
+        MyExpandableListAdapter adapter1 = new MyExpandableListAdapter(groupArray1, hashMap1);
+        expandableListView1.setAdapter(adapter1);
+    }
 
     @Override
     public void onTopBarClick(View view, int position) {
-        // TODO: 2018/3/26 to do something
+        // TODO: 2018/5/9
     }
 }

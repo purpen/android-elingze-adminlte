@@ -1,4 +1,4 @@
-package com.thn.erp.goods;
+package com.thn.erp.goods.adapter;
 
 import android.graphics.Color;
 import android.view.LayoutInflater;

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.thn.erp.goods;
+package com.thn.erp.goods.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

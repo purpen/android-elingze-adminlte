@@ -33,6 +33,7 @@ public class GoodsDetailData {
 
             public String content;
             public String type;
+            public int stockNum;
         }
 
         public static class ImagesBean {

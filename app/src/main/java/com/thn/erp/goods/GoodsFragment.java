@@ -13,6 +13,8 @@ import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
 import com.thn.erp.base.BaseUltimateRecyclerView;
 import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
+import com.thn.erp.goods.adapter.GoodsListAdapter;
+import com.thn.erp.goods.adapter.TitleRecyclerViewAdapter;
 import com.thn.erp.goods.add.GoodsAddActivity;
 import com.thn.erp.goods.brand.GoodsBrandActivity;
 import com.thn.erp.goods.category.GoodsCategoryActivity;
