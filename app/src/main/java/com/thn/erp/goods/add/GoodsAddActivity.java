@@ -2,14 +2,15 @@ package com.thn.erp.goods.add;
 
 import android.Manifest;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.qiniu.android.http.ResponseInfo;
@@ -64,6 +65,7 @@ import java.util.Map;
 import java.util.Set;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by Stephen on 2018/3/26 22:33
@@ -75,6 +77,9 @@ public class GoodsAddActivity extends BaseStyle2Activity {
     CustomHeadView customHeadView;
     @BindView(R.id.recyclerView1)
     RecyclerView recyclerView1;
+
+    @BindView(R.id.imageBtn)
+    ImageButton imageBtn;
     @BindView(R.id.layoutItemView1)
     LinearLayoutCustomerAddArrowView layoutItemView1;
     @BindView(R.id.layoutItemView2)
@@ -99,12 +104,6 @@ public class GoodsAddActivity extends BaseStyle2Activity {
     private GoodsAddRecyclerViewAdapter mGoodsAddRecyclerViewAdapter;
     private THNWaittingDialog dialog;
     private File mCurrentPhotoFile;
-    private static final int REQUEST_NICK_NAME = 3;
-    private static final int REQUEST_SIGNATURE = 4;
-    private static final int SECRET = 0;
-    private static final int MAN = 1;
-    private static final int WOMAN = 2;
-    private Bitmap bitmap;
     private LayoutInflater layoutInflater;
     private List<String> coverIds = new ArrayList<>();
 
@@ -112,7 +111,6 @@ public class GoodsAddActivity extends BaseStyle2Activity {
     protected int getLayout() {
         return R.layout.activity_goods_add;
     }
-
 
 
     @Override
@@ -178,7 +176,6 @@ public class GoodsAddActivity extends BaseStyle2Activity {
                     case 0:
                     case 1:
                     case 2:
-                        PopupWindowUtil.getInstance().show(GoodsAddActivity.this, initPopView(R.layout.popup_upload_avatar, "添加商品"));
                         break;
                 }
             }
@@ -191,14 +188,36 @@ public class GoodsAddActivity extends BaseStyle2Activity {
         customHeadView.setHeadRightTxtShow(true, R.string.save);
     }
 
+    @OnClick(R.id.imageBtn)
+    void performClick(View v){
+        switch (v.getId()){
+            case R.id.imageBtn:
+                PopupWindowUtil.getInstance().show(GoodsAddActivity.this, initPopView(R.layout.popup_upload_avatar, "添加商品"));
+                break;
+        }
+    }
+
     @Override
     protected void installListener() {
         customHeadView.getHeadRightTV().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (coverIds.size() > 0 && layoutItemView1.getValue() != null && layoutItemView4.getValue() != null) {
-                    uploadGoods(layoutItemView1.getValue().toString(), coverIds.get(0), layoutItemView4.getValue().toString());
+                if (coverIds.size() == 0) {
+                    THNToastUtil.showInfo("请上传商品");
+                    return;
                 }
+                String productName = layoutItemView1.getValue().toString();
+                if (TextUtils.isEmpty(productName)) {
+                    THNToastUtil.showInfo("请输入商品名");
+                    return;
+                }
+                String price = layoutItemView4.getValue().toString();
+                if (TextUtils.isEmpty(price)) {
+                    THNToastUtil.showInfo("请输入商品价格");
+                    return;
+                }
+
+                uploadGoods(productName, coverIds.get(0), price);
             }
         });
     }
@@ -276,21 +295,29 @@ public class GoodsAddActivity extends BaseStyle2Activity {
                     toCropActivity(ImageUtils.getUriForFile(mCurrentPhotoFile));
 //                    mGoodsAddRecyclerViewAdapter.addList(ImageUtils.getUriForFile(mCurrentPhotoFile));
                     break;
-                case RequestCode.CODE_GOODS_NAME: layoutItemView1.setValue(data.getStringExtra(getClass().getSimpleName()));
+                case RequestCode.CODE_GOODS_NAME:
+                    layoutItemView1.setValue(data.getStringExtra(getClass().getSimpleName()));
                     break;
-                case RequestCode.CODE_GOODS_CATEGORY: layoutItemView2.setValue(data.getStringExtra(getClass().getSimpleName()));
+                case RequestCode.CODE_GOODS_CATEGORY:
+                    layoutItemView2.setValue(data.getStringExtra(getClass().getSimpleName()));
                     break;
-                case RequestCode.CODE_GOODS_INTRODUCTION:  layoutItemView3.setValue(data.getStringExtra(getClass().getSimpleName()));
+                case RequestCode.CODE_GOODS_INTRODUCTION:
+                    layoutItemView3.setValue(data.getStringExtra(getClass().getSimpleName()));
                     break;
-                case RequestCode.CODE_GOODS_PRICE:  layoutItemView4.setValue(data.getStringExtra(getClass().getSimpleName()));
+                case RequestCode.CODE_GOODS_PRICE:
+                    layoutItemView4.setValue(data.getStringExtra(getClass().getSimpleName()));
                     break;
-                case RequestCode.CODE_GOODS_SPECIFICATION: layoutItemView5.setValue(data.getStringExtra(getClass().getSimpleName()));
+                case RequestCode.CODE_GOODS_SPECIFICATION:
+                    layoutItemView5.setValue(data.getStringExtra(getClass().getSimpleName()));
                     break;
-                case RequestCode.CODE_GOODS_CODE: layoutItemView6.setValue(data.getStringExtra(getClass().getSimpleName()));
+                case RequestCode.CODE_GOODS_CODE:
+                    layoutItemView6.setValue(data.getStringExtra(getClass().getSimpleName()));
                     break;
-                case RequestCode.CODE_GOODS_UNIT: layoutItemView7.setValue(data.getStringExtra(getClass().getSimpleName()));
+                case RequestCode.CODE_GOODS_UNIT:
+                    layoutItemView7.setValue(data.getStringExtra(getClass().getSimpleName()));
                     break;
-                case RequestCode.CODE_GOODS_KEYWORDS: layoutItemView8.setValue(data.getStringExtra(getClass().getSimpleName()));
+                case RequestCode.CODE_GOODS_KEYWORDS:
+                    layoutItemView8.setValue(data.getStringExtra(getClass().getSimpleName()));
                     break;
             }
         }
@@ -305,19 +332,27 @@ public class GoodsAddActivity extends BaseStyle2Activity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
+    public void hiddenAddButton(GoodsAddRecyclerViewAdapter.MessageHideAddButton messageHideAddButton){
+        if (messageHideAddButton!=null){
+            imageBtn.setVisibility(View.GONE);
+        }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onClipComplete(final ImageCropActivity.Message message) {
-        if (message.bitmap!=null){
-            String imgPath = absolutePath + File.separator + "elingze-adminlte" + File.separator + "products" + File.separator + System.currentTimeMillis() + ".png";
+        if (message.bitmap != null) {
+            final String imgPath = absolutePath + File.separator + "elingze-adminlte" + File.separator + "products" + File.separator + System.currentTimeMillis() + ".png";
             boolean bitmapToFile = FileUtil.bitmapToFile(message.bitmap, imgPath);
             if (bitmapToFile) {
                 getQiNiuToken(imgPath, new UpLoadCallBack() {
                     @Override
                     public void complete() {
-                        mGoodsAddRecyclerViewAdapter.addList(message.bitmap);
+                        mGoodsAddRecyclerViewAdapter.addList(imgPath);
                     }
                 });
             }
-        }else {
+        } else {
             THNToastUtil.showInfo("添加图片失败");
         }
     }
@@ -340,7 +375,7 @@ public class GoodsAddActivity extends BaseStyle2Activity {
                     String upToken = customerBean.getData().getUp_token();
                     String userId = customerBean.getData().getUser_id();
                     String directoryId = customerBean.getData().getDirectory_id();
-                    uploadFile(imgPath, upToken,new String[]{userId, directoryId}, globalCallBack);
+                    uploadFile(imgPath, upToken, new String[]{userId, directoryId}, globalCallBack);
                 } else {
                     ToastUtils.showError(customerBean.getStatus().getMessage());
                 }
@@ -356,7 +391,7 @@ public class GoodsAddActivity extends BaseStyle2Activity {
 
     private void uploadFile(String imgPath, String token, String[] strings, final UpLoadCallBack upLoadCallBack) {
         Map<String, String> map = new HashMap<>();
-        map.put("x:user_id",strings[0] );
+        map.put("x:user_id", strings[0]);
         map.put("x:directory_id", strings[1]);
         UploadOptions uploadOptions = new UploadOptions(map, "image", false, new UpProgressHandler() {
             @Override
@@ -410,22 +445,22 @@ public class GoodsAddActivity extends BaseStyle2Activity {
             } else if (view == layoutItemView2) {
                 Intent intent = new Intent(GoodsAddActivity.this, GoodsCategoryEditActivity.class);
                 startActivityForResult(intent, RequestCode.CODE_GOODS_CATEGORY);
-            }else if (view == layoutItemView3) {
+            } else if (view == layoutItemView3) {
                 Intent intent = new Intent(GoodsAddActivity.this, GoodsIntroductionEditActivity.class);
                 startActivityForResult(intent, RequestCode.CODE_GOODS_INTRODUCTION);
-            }else if (view == layoutItemView4) {
+            } else if (view == layoutItemView4) {
                 Intent intent = new Intent(GoodsAddActivity.this, GoodsPriceEditActivity.class);
                 startActivityForResult(intent, RequestCode.CODE_GOODS_PRICE);
-            }else if (view == layoutItemView5) {
+            } else if (view == layoutItemView5) {
                 Intent intent = new Intent(GoodsAddActivity.this, GoodsSpecificationEditActivity.class);
                 startActivityForResult(intent, RequestCode.CODE_GOODS_SPECIFICATION);
-            }else if (view == layoutItemView6) {
+            } else if (view == layoutItemView6) {
                 Intent intent = new Intent(GoodsAddActivity.this, GoodsCodeEditActivity.class);
                 startActivityForResult(intent, RequestCode.CODE_GOODS_CODE);
-            }else if (view == layoutItemView7) {
+            } else if (view == layoutItemView7) {
                 Intent intent = new Intent(GoodsAddActivity.this, GoodsUnitEditActivity.class);
                 startActivityForResult(intent, RequestCode.CODE_GOODS_UNIT);
-            }else if (view == layoutItemView8) {
+            } else if (view == layoutItemView8) {
                 Intent intent = new Intent(GoodsAddActivity.this, GoodsKeywordsEditActivity.class);
                 startActivityForResult(intent, RequestCode.CODE_GOODS_KEYWORDS);
             }
@@ -433,8 +468,9 @@ public class GoodsAddActivity extends BaseStyle2Activity {
     };
 
     private void uploadGoods(String name, String coverId, String price) {
+
         HashMap<String, String> params = ClientParamsAPI.getDefaultParams();
-        params.put("name",name );
+        params.put("name", name);
         params.put("cover_id", coverId);
         params.put("price", price);
         HttpRequest.sendRequest(HttpRequest.POST, URL.PRODUCT_ADD, params, new HttpRequestCallback() {
@@ -463,5 +499,4 @@ public class GoodsAddActivity extends BaseStyle2Activity {
             }
         });
     }
-//    private String[] GOODS = {"西瓜", "苹果", "香蕉", "梨子", "辣条", "啤酒", "泡面", "饼干", "鸡爪"};
 }

@@ -89,4 +89,5 @@
     <dimen name="sp9">9sp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="dp9">9dp</dimen>
+    <dimen name="dp69">69dp</dimen>
 </resources>

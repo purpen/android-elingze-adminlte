@@ -1,7 +1,6 @@
 package com.thn.erp.goods.add;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +11,8 @@ import android.widget.ImageView;
 import com.stephen.taihuoniaolibrary.utils.THNGlideUtil;
 import com.thn.erp.R;
 import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +25,14 @@ import java.util.List;
 
 public class GoodsAddRecyclerViewAdapter extends RecyclerView.Adapter<GoodsAddRecyclerViewAdapter.ViewHolder> {
     private Context mContext;
-    private List<Bitmap> stringList;
+    private List<String> stringList;
     private int pictureSize = 3;//最多三张图片
+    private int pixelSize;
     private OnRecyclerViewItemClickListener onRecyclerViewItemClickListener;
 
     public GoodsAddRecyclerViewAdapter(Context context, OnRecyclerViewItemClickListener onRecyclerViewItemClickListener) {
         this.mContext = context;
+        pixelSize = context.getResources().getDimensionPixelSize(R.dimen.dp69);
         this.onRecyclerViewItemClickListener = onRecyclerViewItemClickListener;
         if (stringList == null) {
             stringList = new ArrayList<>();
@@ -43,13 +46,12 @@ public class GoodsAddRecyclerViewAdapter extends RecyclerView.Adapter<GoodsAddRe
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        if (stringList.size() == 0 || position == stringList.size()) {
-            THNGlideUtil.displayImage(R.mipmap.icon_goods_add_img, holder.imageView);
-        } else {
-            Bitmap uri = stringList.get(position);
-            holder.imageView.setImageBitmap(uri);
-//            GlideUtil.displayImage(uri, holder.imageView);
-        }
+//        if (stringList.size() == 0 || position == stringList.size()) {
+//            THNGlideUtil.displayImage(R.mipmap.icon_goods_add_img, holder.imageView);
+//        } else {
+        String uri = stringList.get(position);
+        THNGlideUtil.displayImageFadeinWithDimen(uri, holder.imageView, pixelSize, pixelSize);
+//        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,13 +64,7 @@ public class GoodsAddRecyclerViewAdapter extends RecyclerView.Adapter<GoodsAddRe
 
     @Override
     public int getItemCount() {
-        if (stringList == null) {
-            return 1;
-        } else if (stringList.size() == pictureSize) {
-            return pictureSize;
-        } else {
-            return stringList.size() + 1;
-        }
+        return stringList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -80,14 +76,22 @@ public class GoodsAddRecyclerViewAdapter extends RecyclerView.Adapter<GoodsAddRe
         }
     }
 
-    class ImageBean{
+    class ImageBean {
         String imageResource;
         String imamgeIndex;
         String imageId;
     }
 
-    public void addList(Bitmap uri) {
+    public static class MessageHideAddButton {
+        public boolean hidden= true;
+    }
+
+    public void addList(String uri) {
         stringList.add(uri);
         notifyDataSetChanged();
+        if (stringList.size() == pictureSize) {
+            EventBus.getDefault().post(new MessageHideAddButton());
+        }
+
     }
 }

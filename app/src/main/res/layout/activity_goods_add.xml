@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--<include layout="@layout/include_public_topbar" />-->
     <com.thn.erp.view.CustomHeadView
         android:id="@+id/customHeadView"
         android:layout_width="match_parent"
@@ -28,7 +27,15 @@
                 android:gravity="center_vertical"
                 android:background="#FFFFFF"
                 android:padding="15dp">
-
+                <ImageButton
+                    android:id="@+id/imageBtn"
+                    android:layout_width="@dimen/dp50"
+                    android:layout_height="@dimen/dp50"
+                    android:src="@mipmap/icon_goods_add_img"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:scaleType="fitXY"
+                    android:background="@null"
+                    />
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerView1"
                     android:layout_width="match_parent"
@@ -36,54 +43,98 @@
                     android:background="#FFFFFF" />
             </LinearLayout>
 
-            <include layout="@layout/include_view_separate_vertical_10dp" />
 
             <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView
                 android:id="@+id/layoutItemView1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp10"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp05"
+                android:background="@color/color_E6E6E6"
+                />
             <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView
                 android:id="@+id/layoutItemView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp05"
+                android:background="@color/color_E6E6E6"
+                />
             <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView
                 android:id="@+id/layoutItemView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp05"
+                android:background="@color/color_E6E6E6"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="商品标签"
+                android:background="@android:color/white"
+                android:paddingLeft="@dimen/dp15"
+                android:paddingTop="@dimen/dp10"
+                android:textColor="@color/color_222"
+                android:textSize="@dimen/sp15"
+                />
             <com.zhy.view.flowlayout.TagFlowLayout
                 android:id="@+id/id_flowlayout"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#FFFFFF"
-                android:padding="10dp"
+                android:background="@android:color/white"
+                android:padding="@dimen/dp10"
                 zhy:tag_gravity="left"
-                zhy:max_select="1" />
-
+                zhy:max_select="1"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp05"
+                android:background="@color/color_E6E6E6"
+                />
             <include layout="@layout/include_view_separate_vertical_10dp" />
 
             <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView
                 android:id="@+id/layoutItemView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp05"
+                android:background="@color/color_E6E6E6"
+                />
             <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView
                 android:id="@+id/layoutItemView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp05"
+                android:background="@color/color_E6E6E6"
+                />
             <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView
                 android:id="@+id/layoutItemView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp05"
+                android:background="@color/color_E6E6E6"
+                />
             <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView
                 android:id="@+id/layoutItemView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp05"
+                android:background="@color/color_E6E6E6"
+                />
             <com.thn.erp.view.common.LinearLayoutCustomerAddArrowView
                 android:id="@+id/layoutItemView8"
                 android:layout_width="wrap_content"
@@ -96,7 +147,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp" />
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp05"
+                android:background="@color/color_E6E6E6"
+                />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

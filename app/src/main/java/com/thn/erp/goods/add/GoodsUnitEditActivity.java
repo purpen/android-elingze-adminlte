@@ -1,7 +1,6 @@
 package com.thn.erp.goods.add;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +16,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by Stephen on 2018/3/29 16:43
@@ -50,12 +48,6 @@ public class GoodsUnitEditActivity extends BaseStyle2Activity implements ImpTopb
         publicTopBar.setTopBarOnClickListener(this);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 
     @Override
     public void onTopBarClick(View view, int position) {
@@ -76,7 +68,7 @@ public class GoodsUnitEditActivity extends BaseStyle2Activity implements ImpTopb
         recyclerView1 = (RecyclerView) findViewById(R.id.recyclerView1);
         String[] stringArray = getResources().getStringArray(R.array.GoodsAddUnit);
         final List<String> strings = Arrays.asList(stringArray);
-        arrayAdapter = new RecyclerViewArrayAdapter(this, android.R.layout.simple_list_item_1, strings, new OnRecyclerViewItemClickListener() {
+        arrayAdapter = new RecyclerViewArrayAdapter(strings, new OnRecyclerViewItemClickListener() {
             @Override
             public void onClick(View view, int i) {
                 Intent intent = new Intent();

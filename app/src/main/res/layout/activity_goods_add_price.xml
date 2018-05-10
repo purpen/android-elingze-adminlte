@@ -1,19 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <include layout="@layout/include_public_topbar" />
 
     <include layout="@layout/include_view_line_divider_vertical" />
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_marginTop="20dp"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_marginLeft="20dp"
-        android:hint="请输入价格"
-        android:padding="10dp"
-        android:inputType="numberDecimal"
-        android:layout_marginRight="20dp"
-        android:layout_height="44dp"
-        style="@style/CommonEditTextStyle" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp10"
+        >
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp44"
+
+            android:background="@color/color_eee"
+            android:hint="请输入价格"
+            android:inputType="numberDecimal"
+            android:maxLength="20"
+            android:paddingLeft="@dimen/dp15"
+            android:paddingRight="@dimen/dp15"
+            android:singleLine="true"
+            android:textColor="@color/color_222"
+            android:textColorHint="@color/color_999"
+            android:textSize="@dimen/sp14" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp15"
+            android:layout_centerVertical="true"
+            android:text="元"
+            android:textSize="@dimen/sp14"
+
+            />
+    </RelativeLayout>
+
+
 </LinearLayout>

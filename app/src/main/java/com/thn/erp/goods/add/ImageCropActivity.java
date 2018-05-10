@@ -60,7 +60,6 @@ public class ImageCropActivity extends BaseActivity {
 
         if (intent.hasExtra(ImageCropActivity.class.getName())) { //区分界面
             page = intent.getStringExtra(ImageCropActivity.class.getName());
-//            zoneId = intent.getStringExtra(ZoneManagementActivity.class.getSimpleName());
         }
     }
 

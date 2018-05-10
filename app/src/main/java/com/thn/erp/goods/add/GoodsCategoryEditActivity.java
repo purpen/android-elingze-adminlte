@@ -58,7 +58,7 @@ public class GoodsCategoryEditActivity extends BaseStyle2Activity implements Imp
         recyclerView1 = (RecyclerView) findViewById(R.id.recyclerView1);
 //        String[] stringArray = getResources().getStringArray(R.array.GoodsCategory);
 //        final List<String> strings = Arrays.asList(stringArray);
-        arrayAdapter = new RecyclerViewArrayAdapter(this, android.R.layout.simple_list_item_1, null, new OnRecyclerViewItemClickListener() {
+        arrayAdapter = new RecyclerViewArrayAdapter( null, new OnRecyclerViewItemClickListener() {
             @Override
             public void onClick(View view, int i) {
                 Intent intent = new Intent();

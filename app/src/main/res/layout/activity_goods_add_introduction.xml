@@ -8,13 +8,16 @@
 
     <EditText
         android:id="@+id/editText1"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/bg_goods_name_edit"
+        android:layout_marginTop="10dp"
+        android:background="@color/color_E6E6E6"
         android:layout_width="match_parent"
-        android:layout_marginLeft="20dp"
-        android:hint="请输入内容"
+        android:layout_marginLeft="@dimen/dp15"
+        android:layout_marginRight="@dimen/dp15"
+        android:hint="请输入商品简介"
         android:gravity="left"
-        android:padding="10dp"
-        android:layout_marginRight="20dp"
-        android:layout_height="200dp" />
+        android:textColor="@color/color_222"
+        android:textSize="@dimen/sp14"
+        android:maxLength="300"
+        android:padding="5dp"
+        android:layout_height="250dp" />
 </LinearLayout>

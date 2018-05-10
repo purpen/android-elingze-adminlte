@@ -7,6 +7,7 @@ import android.os.Environment;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
+import com.example.myapp.MyEventBusIndex;
 import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UploadManager;
 import com.squareup.leakcanary.LeakCanary;
@@ -14,6 +15,8 @@ import com.stephen.taihuoniaolibrary.common.THNApp;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.common.constant.THNZone;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -60,6 +63,7 @@ public class AppApplication extends MultiDexApplication {
         }
 
         THNApp.init(this);
+        EventBus.builder().addIndex(new MyEventBusIndex()).throwSubscriberException(BuildConfig.DEBUG).installDefaultEventBus();
         initQiNiu();
         ZXingLibrary.initDisplayOpinion(this);
     }
