@@ -92,6 +92,7 @@ public class GoodsDetailsActivity extends BaseStyle2Activity implements ImpTopba
     }
 
     private void setBasicDat0a() {
+        if (mProductsBean==null) return;
         textView1.setText(mProductsBean.name);
         textView2.setText("编号: " + mProductsBean.rid);
         textView3.setText("单位: 件");

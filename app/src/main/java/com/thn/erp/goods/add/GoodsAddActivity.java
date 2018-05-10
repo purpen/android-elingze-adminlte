@@ -178,7 +178,7 @@ public class GoodsAddActivity extends BaseStyle2Activity {
                     case 0:
                     case 1:
                     case 2:
-                        PopupWindowUtil.show(GoodsAddActivity.this, initPopView(R.layout.popup_upload_avatar, "添加商品"));
+                        PopupWindowUtil.getInstance().show(GoodsAddActivity.this, initPopView(R.layout.popup_upload_avatar, "添加商品"));
                         break;
                 }
             }
@@ -221,7 +221,7 @@ public class GoodsAddActivity extends BaseStyle2Activity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.tv_take_photo:
-                    PopupWindowUtil.dismiss();
+                    PopupWindowUtil.getInstance().dismiss();
                     if (AndPermission.hasPermission(activity, Manifest.permission.CAMERA)) {
                         openCamera();
                     } else {
@@ -233,7 +233,7 @@ public class GoodsAddActivity extends BaseStyle2Activity {
                     }
                     break;
                 case R.id.tv_album:
-                    PopupWindowUtil.dismiss();
+                    PopupWindowUtil.getInstance().dismiss();
                     if (AndPermission.hasPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE)) {
                         ImageUtils.getImageFromAlbum(activity, 1);
                     } else {
@@ -246,7 +246,7 @@ public class GoodsAddActivity extends BaseStyle2Activity {
                     break;
                 case R.id.tv_cancel:
                 default:
-                    PopupWindowUtil.dismiss();
+                    PopupWindowUtil.getInstance().dismiss();
                     break;
             }
         }

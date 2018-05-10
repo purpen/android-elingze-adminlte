@@ -159,13 +159,13 @@ public class GoodsCategoryActivity extends BaseStyle2Activity implements ImpTopb
                 textViewGoodsCategoryEditSave.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        PopupWindowUtil.dismiss();
+                        PopupWindowUtil.getInstance().dismiss();
                         Intent intent = new Intent(GoodsCategoryActivity.this, GoodsCategoryAddActivity.class);
                         intent.putExtra(ExtraKey.CATEGORY_BEAN, categoriesEntity);
                         startActivityForResult(intent, RequestCode.CODE_GOODS_CATEGORY_ADD);
                     }
                 });
-                PopupWindowUtil.show(GoodsCategoryActivity.this, layoutView);
+                PopupWindowUtil.getInstance().show(GoodsCategoryActivity.this, layoutView);
             }
         });
 
@@ -254,7 +254,7 @@ public class GoodsCategoryActivity extends BaseStyle2Activity implements ImpTopb
                 BrandResultBean customerBean = JsonUtil.fromJson(json, BrandResultBean.class);
                 if (customerBean.getSuccess()) {
                     ToastUtils.showSuccess(customerBean.getStatus().getMessage());
-                    PopupWindowUtil.dismiss();
+                    PopupWindowUtil.getInstance().dismiss();
                 } else {
                     ToastUtils.showError(customerBean.getStatus().getMessage());
                 }

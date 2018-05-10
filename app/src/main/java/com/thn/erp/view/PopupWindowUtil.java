@@ -8,7 +8,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
 
-import com.stephen.taihuoniaolibrary.common.THNApp;
 import com.thn.erp.utils.Util;
 
 
@@ -17,19 +16,34 @@ import com.thn.erp.utils.Util;
  *         created at 2016/4/26 18:39
  */
 public class PopupWindowUtil {
-    private static OnDismissListener windowListener;
-    private static PopupWindow popupWindow;
-    private static Activity activity;
+
+    /**
+     * jvm在类装载的时候是同步的，从而保证了线程安全
+     * activity被作为静态成员或被静态成员对象所持有，导致内存泄漏
+     */
+    private static class SingletonHolder{
+        public static PopupWindowUtil instance = new PopupWindowUtil();
+    }
+
+    private OnDismissListener listener;
+    private PopupWindow popupWindow;
     public interface OnDismissListener {
         void onDismiss();
     }
 
-    public static void setListener(OnDismissListener listener) {
-        windowListener = listener;
+    private PopupWindowUtil(){}
+
+
+    public static PopupWindowUtil getInstance(){
+
+        return SingletonHolder.instance;
     }
 
-    public static void show(Activity activity, View view) {
-        PopupWindowUtil.activity = activity;
+    public void setOnDismissListener(OnDismissListener listener) {
+        this.listener = listener;
+    }
+
+    public void show(final Activity activity, View view) {
         popupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         popupWindow.setAnimationStyle(android.R.style.Widget_PopupWindow);
         popupWindow.setFocusable(true);
@@ -38,23 +52,41 @@ public class PopupWindowUtil {
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
         popupWindow.setOutsideTouchable(true);
         popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
-        popupWindow.setOnDismissListener(dismissListener);
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                setWindowAlpha(activity,1f);
+                if (listener != null) {
+                    listener.onDismiss();
+                    listener = null;
+                }
+            }
+        });
         setWindowAlpha(activity,0.5f);
     }
 
-    public static void show(Activity activity, View view, int gravity) {
-        PopupWindowUtil.activity = activity;
+    public void show(final Activity activity, View view, int gravity) {
         PopupWindow popupWindow = new PopupWindow(view, Util.getScreenWidth() * 4 / 5, Util.getScreenHeight() / 4);
         popupWindow.setAnimationStyle(android.R.style.Widget_PopupWindow);
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(false);
         popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         popupWindow.showAtLocation(view, gravity, 0, 0);
-        popupWindow.setOnDismissListener(dismissListener);
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                setWindowAlpha(activity,1f);
+                if (listener != null) {
+                    listener.onDismiss();
+                    listener = null;
+                }
+            }
+        });
         setWindowAlpha(activity,0.5f);
     }
 
-    private static void setWindowAlpha(Activity activity, float f) {
+    private void setWindowAlpha(Activity activity,float f) {
+        if(activity==null) return;
         Window window = activity.getWindow();
         WindowManager.LayoutParams lp = window.getAttributes();
         lp.alpha = f;
@@ -66,23 +98,11 @@ public class PopupWindowUtil {
         window.setAttributes(lp);
     }
 
-    private static PopupWindow.OnDismissListener dismissListener = new PopupWindow.OnDismissListener() {
-        @Override
-        public void onDismiss() {
-            setWindowAlpha(activity,1f);
-            if (windowListener != null) {
-                windowListener.onDismiss();
-                PopupWindowUtil.windowListener = null;
-            }
-        }
-    };
 
-
-    public static void dismiss() {
+    public void dismiss() {
         if (popupWindow != null) {
             popupWindow.dismiss();
             popupWindow = null;
-            activity = null;
         }
     }
 }

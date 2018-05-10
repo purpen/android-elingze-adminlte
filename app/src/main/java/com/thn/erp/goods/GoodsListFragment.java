@@ -69,6 +69,7 @@ public class GoodsListFragment extends BaseFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         brandId = getArguments().getString(ExtraKey.BRAND_ID, null);
     }
@@ -119,7 +120,7 @@ public class GoodsListFragment extends BaseFragment {
                 GoodsData.DataBean.ProductsBean productsBean = list.get(i);
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), GoodsDetailsActivity.class);
-                intent.putExtra("Extra",productsBean);
+                intent.putExtra(GoodsDetailsActivity.class.getSimpleName(),productsBean);
                 getActivity().startActivity(intent);
             }
         } );

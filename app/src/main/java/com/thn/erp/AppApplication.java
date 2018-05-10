@@ -30,7 +30,6 @@ import java.util.List;
  */
 public class AppApplication extends MultiDexApplication {
     private static Application instance;
-    public static int which_activity;//判断是从哪个界面跳转到登录界面,0是默认从主页面跳
 
 //    private PushAgent mPushAgent;
     private SharedPreferences tempSharedPreference;//检查本地存储是否设置推送的开关
