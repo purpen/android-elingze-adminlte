@@ -1,10 +1,7 @@
 package com.thn.erp.more;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,7 +14,6 @@ import com.thn.erp.more.supplier.SupplierManageActivity;
 import com.thn.erp.view.common.LinearLayoutArrowTextView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
@@ -62,20 +58,6 @@ public class MoreFragment extends BaseFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
-        return rootView;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
-    @Override
     protected void initView() {
         linearLayoutArrowTextView1.setName(NAMES[0]);
         linearLayoutArrowTextView2.setName(NAMES[1]);
@@ -94,32 +76,40 @@ public class MoreFragment extends BaseFragment {
                 break;
             case R.id.textView_user_company:
                 break;
-            case R.id.linearLayout_service1:    Toast.makeText(activity, "在线服务", Toast.LENGTH_SHORT).show();
+            case R.id.linearLayout_service1:
+                Toast.makeText(activity, "在线服务", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.linearLayout_service2:    Toast.makeText(activity, "客服热线", Toast.LENGTH_SHORT).show();
+            case R.id.linearLayout_service2:
+                Toast.makeText(activity, "客服热线", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.linearLayout_service3:    Toast.makeText(activity, "提工单", Toast.LENGTH_SHORT).show();
+            case R.id.linearLayout_service3:
+                Toast.makeText(activity, "提工单", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.layoutItemView1:  Toast.makeText(activity, NAMES[0], Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(activity, DemoActivity.class));
+            case R.id.layoutItemView1:
+                Toast.makeText(activity, NAMES[0], Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(activity, DemoActivity.class));
                 break;
-            case R.id.layoutItemView2:  Toast.makeText(activity, NAMES[1], Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(activity, ToolsActivity.class));
+            case R.id.layoutItemView2:
+                startActivity(new Intent(activity, ToolsActivity.class));
                 break;
-            case R.id.layoutItemView3:  Toast.makeText(activity, NAMES[2], Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(activity, SettingActivity.class));
+            case R.id.layoutItemView3:
+                Toast.makeText(activity, NAMES[2], Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(activity, SettingActivity.class));
                 break;
-            case R.id.layoutItemView4:  Toast.makeText(activity, NAMES[3], Toast.LENGTH_SHORT).show();
+            case R.id.layoutItemView4:
+                Toast.makeText(activity, NAMES[3], Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getActivity(), RepositoryManageActivity.class));
                 break;
-            case R.id.layoutItemView5:  Toast.makeText(activity, NAMES[4], Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(activity, SupplierManageActivity.class));
+            case R.id.layoutItemView5:
+                Toast.makeText(activity, NAMES[4], Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(activity, SupplierManageActivity.class));
                 break;
-            case R.id.layoutItemView6:  Toast.makeText(activity, NAMES[5], Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(activity, AccountManageActivity.class));
+            case R.id.layoutItemView6:
+                Toast.makeText(activity, NAMES[5], Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(activity, AccountManageActivity.class));
                 break;
         }
     }
 
-    private static String[] NAMES = {"快速上手", "工具箱","设置", "仓库管理", "供应商管理", "账户管理"};
+    private static String[] NAMES = {"快速上手", "工具箱", "设置", "仓库管理", "供应商管理", "账户管理"};
 }

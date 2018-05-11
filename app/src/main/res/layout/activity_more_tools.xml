@@ -2,55 +2,51 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/color_f8f8f8"
+    >
 
     <include layout="@layout/include_public_topbar" />
 
     <include layout="@layout/include_view_line_divider_vertical" />
 
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="#287ff0f0"
-        android:scaleType="fitCenter"
-        />
-
-    <include layout="@layout/include_view_line_divider_vertical" />
-
     <TextView
         style="@style/CommonTextViewTextStyle"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:layout_marginLeft="15dp"
+        android:layout_height="45dp"
+        android:paddingLeft="@dimen/dp15"
         android:gravity="center_vertical"
+        android:textColor="@color/color_666"
+        android:textSize="@dimen/sp15"
         android:text="仓库助手" />
 
-    <include layout="@layout/include_view_line_divider_vertical" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView1"
         android:layout_width="match_parent"
         android:overScrollMode="never"
-        android:layout_height="90dp" />
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        />
 
-    <include layout="@layout/include_view_line_divider_vertical" />
 
     <TextView
         style="@style/CommonTextViewTextStyle"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:layout_marginLeft="15dp"
+        android:layout_height="45dp"
+        android:paddingLeft="@dimen/dp15"
         android:gravity="center_vertical"
+        android:textColor="@color/color_666"
+        android:textSize="@dimen/sp15"
         android:text="订货助手" />
 
-    <include layout="@layout/include_view_line_divider_vertical" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView2"
         android:layout_width="match_parent"
         android:overScrollMode="never"
-        android:layout_height="90dp" />
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        />
 
-    <include layout="@layout/include_view_line_divider_vertical" />
 </LinearLayout>

@@ -5,13 +5,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.stephen.taihuoniaolibrary.utils.THNGlideUtil;
 import com.thn.erp.R;
 import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
+import com.thn.erp.more.ToolsActivity;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by Stephen on 2018/4/20 15:10
@@ -19,11 +24,12 @@ import java.util.List;
  */
 
 public class ToolsAdapter extends RecyclerView.Adapter<ToolsAdapter.ViewHolder> {
-    private List<String> stringList;
+
+    private List<ToolsActivity.ItemBean> list;
     private OnRecyclerViewItemClickListener onRecyclerViewItemClickListener;
 
-    public ToolsAdapter(List<String> list, OnRecyclerViewItemClickListener onRecyclerViewItemClickListener) {
-        this.stringList = list;
+    public ToolsAdapter(List<ToolsActivity.ItemBean> list, OnRecyclerViewItemClickListener onRecyclerViewItemClickListener) {
+        this.list = list;
         this.onRecyclerViewItemClickListener = onRecyclerViewItemClickListener;
     }
 
@@ -35,13 +41,9 @@ public class ToolsAdapter extends RecyclerView.Adapter<ToolsAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        if (position < stringList.size()) {
-            String text = stringList.get(position);
-            holder.textViewEntry11.setText(text);
-            holder.linearLayoutMoreStockExport.setVisibility(View.VISIBLE);
-        } else {
-            holder.linearLayoutMoreStockExport.setVisibility(View.INVISIBLE);
-        }
+        ToolsActivity.ItemBean itemBean = list.get(position);
+        holder.title.setText(itemBean.title);
+        THNGlideUtil.displayImageWithId(itemBean.resId,holder.imageView);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,16 +57,18 @@ public class ToolsAdapter extends RecyclerView.Adapter<ToolsAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return 4;
+        return list.size();
     }
-    class ViewHolder extends RecyclerView.ViewHolder{
-            private LinearLayout linearLayoutMoreStockExport;
-            private TextView textViewEntry11;
 
-        public ViewHolder(View itemView) {
-            super(itemView);
-            linearLayoutMoreStockExport = (LinearLayout) itemView.findViewById(R.id.linearLayout_more_stock_export);
-            textViewEntry11 = (TextView) itemView.findViewById(R.id.textView_entry_11);
+   static class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.imageView)
+        ImageView imageView;
+        @BindView(R.id.title)
+        TextView title;
+
+        public ViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this,view);
         }
     }
 }
