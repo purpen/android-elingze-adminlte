@@ -8,8 +8,10 @@ import android.os.Environment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -40,7 +42,7 @@ import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.LogUtil;
 import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.CustomHeadView;
-import com.thn.erp.view.PopupWindowUtil;
+import com.thn.erp.view.CustomPopupWindow;
 import com.thn.erp.view.common.LinearLayoutCustomerAddArrowView;
 import com.thn.erp.view.common.LinearLayoutCustomerAddSwitchView;
 import com.yanzhenjie.permission.AndPermission;
@@ -106,6 +108,7 @@ public class GoodsAddActivity extends BaseStyle2Activity {
     private File mCurrentPhotoFile;
     private LayoutInflater layoutInflater;
     private List<String> coverIds = new ArrayList<>();
+    private CustomPopupWindow customPopupWindow;
 
     @Override
     protected int getLayout() {
@@ -189,10 +192,20 @@ public class GoodsAddActivity extends BaseStyle2Activity {
     }
 
     @OnClick(R.id.imageBtn)
-    void performClick(View v){
-        switch (v.getId()){
+    void performClick(View v) {
+        switch (v.getId()) {
             case R.id.imageBtn:
-                PopupWindowUtil.getInstance().show(GoodsAddActivity.this, initPopView(R.layout.popup_upload_avatar, "添加商品"));
+                View view = initPopView(R.layout.popup_upload_avatar, "添加商品");
+                customPopupWindow = new CustomPopupWindow.Builder()
+                        .setActivity(this)
+                        .setContentView(view)
+                        .setAnimationStyle(R.style.popupAnimStyle)
+                        .setOutSideCancel(true)
+                        .setFocusable(true)
+                        .setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
+                        .build()
+                        .showAtLocation(view, Gravity.BOTTOM, 0, 0)
+                        .setWindowAlpha(0.5f);
                 break;
         }
     }
@@ -240,7 +253,7 @@ public class GoodsAddActivity extends BaseStyle2Activity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.tv_take_photo:
-                    PopupWindowUtil.getInstance().dismiss();
+                   customPopupWindow.dismiss();
                     if (AndPermission.hasPermission(activity, Manifest.permission.CAMERA)) {
                         openCamera();
                     } else {
@@ -252,7 +265,7 @@ public class GoodsAddActivity extends BaseStyle2Activity {
                     }
                     break;
                 case R.id.tv_album:
-                    PopupWindowUtil.getInstance().dismiss();
+                    customPopupWindow.dismiss();
                     if (AndPermission.hasPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE)) {
                         ImageUtils.getImageFromAlbum(activity, 1);
                     } else {
@@ -265,7 +278,7 @@ public class GoodsAddActivity extends BaseStyle2Activity {
                     break;
                 case R.id.tv_cancel:
                 default:
-                    PopupWindowUtil.getInstance().dismiss();
+                    customPopupWindow.dismiss();
                     break;
             }
         }
@@ -332,8 +345,8 @@ public class GoodsAddActivity extends BaseStyle2Activity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void hiddenAddButton(GoodsAddRecyclerViewAdapter.MessageHideAddButton messageHideAddButton){
-        if (messageHideAddButton!=null){
+    public void hiddenAddButton(GoodsAddRecyclerViewAdapter.MessageHideAddButton messageHideAddButton) {
+        if (messageHideAddButton != null) {
             imageBtn.setVisibility(View.GONE);
         }
     }

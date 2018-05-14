@@ -17,7 +17,7 @@ import com.stephen.taihuoniaolibrary.common.THNApp;
 public class THNGlideUtil {
     private static final int DEFAULT_IMAGEID = R.drawable.default_error_load;
     private static final int ERROR_IMAGEID = R.drawable.default_error_load;
-    private static final int FADE_IN_DURATION = 200;
+    private static final int FADE_IN_DURATION = 250;
 
     public static Context getContext() {
         return THNApp.getContext();

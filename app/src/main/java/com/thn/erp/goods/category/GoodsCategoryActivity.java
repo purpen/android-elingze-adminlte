@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
@@ -27,7 +29,7 @@ import com.thn.erp.net.URL;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.LogUtil;
 import com.thn.erp.utils.ToastUtils;
-import com.thn.erp.view.PopupWindowUtil;
+import com.thn.erp.view.CustomPopupWindow;
 import com.thn.erp.view.SearchView;
 import com.thn.erp.view.common.PublicTopBar;
 import com.thn.erp.view.svprogress.WaitingDialog;
@@ -60,6 +62,7 @@ public class GoodsCategoryActivity extends BaseStyle2Activity implements ImpTopb
     private GoodsCategoryListAdapter2 adapter;
     private GridLayoutManager linearLayoutManager;
     private String cid = "";
+    private CustomPopupWindow customPopupWindow;
 
     @Override
     protected int getLayout() {
@@ -159,13 +162,23 @@ public class GoodsCategoryActivity extends BaseStyle2Activity implements ImpTopb
                 textViewGoodsCategoryEditSave.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        PopupWindowUtil.getInstance().dismiss();
+                        customPopupWindow.dismiss();
                         Intent intent = new Intent(GoodsCategoryActivity.this, GoodsCategoryAddActivity.class);
                         intent.putExtra(ExtraKey.CATEGORY_BEAN, categoriesEntity);
                         startActivityForResult(intent, RequestCode.CODE_GOODS_CATEGORY_ADD);
                     }
                 });
-                PopupWindowUtil.getInstance().show(GoodsCategoryActivity.this, layoutView);
+
+                customPopupWindow = new CustomPopupWindow.Builder()
+                        .setActivity(activity)
+                        .setContentView(layoutView)
+                        .setAnimationStyle(R.style.popupAnimStyle)
+                        .setOutSideCancel(true)
+                        .setFocusable(true)
+                        .setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
+                        .build()
+                        .showAtLocation(view, Gravity.BOTTOM, 0, 0)
+                        .setWindowAlpha(0.5f);
             }
         });
 
@@ -254,7 +267,7 @@ public class GoodsCategoryActivity extends BaseStyle2Activity implements ImpTopb
                 BrandResultBean customerBean = JsonUtil.fromJson(json, BrandResultBean.class);
                 if (customerBean.getSuccess()) {
                     ToastUtils.showSuccess(customerBean.getStatus().getMessage());
-                    PopupWindowUtil.getInstance().dismiss();
+                    customPopupWindow.dismiss();
                 } else {
                     ToastUtils.showError(customerBean.getStatus().getMessage());
                 }

@@ -185,4 +185,8 @@
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 
+    <style name="popupAnimStyle">
+        <item name="android:windowEnterAnimation">@anim/bottom_to_up</item>
+        <item name="android:windowExitAnimation">@anim/up_to_bottom</item>
+    </style>
 </resources>
