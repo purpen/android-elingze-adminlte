@@ -11,9 +11,9 @@ import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
-import com.stephen.taihuoniaolibrary.utils.THNGlideUtil;
 import com.thn.erp.R;
 import com.thn.erp.goods.brand.GoodsBrandData;
+import com.thn.erp.utils.GlideUtil;
 
 import java.security.SecureRandom;
 import java.util.List;
@@ -44,7 +44,7 @@ public class GoodsCategoryListAdapter extends UltimateViewAdapter {
             GoodsBrandData.DataEntity.BrandsEntity goods = list.get(pos);
             ViewHolder viewHolder = ((ViewHolder) holder);
             viewHolder.goodsName.setText(goods.getName());
-            THNGlideUtil.displayImage(goods.getLogo(),viewHolder.ivCover,R.mipmap.ic_launcher);
+            GlideUtil.loadImage(goods.getLogo(),viewHolder.ivCover);
             viewHolder.tvNum.setText("编号："+goods.getRid());
             viewHolder.price.setText("￥"+goods.getFeatures());
             viewHolder.stockNum.setText("库存："+ position);

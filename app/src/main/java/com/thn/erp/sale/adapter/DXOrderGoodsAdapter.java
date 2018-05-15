@@ -12,9 +12,9 @@ import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
-import com.stephen.taihuoniaolibrary.utils.THNGlideUtil;
 import com.thn.erp.R;
 import com.thn.erp.sale.bean.SKUListData;
+import com.thn.erp.utils.GlideUtil;
 import com.thn.erp.view.CounterView;
 
 import java.security.SecureRandom;
@@ -38,7 +38,7 @@ public class DXOrderGoodsAdapter extends UltimateViewAdapter {
             final SKUListData.DataBean.ItemsBean goods = list.get(customHeaderView != null ? position - 1 : position);
             viewHolder = ((DXOrderGoodsAdapter.ViewHolder) holder);
             viewHolder.goodsName.setText(goods.product_name);
-            THNGlideUtil.displayImage(goods.cover,viewHolder.ivCover,R.mipmap.ic_launcher);
+            GlideUtil.loadImage(goods.cover,viewHolder.ivCover);
             viewHolder.tvNum.setText("编号："+goods.rid);
             viewHolder.price.setText(""+goods.sale_price);
             viewHolder.counterView.setStorageNum(goods.stock_count);

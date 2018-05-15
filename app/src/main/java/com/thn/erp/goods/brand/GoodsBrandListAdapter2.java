@@ -9,9 +9,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
-import com.stephen.taihuoniaolibrary.utils.THNGlideUtil;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseUltimateViewAdapter;
+import com.thn.erp.utils.GlideUtil;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class GoodsBrandListAdapter2<T> extends BaseUltimateViewAdapter {
         GoodsBrandData.DataEntity.BrandsEntity goods = (GoodsBrandData.DataEntity.BrandsEntity) list.get(position);
         GoodsBrandListAdapter2.ViewHolder viewHolder = ((GoodsBrandListAdapter2.ViewHolder) viewHolder2);
         viewHolder.goodsName.setText(goods.getName());
-        THNGlideUtil.displayImage(goods.getLogo(),viewHolder.ivCover, R.mipmap.ic_launcher);
+        GlideUtil.loadImage(goods.getLogo(),viewHolder.ivCover);
         viewHolder.tvNum.setText("编号："+goods.getRid());
         viewHolder.price.setText(goods.getFeatures());
         viewHolder.stockNum.setText("");

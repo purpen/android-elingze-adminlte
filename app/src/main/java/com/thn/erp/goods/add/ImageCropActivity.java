@@ -7,10 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
-import com.stephen.taihuoniaolibrary.utils.THNGlideUtil;
 import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
+import com.thn.erp.utils.GlideUtil;
 import com.thn.erp.view.ImageCrop.ClipSquareImageView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -47,7 +47,6 @@ public class ImageCropActivity extends BaseActivity {
 
     Button bt_clip;
     private String page;
-    private String zoneId;
     private THNWaittingDialog dialog;
 
 
@@ -73,7 +72,7 @@ public class ImageCropActivity extends BaseActivity {
     protected void initView() {
         if (uri == null) return;
         dialog = new THNWaittingDialog(this);
-        THNGlideUtil.displayImage(uri, csiv);
+        GlideUtil.loadImageAsBitmap(uri, csiv);
     }
 
 

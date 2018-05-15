@@ -1,10 +1,11 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    
+
     repositories {
         google()
         jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.2'
@@ -33,10 +34,19 @@ task clean(type: Delete) {
 //        }
 //    }
 //}
-
-ext{
+def supportVersion = '27.1.1';
+ext {
     compileSdkVersion = 27
     buildToolsVersion = '27.0.0'
     minSdkVersion = 19
     targetSdkVersion = 27
+
+    dependencies = [
+            "support-v4"              : "com.android.support:support-v4:${supportVersion}",
+            "support-v13"             : "com.android.support:support-v13:${supportVersion}",
+            "design"                  : "com.android.support:design:${supportVersion}",
+            "appcompat-v7"            : "com.android.support:appcompat-v7:${supportVersion}",
+            "recyclerview-v7"         : "com.android.support:recyclerview-v7:${supportVersion}",
+            "animated-vector-drawable": "com.android.support:animated-vector-drawable:${supportVersion}",
+    ]
 }

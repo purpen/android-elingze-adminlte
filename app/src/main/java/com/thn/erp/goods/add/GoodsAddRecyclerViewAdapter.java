@@ -8,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.stephen.taihuoniaolibrary.utils.THNGlideUtil;
 import com.thn.erp.R;
 import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
+import com.thn.erp.utils.GlideUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -50,7 +50,8 @@ public class GoodsAddRecyclerViewAdapter extends RecyclerView.Adapter<GoodsAddRe
 //            THNGlideUtil.displayImage(R.mipmap.icon_goods_add_img, holder.imageView);
 //        } else {
         String uri = stringList.get(position);
-        THNGlideUtil.displayImageFadeinWithDimen(uri, holder.imageView, pixelSize, pixelSize);
+        GlideUtil.loadImageWithDimen(uri, holder.imageView, pixelSize, pixelSize);
+//        THNGlideUtil.displayImageFadeinWithDimen(uri, holder.imageView, pixelSize, pixelSize);
 //        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

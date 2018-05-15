@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
+import com.thn.erp.more.chat.MessageListActivity;
 import com.thn.erp.more.repository.RepositoryManageActivity;
 import com.thn.erp.more.supplier.SupplierManageActivity;
 import com.thn.erp.view.common.LinearLayoutArrowTextView;
@@ -77,7 +78,7 @@ public class MoreFragment extends BaseFragment {
             case R.id.textView_user_company:
                 break;
             case R.id.linearLayout_service1:
-                Toast.makeText(activity, "在线服务", Toast.LENGTH_SHORT).show();
+               startActivity(new Intent(getContext(), MessageListActivity.class));
                 break;
             case R.id.linearLayout_service2:
                 Toast.makeText(activity, "客服热线", Toast.LENGTH_SHORT).show();

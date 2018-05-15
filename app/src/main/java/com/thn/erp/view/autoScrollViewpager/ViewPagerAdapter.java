@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.stephen.taihuoniaolibrary.utils.THNGlideUtil;
 import com.stephen.taihuoniaolibrary.utils.THNToastUtil;
 import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
 import com.thn.erp.Constants;
@@ -15,6 +14,7 @@ import com.thn.erp.MainActivity;
 import com.thn.erp.R;
 import com.thn.erp.UserGuideActivity;
 import com.thn.erp.user.LoginRegisterActivity;
+import com.thn.erp.utils.GlideUtil;
 import com.thn.erp.utils.SPUtil;
 
 import java.util.List;
@@ -82,7 +82,8 @@ public class ViewPagerAdapter<T> extends RecyclingPagerAdapter {
             if (TextUtils.isEmpty((String) content)) {
                 THNToastUtil.showError("图片链接为空");
             } else {
-                THNGlideUtil.displayImage(content, holder.imageView);
+                GlideUtil.loadImage(content,holder.imageView);
+//                THNGlideUtil.displayImage(content, holder.imageView);
             }
         }
 

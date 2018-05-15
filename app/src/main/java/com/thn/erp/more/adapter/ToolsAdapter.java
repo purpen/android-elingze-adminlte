@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.stephen.taihuoniaolibrary.utils.THNGlideUtil;
 import com.thn.erp.R;
 import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
 import com.thn.erp.more.ToolsActivity;
+import com.thn.erp.utils.GlideUtil;
 
 import java.util.List;
 
@@ -43,7 +43,7 @@ public class ToolsAdapter extends RecyclerView.Adapter<ToolsAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         ToolsActivity.ItemBean itemBean = list.get(position);
         holder.title.setText(itemBean.title);
-        THNGlideUtil.displayImageWithId(itemBean.resId,holder.imageView);
+        GlideUtil.loadImage(itemBean.resId,holder.imageView);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

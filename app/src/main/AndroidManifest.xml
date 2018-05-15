@@ -103,6 +103,17 @@
         <!--搜索商品-->
         <activity android:name=".overview.SearchGoodsHistoryActivity" android:launchMode="singleTask"/>
         <activity android:name=".overview.SearchGoodsResultActivity"/>
+
+        <!--在线客服-->
+        <activity
+            android:name=".more.chat.MessageListActivity">
+        </activity>
+        <activity
+            android:name=".more.chat.VideoActivity"
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen">
+
+        </activity>
+        <activity android:name=".more.chat.BrowserImageActivity" />
     </application>
 
 </manifest>

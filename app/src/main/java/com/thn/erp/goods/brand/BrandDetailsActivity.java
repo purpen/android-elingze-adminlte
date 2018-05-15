@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.stephen.taihuoniaolibrary.utils.THNGlideUtil;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.common.constant.ExtraKey;
@@ -20,6 +19,7 @@ import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.net.paramsBean.UpdateBrandBean;
+import com.thn.erp.utils.GlideUtil;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.LogUtil;
 import com.thn.erp.utils.ToastUtils;
@@ -138,8 +138,8 @@ public class BrandDetailsActivity extends BaseActivity implements ImpTopbarOnCli
     }
 
     private void refreshUi(BrandBean.DataEntity data) {
-        THNGlideUtil.displayImage(data.getBanner(), imageView);
-        THNGlideUtil.displayImage(data.getLogo(), imageView2);
+        GlideUtil.loadImage(data.getBanner(), imageView);
+        GlideUtil.loadImage(data.getLogo(), imageView2);
         textView1.setText(data.getDescription());
         textView2.setText(data.getFeatures());
         textView3.setText(data.getName());

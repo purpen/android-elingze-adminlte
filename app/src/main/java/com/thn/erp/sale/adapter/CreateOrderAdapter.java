@@ -5,11 +5,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
-import com.stephen.taihuoniaolibrary.utils.THNGlideUtil;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseUltimateViewAdapter;
 import com.thn.erp.sale.bean.SKUListData;
+import com.thn.erp.utils.GlideUtil;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -44,7 +46,7 @@ public class CreateOrderAdapter extends BaseUltimateViewAdapter<SKUListData.Data
         SKUListData.DataBean.ItemsBean goods = list.get(position);
         ViewHolder viewHolder = ((ViewHolder) ultimateRecyclerviewViewHolder);
         viewHolder.goodsName.setText(goods.product_name);
-        THNGlideUtil.displayImage(goods.cover,viewHolder.ivCover,R.mipmap.ic_launcher);
+        GlideUtil.loadImage(goods.cover,viewHolder.ivCover);
         viewHolder.tvNum.setText("编号："+goods.rid);
         viewHolder.price.setText("￥"+goods.sale_price);
         viewHolder.stockNum.setText("数量："+goods.buyNum);

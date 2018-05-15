@@ -9,12 +9,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
-import com.stephen.taihuoniaolibrary.utils.THNGlideUtil;
 import com.thn.erp.AppApplication;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseUltimateViewAdapter;
 import com.thn.erp.sale.bean.OrderData;
 import com.thn.erp.utils.DateUtil;
+import com.thn.erp.utils.GlideUtil;
 
 import java.util.List;
 
@@ -44,7 +44,7 @@ public class OrderListAdapter extends BaseUltimateViewAdapter<OrderData.DataBean
             GoodsItemHolder itemHolder = new GoodsItemHolder(view);
             viewHolder.llGoods.addView(view);
             itemHolder.goodsName.setText(item.product_name);
-            THNGlideUtil.displayImage(item.cover,itemHolder.ivCover,R.mipmap.default_load);
+            GlideUtil.loadImage(item.cover,itemHolder.ivCover);
             itemHolder.tvNum.setText("编号："+item.rid);
             itemHolder.price.setText("￥"+item.sale_price);
             itemHolder.stockNum.setText("数量："+item.quantity);

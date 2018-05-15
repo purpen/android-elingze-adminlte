@@ -1,11 +1,12 @@
 package com.thn.erp.album;
 
 import android.os.Parcel;
+import android.widget.AbsListView;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-import com.stephen.taihuoniaolibrary.utils.THNGlideUtil;
 import com.thn.erp.R;
+import com.thn.erp.utils.GlideUtil;
 
 
 public class ImageLoaderEngine implements LoadEngine {
@@ -32,17 +33,33 @@ public class ImageLoaderEngine implements LoadEngine {
 
     @Override
     public void displayImage(String path, ImageView imageView) {
-        THNGlideUtil.displayImageFadein(path, imageView);
+        GlideUtil.loadImage(path, imageView);
     }
 
     @Override
     public void displayCameraItem(ImageView imageView) {
-        THNGlideUtil.displayImageFadein(img_camera, imageView);
+        GlideUtil.loadImage(img_camera, imageView);
     }
 
     @Override
     public void scrolling(GridView view) {
+        view.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState==SCROLL_STATE_IDLE){
+                    GlideUtil.resumeRequests();
+                }
 
+                if (scrollState ==SCROLL_STATE_FLING) {
+                    GlideUtil.pauseRequests();
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+            }
+        });
     }
 
     @Override

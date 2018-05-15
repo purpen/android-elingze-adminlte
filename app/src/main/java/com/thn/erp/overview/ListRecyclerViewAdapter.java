@@ -8,10 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
-import com.stephen.taihuoniaolibrary.utils.THNGlideUtil;
 import com.thn.erp.R;
 import com.thn.erp.common.interfaces.GlobalCallBack;
+import com.thn.erp.utils.GlideUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -54,7 +53,7 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
             if (o1 instanceof Map) {
                 Map<String, String> map = (Map<String,String>) o1;
                 holder.name.setText(map.get("name"));
-                THNGlideUtil.displayImage(Integer.valueOf(map.get("img")), holder.productImg);
+                GlideUtil.loadImage(Integer.valueOf(map.get("img")), holder.productImg);
             }
         }
     }

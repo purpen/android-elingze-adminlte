@@ -9,9 +9,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
-import com.stephen.taihuoniaolibrary.utils.THNGlideUtil;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseUltimateViewAdapter;
+import com.thn.erp.utils.GlideUtil;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class GoodsCategoryListAdapter2 extends BaseUltimateViewAdapter {
         GoodsCategoryListAdapter2.ViewHolder viewHolder = ((GoodsCategoryListAdapter2.ViewHolder) ultimateRecyclerviewViewHolder);
         viewHolder.goodsName.setText(goods.getName());
         String cover = goods.getCover();
-        THNGlideUtil.displayImage(cover,viewHolder.ivCover, R.mipmap.ic_launcher);
+        GlideUtil.loadImage(cover,viewHolder.ivCover);
     }
 
     @Override

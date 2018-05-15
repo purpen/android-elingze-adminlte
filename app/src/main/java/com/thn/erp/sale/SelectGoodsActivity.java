@@ -23,7 +23,6 @@ import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
-import com.stephen.taihuoniaolibrary.utils.THNGlideUtil;
 import com.thn.erp.AppApplication;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
@@ -38,6 +37,7 @@ import com.thn.erp.sale.adapter.SKUAdapter;
 import com.thn.erp.sale.adapter.SpecificationAdapter;
 import com.thn.erp.sale.bean.GoodsData;
 import com.thn.erp.sale.bean.SKUListData;
+import com.thn.erp.utils.GlideUtil;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.LogUtil;
 import com.thn.erp.utils.SPUtil;
@@ -590,7 +590,7 @@ public class SelectGoodsActivity extends BaseActivity {
     private void setSkuInfo(SKUListData.DataBean.ItemsBean dataBean) {
         this.dataBean = dataBean;
         holder.counterView.setStorageNum(dataBean.stock_count);
-        THNGlideUtil.displayImageFadein(dataBean.cover, holder.dialogCartProductimg);
+        GlideUtil.loadImage(dataBean.cover, holder.dialogCartProductimg);
         holder.dialogCartPrice.setText("￥" + dataBean.sale_price);
         holder.dialogCartProducttitle.setText(dataBean.product_name);
         holder.dialogCartSkusnumber.setText("库存：" + dataBean.stock_count);

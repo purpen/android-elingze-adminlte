@@ -14,6 +14,7 @@
     <color name="color_FAFAFA">#FAFAFA</color>
     <color name="color_66fee178">#66fee178</color>
     <color name="color_ff5a5f">#ff5a5f</color>
+    <color name="chat_title_bg">#427BED</color>
 
     <!-- 主体颜色 -->
     <color name="THN_color_primaryColor">#28AA5A</color>
