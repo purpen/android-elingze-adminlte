@@ -351,7 +351,6 @@ public class ImageUtils {
             return;
         }
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        uri = FileCameraUtil.getUriForFile();
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         activity.startActivityForResult(intent, Constants.REQUEST_CODE_CAPTURE_CAMERA);
     }
@@ -375,11 +374,11 @@ public class ImageUtils {
         }
     }
 
-    public static Uri getUriForFile(Activity activity,File file) {
+    public static Uri getUriForFile(Context context,File file) {
         if (null == file) file = getDefaultFile();
         Uri uri;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            uri = FileProvider.getUriForFile(activity, BuildConfig.APPLICATION_ID + ".fileProvider", file);
+            uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileProvider", file);
         } else {
             uri = Uri.fromFile(file);
         }

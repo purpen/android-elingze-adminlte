@@ -36,7 +36,6 @@ import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.utils.FileUtil;
-import com.thn.erp.utils.ImageUtils;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.LogUtil;
 import com.thn.erp.utils.ToastUtils;
@@ -44,6 +43,7 @@ import com.thn.erp.view.CustomHeadView;
 import com.thn.erp.view.CustomPopupWindow;
 import com.thn.erp.view.common.LinearLayoutCustomerAddArrowView;
 import com.thn.erp.view.common.LinearLayoutCustomerAddSwitchView;
+import com.thn.imagealbum.album.ImageUtils;
 import com.yanzhenjie.permission.AndPermission;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
@@ -283,7 +283,7 @@ public class GoodsAddActivity extends BaseStyle2Activity {
     protected void openCamera() {
         mCurrentPhotoFile = ImageUtils.getDefaultFile();
         if (null == mCurrentPhotoFile) return;
-        ImageUtils.getImageFromCamera(activity, ImageUtils.getUriForFile(mCurrentPhotoFile));
+        ImageUtils.getImageFromCamera(this, ImageUtils.getUriForFile(getApplicationContext(),mCurrentPhotoFile));
     }
 
     @Override
@@ -297,12 +297,10 @@ public class GoodsAddActivity extends BaseStyle2Activity {
                         return;
                     }
                     toCropActivity(mSelected.get(0));
-//                    mGoodsAddRecyclerViewAdapter.addList(mSelected.get(0));
                     break;
                 case Constants.REQUEST_CODE_CAPTURE_CAMERA:
                     if (null == mCurrentPhotoFile) return;
-                    toCropActivity(ImageUtils.getUriForFile(mCurrentPhotoFile));
-//                    mGoodsAddRecyclerViewAdapter.addList(ImageUtils.getUriForFile(mCurrentPhotoFile));
+                    toCropActivity(ImageUtils.getUriForFile(getApplicationContext(),mCurrentPhotoFile));
                     break;
                 case RequestCode.CODE_GOODS_NAME:
                     layoutItemView1.setValue(data.getStringExtra(getClass().getSimpleName()));
