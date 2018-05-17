@@ -8,9 +8,9 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
+import com.thn.basemodule.tools.GlideUtil;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
-import com.thn.erp.utils.GlideUtil;
 import com.thn.erp.view.ImageCrop.ClipSquareImageView;
 
 import org.greenrobot.eventbus.EventBus;

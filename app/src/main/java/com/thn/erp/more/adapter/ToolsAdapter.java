@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.thn.basemodule.tools.GlideUtil;
 import com.thn.erp.R;
 import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
 import com.thn.erp.more.ToolsActivity;
-import com.thn.erp.utils.GlideUtil;
 
 import java.util.List;
 

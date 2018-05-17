@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
+import com.thn.basemodule.tools.GlideUtil;
 import com.thn.erp.AppApplication;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
@@ -37,7 +38,6 @@ import com.thn.erp.sale.adapter.SKUAdapter;
 import com.thn.erp.sale.adapter.SpecificationAdapter;
 import com.thn.erp.sale.bean.GoodsData;
 import com.thn.erp.sale.bean.SKUListData;
-import com.thn.erp.utils.GlideUtil;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.LogUtil;
 import com.thn.erp.utils.SPUtil;

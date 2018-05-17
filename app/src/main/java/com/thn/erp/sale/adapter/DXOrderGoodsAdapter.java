@@ -12,9 +12,9 @@ import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
+import com.thn.basemodule.tools.GlideUtil;
 import com.thn.erp.R;
 import com.thn.erp.sale.bean.SKUListData;
-import com.thn.erp.utils.GlideUtil;
 import com.thn.erp.view.CounterView;
 
 import java.security.SecureRandom;

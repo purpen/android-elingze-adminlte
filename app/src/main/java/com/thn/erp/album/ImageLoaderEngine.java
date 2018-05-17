@@ -5,8 +5,8 @@ import android.widget.AbsListView;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.thn.basemodule.tools.GlideUtil;
 import com.thn.erp.R;
-import com.thn.erp.utils.GlideUtil;
 
 
 public class ImageLoaderEngine implements LoadEngine {
@@ -47,11 +47,11 @@ public class ImageLoaderEngine implements LoadEngine {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 if (scrollState==SCROLL_STATE_IDLE){
-                    GlideUtil.resumeRequests();
+                    GlideUtil.resumeRequests(view.getContext());
                 }
 
                 if (scrollState ==SCROLL_STATE_FLING) {
-                    GlideUtil.pauseRequests();
+                    GlideUtil.pauseRequests(view.getContext());
                 }
             }
 

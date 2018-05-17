@@ -9,12 +9,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
+import com.thn.basemodule.tools.GlideUtil;
 import com.thn.erp.AppApplication;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseUltimateViewAdapter;
 import com.thn.erp.sale.bean.OrderData;
 import com.thn.erp.utils.DateUtil;
-import com.thn.erp.utils.GlideUtil;
 
 import java.util.List;
 

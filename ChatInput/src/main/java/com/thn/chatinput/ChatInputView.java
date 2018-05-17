@@ -570,7 +570,7 @@ public class ChatInputView extends LinearLayout
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.idSelectAlbum) {
-
+            
         } else if (id == R.id.idSelectCamera) {
 
         } else if (view.getId() == R.id.aurora_pb_recordvoice_play_audio) {
@@ -1110,6 +1110,9 @@ public class ChatInputView extends LinearLayout
         }
     }
 
+    /**
+     *  提交文字
+     */
     private boolean onSubmit() {
         return mListener != null && mListener.onSendTextMessage(mInput);
     }

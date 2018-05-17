@@ -11,9 +11,9 @@ import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
+import com.thn.basemodule.tools.GlideUtil;
 import com.thn.erp.R;
 import com.thn.erp.goods.brand.GoodsBrandData;
-import com.thn.erp.utils.GlideUtil;
 
 import java.security.SecureRandom;
 import java.util.List;
