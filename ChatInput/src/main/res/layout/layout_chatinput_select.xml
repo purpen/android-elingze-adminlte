@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    >
+    <ImageButton
+        android:id="@+id/idSelectAlbum"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/icon_menu_album"
+        android:background="@null"
+        android:layout_marginRight="75dp"
+        />
+    <ImageButton
+        android:id="@+id/idSelectCamera"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/icon_menu_camera"
+        android:background="@null"
+        />
+</LinearLayout>

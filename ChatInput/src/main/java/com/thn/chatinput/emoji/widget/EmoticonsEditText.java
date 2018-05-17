@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputConnection;
 
 import com.thn.chatinput.emoji.EmoticonFilter;
 
@@ -125,6 +127,28 @@ public class EmoticonsEditText extends AppCompatEditText {
 
     public void setOnSizeChangedListener(OnSizeChangedListener i) {
         onSizeChangedListener = i;
+    }
+
+
+    /**
+     * adjust the IME options after letting the platform configure them
+     * @param outAttrs
+     * @return
+     */
+    @Override
+    public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
+        InputConnection connection = super.onCreateInputConnection(outAttrs);
+        int imeActions = outAttrs.imeOptions&EditorInfo.IME_MASK_ACTION;
+        if ((imeActions&EditorInfo.IME_ACTION_SEND) != 0) {
+            // clear the existing action
+            outAttrs.imeOptions ^= imeActions;
+            // set the SEND action
+            outAttrs.imeOptions |= EditorInfo.IME_ACTION_SEND;
+        }
+        if ((outAttrs.imeOptions& EditorInfo.IME_FLAG_NO_ENTER_ACTION) != 0) {
+            outAttrs.imeOptions &= ~EditorInfo.IME_FLAG_NO_ENTER_ACTION;
+        }
+        return connection;
     }
 
 }

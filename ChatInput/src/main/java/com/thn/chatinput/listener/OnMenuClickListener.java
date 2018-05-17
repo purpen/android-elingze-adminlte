@@ -48,4 +48,10 @@ public interface OnMenuClickListener {
      * Fires when emoji button is on click.
      */
     boolean switchToEmojiMode();
+
+    /**
+     * Fires when add button is on click
+     * @return
+     */
+    boolean switchToSelectMode();
 }

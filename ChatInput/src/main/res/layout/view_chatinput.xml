@@ -8,44 +8,47 @@
         android:id="@+id/aurora_ll_input_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:background="@android:color/white"
         android:orientation="horizontal">
-
-        <android.support.v4.widget.Space
-            android:id="@+id/aurora_input_margin_left"
-            android:layout_width="15dp"
-            android:layout_height="match_parent" />
 
         <com.thn.chatinput.emoji.widget.EmoticonsEditText
             android:id="@+id/aurora_et_chat_input"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:paddingTop="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="13dp"
+            android:paddingBottom="5dp"
+            android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:background="@drawable/aurora_edittext_bg"
             android:cursorVisible="true"
             android:focusableInTouchMode="true"
             android:gravity="center_vertical"
             android:inputType="textMultiLine"
+            android:imeOptions="actionSend"
             android:maxLines="4"
-            android:minHeight="44dp"
-            android:paddingBottom="5dp"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:paddingTop="5dp"
+            android:minHeight="35dp"
+            android:padding="5dp"
             android:textColor="@android:color/black"
             android:textCursorDrawable="@drawable/aurora_edittext_cursor_bg"
-            android:textSize="18sp" />
+            android:textSize="15sp" />
 
-        <android.support.v4.widget.Space
-            android:id="@+id/aurora_input_margin_right"
-            android:layout_width="15dp"
-            android:layout_height="match_parent" />
-
+        <ImageButton
+            android:id="@+id/idAddPic"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="15dp"
+            android:background="@null"
+            android:src="@drawable/icon_kefu_add" />
     </LinearLayout>
 
     <include
         android:id="@+id/aurora_ll_menuitem_container"
-        layout="@layout/layout_chatinput_menu" />
+        layout="@layout/layout_chatinput_menu"
+        android:visibility="gone" />
 
     <FrameLayout
         android:id="@+id/aurora_fl_menu_container"
@@ -54,8 +57,13 @@
         android:gravity="center">
 
         <include
+            android:id="@+id/idSelectAlbumCamera"
+            layout="@layout/layout_chatinput_select" />
+
+        <include
             android:id="@+id/aurora_rl_recordvoice_container"
-            layout="@layout/layout_chatinput_recordvoice" />
+            layout="@layout/layout_chatinput_recordvoice"
+            android:visibility="gone" />
 
         <com.thn.chatinput.photo.SelectPhotoView
             android:id="@+id/aurora_view_selectphoto"

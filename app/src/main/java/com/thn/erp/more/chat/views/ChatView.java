@@ -29,7 +29,7 @@ public class ChatView extends RelativeLayout {
     private RecordVoiceButton mRecordVoiceBtn;
     private PullToRefreshLayout mPtrLayout;
     private ImageButton mSelectAlbumIb;
-
+    private ImageButton mAddPicBtn;
     public ChatView(Context context) {
         super(context);
     }
@@ -54,6 +54,7 @@ public class ChatView extends RelativeLayout {
          * For perfect display, the height should be equals with soft input height.
          */
         mChatInput.setMenuContainerHeight(819);
+        mAddPicBtn = mChatInput.getAddPicBtn();
         mRecordVoiceBtn = mChatInput.getRecordVoiceButton();
         mSelectAlbumIb = mChatInput.getSelectAlbumBtn();
         PtrDefaultHeader header = new PtrDefaultHeader(getContext());
@@ -140,5 +141,9 @@ public class ChatView extends RelativeLayout {
 
     public ImageButton getSelectAlbumBtn() {
         return this.mSelectAlbumIb;
+    }
+
+    public ImageButton getAddPicBtn() {
+        return  this.mAddPicBtn;
     }
 }

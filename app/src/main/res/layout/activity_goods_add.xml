@@ -31,7 +31,7 @@
                     android:id="@+id/imageBtn"
                     android:layout_width="@dimen/dp50"
                     android:layout_height="@dimen/dp50"
-                    android:src="@mipmap/icon_goods_add_img"
+                    android:src="@mipmap/icon_goods_add"
                     android:layout_marginRight="@dimen/dp5"
                     android:scaleType="fitXY"
                     android:background="@null"

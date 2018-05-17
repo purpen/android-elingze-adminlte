@@ -159,6 +159,12 @@ public class MessageListActivity extends Activity implements View.OnTouchListene
             }
 
             @Override
+            public boolean switchToSelectMode() {
+                scrollToBottom();
+                return true;
+            }
+
+            @Override
             public boolean switchToMicrophoneMode() {
                 scrollToBottom();
                 String[] perms = new String[]{
@@ -297,6 +303,15 @@ public class MessageListActivity extends Activity implements View.OnTouchListene
             @Override
             public void onCancelVideoRecord() {
 
+            }
+        });
+
+        //添加图片按钮点击滑动到底部
+        mChatView.getAddPicBtn().setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                scrollToBottom();
+                return false;
             }
         });
 
@@ -621,8 +636,9 @@ public class MessageListActivity extends Activity implements View.OnTouchListene
         sendVoiceMsg.setMediaFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/voice/2018-02-28-105103.m4a");
         sendVoiceMsg.setDuration(4);
         mAdapter.addToStart(sendVoiceMsg, true);
-        MyMessage eventMsg = new MyMessage("haha", IMessage.MessageType.EVENT.ordinal());
-        mAdapter.addToStart(eventMsg, true);
+
+//        MyMessage eventMsg = new MyMessage("event", IMessage.MessageType.EVENT.ordinal());
+//        mAdapter.addToStart(eventMsg, true);
 
         MyMessage receiveVideo = new MyMessage("", IMessage.MessageType.RECEIVE_VIDEO.ordinal());
         receiveVideo.setMediaFilePath(Environment.getExternalStorageDirectory().getPath() + "/Pictures/Hangouts/video-20170407_135638.3gp");
@@ -679,16 +695,19 @@ public class MessageListActivity extends Activity implements View.OnTouchListene
                 mAdapter.addToEndChronologically(list);
                 mChatView.getPtrLayout().refreshComplete();
             }
-        }, 1500);
+        }, 1000);
     }
 
-    private void scrollToBottom() {
+    /**
+     * 消息列表滑动到底部
+     */
+    public void scrollToBottom() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 mChatView.getMessageListView().smoothScrollToPosition(0);
             }
-        }, 200);
+        }, 250);
     }
 
     @Override

@@ -18,7 +18,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.Space;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -28,6 +27,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
@@ -88,8 +88,6 @@ public class ChatInputView extends LinearLayout
     private EmoticonsEditText mChatInput;
     private TextView mSendCountTv;
     private CharSequence mInput;
-    private Space mInputMarginLeft;
-    private Space mInputMarginRight;
 
     private ImageButton mVoiceBtn;
     private ImageButton mPhotoBtn;
@@ -173,6 +171,10 @@ public class ChatInputView extends LinearLayout
     private Context mContext;
     private Rect mRect = new Rect();
     private LinearLayout mCameraBtnContainer;
+    private LinearLayout mIdSelectAlbumCameraContainer;
+    private ImageButton mIdSelectAlbum;
+    private ImageButton mIdSelectCamera;
+    private ImageButton mIdAddPic;
 
     public ChatInputView(Context context) {
         super(context);
@@ -195,6 +197,8 @@ public class ChatInputView extends LinearLayout
 
         // menu buttons
         mChatInput = (EmoticonsEditText) findViewById(R.id.aurora_et_chat_input);
+        mIdAddPic = (ImageButton) findViewById(R.id.idAddPic);
+
         mVoiceBtn = (ImageButton) findViewById(R.id.aurora_menuitem_ib_voice);
         mPhotoBtn = (ImageButton) findViewById(R.id.aurora_menuitem_ib_photo);
         mCameraBtn = (ImageButton) findViewById(R.id.aurora_menuitem_ib_camera);
@@ -207,6 +211,7 @@ public class ChatInputView extends LinearLayout
         View emojiBtnContainer = findViewById(R.id.aurora_framelayout_menuitem_emoji);
 
         //设置按钮item点击
+        mIdAddPic.setOnClickListener(onMenuItemClickListener);
         voiceBtnContainer.setOnClickListener(onMenuItemClickListener);
         photoBtnContainer.setOnClickListener(onMenuItemClickListener);
         mCameraBtnContainer.setOnClickListener(onMenuItemClickListener);
@@ -214,16 +219,19 @@ public class ChatInputView extends LinearLayout
         mSendBtn.setOnClickListener(onMenuItemClickListener);
 
         mSendCountTv = (TextView) findViewById(R.id.aurora_menuitem_tv_send_count);
-        mInputMarginLeft = (Space) findViewById(R.id.aurora_input_margin_left);
-        mInputMarginRight = (Space) findViewById(R.id.aurora_input_margin_right);
         mChatInputContainer = (LinearLayout) findViewById(R.id.aurora_ll_input_container);
         mMenuItemContainer = (LinearLayout) findViewById(R.id.aurora_ll_menuitem_container);
         mMenuContainer = (FrameLayout) findViewById(R.id.aurora_fl_menu_container);
+        //选择相片和拍照
+        mIdSelectAlbumCameraContainer = findViewById(R.id.idSelectAlbumCamera);
+        mIdSelectAlbum = (ImageButton) findViewById(R.id.idSelectAlbum);
+        mIdSelectCamera = (ImageButton) findViewById(R.id.idSelectCamera);
+
+        //录音
         mRecordVoiceRl = (RelativeLayout) findViewById(R.id.aurora_rl_recordvoice_container);
         mPreviewPlayLl = (LinearLayout) findViewById(R.id.aurora_ll_recordvoice_preview_container);
         mPreviewPlayBtn = (ProgressButton) findViewById(R.id.aurora_pb_recordvoice_play_audio);
         mRecordContentLl = (LinearLayout) findViewById(R.id.aurora_ll_recordvoice_content_container);
-
         mRecordControllerView = (RecordControllerView) findViewById(R.id.aurora_rcv_recordvoice_controller);
         mChronometer = (Chronometer) findViewById(R.id.aurora_chronometer_recordvoice);
         mRecordHintTv = (TextView) findViewById(R.id.aurora_tv_recordvoice_hint);
@@ -238,6 +246,7 @@ public class ChatInputView extends LinearLayout
         mCaptureBtn = (ImageButton) findViewById(R.id.aurora_ib_camera_capture);
         mSwitchCameraBtn = (ImageButton) findViewById(R.id.aurora_ib_camera_switch);
 
+        //选图
         mSelectPhotoView = (SelectPhotoView) findViewById(R.id.aurora_view_selectphoto);
         mSelectAlbumIb = (ImageButton) findViewById(R.id.aurora_imagebtn_selectphoto_album);
         mSelectPhotoView.setOnFileSelectedListener(this);
@@ -258,6 +267,36 @@ public class ChatInputView extends LinearLayout
             }
         });
 
+        //监听发送按钮点击
+        mChatInput.setOnKeyListener(new OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode != KeyEvent.KEYCODE_ENTER) return false;
+
+                if (event.getAction() == KeyEvent.ACTION_UP) {//发送文字和图片
+                    if (onSubmit()) {
+                        mChatInput.setText("");
+                    }
+                    if (mSelectPhotoView.getSelectFiles() != null && mSelectPhotoView.getSelectFiles().size() > 0) {
+                        mListener.onSendFiles(mSelectPhotoView.getSelectFiles());
+
+                        mSendBtn.setImageDrawable(ContextCompat.getDrawable(getContext(),
+                                R.drawable.aurora_menuitem_send));
+                        mSendCountTv.setVisibility(View.INVISIBLE);
+                        mSelectPhotoView.resetCheckState();
+                        dismissMenuLayout();
+                        mImm.hideSoftInputFromWindow(getWindowToken(), 0);
+                        mWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                    }
+                }
+
+                return false;
+            }
+        });
+
+        //设置事件
+        mIdSelectAlbum.setOnClickListener(this);
+        mIdSelectCamera.setOnClickListener(this);
         mRecordVoiceBtn.setRecordController(mRecordControllerView);
         mPreviewPlayBtn.setOnClickListener(this);
         mCancelSendAudioBtn.setOnClickListener(this);
@@ -338,8 +377,6 @@ public class ChatInputView extends LinearLayout
         mChatInput.setBackgroundResource(mStyle.getInputEditTextBg());
         mChatInput.setPadding(mStyle.getInputPaddingLeft(), mStyle.getInputPaddingTop(),
                 mStyle.getInputPaddingRight(), mStyle.getInputPaddingBottom());
-        mInputMarginLeft.getLayoutParams().width = mStyle.getInputMarginLeft();
-        mInputMarginRight.getLayoutParams().width = mStyle.getInputMarginRight();
         mVoiceBtn.setImageResource(mStyle.getVoiceBtnIcon());
         mVoiceBtn.setBackground(mStyle.getVoiceBtnBg());
         mPhotoBtn.setBackground(mStyle.getPhotoBtnBg());
@@ -427,7 +464,8 @@ public class ChatInputView extends LinearLayout
     private OnClickListener onMenuItemClickListener = new OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (view.getId() == R.id.aurora_menuitem_ib_send) {
+            int id = view.getId();
+            if (id == R.id.aurora_menuitem_ib_send) {
                 // Allow send text and photos at the same time.
                 if (onSubmit()) {
                     mChatInput.setText("");
@@ -446,7 +484,20 @@ public class ChatInputView extends LinearLayout
 
             } else {
                 mChatInput.clearFocus();
-                if (view.getId() == R.id.aurora_framelayout_menuitem_voice) {
+                if (id == R.id.idAddPic) {
+                    if (mListener != null && mListener.switchToSelectMode()) {
+                        if (mIdSelectAlbumCameraContainer.getVisibility() == VISIBLE && mMenuContainer.getVisibility() == VISIBLE) { //布局已经可，则关闭布局
+                            dismissMenuLayout();
+                        } else if (isKeyboardVisible()) { //布局不可见，键盘可见，关闭键盘，显示布局
+                            mPendingShowMenu = true;
+                            EmoticonsKeyboardUtils.closeSoftKeyboard(mChatInput);
+                            showSelectAlbumAndCameraLayout();
+                        } else { //布局不可见，键盘不可见，显示布局
+                            showMenuLayout();
+                            showSelectAlbumAndCameraLayout();
+                        }
+                    }
+                } else if (id == R.id.aurora_framelayout_menuitem_voice) {
                     if (mListener != null && mListener.switchToMicrophoneMode()) {
                         if (mRecordVoiceRl.getVisibility() == VISIBLE && mMenuContainer.getVisibility() == VISIBLE) {
                             dismissMenuLayout();
@@ -459,7 +510,7 @@ public class ChatInputView extends LinearLayout
                             showRecordVoiceLayout();
                         }
                     }
-                } else if (view.getId() == R.id.aurora_framelayout_menuitem_photo) {
+                } else if (id == R.id.aurora_framelayout_menuitem_photo) {
                     if (mListener != null && mListener.switchToGalleryMode()) {
                         if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE)
                                 != PackageManager.PERMISSION_GRANTED) {
@@ -476,7 +527,7 @@ public class ChatInputView extends LinearLayout
                             showSelectPhotoLayout();
                         }
                     }
-                } else if (view.getId() == R.id.aurora_ll_menuitem_camera_container) {
+                } else if (id == R.id.aurora_ll_menuitem_camera_container) {
                     if (mListener != null && mListener.switchToCameraMode()) {
                         if (mCameraFl.getVisibility() == VISIBLE && mMenuContainer.getVisibility() == VISIBLE) {
                             dismissMenuLayout();
@@ -497,7 +548,7 @@ public class ChatInputView extends LinearLayout
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
-                } else if (view.getId() == R.id.aurora_framelayout_menuitem_emoji) {
+                } else if (id == R.id.aurora_framelayout_menuitem_emoji) {
                     if (mListener != null && mListener.switchToEmojiMode()) {
                         if (mEmojiRl.getVisibility() == VISIBLE && mMenuContainer.getVisibility() == VISIBLE) {
                             dismissMenuLayout();
@@ -517,7 +568,12 @@ public class ChatInputView extends LinearLayout
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.aurora_pb_recordvoice_play_audio) {
+        int id = view.getId();
+        if (id == R.id.idSelectAlbum) {
+
+        } else if (id == R.id.idSelectCamera) {
+
+        } else if (view.getId() == R.id.aurora_pb_recordvoice_play_audio) {
             // press preview play audio button
             if (!mPlaying) {
                 if (mSetData) {
@@ -897,7 +953,7 @@ public class ChatInputView extends LinearLayout
         params3.gravity = Gravity.BOTTOM | Gravity.END;
         mSwitchCameraBtn.setLayoutParams(params3);
 
-        mMenuContainer.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,  height));
+        mMenuContainer.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, height));
         mTextureView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
         mIsFullScreen = true;
     }
@@ -992,6 +1048,14 @@ public class ChatInputView extends LinearLayout
         mRecordVoiceRl.setVisibility(GONE);
     }
 
+    /**
+     * 显示相册和相机选择界面
+     */
+    public void showSelectAlbumAndCameraLayout() {
+
+        mIdSelectAlbumCameraContainer.setVisibility(VISIBLE);
+    }
+
     public void showSelectPhotoLayout() {
         mRecordVoiceRl.setVisibility(GONE);
         mCameraFl.setVisibility(GONE);
@@ -1033,6 +1097,7 @@ public class ChatInputView extends LinearLayout
     }
 
     /**
+     * 设置弹出布局高度
      * Set menu container's height, invoke this method once the menu was initialized.
      *
      * @param height Height of menu, set same height as soft keyboard so that display to perfection.
@@ -1233,7 +1298,7 @@ public class ChatInputView extends LinearLayout
     public void onLeftUpTapped() {
         mChronometer.stop();
         mRecordTime = SystemClock.elapsedRealtime() - mChronometer.getBase();
-        mPreviewPlayBtn.setMax(Math.round(mRecordTime/ 1000));
+        mPreviewPlayBtn.setMax(Math.round(mRecordTime / 1000));
         mChronometer.setVisibility(VISIBLE);
         mRecordHintTv.setVisibility(INVISIBLE);
         mPreviewPlayLl.setVisibility(VISIBLE);
@@ -1348,8 +1413,14 @@ public class ChatInputView extends LinearLayout
         return true;
     }
 
+    /**
+     * 计算输入框到底部距离
+     *
+     * @return
+     */
     public int getDistanceFromInputToBottom() {
-        mMenuItemContainer.getGlobalVisibleRect(mRect);
+        // mMenuItemContainer.getGlobalVisibleRect(mRect);
+        mChatInputContainer.getGlobalVisibleRect(mRect);
         return mHeight - mRect.bottom;
     }
 
@@ -1418,6 +1489,10 @@ public class ChatInputView extends LinearLayout
 
     public ImageButton getSendBtn() {
         return this.mSendBtn;
+    }
+
+    public ImageButton getAddPicBtn() {
+        return this.mIdAddPic;
     }
 
     public SelectPhotoView getSelectPhotoView() {

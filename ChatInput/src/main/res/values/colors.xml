@@ -3,10 +3,10 @@
     <color name="white">#ffffff</color>
 
     <!-->chat input<-->
-    <color name="aurora_bg_input_default">#f3f3f3</color>
+    <color name="aurora_bg_input_default">#f8f8f8</color>
     <color name="aurora_bg_input_container">#e5e5e5</color>
     <color name="aurora_bg_edittext_default">#e5e5e5</color>
-    <color name="aurora_bg_edittext_focus">#27AE59</color>
+    <color name="aurora_bg_edittext_focus">#e6e6e6</color>
     <color name="aurora_cursor_color_default">#27AE59</color>
     <color name="aurora_jpush_blue">#3f80dc</color>
     <color name="aurora_bg_voice_btn_default">#3f80dc</color>
