@@ -25,8 +25,9 @@ public class Constants {
     //拍照获取图片
     public static final int REQUEST_CODE_CAPTURE_CAMERA = 10002;
 
+    //从获取相册图片
+    public static final int REQUEST_CODE_EXTERNAL_STORAGE = 10003;
 
-    public static final int REQUEST_CODE_SETTING = 10003;
 
     public static final String INFO_TYPE = "info_type";
 

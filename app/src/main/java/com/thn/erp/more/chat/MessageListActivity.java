@@ -1,8 +1,6 @@
 package com.thn.erp.more.chat;
 
-
 import android.Manifest;
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +13,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
-import android.os.Bundle;
+import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.PowerManager;
@@ -37,7 +35,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.thn.basemodule.tools.Constants;
 import com.thn.basemodule.tools.GlideUtil;
+import com.thn.basemodule.tools.LogUtil;
 import com.thn.chatinput.ChatInputView;
 import com.thn.chatinput.listener.OnCameraCallbackListener;
 import com.thn.chatinput.listener.OnMenuClickListener;
@@ -45,6 +45,9 @@ import com.thn.chatinput.listener.RecordVoiceListener;
 import com.thn.chatinput.model.FileItem;
 import com.thn.chatinput.model.VideoItem;
 import com.thn.erp.R;
+import com.thn.erp.album.ImageUtils;
+import com.thn.erp.album.PicturePickerUtils;
+import com.thn.erp.base.BaseActivity;
 import com.thn.erp.more.chat.beans.DefaultUser;
 import com.thn.erp.more.chat.beans.MyMessage;
 import com.thn.erp.more.chat.views.ChatView;
@@ -66,14 +69,11 @@ import java.util.Locale;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class MessageListActivity extends Activity implements View.OnTouchListener,
+public class MessageListActivity extends BaseActivity implements View.OnTouchListener,
         EasyPermissions.PermissionCallbacks, SensorEventListener {
-    private static final String Id0Avatar="R.mipmap.default_load";
-    private static final String Id1Avatar="R.mipmap.ic_launcher";
-    private final static String TAG = "MessageListActivity";
+    private static final String Id0Avatar = "R.mipmap.default_load";
+    private static final String Id1Avatar = "R.mipmap.ic_launcher";
     private final int RC_RECORD_VOICE = 0x0001;
-    private final int RC_CAMERA = 0x0002;
-    private final int RC_PHOTO = 0x0003;
 
     private ChatView mChatView;
     private MsgListAdapter<MyMessage> mAdapter;
@@ -92,11 +92,16 @@ public class MessageListActivity extends Activity implements View.OnTouchListene
      */
     private ArrayList<String> mPathList = new ArrayList<>();
     private ArrayList<String> mMsgIdList = new ArrayList<>();
+    private File mCurrentPhotoFile;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
+    protected int getLayout() {
+        return R.layout.activity_chat;
+    }
+
+
+    @Override
+    protected void initView() {
         this.mImm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         mWindow = getWindow();
         registerProximitySensorListener();
@@ -109,7 +114,38 @@ public class MessageListActivity extends Activity implements View.OnTouchListene
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_HEADSET_PLUG);
         registerReceiver(mReceiver, intentFilter);
+    }
+
+
+    @Override
+    protected void installListener() {
+        mChatView.getChatInputView().getmIdSelectAlbum().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!EasyPermissions.hasPermissions(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    EasyPermissions.requestPermissions(activity, getString(R.string.rationale_external_storage),
+                            Constants.REQUEST_CODE_PICK_IMAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
+                } else {
+                    ImageUtils.getImageFromAlbum(activity, 9);
+                }
+            }
+        });
+
+        mChatView.getChatInputView().getmIdSelectCamera().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!EasyPermissions.hasPermissions(getApplicationContext(), Manifest.permission.CAMERA)) {
+                    EasyPermissions.requestPermissions(activity, getString(R.string.rationale_external_storage),
+                            Constants.REQUEST_CODE_CAPTURE_CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE);
+                } else {
+                    openCamera();
+                }
+            }
+        });
+
+
         mChatView.setOnTouchListener(this);
+
         mChatView.setMenuClickListener(new OnMenuClickListener() {
             @Override
             public boolean onSendTextMessage(CharSequence input) {
@@ -190,7 +226,7 @@ public class MessageListActivity extends Activity implements View.OnTouchListene
                 if (!EasyPermissions.hasPermissions(MessageListActivity.this, perms)) {
                     EasyPermissions.requestPermissions(MessageListActivity.this,
                             getResources().getString(R.string.rationale_photo),
-                            RC_PHOTO, perms);
+                            Constants.REQUEST_CODE_EXTERNAL_STORAGE, perms);
                 }
                 // If you call updateData, select photo view will try to update data(Last update over 30 seconds.)
                 mChatView.getChatInputView().getSelectPhotoView().updateData();
@@ -209,7 +245,7 @@ public class MessageListActivity extends Activity implements View.OnTouchListene
                 if (!EasyPermissions.hasPermissions(MessageListActivity.this, perms)) {
                     EasyPermissions.requestPermissions(MessageListActivity.this,
                             getResources().getString(R.string.rationale_camera),
-                            RC_CAMERA, perms);
+                            Constants.REQUEST_CODE_CAPTURE_CAMERA, perms);
                 } else {
                     File rootDir = getFilesDir();
                     String fileDir = rootDir.getAbsolutePath() + "/photo";
@@ -313,6 +349,7 @@ public class MessageListActivity extends Activity implements View.OnTouchListene
                 scrollToBottom();
                 return false;
             }
+
         });
 
         mChatView.getChatInputView().getInputView().setOnTouchListener(new View.OnTouchListener() {
@@ -322,15 +359,14 @@ public class MessageListActivity extends Activity implements View.OnTouchListene
                 return false;
             }
         });
-
-        mChatView.getSelectAlbumBtn().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MessageListActivity.this, "OnClick select album button",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
     }
+
+    private void openCamera() {
+        mCurrentPhotoFile = ImageUtils.getDefaultFile();
+        if (null == mCurrentPhotoFile) return;
+        ImageUtils.getImageFromCamera(activity, ImageUtils.getUriForFile(getApplicationContext(), mCurrentPhotoFile));
+    }
+
 
     private void registerProximitySensorListener() {
         try {
@@ -415,13 +451,93 @@ public class MessageListActivity extends Activity implements View.OnTouchListene
 
     @Override
     public void onPermissionsGranted(int requestCode, List<String> perms) {
+        if (requestCode == Constants.REQUEST_CODE_PICK_IMAGE && perms.contains(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            ImageUtils.getImageFromAlbum(activity, 9);
+            LogUtil.e("onPermissionsGranted()::getImageFromAlbum");
+        }
 
+        if (requestCode == Constants.REQUEST_CODE_CAPTURE_CAMERA && perms.contains(Manifest.permission.CAMERA)) {
+            openCamera();
+            LogUtil.e("onPermissionsGranted()::openCamera");
+        }
     }
+
 
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
             new AppSettingsDialog.Builder(this).build().show();
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case Constants.REQUEST_CODE_PICK_IMAGE:
+                    List<Uri> mSelected = PicturePickerUtils.obtainResult(data);
+                    if (mSelected == null || mSelected.size() == 0) return;
+                    sendFileMessage(mSelected);
+                    break;
+                case Constants.REQUEST_CODE_CAPTURE_CAMERA:
+                    if (null == mCurrentPhotoFile) return;
+                    Uri uri = ImageUtils.getUriForFile(getApplicationContext(), mCurrentPhotoFile);
+                    ArrayList<Uri> list = new ArrayList<>();
+                    list.add(uri);
+                    sendFileMessage(list);
+                    break;
+            }
+        }
+    }
+
+    private List<FileItem> getFileItemList(List<Uri> uris) {
+        if (uris == null || uris.isEmpty()) return null;
+        List<FileItem> items = new ArrayList<>();
+        FileItem fileItem;
+        String path;
+        for (Uri uri : uris) {
+            path = ImageUtils.getRealFilePath(getApplicationContext(), uri);
+            fileItem = new FileItem(path, "", "", "");
+            fileItem.setType(FileItem.Type.Image);
+            items.add(fileItem);
+        }
+
+        return items;
+    }
+
+    /**
+     * 发送图片消息
+     * @param uris
+     */
+    private void sendFileMessage(List<Uri> uris) {
+        if (uris == null || uris.isEmpty()) {
+            return;
+        }
+
+        List<FileItem> fileItemList = getFileItemList(uris);
+
+        MyMessage message;
+        for (FileItem item : fileItemList) {
+            if (item.getType() == FileItem.Type.Image) {
+                message = new MyMessage(null, IMessage.MessageType.SEND_IMAGE.ordinal());
+                mPathList.add(item.getFilePath());
+                mMsgIdList.add(message.getMsgId());
+            } else if (item.getType() == FileItem.Type.Video) {
+                message = new MyMessage(null, IMessage.MessageType.SEND_VIDEO.ordinal());
+                message.setDuration(((VideoItem) item).getDuration());
+
+            } else {
+                throw new RuntimeException("Invalid FileItem type. Must be Type.Image or Type.Video");
+            }
+
+            message.setTimeString(new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date()));
+            message.setMediaFilePath(item.getFilePath());
+            message.setUserInfo(new DefaultUser("1", "Ironman", "R.drawable.ironman"));
+
+            final MyMessage fMsg = message;
+            mAdapter.addToStart(fMsg, true);
         }
     }
 

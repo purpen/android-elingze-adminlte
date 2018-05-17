@@ -135,8 +135,7 @@ public class ChatInputView extends LinearLayout
     private int mWidth;
     private int mHeight;
     private int mSoftKeyboardHeight;
-    private int mNowh;
-    private int mOldh;
+
     public static int sMenuHeight = 831;
 
     private boolean mPendingShowMenu;
@@ -295,8 +294,6 @@ public class ChatInputView extends LinearLayout
         });
 
         //设置事件
-        mIdSelectAlbum.setOnClickListener(this);
-        mIdSelectCamera.setOnClickListener(this);
         mRecordVoiceBtn.setRecordController(mRecordControllerView);
         mPreviewPlayBtn.setOnClickListener(this);
         mCancelSendAudioBtn.setOnClickListener(this);
@@ -569,11 +566,7 @@ public class ChatInputView extends LinearLayout
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if (id == R.id.idSelectAlbum) {
-            
-        } else if (id == R.id.idSelectCamera) {
-
-        } else if (view.getId() == R.id.aurora_pb_recordvoice_play_audio) {
+        if (view.getId() == R.id.aurora_pb_recordvoice_play_audio) {
             // press preview play audio button
             if (!mPlaying) {
                 if (mSetData) {
@@ -1504,5 +1497,13 @@ public class ChatInputView extends LinearLayout
 
     public ImageButton getSelectAlbumBtn() {
         return this.mSelectAlbumIb;
+    }
+
+    public ImageButton getmIdSelectAlbum() {
+        return mIdSelectAlbum;
+    }
+
+    public ImageButton getmIdSelectCamera() {
+        return mIdSelectCamera;
     }
 }
