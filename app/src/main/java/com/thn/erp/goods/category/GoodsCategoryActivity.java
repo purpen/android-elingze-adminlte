@@ -8,7 +8,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
@@ -169,13 +168,10 @@ public class GoodsCategoryActivity extends BaseStyle2Activity implements ImpTopb
                     }
                 });
 
-                customPopupWindow = new CustomPopupWindow.Builder()
-                        .setActivity(activity)
-                        .setContentView(layoutView)
+                customPopupWindow = new CustomPopupWindow.Builder(activity,layoutView)
                         .setAnimationStyle(R.style.popupAnimStyle)
                         .setOutSideCancel(true)
                         .setFocusable(true)
-                        .setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
                         .build()
                         .showAtLocation(view, Gravity.BOTTOM, 0, 0)
                         .setWindowAlpha(0.5f);

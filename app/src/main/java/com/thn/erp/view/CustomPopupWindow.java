@@ -101,14 +101,17 @@ public class CustomPopupWindow {
         private int animationStyle;
         private Activity activity;
 
-        public Builder setContentView(View contentView) {
+
+        public Builder(Activity activity,View contentView){
+            this.activity =activity;
             this.contentView = contentView;
-            return this;
+            this.layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         }
 
-        public Builder setActivity(Activity activity) {
-            this.activity = activity;
-            return this;
+        public Builder(Activity activity,View contentView,ViewGroup.LayoutParams layoutParams){
+            this.activity =activity;
+            this.contentView = contentView;
+            this.layoutParams = layoutParams;
         }
 
 
@@ -127,10 +130,6 @@ public class CustomPopupWindow {
             return this;
         }
 
-        public Builder setLayoutParams(ViewGroup.LayoutParams params){
-            this.layoutParams = params;
-            return this;
-        }
 
         public CustomPopupWindow build() {
             return new CustomPopupWindow(this);
