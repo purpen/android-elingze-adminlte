@@ -17,8 +17,7 @@ import android.os.Handler;
 import android.provider.MediaStore.Images.Media;
 import android.provider.MediaStore.Images.Thumbnails;
 
-
-import com.thn.erp.utils.ImageUtils;
+import com.thn.imagealbum.album.ExifInterfaceCompat;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -67,7 +66,7 @@ public class MediaStoreCompat {
             } else {
                 Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
                 intent.addCategory("android.intent.category.DEFAULT");
-                intent.putExtra("output",ImageUtils.getUriForFile(toSave));
+                intent.putExtra("output",ImageUtils.getUriForFile(activity,toSave));
                 intent.putExtra("android.intent.extra.videoQuality", 1);
                 activity.startActivityForResult(intent, requestCode);
                 return toSave.toString();

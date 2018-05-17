@@ -1,4 +1,4 @@
-package com.thn.imagealbum.album;
+package com.thn.erp.album;
 
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -23,10 +23,11 @@ import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.view.View;
 
-import com.thn.basemodule.BuildConfig;
 import com.thn.basemodule.tools.Constants;
 import com.thn.basemodule.tools.LogUtil;
 import com.thn.basemodule.tools.ToastUtils;
+import com.thn.imagealbum.BuildConfig;
+import com.thn.imagealbum.album.ImageLoaderEngine;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

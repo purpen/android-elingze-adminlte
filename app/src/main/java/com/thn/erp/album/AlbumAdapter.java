@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.thn.erp.R;
+import com.thn.imagealbum.album.Album;
 
 
 public class AlbumAdapter extends CursorAdapter {

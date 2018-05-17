@@ -22,6 +22,10 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
+import com.thn.imagealbum.album.LoadEngine;
+import com.thn.imagealbum.album.MimeType;
+import com.thn.imagealbum.album.SelectionSpec;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;

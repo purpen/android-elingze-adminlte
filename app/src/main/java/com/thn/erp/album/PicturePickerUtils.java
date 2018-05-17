@@ -5,6 +5,8 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 
+import com.thn.imagealbum.album.PhotoMetadataUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 

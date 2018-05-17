@@ -20,9 +20,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.thn.erp.R;
-import com.thn.erp.utils.LogUtil;
+import com.thn.imagealbum.album.Album;
+import com.thn.imagealbum.album.BundleUtils;
+import com.thn.imagealbum.album.SelectedUriCollection;
+import com.thn.imagealbum.album.SelectionSpec;
 
 import java.util.ArrayList;
 
@@ -50,7 +52,6 @@ public class ImageSelectActivity extends FragmentActivity implements AlbumCollec
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LogUtil.e("onCreate()" + this.getClass().getSimpleName());
         setContentView(R.layout.activity_image_select);
         mCapturePhotoUriHolder = savedInstanceState != null ? savedInstanceState.getString(STATE_CAPTURE_PHOTO_URI) : "";
         SelectionSpec selectionSpec = getIntent().getParcelableExtra(ImageSelectActivity.EXTRA_SELECTION_SPEC);
@@ -159,7 +160,7 @@ public class ImageSelectActivity extends FragmentActivity implements AlbumCollec
     }
 
     private void showFolderList() {
-        galleryTip.setImageResource(R.mipmap.arrow_up_white);
+        galleryTip.setImageResource(R.drawable.arrow_up_white);
         mListViewGroup.setVisibility(View.VISIBLE);
         mListView.setVisibility(View.VISIBLE);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.listview_up);
@@ -170,7 +171,7 @@ public class ImageSelectActivity extends FragmentActivity implements AlbumCollec
     }
 
     private void hideFolderList() {
-        galleryTip.setImageResource(R.mipmap.arrow_down_white);
+        galleryTip.setImageResource(R.drawable.arrow_down_white);
         Animation animation = AnimationUtils.loadAnimation(ImageSelectActivity.this, R.anim.listview_down);
         Animation fadeOut = AnimationUtils.loadAnimation(ImageSelectActivity.this, R.anim.listview_fade_out);
         animation.setAnimationListener(new Animation.AnimationListener() {

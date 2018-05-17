@@ -23,6 +23,10 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.content.CursorLoader;
 
+import com.thn.imagealbum.album.Album;
+import com.thn.imagealbum.album.Picture;
+import com.thn.imagealbum.album.SelectionSpec;
+
 
 /**
  * @author KeithYokoma

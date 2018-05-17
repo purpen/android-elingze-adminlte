@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.thn.erp.album;
+package com.thn.erp.view;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -23,7 +23,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.thn.erp.R;
+import com.thn.erp.album.ImageSelectActivity;
+import com.thn.imagealbum.R;
+import com.thn.imagealbum.album.Picture;
+import com.thn.imagealbum.album.SelectedUriCollection;
 
 
 /**
@@ -79,11 +82,11 @@ public class GridViewItemRelativeLayout extends RelativeLayout {
                 }
                 if (GridViewItemRelativeLayout.this.mCollection.isSelected(item.buildContentUri())) {
                     GridViewItemRelativeLayout.this.mCollection.remove(item.buildContentUri());
-                    GridViewItemRelativeLayout.this.imageCheck.setImageResource(R.mipmap.pick_photo_checkbox_normal);
+                    GridViewItemRelativeLayout.this.imageCheck.setImageResource(R.drawable.pick_photo_checkbox_normal);
                     GridViewItemRelativeLayout.this.imageView.clearColorFilter();
                 } else {
                     GridViewItemRelativeLayout.this.mCollection.add(item.buildContentUri());
-                    GridViewItemRelativeLayout.this.imageCheck.setImageResource(R.mipmap.pick_photo_check);
+                    GridViewItemRelativeLayout.this.imageCheck.setImageResource(R.drawable.pick_photo_check);
                     GridViewItemRelativeLayout.this.imageView.setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
                 }
             }
@@ -93,10 +96,10 @@ public class GridViewItemRelativeLayout extends RelativeLayout {
     public void setItem(Picture item) {
         this.item = item;
         imageView.clearColorFilter();
-        imageCheck.setImageResource(R.mipmap.pick_photo_checkbox_normal);
+        imageCheck.setImageResource(R.drawable.pick_photo_checkbox_normal);
         if (mCollection.isSelected(item.buildContentUri())) {
             imageView.setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
-            imageCheck.setImageResource(R.mipmap.pick_photo_check);
+            imageCheck.setImageResource(R.drawable.pick_photo_check);
         }
         imageCheck.setVisibility(mCollection.isSingleChoose() || item.isCapture() ? View.GONE : View.VISIBLE);
         disPlay();

@@ -24,6 +24,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.thn.erp.R;
+import com.thn.erp.view.GridViewItemRelativeLayout;
+import com.thn.imagealbum.album.Picture;
+import com.thn.imagealbum.album.SelectedUriCollection;
 
 
 /**

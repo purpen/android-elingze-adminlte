@@ -25,6 +25,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.thn.imagealbum.album.Album;
+import com.thn.imagealbum.album.AlbumLoader;
+import com.thn.imagealbum.album.BundleUtils;
+import com.thn.imagealbum.album.HandlerUtils;
+import com.thn.imagealbum.album.SelectionSpec;
+
 import java.lang.ref.WeakReference;
 
 /**

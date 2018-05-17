@@ -23,9 +23,11 @@ import com.qiniu.android.storage.UploadOptions;
 import com.stephen.taihuoniaolibrary.utils.THNDpUtil;
 import com.stephen.taihuoniaolibrary.utils.THNToastUtil;
 import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
+import com.thn.basemodule.tools.LogUtil;
 import com.thn.erp.AppApplication;
 import com.thn.erp.Constants;
 import com.thn.erp.R;
+import com.thn.erp.album.ImageUtils;
 import com.thn.erp.album.PicturePickerUtils;
 import com.thn.erp.base.BaseStyle2Activity;
 import com.thn.erp.common.RecycleViewItemDecorationHorizontal;
@@ -37,13 +39,11 @@ import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.utils.FileUtil;
 import com.thn.erp.utils.JsonUtil;
-import com.thn.erp.utils.LogUtil;
 import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.CustomHeadView;
 import com.thn.erp.view.CustomPopupWindow;
 import com.thn.erp.view.common.LinearLayoutCustomerAddArrowView;
 import com.thn.erp.view.common.LinearLayoutCustomerAddSwitchView;
-import com.thn.imagealbum.album.ImageUtils;
 import com.yanzhenjie.permission.AndPermission;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
@@ -355,6 +355,7 @@ public class GoodsAddActivity extends BaseStyle2Activity {
                 getQiNiuToken(imgPath, new UpLoadCallBack() {
                     @Override
                     public void complete() {
+                        com.thn.basemodule.tools.LogUtil.e("complete()===="+imgPath);
                         mGoodsAddRecyclerViewAdapter.addList(imgPath);
                     }
                 });

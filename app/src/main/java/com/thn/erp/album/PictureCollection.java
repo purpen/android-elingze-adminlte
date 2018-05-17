@@ -25,6 +25,11 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.widget.GridView;
 
+import com.thn.imagealbum.album.Album;
+import com.thn.imagealbum.album.BundleUtils;
+import com.thn.imagealbum.album.SelectedUriCollection;
+import com.thn.imagealbum.album.SelectionSpec;
+
 import java.lang.ref.WeakReference;
 
 /**
