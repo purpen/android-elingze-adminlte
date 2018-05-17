@@ -124,7 +124,7 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
             public void onClick(View v) {
                 if (!EasyPermissions.hasPermissions(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
                     EasyPermissions.requestPermissions(activity, getString(R.string.rationale_external_storage),
-                            Constants.REQUEST_CODE_PICK_IMAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
+                            Constants.REQUEST_CODE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
                 } else {
                     ImageUtils.getImageFromAlbum(activity, 9);
                 }
