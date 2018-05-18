@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.thn.basemodule.tools.CustomDialog;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
 import com.thn.erp.more.chat.MessageListActivity;
@@ -81,7 +82,8 @@ public class MoreFragment extends BaseFragment {
                startActivity(new Intent(getContext(), MessageListActivity.class));
                 break;
             case R.id.linearLayout_service2:
-                Toast.makeText(activity, "客服热线", Toast.LENGTH_SHORT).show();
+                CustomDialog dialog = new CustomDialog();
+                dialog.show(getFragmentManager(), CustomDialog.class.getSimpleName());
                 break;
             case R.id.linearLayout_service3:
                 Toast.makeText(activity, "提工单", Toast.LENGTH_SHORT).show();
