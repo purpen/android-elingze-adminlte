@@ -13,16 +13,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.NetReadyHandler;
 import com.qiniu.android.storage.UpCancellationSignal;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UpProgressHandler;
 import com.qiniu.android.storage.UploadOptions;
-import com.stephen.taihuoniaolibrary.utils.THNDpUtil;
 import com.stephen.taihuoniaolibrary.utils.THNToastUtil;
 import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
+import com.thn.basemodule.tools.DimenUtil;
 import com.thn.basemodule.tools.LogUtil;
 import com.thn.erp.AppApplication;
 import com.thn.erp.Constants;
@@ -48,7 +47,6 @@ import com.yanzhenjie.permission.AndPermission;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -170,7 +168,7 @@ public class GoodsAddActivity extends BaseStyle2Activity {
     private void initRecyclerView() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView1.setLayoutManager(layoutManager);
-        recyclerView1.addItemDecoration(new RecycleViewItemDecorationHorizontal(THNDpUtil.dp2px(this, 10)));
+        recyclerView1.addItemDecoration(new RecycleViewItemDecorationHorizontal(DimenUtil.dp2px(this, 10)));
         mGoodsAddRecyclerViewAdapter = new GoodsAddRecyclerViewAdapter(this, new OnRecyclerViewItemClickListener() {
             @Override
             public void onClick(View view, int i) {

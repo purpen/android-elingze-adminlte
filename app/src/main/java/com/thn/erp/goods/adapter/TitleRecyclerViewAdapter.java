@@ -26,7 +26,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.stephen.taihuoniaolibrary.utils.THNDpUtil;
+import com.thn.basemodule.tools.DimenUtil;
 import com.thn.erp.R;
 import com.thn.erp.utils.Util;
 
@@ -93,7 +93,7 @@ public class TitleRecyclerViewAdapter extends RecyclerView.Adapter<TitleRecycler
         if (equalWidth) {
             view.setLayoutParams(new RelativeLayout.LayoutParams((int) (Util.getScreenWidth() * 0.25), view.getLayoutParams().height));
         }else {
-            view.setLayoutParams(new RelativeLayout.LayoutParams(THNDpUtil.dp2px(view.getContext(),80), view.getLayoutParams().height));
+            view.setLayoutParams(new RelativeLayout.LayoutParams(DimenUtil.dp2px(view.getContext(),80), view.getLayoutParams().height));
         }
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;

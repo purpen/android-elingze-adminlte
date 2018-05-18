@@ -3,15 +3,11 @@ package com.thn.erp.base;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.WindowManager;
 
-import com.stephen.taihuoniaolibrary.utils.THNDpUtil;
 import com.stephen.taihuoniaolibrary.utils.THNStatusBarUtils;
+import com.thn.basemodule.tools.DimenUtil;
 import com.thn.erp.R;
 import com.thn.erp.common.RecycleViewItemDecorationVertical;
-import com.thn.erp.view.common.PublicTopBar;
-
-import butterknife.BindView;
 
 /**
  * Created by Stephen on 2018/3/21 16:52
@@ -45,7 +41,7 @@ public abstract class BaseStyle2Activity extends BaseActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         ultimateRecyclerView.setHasFixedSize(true);
         ultimateRecyclerView.removeItemDividerDecoration();
-        ultimateRecyclerView.addItemDecoration(new RecycleViewItemDecorationVertical(THNDpUtil.dp2px(this, 10)));
+        ultimateRecyclerView.addItemDecoration(new RecycleViewItemDecorationVertical(DimenUtil.dp2px(this, 10)));
         ultimateRecyclerView.setLayoutManager(linearLayoutManager);
     }
 
@@ -53,7 +49,7 @@ public abstract class BaseStyle2Activity extends BaseActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         ultimateRecyclerView.setHasFixedSize(true);
         ultimateRecyclerView.removeItemDividerDecoration();
-        ultimateRecyclerView.addItemDecoration(new RecycleViewItemDecorationVertical(THNDpUtil.dp2px(this, 10)));
+        ultimateRecyclerView.addItemDecoration(new RecycleViewItemDecorationVertical(DimenUtil.dp2px(this, 10)));
         ultimateRecyclerView.setLayoutManager(linearLayoutManager);
     }
 }
