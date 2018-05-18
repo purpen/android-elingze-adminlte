@@ -18,13 +18,12 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -33,8 +32,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.thn.basemodule.tools.Constants;
 import com.thn.basemodule.tools.GlideUtil;
 import com.thn.basemodule.tools.LogUtil;
@@ -124,7 +121,7 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
             public void onClick(View v) {
                 if (!EasyPermissions.hasPermissions(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
                     EasyPermissions.requestPermissions(activity, getString(R.string.rationale_external_storage),
-                            Constants.REQUEST_CODE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
+                            Constants.REQUEST_CODE_PICK_IMAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
                 } else {
                     ImageUtils.getImageFromAlbum(activity, 9);
                 }
@@ -226,7 +223,7 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
                 if (!EasyPermissions.hasPermissions(MessageListActivity.this, perms)) {
                     EasyPermissions.requestPermissions(MessageListActivity.this,
                             getResources().getString(R.string.rationale_photo),
-                            Constants.REQUEST_CODE_EXTERNAL_STORAGE, perms);
+                            Constants.REQUEST_CODE_PICK_IMAGE, perms);
                 }
                 // If you call updateData, select photo view will try to update data(Last update over 30 seconds.)
                 mChatView.getChatInputView().getSelectPhotoView().updateData();
@@ -509,6 +506,7 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
 
     /**
      * 发送图片消息
+     *
      * @param uris
      */
     private void sendFileMessage(List<Uri> uris) {
@@ -568,8 +566,8 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
 
     private void initMsgAdapter() {
         final float density = getResources().getDisplayMetrics().density;
-        final float MIN_WIDTH = 60 * density;
-        final float MAX_WIDTH = 200 * density;
+        final float MIN_WIDTH = 50 * density;
+        final float MAX_WIDTH = 150 * density;
         final float MIN_HEIGHT = 60 * density;
         final float MAX_HEIGHT = 200 * density;
         ImageLoader imageLoader = new ImageLoader() {
@@ -592,67 +590,76 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
              * @param string A file path, or a uri or url.
              */
             @Override
-            public void loadImage(final ImageView imageView, String string) {
+            public void loadImage(final ImageView imageView, final String string) {
                 // You can use other image load libraries.
-                Glide.with(getApplicationContext())
-                        .asBitmap()
-                        .load(string)
-                        .apply(new RequestOptions().fitCenter().placeholder(R.drawable.aurora_picture_not_found))
-                        .into(new SimpleTarget<Bitmap>() {
-                            @Override
-                            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                                int imageWidth = resource.getWidth();
-                                int imageHeight = resource.getHeight();
-                                Log.d(TAG, "Image width " + imageWidth + " height: " + imageHeight);
+                GlideUtil.loadImage(string,imageView);
 
-                                // 裁剪 bitmap
-                                float width, height;
-                                if (imageWidth > imageHeight) {
-                                    if (imageWidth > MAX_WIDTH) {
-                                        float temp = MAX_WIDTH / imageWidth * imageHeight;
-                                        height = temp > MIN_HEIGHT ? temp : MIN_HEIGHT;
-                                        width = MAX_WIDTH;
-                                    } else if (imageWidth < MIN_WIDTH) {
-                                        float temp = MIN_WIDTH / imageWidth * imageHeight;
-                                        height = temp < MAX_HEIGHT ? temp : MAX_HEIGHT;
-                                        width = MIN_WIDTH;
-                                    } else {
-                                        float ratio = imageWidth / imageHeight;
-                                        if (ratio > 3) {
-                                            ratio = 3;
-                                        }
-                                        height = imageHeight * ratio;
-                                        width = imageWidth;
-                                    }
-                                } else {
-                                    if (imageHeight > MAX_HEIGHT) {
-                                        float temp = MAX_HEIGHT / imageHeight * imageWidth;
-                                        width = temp > MIN_WIDTH ? temp : MIN_WIDTH;
-                                        height = MAX_HEIGHT;
-                                    } else if (imageHeight < MIN_HEIGHT) {
-                                        float temp = MIN_HEIGHT / imageHeight * imageWidth;
-                                        width = temp < MAX_WIDTH ? temp : MAX_WIDTH;
-                                        height = MIN_HEIGHT;
-                                    } else {
-                                        float ratio = imageHeight / imageWidth;
-                                        if (ratio > 3) {
-                                            ratio = 3;
-                                        }
-                                        width = imageWidth * ratio;
-                                        height = imageHeight;
-                                    }
-                                }
-                                ViewGroup.LayoutParams params = imageView.getLayoutParams();
-                                params.width = (int) width;
-                                params.height = (int) height;
-                                imageView.setLayoutParams(params);
-                                Matrix matrix = new Matrix();
-                                float scaleWidth = width / imageWidth;
-                                float scaleHeight = height / imageHeight;
-                                matrix.postScale(scaleWidth, scaleHeight);
-                                imageView.setImageBitmap(Bitmap.createBitmap(resource, 0, 0, imageWidth, imageHeight, matrix, true));
-                            }
-                        });
+//                Glide.with(getApplicationContext())
+//                        .asBitmap()
+//                        .load(string)
+//                        .into(new SimpleTarget<Bitmap>() {
+//                            @Override
+//                            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+//                                int imageWidth = resource.getWidth();
+//                                int imageHeight = resource.getHeight();
+//                                LogUtil.e(TAG + " imageWidth: " + imageWidth + " imageHeight: " + imageHeight);
+//                                if (imageWidth <= MIN_WIDTH) {
+//                                    GlideUtil.loadImageWithDimen(string, imageView, imageWidth, imageHeight);
+//                                } else if (imageWidth > MAX_WIDTH) {
+//                                    float scaleW = MAX_WIDTH;
+//                                    float scaleH = imageHeight * MAX_WIDTH / imageWidth;
+//                                    GlideUtil.loadImageWithDimen(string, imageView, (int) scaleW, (int) scaleH);
+//                                }
+
+//                                // 裁剪 bitmap
+//                                float width, height;
+//                                if (imageWidth > imageHeight) {
+//                                    if (imageWidth > MAX_WIDTH) {
+//                                        float temp = MAX_WIDTH / imageWidth * imageHeight;
+//                                        height = temp > MIN_HEIGHT ? temp : MIN_HEIGHT;
+//                                        width = MAX_WIDTH;
+//                                    } else if (imageWidth < MIN_WIDTH) {
+//                                        float temp = MIN_WIDTH / imageWidth * imageHeight;
+//                                        height = temp < MAX_HEIGHT ? temp : MAX_HEIGHT;
+//                                        width = MIN_WIDTH;
+//                                    } else {
+//                                        float ratio = imageWidth / imageHeight;
+//                                        if (ratio > 3) {
+//                                            ratio = 3;
+//                                        }
+//                                        height = imageHeight * ratio;
+//                                        width = imageWidth;
+//                                    }
+//                                } else {
+//                                    if (imageHeight > MAX_HEIGHT) {
+//                                        float temp = MAX_HEIGHT / imageHeight * imageWidth;
+//                                        width = temp > MIN_WIDTH ? temp : MIN_WIDTH;
+//                                        height = MAX_HEIGHT;
+//                                    } else if (imageHeight < MIN_HEIGHT) {
+//                                        float temp = MIN_HEIGHT / imageHeight * imageWidth;
+//                                        width = temp < MAX_WIDTH ? temp : MAX_WIDTH;
+//                                        height = MIN_HEIGHT;
+//                                    } else {
+//                                        float ratio = imageHeight / imageWidth;
+//                                        if (ratio > 3) {
+//                                            ratio = 3;
+//                                        }
+//                                        width = imageWidth * ratio;
+//                                        height = imageHeight;
+//                                    }
+//                                }
+//                                ViewGroup.LayoutParams params = imageView.getLayoutParams();
+//                                params.width = (int) width;
+//                                params.height = (int) height;
+//                                imageView.setLayoutParams(params);
+//                                Matrix matrix = new Matrix();
+//                                float scaleWidth = width / imageWidth;
+//                                float scaleHeight = height / imageHeight;
+//                                matrix.postScale(scaleWidth, scaleHeight);
+//                                GlideUtil.loadImageWithDimen(string,imageView,(int)width,(int) height);
+////                                imageView.setImageBitmap(Bitmap.createBitmap(resource, 0, 0, imageWidth, imageHeight, matrix, true));
+//                            }
+//                        });
             }
 
             /**
@@ -737,6 +744,20 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
             }
         });
 
+        mChatView.getMessageListView().addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState== RecyclerView.SCROLL_STATE_DRAGGING){
+                    GlideUtil.pauseRequests(getApplicationContext());
+                }
+
+                if (newState== RecyclerView.SCROLL_STATE_IDLE){
+                    GlideUtil.resumeRequests(getApplicationContext());
+                }
+            }
+        });
+
         //TODO 添加首屏假数据
         MyMessage message = new MyMessage("Hello World", IMessage.MessageType.RECEIVE_TEXT.ordinal());
         message.setUserInfo(new DefaultUser("0", "客户", Id0Avatar));
@@ -782,6 +803,22 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
 
         mChatView.setAdapter(mAdapter);
         mAdapter.getLayoutManager().scrollToPosition(0);
+    }
+
+    // 缩放图片
+    public static Bitmap zoomImg(Bitmap bm, int newWidth, int newHeight) {
+        // 获得图片的宽高
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        // 计算缩放比例
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // 取得想要缩放的matrix参数
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+        // 得到新的图片
+        Bitmap newbm = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, true);
+        return newbm;
     }
 
     /**

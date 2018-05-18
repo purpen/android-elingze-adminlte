@@ -59,11 +59,11 @@ public class PhotoViewHolder<MESSAGE extends IMessage> extends BaseMessageViewHo
             mImageLoader.loadAvatarImage(mAvatarIv, message.getFromUser().getAvatarFilePath());
         }
 
-        if (mScroll) {
-            mPhotoIv.setImageResource(R.drawable.aurora_picture_not_found);
-        } else {
+//        if (mScroll) {
+//            mPhotoIv.setImageResource(R.drawable.aurora_picture_not_found);
+//        } else {
             mImageLoader.loadImage(mPhotoIv, message.getMediaFilePath());
-        }
+//        }
 
 
         mAvatarIv.setOnClickListener(new View.OnClickListener() {

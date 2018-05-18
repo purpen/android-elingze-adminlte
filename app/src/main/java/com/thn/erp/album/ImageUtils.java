@@ -369,7 +369,7 @@ public class ImageUtils {
                     .count(count)
                     .enableCamera(true)
                     .setEngine(new ImageLoaderEngine())
-                    .forResult(Constants.REQUEST_CODE_EXTERNAL_STORAGE);
+                    .forResult(Constants.REQUEST_CODE_PICK_IMAGE);
         } else {
             ToastUtils.showError(activity,"未检测到SD卡");
         }

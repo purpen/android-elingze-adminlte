@@ -53,12 +53,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
+            android:maxWidth="150dp"
             android:layout_below="@+id/aurora_tv_msgitem_sender_display_name"
             android:layout_toLeftOf="@+id/aurora_iv_msgitem_avatar"
-            android:layout_marginRight="8dp"
-            android:maxHeight="200dp"
-            android:maxWidth="200dp"
             android:src="@drawable/aurora_picture_not_found"
+            android:layout_marginRight="8dp"
             app:photoMessageRadius="8dp"
             />
 
