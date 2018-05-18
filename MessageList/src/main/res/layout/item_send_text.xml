@@ -5,7 +5,8 @@
 
     <com.thn.messagelist.view.RoundTextView
         android:id="@+id/aurora_tv_msgitem_date"
-        style="@style/aurora_msgitem_date_style"/>
+        style="@style/aurora_msgitem_date_style"
+        />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -54,11 +55,10 @@
             android:layout_below="@+id/aurora_tv_msgitem_sender_display_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:lineSpacingExtra="5dp"
+            android:lineSpacingMultiplier="1.1"
             android:layout_marginRight="3dp"
-            android:background="@drawable/aurora_sendtxt_bubble"
-            android:paddingRight="20dp"
-            android:text="asdf"/>
+            android:background="@drawable/icon_send_message"
+            android:text="message"/>
 
         <com.thn.messagelist.view.RoundImageView
             android:id="@+id/aurora_iv_msgitem_avatar"

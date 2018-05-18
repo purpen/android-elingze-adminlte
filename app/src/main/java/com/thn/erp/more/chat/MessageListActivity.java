@@ -71,8 +71,8 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class MessageListActivity extends BaseActivity implements View.OnTouchListener,
         EasyPermissions.PermissionCallbacks, SensorEventListener {
-    private static final String Id0Avatar = "R.mipmap.default_load";
-    private static final String Id1Avatar = "R.mipmap.ic_launcher";
+    private static final String Id0Avatar = "R.mipmap.icon_head_business";
+    private static final String Id1Avatar = "R.mipmap.icon_head_business";
     private final int RC_RECORD_VOICE = 0x0001;
 
     private ChatView mChatView;
@@ -153,7 +153,7 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
                     return false;
                 }
                 MyMessage message = new MyMessage(input.toString(), IMessage.MessageType.SEND_TEXT.ordinal());
-                message.setUserInfo(new DefaultUser("1", "Ironman", "R.drawable.ironman"));
+                message.setUserInfo(new DefaultUser("1", "客户", Id1Avatar));
                 message.setTimeString(new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date()));
                 message.setMessageStatus(IMessage.MessageStatus.SEND_GOING);
                 mAdapter.addToStart(message, true);
@@ -182,7 +182,7 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
 
                     message.setTimeString(new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date()));
                     message.setMediaFilePath(item.getFilePath());
-                    message.setUserInfo(new DefaultUser("1", "Ironman", "R.drawable.ironman"));
+                    message.setUserInfo(new DefaultUser("1", "客户", Id1Avatar));
 
                     final MyMessage fMsg = message;
                     MessageListActivity.this.runOnUiThread(new Runnable() {
@@ -278,7 +278,7 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
             @Override
             public void onFinishRecord(File voiceFile, int duration) {
                 MyMessage message = new MyMessage(null, IMessage.MessageType.SEND_VOICE.ordinal());
-                message.setUserInfo(new DefaultUser("1", "Ironman", "R.drawable.ironman"));
+                message.setUserInfo(new DefaultUser("1", "客户", Id1Avatar));
                 message.setMediaFilePath(voiceFile.getPath());
                 message.setDuration(duration);
                 message.setTimeString(new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date()));
@@ -317,7 +317,7 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
                 message.setMediaFilePath(photoPath);
                 mPathList.add(photoPath);
                 mMsgIdList.add(message.getMsgId());
-                message.setUserInfo(new DefaultUser("1", "Ironman", "R.drawable.ironman"));
+                message.setUserInfo(new DefaultUser("1", "客户", Id1Avatar));
                 MessageListActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -534,7 +534,7 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
 
             message.setTimeString(new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date()));
             message.setMediaFilePath(item.getFilePath());
-            message.setUserInfo(new DefaultUser("1", "Ironman", "R.drawable.ironman"));
+            message.setUserInfo(new DefaultUser("1", "客户", Id1Avatar));
 
             final MyMessage fMsg = message;
             mAdapter.addToStart(fMsg, true);
@@ -555,7 +555,7 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
             MyMessage message;
             if (i % 2 == 0) {
                 message = new MyMessage(messages[i], IMessage.MessageType.RECEIVE_TEXT.ordinal());
-                message.setUserInfo(new DefaultUser("0", "商家", Id0Avatar));
+                message.setUserInfo(new DefaultUser("0", "客户", Id0Avatar));
             } else {
                 message = new MyMessage(messages[i], IMessage.MessageType.SEND_TEXT.ordinal());
                 message.setUserInfo(new DefaultUser("1", "客服", Id1Avatar));
@@ -739,10 +739,10 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
 
         //TODO 添加首屏假数据
         MyMessage message = new MyMessage("Hello World", IMessage.MessageType.RECEIVE_TEXT.ordinal());
-        message.setUserInfo(new DefaultUser("0", "商家", Id0Avatar));
+        message.setUserInfo(new DefaultUser("0", "客户", Id0Avatar));
         mAdapter.addToStart(message, true);
         MyMessage voiceMessage = new MyMessage("", IMessage.MessageType.RECEIVE_VOICE.ordinal());
-        voiceMessage.setUserInfo(new DefaultUser("0", "商家", Id0Avatar));
+        voiceMessage.setUserInfo(new DefaultUser("0", "客户", Id0Avatar));
         voiceMessage.setMediaFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/voice/2018-02-28-105103.m4a");
         voiceMessage.setDuration(4);
         mAdapter.addToStart(voiceMessage, true);
@@ -759,7 +759,7 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
         MyMessage receiveVideo = new MyMessage("", IMessage.MessageType.RECEIVE_VIDEO.ordinal());
         receiveVideo.setMediaFilePath(Environment.getExternalStorageDirectory().getPath() + "/Pictures/Hangouts/video-20170407_135638.3gp");
         receiveVideo.setDuration(4);
-        receiveVideo.setUserInfo(new DefaultUser("0", "商家", Id0Avatar));
+        receiveVideo.setUserInfo(new DefaultUser("0", "客户", Id0Avatar));
         mAdapter.addToStart(receiveVideo, true);
         mAdapter.addToEndChronologically(mData);
 
@@ -798,7 +798,7 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
                     MyMessage message;
                     if (i % 2 == 0) {
                         message = new MyMessage(messages[i], IMessage.MessageType.RECEIVE_TEXT.ordinal());
-                        message.setUserInfo(new DefaultUser("0", "商家", Id0Avatar));
+                        message.setUserInfo(new DefaultUser("0", "客户", Id0Avatar));
                     } else {
                         message = new MyMessage(messages[i], IMessage.MessageType.SEND_TEXT.ordinal());
                         message.setUserInfo(new DefaultUser("1", "客服", Id1Avatar));

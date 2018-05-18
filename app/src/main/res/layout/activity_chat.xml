@@ -4,7 +4,7 @@
     android:id="@+id/chat_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f3f3f3"
+    android:background="#f8f8f8"
     android:orientation="vertical">
 
     <com.thn.erp.view.CustomHeadView
@@ -36,13 +36,19 @@
             app:avatarRadius="5dp"
             app:bubbleMaxWidth="0.70"
             app:dateTextSize="12sp"
-            app:receiveBubblePaddingLeft="16dp"
-            app:receiveBubblePaddingRight="8dp"
-            app:receiveTextColor="#ffffff"
+            app:receiveBubblePaddingLeft="10dp"
+            app:receiveBubblePaddingRight="10dp"
+            app:receiveBubblePaddingTop="10dp"
+            app:receiveBubblePaddingBottom="15dp"
+            app:receiveBubbleDrawable="@drawable/icon_receive_message"
+            app:sendBubbleDrawable="@drawable/icon_send_message"
+            app:receiveTextColor="#222"
             app:receiveTextSize="15sp"
-            app:sendBubblePaddingLeft="8dp"
-            app:sendBubblePaddingRight="16dp"
-            app:sendTextColor="#7587A8"
+            app:sendBubblePaddingTop="10dp"
+            app:sendBubblePaddingBottom="15dp"
+            app:sendBubblePaddingLeft="10dp"
+            app:sendBubblePaddingRight="10dp"
+            app:sendTextColor="#222"
             app:sendTextSize="15sp" />
 
     </com.thn.messagelist.messages.ptr.PullToRefreshLayout>
