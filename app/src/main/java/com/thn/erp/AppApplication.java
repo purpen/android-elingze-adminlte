@@ -22,15 +22,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-
-/**
- * Created by taihuoniao on 2016/3/14.
- * ¥
- * 上线之前检查WriteJSONToSD
- * 在客户端scene是场景，qingjing是情景，而在服务器端sight是场景，scene是情景
- * 检查在DataConstants.NETWORK_FAILURE情况下dialog是否隐藏
- * 检查所有的Toast，删除没用的提示
- */
 public class AppApplication extends MultiDexApplication {
     private static Application instance;
 

@@ -27,6 +27,8 @@ public class ViewPagerAdapter<T> extends RecyclingPagerAdapter {
     private boolean isInfiniteLoop;
     private String code;
     private THNWaittingDialog dialog;
+    private int imgW;
+    private int imgH;
 
     public int getSize() {
         return size;
@@ -39,10 +41,23 @@ public class ViewPagerAdapter<T> extends RecyclingPagerAdapter {
         isInfiniteLoop = false;
     }
 
+    public ViewPagerAdapter(final Activity activity, List<T> list, int imgW, int imageH) {
+        this.activity = activity;
+        this.list = list;
+        this.size = (list == null ? 0 : list.size());
+        this.imgH = imageH;
+        this.imgW = imgW;
+        isInfiniteLoop = false;
+    }
+
     @Override
     public int getCount() {
         if (size == 0) {
             return 0;
+        }
+
+        if (size == 1) {
+            return 1;
         }
         return isInfiniteLoop ? Integer.MAX_VALUE : size;
     }
@@ -75,13 +90,12 @@ public class ViewPagerAdapter<T> extends RecyclingPagerAdapter {
         }
 
         if (content instanceof String) {
-            if (TextUtils.isEmpty((String) content)) {
-                THNToastUtil.showError("图片链接为空");
-            } else {
-                GlideUtil.loadImage(content,holder.imageView);
+            if (imgW==0 || imgH==0){
+                GlideUtil.loadImage(content, holder.imageView);
+            }else {
+                GlideUtil.loadImageWithDimen(content, holder.imageView,imgW,imgH);
             }
         }
-
 
         if (activity instanceof UserGuideActivity) {
             if (position == size - 1) {
@@ -90,9 +104,9 @@ public class ViewPagerAdapter<T> extends RecyclingPagerAdapter {
                     public void onClick(View v) {
                         if (TextUtils.isEmpty(UserGuideActivity.fromPage)) {
                             String token = SPUtil.read(Constants.TOKEN);
-                            if (TextUtils.isEmpty(token)){
+                            if (TextUtils.isEmpty(token)) {
                                 activity.startActivity(new Intent(activity, LoginRegisterActivity.class));
-                            }else {
+                            } else {
                                 activity.startActivity(new Intent(activity, MainActivity.class));
                             }
                             activity.finish();

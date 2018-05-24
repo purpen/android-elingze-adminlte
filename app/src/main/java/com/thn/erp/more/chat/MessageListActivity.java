@@ -566,10 +566,10 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
 
     private void initMsgAdapter() {
         final float density = getResources().getDisplayMetrics().density;
-        final float MIN_WIDTH = 50 * density;
-        final float MAX_WIDTH = 150 * density;
-        final float MIN_HEIGHT = 60 * density;
-        final float MAX_HEIGHT = 200 * density;
+//        final float MIN_WIDTH = 50 * density;
+//        final float MAX_WIDTH = 150 * density;
+//        final float MIN_HEIGHT = 60 * density;
+//        final float MAX_HEIGHT = 200 * density;
         ImageLoader imageLoader = new ImageLoader() {
             @Override
             public void loadAvatarImage(ImageView avatarImageView, String string) {

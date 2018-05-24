@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.SparseArray;
 import android.view.View;
 
 import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
@@ -14,15 +16,20 @@ import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
+import com.thn.erp.overview.bean.CustomMenuBean;
 import com.thn.erp.overview.bean.SlidesData;
 import com.thn.erp.overview.usermanage.CustomerListActivity;
 import com.thn.erp.utils.JsonUtil;
 import com.thn.erp.utils.ToastUtils;
+import com.thn.erp.utils.Util;
 import com.thn.erp.view.autoScrollViewpager.ScrollableView;
 import com.thn.erp.view.autoScrollViewpager.ViewPagerAdapter;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,10 +62,9 @@ public class OverViewFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        dialog=new THNWaittingDialog(getContext());
-        slideList= new ArrayList<>();
+        dialog = new THNWaittingDialog(getContext());
+        slideList = new ArrayList<>();
         initRecyclerView();
-        initListAdapter();
     }
 
     @Override
@@ -70,11 +76,11 @@ public class OverViewFragment extends BaseFragment {
      * 获取轮播图
      */
     private void getSlides() {
-        HashMap<String, String> params = ClientParamsAPI.slideParam("erpapp_index_slide",1);
+        HashMap<String, String> params = ClientParamsAPI.slideParam("erpapp_index_slide", 1);
         HttpRequest.sendRequest(HttpRequest.GET, URL.SLIDES, params, new HttpRequestCallback() {
             @Override
             public void onStart() {
-                 dialog.show();
+                dialog.show();
             }
 
             @Override
@@ -98,7 +104,7 @@ public class OverViewFragment extends BaseFragment {
     }
 
     private void updateData(List<SlidesData.DataBean.SlidesBean> slides) {
-        for (SlidesData.DataBean.SlidesBean slidesBean:slides){
+        for (SlidesData.DataBean.SlidesBean slidesBean : slides) {
             slideList.add(slidesBean.image);
         }
         initScrollView();
@@ -106,8 +112,8 @@ public class OverViewFragment extends BaseFragment {
 
     private void initScrollView() {
         if (viewPagerAdapter == null) {
-            viewPagerAdapter = new ViewPagerAdapter<>(activity, slideList);
-            scrollableView.setAdapter(viewPagerAdapter);
+            viewPagerAdapter = new ViewPagerAdapter<>(activity, slideList, Util.getScreenWidth(),getResources().getDimensionPixelSize(R.dimen.dp100));
+            scrollableView.setAdapter(viewPagerAdapter.setInfiniteLoop(true));
 //            scrollableView.setOnPageChangeListener(this);
             scrollableView.setAutoScrollDurationFactor(8);
             scrollableView.showIndicators();
@@ -133,55 +139,86 @@ public class OverViewFragment extends BaseFragment {
         }
     }
 
+    /**
+     * 初始化菜单数据
+     */
     private void initRecyclerView() {
+        int length = menuTitles.length;
+        ArrayList<CustomMenuBean> list = new ArrayList<>();
+        CustomMenuBean bean;
+        for (int i = 0; i < length; i++) {
+            bean = new CustomMenuBean();
+            bean.pos = i;
+            bean.selected = false;
+            bean.iconId = menuIcons[i];
+            bean.title = menuTitles[i];
+            list.add(bean);
+        }
+//TODO
+//        Collections.sort(list,new SortByPosition());
+
+        String s = JsonUtil.list2Json(list);
+
         listFragment.setHasFixedSize(true);
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 3, LinearLayoutManager.VERTICAL, false);
         listFragment.setLayoutManager(layoutManager);
 //        listFragment.addItemDecoration(new RecycleViewItemDecoration(getActivity(), 30.0f));
-        mListAdapter = new ListRecyclerViewAdapter(getActivity(), new GlobalCallBack() {
+        mListAdapter = new ListRecyclerViewAdapter(list,new GlobalCallBack<CustomMenuBean>() {
             @Override
-            public void callBack(Object o) {
-//                startActivity(new Intent(getActivity(), CustomerManageActivity.class));
-//                LogUtil.e(o.toString());
-                if (o instanceof Map){
-                    if (((Map) o).get("name").equals("客户管理")){
-                        startActivity(new Intent(activity, CustomerListActivity.class));
-                    }
+            public void callBack(CustomMenuBean customMenuBean) {
+                if (TextUtils.equals("客户管理",customMenuBean.title)) {
+                    startActivity(new Intent(activity, CustomerListActivity.class));
                 }
             }
         });
         listFragment.setAdapter(mListAdapter);
     }
 
-    private void initListAdapter(){
-        List<Object> list = new ArrayList<>();
-        for(int i = 0; i < ITEMS.length; i++) {
-            Map<String, String> map = new HashMap<>();
-            map.put("img", String.valueOf(IMGS[i]));
-            map.put("name", ITEMS[i]);
-            list.add(map);
-        }
-        mListAdapter.putList(list);
-    }
+
 
     @OnClick(R.id.llSearchGoods)
-    void performClick(View v){
-        switch (v.getId()){
+    void performClick(View v) {
+        switch (v.getId()) {
             case R.id.llSearchGoods:
-                Intent intent=new Intent(activity,SearchGoodsHistoryActivity.class);
+                Intent intent = new Intent(activity, SearchGoodsHistoryActivity.class);
                 startActivity(intent);
                 break;
         }
     }
 
 
-    public static final String[] ITEMS = {"商品管理", "采购单", "销售单", "库存查询", "客户管理", "经营概况","推荐有奖", "增值服务"};
-    public static final int[] IMGS = {R.mipmap.icon_overview_main_category_01, R.mipmap.icon_overview_main_category_02,
-            R.mipmap.icon_overview_main_category_03,
-            R.mipmap.icon_overview_main_category_04,
-            R.mipmap.icon_overview_main_category_05,
-            R.mipmap.icon_overview_main_category_06,
-            R.mipmap.icon_overview_main_category_07,
-            R.mipmap.icon_overview_main_category_08,
-            R.mipmap.icon_overview_main_category_09};
+
+    public static final String[] menuTitles = {"推荐有奖","增值服务","经营概况","销售单","销售退货单","进销对比","采购单","采购退货单", "商品管理", "人员管理", "客户管理","供应商管理","出库单历史","入库单历史","库存查询","入库报表","出库报表","物流管理"};
+    public static final int[] menuIcons = {
+            R.mipmap.icon_menu_prize,
+            R.mipmap.icon_menu_value_added,
+            R.mipmap.icon_menu_status,
+            R.mipmap.icon_menu_sale_order,
+            R.mipmap.icon_menu_sales_return,
+            R.mipmap.icon_menu_import_export_compare,
+            R.mipmap.icon_menu_purchase_order,
+            R.mipmap.icon_menu_purchase_return,
+            R.mipmap.icon_menu_goods_manage,
+            R.mipmap.icon_menu_person_manage,
+            R.mipmap.icon_menu_customer_manage,
+            R.mipmap.icon_menu_supplier_manage,
+            R.mipmap.icon_menu_outgoing_history,
+            R.mipmap.icon_menu_warehousing_history,
+            R.mipmap.icon_menu_inventory_query,
+            R.mipmap.icon_menu_warehousing_report,
+            R.mipmap.icon_menu_outgoing_report,
+            R.mipmap.icon_menu_logistics_manage,
+           };
+
+    private static class SortByPosition implements Comparator<CustomMenuBean>{
+        @Override
+        public int compare(CustomMenuBean o1, CustomMenuBean o2) {
+            if (o1.pos<o2.pos){
+                return -1;
+            }else if(o1.pos>o2.pos){
+                return 1;
+            }
+            return 0;
+        }
+    }
 }

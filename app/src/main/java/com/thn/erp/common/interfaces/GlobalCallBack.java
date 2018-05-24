@@ -5,6 +5,6 @@ package com.thn.erp.common.interfaces;
  * Email: 895745843@qq.com
  */
 
-public interface GlobalCallBack {
-    void callBack(Object o);
+public interface GlobalCallBack<T> {
+    void callBack(T t);
 }

@@ -1,1 +1,1 @@
-include ':app', ':dateRangePicker', ':MPChartLib', ':library-taihuoniao', ':ultimaterecyclerview', ':library_zxing', ':library_printer', ':ChatInput', ':MessageList', ':ImageAlbum', ':BaseModule'
+include ':app',':MPChartLib',':dateRangePicker',':library-taihuoniao', ':ultimaterecyclerview', ':library_zxing', ':library_printer', ':ChatInput', ':MessageList', ':ImageAlbum', ':BaseModule'
