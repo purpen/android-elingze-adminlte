@@ -79,12 +79,14 @@ public class UserGuideActivity extends BaseActivity {
             initGuide();
         }
 
-        //第一次进app
-        if (empty) initHomeMenuData();
+        initHomeMenuData();
     }
 
     private void initHomeMenuData() {
         SqliteHelper helper = new SqliteHelper(getApplicationContext());
+        //
+        long count = helper.getCountOfRecordInTable();
+        if (count>0) return;
         int length = menuTitles.length;
         ArrayList<CustomMenuBean> list = new ArrayList<>();
         CustomMenuBean bean;

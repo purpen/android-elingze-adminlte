@@ -1,23 +1,20 @@
 package com.thn.erp.overview;
-
-import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.SparseArray;
-import android.view.LayoutInflater;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
-import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import android.view.ViewGroup;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.thn.erp.R;
 import com.thn.erp.SqliteHelper;
 import com.thn.erp.base.BaseActivity;
-import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
 import com.thn.erp.overview.adapter.CustomMainMenuAdapter;
 import com.thn.erp.overview.bean.CustomMenuBean;
 import com.thn.erp.view.CustomHeadView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -25,8 +22,8 @@ public class CustomMenuSelectActivity extends BaseActivity {
 
     @BindView(R.id.customHeadView)
     CustomHeadView customHeadView;
-    @BindView(R.id.ultimateRecyclerView)
-    UltimateRecyclerView ultimateRecyclerView;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private ArrayList<CustomMenuBean> list;
     private CustomMainMenuAdapter adapter;
@@ -50,13 +47,15 @@ public class CustomMenuSelectActivity extends BaseActivity {
         list = new ArrayList<>();
         helper = new SqliteHelper(getApplicationContext());
         list.addAll(helper.queryAll());
-        adapter = new CustomMainMenuAdapter(list);
+        adapter = new CustomMainMenuAdapter(R.layout.item_customer_class,list);
         linearLayoutManager = new LinearLayoutManager(this);
-        ultimateRecyclerView.setHasFixedSize(true);
-        ultimateRecyclerView.setLayoutManager(linearLayoutManager);
-        ultimateRecyclerView.disableLoadmore();
-        ultimateRecyclerView.setAdapter(adapter);
-        ultimateRecyclerView.addItemDividerDecoration(activity);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        View view = new View(getApplicationContext());
+        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,getResources().getDimensionPixelSize(R.dimen.dp10)));
+        view.setBackgroundColor(Color.parseColor("#f8f8f8"));
+        adapter.addHeaderView(view);
+        recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
     }
 
     @Override
@@ -70,12 +69,12 @@ public class CustomMenuSelectActivity extends BaseActivity {
             }
         });
 
-        adapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onClick(View view, int i) {
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 int size = list.size();
                 if (size == 0) return;
-                CustomMenuBean bean = list.get(i);
+                CustomMenuBean bean = list.get(position);
                 if (bean.selected) {
                     bean.selected = false;
                 } else {
@@ -84,6 +83,7 @@ public class CustomMenuSelectActivity extends BaseActivity {
                 adapter.notifyDataSetChanged();
             }
         });
+
     }
 
 }

@@ -1,13 +1,16 @@
 package com.thn.erp.overview;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
 import com.thn.basemodule.tools.LogUtil;
 import com.thn.erp.R;
@@ -18,6 +21,7 @@ import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
+import com.thn.erp.overview.adapter.IndexMenuAdapter;
 import com.thn.erp.overview.bean.CustomMenuBean;
 import com.thn.erp.overview.bean.SlidesData;
 import com.thn.erp.overview.usermanage.CustomerListActivity;
@@ -31,6 +35,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -40,15 +45,14 @@ import butterknife.OnClick;
 
 public class OverViewFragment extends BaseFragment {
 
-    @BindView(R.id.scrollableView)
-    ScrollableView scrollableView;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     private ViewPagerAdapter<String> viewPagerAdapter;
-    private ListRecyclerViewAdapter mListAdapter;
+    private IndexMenuAdapter adapter;
     private THNWaittingDialog dialog;
     private List<String> slideList;
-    private List<CustomMenuBean> list;
+    private List<IndexMenuAdapter.MultipleItem> list;
+    private ScrollableView scrollableView;
 
     @Override
     protected int getLayout() {
@@ -60,6 +64,7 @@ public class OverViewFragment extends BaseFragment {
         dialog = new THNWaittingDialog(getContext());
         slideList = new ArrayList<>();
         list = new ArrayList<>();
+        scrollableView = getHeaderView();
         initRecyclerView();
     }
 
@@ -107,16 +112,12 @@ public class OverViewFragment extends BaseFragment {
     }
 
     private void initScrollView() {
-        if (viewPagerAdapter == null) {
             viewPagerAdapter = new ViewPagerAdapter<>(activity, slideList, Util.getScreenWidth(), getResources().getDimensionPixelSize(R.dimen.dp100));
             scrollableView.setAdapter(viewPagerAdapter.setInfiniteLoop(true));
 //            scrollableView.setOnPageChangeListener(this);
             scrollableView.setAutoScrollDurationFactor(8);
             scrollableView.showIndicators();
             scrollableView.start();
-        } else {
-            viewPagerAdapter.notifyDataSetChanged();
-        }
     }
 
     @Override
@@ -126,16 +127,14 @@ public class OverViewFragment extends BaseFragment {
         if (scrollableView != null) {
             scrollableView.start();
         }
-
     }
 
     public void resetMenus() {
         if (list == null) return;
         list.clear();
         list.addAll(getMenuData());
-        LogUtil.e("list.size()="+list.size());
-        if (mListAdapter!=null) {
-            mListAdapter.notifyDataSetChanged();
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
         }
     }
 
@@ -151,41 +150,88 @@ public class OverViewFragment extends BaseFragment {
      * 初始化菜单数据
      */
     private void initRecyclerView() {
-        recyclerView.setHasFixedSize(true);
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 3, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
-//        recyclerView.addItemDecoration(new RecycleViewItemDecoration(getActivity(), 30.0f));
+        adapter = new IndexMenuAdapter(list);
+        adapter.addHeaderView(scrollableView);
+        recyclerView.setAdapter(adapter);
+    }
 
-        mListAdapter = new ListRecyclerViewAdapter(list, new GlobalCallBack<CustomMenuBean>() {
+    private ScrollableView getHeaderView() {
+        scrollableView = (ScrollableView) LayoutInflater.from(getContext()).inflate(R.layout.layout_scrollabel_view, null);
+        scrollableView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,getResources().getDimensionPixelSize(R.dimen.dp100)));
+        return scrollableView;
+    }
+
+
+    @Override
+    protected void installListener() {
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void callBack(CustomMenuBean customMenuBean) {
-                if (TextUtils.equals("客户管理", customMenuBean.title)) {
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                int type = adapter.getItemViewType(position);
+                if (type == IndexMenuAdapter.MultipleItem.IMAGE) {
                     startActivity(new Intent(activity, CustomerListActivity.class));
+                } else {
+                    if (list == null || list.isEmpty()) return;
+                    IndexMenuAdapter.MultipleItem item = list.get(position);
+                    switch (item.iconId) {
+                        case R.mipmap.icon_menu_customer_manage:
+                            //客户管理
+                            startActivity(new Intent(activity, CustomerListActivity.class));
+                            break;
+                        case R.mipmap.icon_menu_more:
+                            //更多菜单
+                            startActivity(new Intent(activity,CustomMenuSelectActivity.class));
+                            break;
+                        default:
+                            break;
+                    }
+
                 }
             }
         });
-        recyclerView.setAdapter(mListAdapter);
     }
-
 
     /**
      * 获取选中的菜单列表
      */
-    private List<CustomMenuBean> getMenuData() {
-        SqliteHelper helper = new SqliteHelper(getContext());
-        List<CustomMenuBean> beans = helper.queryItemsBySelection(1);
+    private List<IndexMenuAdapter.MultipleItem> getMenuData() {
+
+
         int length = menuTitles.length;
-        ArrayList<CustomMenuBean> list = new ArrayList<>();
+
+        ArrayList<CustomMenuBean> beanList = new ArrayList<>();
+
         CustomMenuBean bean;
+
+        //添加固定menu
         for (int i = 0; i < length; i++) {
             bean = new CustomMenuBean();
             bean.pos = i;
             bean.selected = false;
             bean.iconId = menuIcons[i];
             bean.title = menuTitles[i];
-            list.add(bean);
+            beanList.add(bean);
         }
-        if (beans != null) list.addAll(beans);
+
+        //读取动态添加menu
+        SqliteHelper helper = new SqliteHelper(getContext());
+        List<CustomMenuBean> beans = helper.queryItemsBySelection(1);
+        if (beans != null) {
+            beanList.addAll(beans);
+        }
+
+        ArrayList<IndexMenuAdapter.MultipleItem> list = new ArrayList<>();
+        IndexMenuAdapter.MultipleItem item;
+
+        for (CustomMenuBean beanItem : beanList) {
+            item = new IndexMenuAdapter.MultipleItem(IndexMenuAdapter.MultipleItem.IMAGE_TEXT, beanItem);
+            list.add(item);
+        }
+        IndexMenuAdapter.MultipleItem imageItem = new IndexMenuAdapter.MultipleItem(IndexMenuAdapter.MultipleItem.IMAGE, R.mipmap.icon_menu_more);
+        list.add(imageItem);
         return list;
     }
 

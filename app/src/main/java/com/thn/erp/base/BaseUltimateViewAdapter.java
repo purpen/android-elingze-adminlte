@@ -14,6 +14,7 @@ import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.thn.erp.R;
 import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
 import com.thn.erp.common.interfaces.OnRecyclerViewItemLongClickListener;
+import com.thn.erp.utils.LogUtil;
 
 import java.security.SecureRandom;
 import java.util.List;
@@ -69,7 +70,9 @@ public abstract class BaseUltimateViewAdapter<T> extends UltimateViewAdapter {
 
     @Override
     public int getAdapterItemCount() {
-        return list.size();
+        int i = list.size() + getAdditionalItems();
+        LogUtil.e(list.size()+"======i============"+i);
+        return i;
     }
 
     @Override

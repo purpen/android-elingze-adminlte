@@ -6,18 +6,8 @@
 
     <include layout="@layout/include_overview_title" />
 
-    <com.thn.erp.view.autoScrollViewpager.ScrollableView
-        android:id="@+id/scrollableView"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"/>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="概览" />
 </LinearLayout>

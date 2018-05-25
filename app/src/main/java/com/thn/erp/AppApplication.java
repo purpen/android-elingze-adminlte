@@ -25,11 +25,7 @@ import java.util.List;
 public class AppApplication extends MultiDexApplication {
     private static Application instance;
 
-//    private PushAgent mPushAgent;
-    private SharedPreferences tempSharedPreference;//检查本地存储是否设置推送的开关
 
-    // activityList
-    private List<BaseActivity> mBaseActivityList;
     private static UploadManager uploadManager;
 
 
@@ -43,9 +39,6 @@ public class AppApplication extends MultiDexApplication {
         super.onCreate();
         instance = this;
 //        initPush();
-        if (mBaseActivityList == null) {
-            mBaseActivityList = new ArrayList<>();
-        }
         if (BuildConfig.LOG_DEBUG) {
             if (LeakCanary.isInAnalyzerProcess(this)) {
                 return;
@@ -101,25 +94,6 @@ public class AppApplication extends MultiDexApplication {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(base);
-    }
-
-    public void addActivity(BaseActivity activity){
-        mBaseActivityList.add(activity);
-    }
-
-    public void removeActivity(BaseActivity activity){
-        boolean contains = mBaseActivityList.contains(activity);
-        if (contains) {
-            mBaseActivityList.remove(activity);
-            activity.finish();
-        }
-    }
-
-    public void clearAllActivity() {
-        for(int i = 0; i < mBaseActivityList.size(); i++) {
-            BaseActivity remove = mBaseActivityList.remove(i);
-            remove.finish();
-        }
     }
 
     private void initQiNiu() {

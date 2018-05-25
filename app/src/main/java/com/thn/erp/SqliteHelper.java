@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
+
 import com.thn.erp.overview.bean.CustomMenuBean;
 import com.thn.erp.utils.LogUtil;
 
@@ -24,12 +26,24 @@ public class SqliteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String sql = "CREATE TABLE if not EXISTS " + TABLE_NAME + "(_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,title TEXT NOT NULL,position INTEGER NOT NULL,icon_id INTEGER NOT NULL,selected INTEGER NOT NULL)";
-        db.execSQL(sql);
+        SQLiteStatement statement = db.compileStatement(sql);
+        statement.execute();
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+    }
+
+    /**
+     * 获取表中的记录数
+     * @return
+     */
+    public long getCountOfRecordInTable(){
+        SQLiteDatabase db = getReadableDatabase();
+        String sql = "SELECT COUNT(*) FROM " + TABLE_NAME;
+        SQLiteStatement statement = db.compileStatement(sql);
+        return statement.simpleQueryForLong();
     }
 
     /**
@@ -122,6 +136,7 @@ public class SqliteHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         List<CustomMenuBean> list = new ArrayList<>();
         String[] selectionArgs = {String.valueOf(selection)};
+        SQLiteStatement statement = db.compileStatement("");
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE selected = ? ORDER BY position ASC", selectionArgs);
         while (cursor.moveToNext()) {
             String title = cursor.getString(cursor.getColumnIndex("title"));
