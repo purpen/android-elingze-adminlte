@@ -64,7 +64,6 @@ public class OverViewFragment extends BaseFragment {
         dialog = new THNWaittingDialog(getContext());
         slideList = new ArrayList<>();
         list = new ArrayList<>();
-        scrollableView = getHeaderView();
         initRecyclerView();
     }
 
@@ -154,10 +153,14 @@ public class OverViewFragment extends BaseFragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new IndexMenuAdapter(list);
-        adapter.addHeaderView(scrollableView);
+        adapter.addHeaderView(getHeaderView());
         recyclerView.setAdapter(adapter);
     }
 
+    /**
+     * 获得头布局
+     * @return
+     */
     private ScrollableView getHeaderView() {
         scrollableView = (ScrollableView) LayoutInflater.from(getContext()).inflate(R.layout.layout_scrollabel_view, null);
         scrollableView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,getResources().getDimensionPixelSize(R.dimen.dp100)));
@@ -198,12 +201,8 @@ public class OverViewFragment extends BaseFragment {
      * 获取选中的菜单列表
      */
     private List<IndexMenuAdapter.MultipleItem> getMenuData() {
-
-
         int length = menuTitles.length;
-
         ArrayList<CustomMenuBean> beanList = new ArrayList<>();
-
         CustomMenuBean bean;
 
         //添加固定menu
