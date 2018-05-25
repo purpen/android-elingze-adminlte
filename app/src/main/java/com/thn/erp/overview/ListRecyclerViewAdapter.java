@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.thn.basemodule.tools.GlideUtil;
+import com.thn.basemodule.tools.LogUtil;
 import com.thn.erp.R;
 import com.thn.erp.common.interfaces.GlobalCallBack;
 import com.thn.erp.overview.bean.CustomMenuBean;
@@ -27,14 +28,12 @@ import java.util.Map;
 
 public class ListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int VIEW_TYPE_SELECT_MENU = 0x0010;
-    private int size;
     private GlobalCallBack mGlobalCallBack;
     private List<CustomMenuBean> list;
     private int imgSize;
     public ListRecyclerViewAdapter(@NonNull List<CustomMenuBean> list, GlobalCallBack globalCallBack) {
         this.mGlobalCallBack = globalCallBack;
         this.list = list;
-        this.size = list.size();
     }
 
     @Override
@@ -78,7 +77,7 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public int getItemViewType(int position) {
-        if (position==size){
+        if (position==list.size()){
             return VIEW_TYPE_SELECT_MENU;
         }
         return super.getItemViewType(position);
@@ -86,13 +85,12 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public int getItemCount() {
-        return size+1;
+        return list.size()+1;
     }
 
     class VH extends RecyclerView.ViewHolder {
         ImageView productImg;
         TextView name;
-        TextView price;
 
         public VH(View itemView) {
             super(itemView);

@@ -2,16 +2,14 @@ package com.thn.erp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
 
+import com.thn.basemodule.tools.LogUtil;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.net.DataConstants;
 import com.thn.erp.overview.bean.CustomMenuBean;
 import com.thn.erp.user.LoginRegisterActivity;
-import com.thn.erp.utils.LogUtil;
 import com.thn.erp.utils.SPUtil;
 import com.thn.erp.view.autoScrollViewpager.ScrollableView;
 import com.thn.erp.view.autoScrollViewpager.ViewPagerAdapter;
@@ -88,16 +86,22 @@ public class UserGuideActivity extends BaseActivity {
     private void initHomeMenuData() {
         SqliteHelper helper = new SqliteHelper(getApplicationContext());
         int length = menuTitles.length;
+        ArrayList<CustomMenuBean> list = new ArrayList<>();
         CustomMenuBean bean;
-        LogUtil.e("Start:"+System.currentTimeMillis());
+//        long startTime = System.currentTimeMillis();
         for (int i = 0; i < length; i++) {
             bean = new CustomMenuBean();
             bean.pos = i;
             bean.selected = false;
             bean.iconId = menuIcons[i];
             bean.title = menuTitles[i];
-            helper.insert(bean);
+            list.add(bean);
         }
+//        LogUtil.e("startTime:"+startTime);
+        helper.insert(list);
+//        long endTime = System.currentTimeMillis();
+//        LogUtil.e("endTime:"+endTime);
+//        LogUtil.e("endTime - startTime:"+(endTime-startTime));
     }
 
     private void initGuide() {
@@ -120,10 +124,8 @@ public class UserGuideActivity extends BaseActivity {
         finish();
     }
 
-    public static final String[] menuTitles = {"推荐有奖", "增值服务", "经营概况", "销售单", "销售退货单", "进销对比", "采购单", "采购退货单", "商品管理", "人员管理", "客户管理", "供应商管理", "出库单历史", "入库单历史", "库存查询", "入库报表", "出库报表", "物流管理"};
+    public static final String[] menuTitles = {"经营概况", "销售单", "销售退货单", "进销对比", "采购单", "采购退货单", "商品管理", "人员管理", "客户管理", "供应商管理", "出库单历史", "入库单历史", "库存查询", "入库报表", "出库报表", "物流管理"};
     public static final int[] menuIcons = {
-            R.mipmap.icon_menu_prize,
-            R.mipmap.icon_menu_value_added,
             R.mipmap.icon_menu_status,
             R.mipmap.icon_menu_sale_order,
             R.mipmap.icon_menu_sales_return,

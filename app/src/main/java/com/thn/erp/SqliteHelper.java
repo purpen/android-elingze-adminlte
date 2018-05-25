@@ -5,8 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.text.TextUtils;
-
 import com.thn.erp.overview.bean.CustomMenuBean;
 import com.thn.erp.utils.LogUtil;
 
@@ -21,11 +19,12 @@ public class SqliteHelper extends SQLiteOpenHelper {
         super(context, "erp.db", null, 1);
     }
 
+
+
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "CREATE TABLE " + TABLE_NAME + "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,title TEXT NOT NULL,position INTEGER NOT NULL,icon_id INTEGER NOT NULL,selected INTEGER NOT NULL)";
+        String sql = "CREATE TABLE if not EXISTS " + TABLE_NAME + "(_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,title TEXT NOT NULL,position INTEGER NOT NULL,icon_id INTEGER NOT NULL,selected INTEGER NOT NULL)";
         db.execSQL(sql);
-        LogUtil.e("fun onCreate table " + TABLE_NAME);
     }
 
     @Override
@@ -34,41 +33,50 @@ public class SqliteHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * 插入记录
-     *
-     * @param bean
+     * 打印数据库所有表
      */
-    public void insert(CustomMenuBean bean) {
-        if (bean == null) {
-            LogUtil.e("fun insert err:bean is null");
-            return;
+    public void printTablesInDB(){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("select name from sqlite_master where type='table';", null);
+        while(cursor.moveToNext()){
+            //遍历出表名
+            String name = cursor.getString(0);
+            LogUtil.e("printTablesInDB ="+name);
         }
-        if (TextUtils.isEmpty(bean.title)) {
-            LogUtil.e("fun insert err:title is empty");
-            return;
-        }
+        cursor.close();
+        db.close();
+    }
 
-        if (bean.iconId == 0) {
-            LogUtil.e("fun insert err:iconId ==0");
-            return;
+    /**
+     * 批量插入记录
+     * @return 插入行数
+     * @param list
+     */
+    public int insert(List<CustomMenuBean> list) {
+        if (list == null) {
+            LogUtil.e("fun insert err:list == null");
+            return -1;
         }
 
         SQLiteDatabase db = getWritableDatabase();
-        //开启事务
+        ContentValues contentValues;
         db.beginTransaction();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("title", bean.title);
-        contentValues.put("position", bean.pos);
-        contentValues.put("icon_id", bean.iconId);
-        if (bean.selected) {
-            contentValues.put("selected", 1);
-        } else {
-            contentValues.put("selected", 0);
+        for (CustomMenuBean bean:list){
+            contentValues = new ContentValues();
+            contentValues.put("title", bean.title);
+            contentValues.put("position", bean.pos);
+            contentValues.put("icon_id", bean.iconId);
+            if (bean.selected) {
+                contentValues.put("selected", 1);
+            } else {
+                contentValues.put("selected", 0);
+            }
+            db.insert(TABLE_NAME, null, contentValues);
         }
-        long l = db.insert(TABLE_NAME, null, contentValues);
+        db.setTransactionSuccessful();
         db.endTransaction();
-
-        LogUtil.e("fun insert table result=" + l);
+        db.close();
+        return list.size();
     }
 
     //删除某条记录
@@ -78,17 +86,35 @@ public class SqliteHelper extends SQLiteOpenHelper {
         String[] whereArgs = {title};
         int i = db.delete(TABLE_NAME, whereClause, whereArgs);
         LogUtil.e("fun delete table result=" + i);
+        db.close();
     }
 
-    //更新数据
-    public void update(String title, int position, int selected) {
+    //批量更新数据
+    public void update(List<CustomMenuBean> list) {
+        if (list == null) {
+            LogUtil.e("fun update err:list == null");
+            return;
+        }
         SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("position", position);
-        values.put("selected", selected);
-        String whereClause = "title=?";
-        String[] whereArgs = {title};
-        db.update(TABLE_NAME, values, whereClause, whereArgs);
+        ContentValues contentValues;
+        db.beginTransaction();
+        for (CustomMenuBean bean:list){
+            contentValues = new ContentValues();
+            contentValues.put("title", bean.title);
+            contentValues.put("position", bean.pos);
+            contentValues.put("icon_id", bean.iconId);
+            if (bean.selected) {
+                contentValues.put("selected", 1);
+            } else {
+                contentValues.put("selected", 0);
+            }
+            String whereClause = "title=?";
+            String[] whereArgs = {bean.title};
+            db.update(TABLE_NAME, contentValues, whereClause, whereArgs);
+        }
+        db.setTransactionSuccessful();
+        db.endTransaction();
+        db.close();
     }
 
     //查询符合选中条件记录
@@ -113,6 +139,8 @@ public class SqliteHelper extends SQLiteOpenHelper {
             bean.iconId = iconId;
             list.add(bean);
         }
+        cursor.close();
+        db.close();
         return list;
     }
 
@@ -139,6 +167,8 @@ public class SqliteHelper extends SQLiteOpenHelper {
             bean.iconId = iconId;
             list.add(bean);
         }
+        cursor.close();
+        db.close();
         return list;
     }
 }

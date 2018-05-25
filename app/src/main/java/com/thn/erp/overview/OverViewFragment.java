@@ -1,15 +1,17 @@
 package com.thn.erp.overview;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.SparseArray;
 import android.view.View;
 
 import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
+import com.thn.basemodule.tools.LogUtil;
 import com.thn.erp.R;
+import com.thn.erp.SqliteHelper;
 import com.thn.erp.base.BaseFragment;
 import com.thn.erp.common.interfaces.GlobalCallBack;
 import com.thn.erp.net.ClientParamsAPI;
@@ -27,13 +29,8 @@ import com.thn.erp.view.autoScrollViewpager.ViewPagerAdapter;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -42,18 +39,16 @@ import butterknife.OnClick;
  */
 
 public class OverViewFragment extends BaseFragment {
-    public static final String LINK1 = "https://www.taihuoniao.com/tracker?kid=183561214";
-    public static final String LINK2 = "https://www.taihuoniao.com/tracker?kid=183548689";
-    public static final String LINK3 = "https://www.taihuoniao.com/tracker?kid=178066260";
 
     @BindView(R.id.scrollableView)
     ScrollableView scrollableView;
-    @BindView(R.id.list_fragment)
-    RecyclerView listFragment;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
     private ViewPagerAdapter<String> viewPagerAdapter;
     private ListRecyclerViewAdapter mListAdapter;
     private THNWaittingDialog dialog;
-    List<String> slideList;
+    private List<String> slideList;
+    private List<CustomMenuBean> list;
 
     @Override
     protected int getLayout() {
@@ -64,12 +59,13 @@ public class OverViewFragment extends BaseFragment {
     protected void initView() {
         dialog = new THNWaittingDialog(getContext());
         slideList = new ArrayList<>();
+        list = new ArrayList<>();
         initRecyclerView();
     }
 
     @Override
     protected void requestNet() {
-        getSlides();
+//        getSlides();
     }
 
     /**
@@ -112,7 +108,7 @@ public class OverViewFragment extends BaseFragment {
 
     private void initScrollView() {
         if (viewPagerAdapter == null) {
-            viewPagerAdapter = new ViewPagerAdapter<>(activity, slideList, Util.getScreenWidth(),getResources().getDimensionPixelSize(R.dimen.dp100));
+            viewPagerAdapter = new ViewPagerAdapter<>(activity, slideList, Util.getScreenWidth(), getResources().getDimensionPixelSize(R.dimen.dp100));
             scrollableView.setAdapter(viewPagerAdapter.setInfiniteLoop(true));
 //            scrollableView.setOnPageChangeListener(this);
             scrollableView.setAutoScrollDurationFactor(8);
@@ -126,8 +122,20 @@ public class OverViewFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        resetMenus();
         if (scrollableView != null) {
             scrollableView.start();
+        }
+
+    }
+
+    public void resetMenus() {
+        if (list == null) return;
+        list.clear();
+        list.addAll(getMenuData());
+        LogUtil.e("list.size()="+list.size());
+        if (mListAdapter!=null) {
+            mListAdapter.notifyDataSetChanged();
         }
     }
 
@@ -143,6 +151,29 @@ public class OverViewFragment extends BaseFragment {
      * 初始化菜单数据
      */
     private void initRecyclerView() {
+        recyclerView.setHasFixedSize(true);
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 3, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+//        recyclerView.addItemDecoration(new RecycleViewItemDecoration(getActivity(), 30.0f));
+
+        mListAdapter = new ListRecyclerViewAdapter(list, new GlobalCallBack<CustomMenuBean>() {
+            @Override
+            public void callBack(CustomMenuBean customMenuBean) {
+                if (TextUtils.equals("客户管理", customMenuBean.title)) {
+                    startActivity(new Intent(activity, CustomerListActivity.class));
+                }
+            }
+        });
+        recyclerView.setAdapter(mListAdapter);
+    }
+
+
+    /**
+     * 获取选中的菜单列表
+     */
+    private List<CustomMenuBean> getMenuData() {
+        SqliteHelper helper = new SqliteHelper(getContext());
+        List<CustomMenuBean> beans = helper.queryItemsBySelection(1);
         int length = menuTitles.length;
         ArrayList<CustomMenuBean> list = new ArrayList<>();
         CustomMenuBean bean;
@@ -154,26 +185,9 @@ public class OverViewFragment extends BaseFragment {
             bean.title = menuTitles[i];
             list.add(bean);
         }
-//TODO
-//        Collections.sort(list,new SortByPosition());
-
-        String s = JsonUtil.list2Json(list);
-
-        listFragment.setHasFixedSize(true);
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 3, LinearLayoutManager.VERTICAL, false);
-        listFragment.setLayoutManager(layoutManager);
-//        listFragment.addItemDecoration(new RecycleViewItemDecoration(getActivity(), 30.0f));
-        mListAdapter = new ListRecyclerViewAdapter(list,new GlobalCallBack<CustomMenuBean>() {
-            @Override
-            public void callBack(CustomMenuBean customMenuBean) {
-                if (TextUtils.equals("客户管理",customMenuBean.title)) {
-                    startActivity(new Intent(activity, CustomerListActivity.class));
-                }
-            }
-        });
-        listFragment.setAdapter(mListAdapter);
+        if (beans != null) list.addAll(beans);
+        return list;
     }
-
 
 
     @OnClick(R.id.llSearchGoods)
@@ -187,38 +201,10 @@ public class OverViewFragment extends BaseFragment {
     }
 
 
-
-    public static final String[] menuTitles = {"推荐有奖","增值服务","经营概况","销售单","销售退货单","进销对比","采购单","采购退货单", "商品管理", "人员管理", "客户管理","供应商管理","出库单历史","入库单历史","库存查询","入库报表","出库报表","物流管理"};
+    public static final String[] menuTitles = {"推荐有奖", "增值服务"};
     public static final int[] menuIcons = {
             R.mipmap.icon_menu_prize,
             R.mipmap.icon_menu_value_added,
-            R.mipmap.icon_menu_status,
-            R.mipmap.icon_menu_sale_order,
-            R.mipmap.icon_menu_sales_return,
-            R.mipmap.icon_menu_import_export_compare,
-            R.mipmap.icon_menu_purchase_order,
-            R.mipmap.icon_menu_purchase_return,
-            R.mipmap.icon_menu_goods_manage,
-            R.mipmap.icon_menu_person_manage,
-            R.mipmap.icon_menu_customer_manage,
-            R.mipmap.icon_menu_supplier_manage,
-            R.mipmap.icon_menu_outgoing_history,
-            R.mipmap.icon_menu_warehousing_history,
-            R.mipmap.icon_menu_inventory_query,
-            R.mipmap.icon_menu_warehousing_report,
-            R.mipmap.icon_menu_outgoing_report,
-            R.mipmap.icon_menu_logistics_manage,
-           };
+    };
 
-    private static class SortByPosition implements Comparator<CustomMenuBean>{
-        @Override
-        public int compare(CustomMenuBean o1, CustomMenuBean o2) {
-            if (o1.pos<o2.pos){
-                return -1;
-            }else if(o1.pos>o2.pos){
-                return 1;
-            }
-            return 0;
-        }
-    }
 }
