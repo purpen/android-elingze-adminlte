@@ -10,11 +10,6 @@ import com.thn.erp.overview.bean.CustomMenuBean;
 
 import java.util.List;
 
-/**
- * Created by Stephen on 2017/3/3 21:20
- * Email: 895745843@qq.com
- */
-
 public class IndexMenuAdapter extends BaseMultiItemQuickAdapter<IndexMenuAdapter.MultipleItem, BaseViewHolder> {
 
     public static class MultipleItem implements MultiItemEntity {

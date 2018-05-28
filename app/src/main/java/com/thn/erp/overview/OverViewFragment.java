@@ -12,11 +12,9 @@ import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
-import com.thn.basemodule.tools.LogUtil;
 import com.thn.erp.R;
 import com.thn.erp.SqliteHelper;
 import com.thn.erp.base.BaseFragment;
-import com.thn.erp.common.interfaces.GlobalCallBack;
 import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
@@ -30,12 +28,10 @@ import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.utils.Util;
 import com.thn.erp.view.autoScrollViewpager.ScrollableView;
 import com.thn.erp.view.autoScrollViewpager.ViewPagerAdapter;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 
