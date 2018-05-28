@@ -22,7 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/CommonActivityTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".UserGuideActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoTitleFullscreen">
             <intent-filter>
@@ -31,7 +31,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity android:name=".MainActivity" />-->
+        <activity android:name=".MainActivity" />
         <activity android:name=".user.LoginRegisterActivity" />
         <activity android:name=".user.ForgetPasswordActivity" />
         <activity android:name=".overview.usermanage.CustomerListActivity" />

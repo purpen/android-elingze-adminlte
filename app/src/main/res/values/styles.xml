@@ -51,7 +51,7 @@
         <item name="windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
-        <!--<item name="android:windowBackground">@mipmap/welcome</item>-->
+        <item name="android:windowBackground">@mipmap/welcome</item>
     </style>
     <style name="CustomDialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
