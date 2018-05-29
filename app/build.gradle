@@ -61,7 +61,6 @@ dependencies {
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
     implementation files('libs/commons-codec-1.11.jar')
     implementation project(':dateRangePicker')
-    implementation project(':MPChartLib')
     implementation project(':ultimaterecyclerview')
     implementation project(':library_zxing')
     implementation project(':library_printer')
@@ -71,7 +70,6 @@ dependencies {
     implementation rootProject.ext.dependencies["appcompat-v7"]
     implementation rootProject.ext.dependencies["recyclerview-v7"]
     implementation rootProject.ext.dependencies["animated-vector-drawable"]
-
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.squareup.okhttp3:okhttp:3.8.1'
     implementation 'com.squareup.okio:okio:1.13.0'
@@ -89,7 +87,6 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.1.1'
     implementation 'pub.devrel:easypermissions:1.2.0'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
-
     //编译时处理注解而不是运行时
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.1.1'
@@ -97,4 +94,6 @@ dependencies {
     implementation project(':MessageList')
     implementation project(':BaseModule')
     implementation project(':ImageAlbum')
+    implementation project(':MPChartLib')
+
 }

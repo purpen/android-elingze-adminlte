@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="color_eee">#eeeeee</color>
     <color name="color_E6E6E6">#E6E6E6</color>
+    <color name="color_E5E5E5">#E5E5E5</color>
     <color name="color_27AE59">#27AE59</color>
     <color name="color_A0A0A0">#A0A0A0</color>
     <color name="color_FAF867">#FAF867</color>
@@ -44,7 +45,6 @@
     <color name="color_f8f8f8">#F8F8F8</color>
     <color name="color_ddd">#DDD</color>
 
-    <color name="color_af8323">#af8323</color>
     <color name="color_333">#333</color>
     <color name="backround_black">#ff010101</color>
     <color name="white">#ffffff</color>

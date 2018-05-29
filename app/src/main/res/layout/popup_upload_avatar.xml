@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp40"
         android:text="上传身份证"
-        android:textColor="@color/color_af8323"
+        android:textColor="@color/color_27AE59"
         android:textSize="@dimen/sp16"
         android:gravity="center"
         />

@@ -78,7 +78,8 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
     /**
      * if true, dragging is enabled for the chart
      */
-    private boolean mDragEnabled = true;
+    private boolean mDragXEnabled = true;
+    private boolean mDragYEnabled = true;
 
     private boolean mScaleXEnabled = true;
     private boolean mScaleYEnabled = true;
@@ -211,14 +212,14 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
         mAxisRendererLeft.renderAxisLine(canvas);
         mAxisRendererRight.renderAxisLine(canvas);
 
-        mXAxisRenderer.renderGridLines(canvas);
-        mAxisRendererLeft.renderGridLines(canvas);
-        mAxisRendererRight.renderGridLines(canvas);
+        if (mXAxis.isDrawGridLinesBehindDataEnabled())
+            mXAxisRenderer.renderGridLines(canvas);
 
-        mXAxisRenderer.renderScaleLines(canvas);
-        mAxisRendererLeft.renderScaleLines(canvas);
-        mAxisRendererRight.renderScaleLines(canvas);
+        if (mAxisLeft.isDrawGridLinesBehindDataEnabled())
+            mAxisRendererLeft.renderGridLines(canvas);
 
+        if (mAxisRight.isDrawGridLinesBehindDataEnabled())
+            mAxisRendererRight.renderGridLines(canvas);
 
         if (mXAxis.isEnabled() && mXAxis.isDrawLimitLinesBehindDataEnabled())
             mXAxisRenderer.renderLimitLines(canvas);
@@ -234,6 +235,15 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
         canvas.clipRect(mViewPortHandler.getContentRect());
 
         mRenderer.drawData(canvas);
+
+        if (!mXAxis.isDrawGridLinesBehindDataEnabled())
+            mXAxisRenderer.renderGridLines(canvas);
+
+        if (!mAxisLeft.isDrawGridLinesBehindDataEnabled())
+            mAxisRendererLeft.renderGridLines(canvas);
+
+        if (!mAxisRight.isDrawGridLinesBehindDataEnabled())
+            mAxisRendererRight.renderGridLines(canvas);
 
         // if highlighting is enabled
         if (valuesToHighlight())
@@ -431,18 +441,12 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
                             offsets.top += Math.min(mLegend.mNeededHeight,
                                     mViewPortHandler.getChartHeight() * mLegend.getMaxSizePercent())
                                     + mLegend.getYOffset();
-
-                            if (getXAxis().isEnabled() && getXAxis().isDrawLabelsEnabled())
-                                offsets.top += getXAxis().mLabelRotatedHeight;
                             break;
 
                         case BOTTOM:
                             offsets.bottom += Math.min(mLegend.mNeededHeight,
                                     mViewPortHandler.getChartHeight() * mLegend.getMaxSizePercent())
                                     + mLegend.getYOffset();
-
-                            if (getXAxis().isEnabled() && getXAxis().isDrawLabelsEnabled())
-                                offsets.bottom += getXAxis().mLabelRotatedHeight;
                             break;
 
                         default:
@@ -482,21 +486,21 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
 
             if (mXAxis.isEnabled() && mXAxis.isDrawLabelsEnabled()) {
 
-                float xlabelheight = mXAxis.mLabelRotatedHeight + mXAxis.getYOffset();
+                float xLabelHeight = mXAxis.mLabelRotatedHeight + mXAxis.getYOffset();
 
                 // offsets for x-labels
                 if (mXAxis.getPosition() == XAxisPosition.BOTTOM) {
 
-                    offsetBottom += xlabelheight;
+                    offsetBottom += xLabelHeight;
 
                 } else if (mXAxis.getPosition() == XAxisPosition.TOP) {
 
-                    offsetTop += xlabelheight;
+                    offsetTop += xLabelHeight;
 
                 } else if (mXAxis.getPosition() == XAxisPosition.BOTH_SIDED) {
 
-                    offsetBottom += xlabelheight;
-                    offsetTop += xlabelheight;
+                    offsetBottom += xLabelHeight;
+                    offsetTop += xLabelHeight;
                 }
             }
 
@@ -1102,7 +1106,8 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
      * @param enabled
      */
     public void setDragEnabled(boolean enabled) {
-        this.mDragEnabled = enabled;
+        this.mDragXEnabled = enabled;
+        this.mDragYEnabled = enabled;
     }
 
     /**
@@ -1111,7 +1116,43 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
      * @return
      */
     public boolean isDragEnabled() {
-        return mDragEnabled;
+        return mDragXEnabled || mDragYEnabled;
+    }
+
+    /**
+     * Set this to true to enable dragging on the X axis
+     *
+     * @param enabled
+     */
+    public void setDragXEnabled(boolean enabled) {
+        this.mDragXEnabled = enabled;
+    }
+
+    /**
+     * Returns true if dragging on the X axis is enabled for the chart, false if not.
+     *
+     * @return
+     */
+    public boolean isDragXEnabled() {
+        return mDragXEnabled;
+    }
+
+    /**
+     * Set this to true to enable dragging on the Y axis
+     *
+     * @param enabled
+     */
+    public void setDragYEnabled(boolean enabled) {
+        this.mDragYEnabled = enabled;
+    }
+
+    /**
+     * Returns true if dragging on the Y axis is enabled for the chart, false if not.
+     *
+     * @return
+     */
+    public boolean isDragYEnabled() {
+        return mDragYEnabled;
     }
 
     /**
@@ -1191,7 +1232,7 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
 
     /**
      * When enabled, the values will be clipped to contentRect,
-     *   otherwise they can bleed outside the content rect.
+     * otherwise they can bleed outside the content rect.
      *
      * @param enabled
      */
@@ -1201,7 +1242,7 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
 
     /**
      * When enabled, the values will be clipped to contentRect,
-     *   otherwise they can bleed outside the content rect.
+     * otherwise they can bleed outside the content rect.
      *
      * @return
      */

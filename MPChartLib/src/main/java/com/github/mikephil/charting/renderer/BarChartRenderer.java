@@ -19,6 +19,8 @@ import com.github.mikephil.charting.utils.MPPointF;
 import com.github.mikephil.charting.utils.Transformer;
 import com.github.mikephil.charting.utils.Utils;
 import com.github.mikephil.charting.utils.ViewPortHandler;
+import android.graphics.LinearGradient;
+import com.github.mikephil.charting.model.GradientColor;
 
 import java.util.List;
 
@@ -163,6 +165,32 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleRenderer {
                 mRenderPaint.setColor(dataSet.getColor(j / 4));
             }
 
+            if (dataSet.getGradientColor() != null) {
+                GradientColor gradientColor = dataSet.getGradientColor();
+                 mRenderPaint.setShader(
+                    new LinearGradient(
+                        buffer.buffer[j],
+                        buffer.buffer[j + 3],
+                        buffer.buffer[j],
+                        buffer.buffer[j + 1],
+                        gradientColor.getStartColor(),
+                        gradientColor.getEndColor(),
+                        android.graphics.Shader.TileMode.MIRROR));
+            }
+
+            if (dataSet.getGradientColors() != null) {
+                 mRenderPaint.setShader(
+                    new LinearGradient(
+                        buffer.buffer[j],
+                        buffer.buffer[j + 3],
+                        buffer.buffer[j],
+                        buffer.buffer[j + 1],
+                        dataSet.getGradientColor(j / 4).getStartColor(),
+                        dataSet.getGradientColor(j / 4).getEndColor(),
+                        android.graphics.Shader.TileMode.MIRROR));
+            }
+
+
             c.drawRect(buffer.buffer[j], buffer.buffer[j + 1], buffer.buffer[j + 2],
                     buffer.buffer[j + 3], mRenderPaint);
 
@@ -179,6 +207,7 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleRenderer {
         float right = x + barWidthHalf;
         float top = y1;
         float bottom = y2;
+
         mBarRect.set(left, top, right, bottom);
 
         trans.rectToPixelPhase(mBarRect, mAnimator.getPhaseY());

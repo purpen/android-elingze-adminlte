@@ -24,8 +24,6 @@ public class YAxisRenderer extends AxisRenderer {
 
     protected Paint mZeroLinePaint;
 
-
-
     public YAxisRenderer(ViewPortHandler viewPortHandler, YAxis yAxis, Transformer trans) {
         super(viewPortHandler, trans, yAxis);
 
@@ -40,7 +38,6 @@ public class YAxisRenderer extends AxisRenderer {
             mZeroLinePaint.setColor(Color.GRAY);
             mZeroLinePaint.setStrokeWidth(1f);
             mZeroLinePaint.setStyle(Paint.Style.STROKE);
-
         }
     }
 
@@ -91,65 +88,6 @@ public class YAxisRenderer extends AxisRenderer {
         drawYLabels(c, xPos, positions, yoffset);
     }
 
-    @Override
-    public void renderScaleLines(Canvas c) {
-        if (!mYAxis.isEnabled() || !mYAxis.isDrawLabelsEnabled())
-            return;
-
-        float[] positions = getTransformedPositions();
-
-        float startX=mViewPortHandler.contentLeft();
-        float startY=mYAxis.getYOffset();
-        float stopX=startX-mYAxis.getScaleLen();
-        float stopY=startY;
-        AxisDependency dependency = mYAxis.getAxisDependency();
-        YAxisLabelPosition labelPosition = mYAxis.getLabelPosition();
-        float scaleLen = mYAxis.getScaleLen();
-        if (dependency == AxisDependency.LEFT) {
-            if (labelPosition == YAxisLabelPosition.OUTSIDE_CHART) {
-                stopX = startX - scaleLen;
-            } else {
-                stopX = startX + scaleLen;
-            }
-
-        } else {
-
-            if (labelPosition == YAxisLabelPosition.OUTSIDE_CHART) {
-                stopX = mViewPortHandler.contentRight() + scaleLen;
-            } else {
-                stopX = mViewPortHandler.contentRight() - scaleLen;
-            }
-        }
-        drawYScales(c,positions,startX, stopX);
-    }
-
-    /**
-     * 画刻度线
-     * @param c
-     * @param positions
-     * @param startX
-     * @param stopX
-     */
-    private void drawYScales(Canvas c,float[] positions, float startX,float stopX) {
-
-        mScaleLinePaint.setStrokeWidth(5f);
-        final int from = mYAxis.isDrawBottomYLabelEntryEnabled() ? 0 : 1;
-        final int to = mYAxis.isDrawTopYLabelEntryEnabled()
-                ? mYAxis.mEntryCount
-                : (mYAxis.mEntryCount - 1);
-        float startY,stopY;
-        // draw
-        for (int i = from; i < to; i++) {
-            startY=positions[i * 2 + 1];
-            stopY=startY;
-            c.drawLine(startX,startY,stopX,stopY,mScaleLinePaint);
-        }
-    }
-
-    /**
-     * 渲染Y轴线
-     * @param c
-     */
     @Override
     public void renderAxisLine(Canvas c) {
 
@@ -406,5 +344,4 @@ public class YAxisRenderer extends AxisRenderer {
             c.restoreToCount(clipRestoreCount);
         }
     }
-
 }

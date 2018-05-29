@@ -8,33 +8,38 @@ import java.util.List;
 
 public class SalesTrendsBean {
 
+
     /**
-     * data : [{"order_count":"1","sum_money":"0.00","time":"2016-12-14"},{"order_count":"3","sum_money":"0.07","time":"2016-12-16"},{"order_count":"1","sum_money":"0.03","time":"2016-12-20"},{"order_count":"9","sum_money":"0.21","time":"2016-12-21"},{"order_count":"8","sum_money":"3011.06","time":"2016-12-22"},{"order_count":"9","sum_money":"0.10","time":"2016-12-28"},{"order_count":"1","sum_money":"0.01","time":"2017-01-03"},{"order_count":"1","sum_money":"0.02","time":"2017-01-04"}]
-     * meta : {"message":"Success.","status_code":200}
+     * data : {"sale_amount_data":[{"sale_amount":88,"time":1526659200},{"sale_amount":23,"time":1526745600},{"sale_amount":98,"time":1526832000},{"sale_amount":111,"time":1526918400}]}
+     * status : {"code":200,"message":"Ok all right."}
+     * success : true
      */
 
-    public MetaBean meta;
-    public List<DataBean> data;
-
-    public static class MetaBean {
-        /**
-         * message : Success.
-         * status_code : 200
-         */
-
-        public String message;
-        public int status_code;
-    }
+    public DataBean data;
+    public StatusBean status;
+    public boolean success;
 
     public static class DataBean {
+        public List<SaleAmountDataBean> sale_amount_data;
+
+        public static class SaleAmountDataBean {
+            /**
+             * sale_amount : 88
+             * time : 1526659200
+             */
+
+            public int sale_amount;
+            public int time;
+        }
+    }
+
+    public static class StatusBean {
         /**
-         * order_count : 1
-         * sum_money : 0.00
-         * time : 2016-12-14
+         * code : 200
+         * message : Ok all right.
          */
 
-        public String order_count;
-        public String sum_money;
-        public String time;
+        public int code;
+        public String message;
     }
 }

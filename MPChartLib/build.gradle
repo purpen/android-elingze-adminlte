@@ -4,13 +4,15 @@ apply plugin: 'maven'
 //apply plugin: 'realm-android'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
     // resourcePrefix 'mpcht'
     defaultConfig {
+        //noinspection MinSdkTooLow
         minSdkVersion 9
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        targetSdkVersion 27
         versionCode 3
-        versionName '3.0.2'
+        versionName '3.0.3'
     }
     buildTypes {
         release {
@@ -33,16 +35,18 @@ repositories {
 }
 
 dependencies {
+    //provided 'io.realm:realm-android:0.87.5' // "optional" dependency to realm-database API
+    implementation 'com.android.support:support-annotations:27.1.1'
     testImplementation 'junit:junit:4.12'
-    testImplementation "org.mockito:mockito-core:1.9.5"
+    testImplementation "org.mockito:mockito-core:1.10.19"
 }
 
 android.libraryVariants.all { variant ->
     def name = variant.buildType.name
     def task = project.tasks.create "jar${name.capitalize()}", Jar
-    task.dependsOn variant.javaCompile
-    task.from variant.javaCompile.destinationDir
-    artifacts.add('archives', task);
+    task.dependsOn variant.javaCompiler
+    task.from variant.javaCompiler.destinationDir
+    artifacts.add('archives', task)
 }
 
 task sourcesJar(type: Jar) {

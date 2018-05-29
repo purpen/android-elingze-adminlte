@@ -45,13 +45,6 @@ public abstract class AxisRenderer extends Renderer {
      */
     protected Paint mLimitLinePaint;
 
-    /**
-     * paint used for the 刻度线
-     */
-    protected Paint mScaleLinePaint;
-
-
-
     public AxisRenderer(ViewPortHandler viewPortHandler, Transformer trans, AxisBase axis) {
         super(viewPortHandler);
 
@@ -67,12 +60,6 @@ public abstract class AxisRenderer extends Renderer {
             mGridPaint.setStrokeWidth(1f);
             mGridPaint.setStyle(Style.STROKE);
             mGridPaint.setAlpha(90);
-
-            //刻度线
-            mScaleLinePaint = new Paint();
-            mScaleLinePaint.setColor(Color.GRAY);
-            mScaleLinePaint.setStrokeWidth(1f);
-            mScaleLinePaint.setStyle(Style.STROKE);
 
             mAxisLinePaint = new Paint();
             mAxisLinePaint.setColor(Color.BLACK);
@@ -91,14 +78,6 @@ public abstract class AxisRenderer extends Renderer {
      */
     public Paint getPaintAxisLabels() {
         return mAxisLabelPaint;
-    }
-
-    /**
-     * 刻度线paint
-     * @return
-     */
-    public Paint getPaintScale() {
-        return mScaleLinePaint;
     }
 
     /**
@@ -305,10 +284,4 @@ public abstract class AxisRenderer extends Renderer {
      * @param c
      */
     public abstract void renderLimitLines(Canvas c);
-
-    /**
-     * 画刻度线
-     * @param c
-     */
-    public abstract void renderScaleLines(Canvas c);
 }

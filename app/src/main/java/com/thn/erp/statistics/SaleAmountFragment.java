@@ -1,5 +1,6 @@
 package com.thn.erp.statistics;
 
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -59,7 +60,7 @@ import butterknife.OnClick;
 
 public class SaleAmountFragment extends BaseFragment implements DatePickerDialog.OnDateSetListener{
     private static final float LINE_WIDTH=1f;
-    private static final float TEXT_SIZE=6f;
+    private static final float TEXT_SIZE=9f;
     private static final float VALUE_TEXT_SIZE=9f;
     private int color;
     @BindView(R.id.scrollView)
@@ -68,7 +69,7 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
     TextView currentSaleAccount;
     @BindView(R.id.currentSaleDate)
     TextView currentSaleDate;
-    private List<SalesTrendsBean.DataBean> datas;
+    private List<SalesTrendsBean.DataBean.SaleAmountDataBean> datas;
     @BindView(R.id.saleAmountChart)
     LineChart saleAmountChart;
     @BindView(R.id.listViewForScrollView)
@@ -118,6 +119,9 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
         }
     }
 
+    /**
+     *选取日期
+     */
     private void getCalendarTime() {
         Calendar now = Calendar.getInstance();
         DatePickerDialog dpd = DatePickerDialog.newInstance(
@@ -126,11 +130,11 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
                 now.get(Calendar.MONTH),
                 now.get(Calendar.DAY_OF_MONTH)
         );
-        dpd.setYearRange(2000,now.get(Calendar.YEAR));
+        dpd.setYearRange(2010,now.get(Calendar.YEAR));
         dpd.setMaxDate(now);
         dpd.setFirstDayOfWeek(Calendar.MONDAY, Calendar.MONDAY);
         dpd.setAccentColor(color);
-        dpd.show(activity.getFragmentManager(), "Datepickerdialog");
+        dpd.show(activity.getFragmentManager(), DatePickerDialog.class.getSimpleName());
     }
 
     @Override
@@ -138,7 +142,7 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
         if(currentClickedId<0) return;
         String start_time = String.format("%04d-%02d-%02d",year,monthOfYear+1,dayOfMonth);
         String end_time = String.format("%04d-%02d-%02d",yearEnd,monthOfYearEnd+1,dayOfMonthEnd);
-        String dateStr = String.format("%s至%s",start_time,end_time);
+        String dateStr = String.format("%s 至 %s",start_time,end_time);
         switch (currentClickedId){
             case R.id.llSaleAmountPeriod:
                 isLoadSaleOrder=false;
@@ -162,7 +166,7 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
             public void onValueSelected(Entry e, Highlight h) {
                 currentSaleAccount.setText(String.format("销售额：%s",e.getY()));
                 if (null==datas) return;
-                currentSaleDate.setText(datas.get((int)e.getX()).time);
+                currentSaleDate.setText(DateUtil.getDateByTimestamp(datas.get((int)e.getX()).time));
             }
 
             @Override
@@ -173,40 +177,38 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
     }
 
     private void setUpSaleAmountChart() {
+
+        //x轴
         XAxis xAxis = saleAmountChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         saleAmountChart.setScaleEnabled(false);
         saleAmountChart.getLegend().setEnabled(false);
         saleAmountChart.getDescription().setEnabled(false);
-        int axisColor = getResources().getColor(R.color.color_222);
+        int axisColor = getResources().getColor(R.color.color_E5E5E5);
         xAxis.setAxisLineColor(axisColor);
         xAxis.setAxisLineWidth(LINE_WIDTH);
         xAxis.setTextSize(TEXT_SIZE);
-//        xAxis.setValueFormatter((float value, AxisBase axis) -> {
-//            if (datas==null) return null;
-//            if (datas.size()>0){
-//                return String.valueOf(datas.get((int) value).time.substring(5));
-//            }else {
-//                return "";
-//            }
-//        });
+        xAxis.setAxisMinimum(0);
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
                 if (datas==null) return null;
                 if (datas.size()>0){
-                    return String.valueOf(datas.get((int) value).time.substring(5));
+                    int v = (int)value;
+                    SalesTrendsBean.DataBean.SaleAmountDataBean bean = datas.get(v);
+                    return DateUtil.getDateByTimestamp(bean.time);
                 }else {
-                    return "";
+                    return null;
                 }
             }
         });
+
         MyMarkerView mv = new MyMarkerView(activity,R.layout.custom_marker_view);
-        mv.setChartView(saleAmountChart); // For bounds control
-        saleAmountChart.setMarker(mv); // Set the marker to the chart
+        mv.setChartView(saleAmountChart);
+        saleAmountChart.setMarker(mv);
         xAxis.setDrawGridLines(false);
-        //设置是否显示x轴
-        xAxis.setEnabled(true);
+
+        //设置y轴值
         YAxis leftAxis = saleAmountChart.getAxisLeft();
         leftAxis.setAxisLineColor(axisColor);
         leftAxis.setAxisLineWidth(LINE_WIDTH);
@@ -224,8 +226,8 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
         String end_time = DateUtil.getSpecifiedDayBefore(new Date(),1);
         String start_time= DateUtil.getSpecifiedMonthBefore(end_time,1);
         LogUtil.e("end_time="+end_time+";start_time="+start_time);
-        tvSaleAmountPeriod.setText(String.format("%s至%s",start_time,end_time));
-        tvSaleRank.setText(String.format("%s至%s",start_time,end_time));
+        tvSaleAmountPeriod.setText(String.format("%s 至 %s",start_time,end_time));
+        tvSaleRank.setText(String.format("%s 至 %s",start_time,end_time));
         isLoadSaleAmount=true;
         isLoadSaleOrder=true;
         getSaleAmountData(start_time,end_time);
@@ -281,23 +283,30 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
 
 
     /**
-     * 获得销售数据
+     * 获得销售额表数据
      */
     private void getSaleAmountData(String start_time, String end_time) {
         if (TextUtils.isEmpty(start_time)) return;
         if (TextUtils.isEmpty(end_time)) return;
         HashMap<String, String> params = ClientParamsAPI.getSalesTrendsRequestParams(start_time, end_time);
-        HttpRequest.sendRequest(HttpRequest.GET, URL.SALES_TRENDS, params, new HttpRequestCallback() {
+        HttpRequest.sendRequest(HttpRequest.POST, URL.SALES_TRENDS, params, new HttpRequestCallback() {
 
             @Override
             public void onSuccess(String json) {
                 SalesTrendsBean salesTrendsBean = JsonUtil.fromJson(json, SalesTrendsBean.class);
-                if (salesTrendsBean.meta.status_code== Constants.SUCCESS){
+                if (salesTrendsBean.status.code== Constants.SUCCESS){
                     if (null!=datas) datas.clear();
-                    datas = salesTrendsBean.data;
+                    datas = salesTrendsBean.data.sale_amount_data;
+                    //测试数据
+                    for (int i = 0; i < 10; i++) {
+                        SalesTrendsBean.DataBean.SaleAmountDataBean bean = new SalesTrendsBean.DataBean.SaleAmountDataBean();
+                        bean.sale_amount = (int)(Math.random()*1000);
+                        bean.time = 1526745600+24*3600*i;
+                        datas.add(bean);
+                    }
                     if (isLoadSaleAmount) setSaleAmountChartData(datas);
                 }else {
-                    ToastUtil.showError(salesTrendsBean.meta.message);
+                    ToastUtil.showError(salesTrendsBean.status.message);
                 }
             }
 
@@ -330,7 +339,7 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
      *
      * @param datas
      */
-    private void setSaleAmountChartData(List<SalesTrendsBean.DataBean> datas) {
+    private void setSaleAmountChartData(List<SalesTrendsBean.DataBean.SaleAmountDataBean> datas) {
         if (null==datas) {
             statesArr.add(false);
             return;
@@ -344,11 +353,11 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
         ArrayList<Entry> values = new ArrayList<>();
         int len = datas.size();
         for (int i = 0; i < len; i++) {
-            SalesTrendsBean.DataBean dataBean = datas.get(i);
-            Float money = Float.valueOf(dataBean.sum_money);
+            SalesTrendsBean.DataBean.SaleAmountDataBean dataBean = datas.get(i);
+            int money = dataBean.sale_amount;
             if (i==0) {
                 currentSaleAccount.setText(String.format("销售额：%s",money));
-                currentSaleDate.setText(dataBean.time);
+                currentSaleDate.setText(DateUtil.getDateByTimestamp(dataBean.time));
             }
             values.add(new Entry(i,money));
         }
@@ -365,7 +374,7 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
             set = new LineDataSet(values, "");
             set.setDrawIcons(false);
             set.setCubicIntensity(0.2f);
-            set.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+            set.setMode(LineDataSet.Mode.LINEAR);
             set.setColor(color);
 //            set.setCircleColor(color);
             set.setLineWidth(LINE_WIDTH);
@@ -375,8 +384,9 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
             set.setValueTextSize(VALUE_TEXT_SIZE);
             set.setValueTextColor(color);
             set.setDrawValues(false);
-            setLineChartFillStyle(set);
-//            set.setValueFormatter((float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) -> String.valueOf((int)value));
+            set.setHighLightColor(color);
+            set.enableDashedHighlightLine(15f, 5f, 0f);
+//            setLineChartFillStyle(set);
             set.setValueFormatter(new IValueFormatter() {
                 @Override
                 public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {

@@ -29,11 +29,6 @@ public abstract class ComponentBase {
     protected float mYOffset = 5f;
 
     /**
-     * 刻度线长度
-     */
-    protected float mScaleLen=10f;
-
-    /**
      * the typeface used for the labels
      */
     protected Typeface mTypeface = null;
@@ -51,14 +46,6 @@ public abstract class ComponentBase {
 
     public ComponentBase() {
 
-    }
-
-    public float getScaleLen() {
-        return mScaleLen;
-    }
-
-    public void setScaleLen(float len){
-        mScaleLen = Utils.convertDpToPixel(len);
     }
 
     /**

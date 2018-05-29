@@ -15,7 +15,12 @@ public class URL {
     public static final String AUTH_REGISTER = BASE_URL + "auth/register";
     //商家登录
     public static final String AUTH_LOGIN = BASE_URL + "auth/business_login";
-    public static final String SALES_TRENDS = BASE_URL + "survey/salesTrends";
+
+    /**
+     * 销售额URL
+     */
+    public static final String SALES_TRENDS = BASE_URL + "stats/sale_amount_trend";
+
     public static final String SALES_TOP100 = BASE_URL + "survey/salesRanking";
     public static final String SALES_PRICE_PER_USER = BASE_URL + "survey/customerPriceDistribution";
     public static final String REBUY_RATE = BASE_URL + "survey/repeatPurchase";

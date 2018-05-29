@@ -20,7 +20,6 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.util.List;
 
-
 public class XAxisRenderer extends AxisRenderer {
 
     protected XAxis mXAxis;
@@ -146,10 +145,6 @@ public class XAxisRenderer extends AxisRenderer {
         MPPointF.recycleInstance(pointF);
     }
 
-    /**
-     * 画x轴
-     * @param c
-     */
     @Override
     public void renderAxisLine(Canvas c) {
 
@@ -176,65 +171,6 @@ public class XAxisRenderer extends AxisRenderer {
                     mViewPortHandler.contentBottom(), mAxisLinePaint);
         }
     }
-
-    /**
-     * 画刻度
-     * @param c
-     */
-    @Override
-    public void renderScaleLines(Canvas c) {
-        boolean centeringEnabled = mXAxis.isCenterAxisLabelsEnabled();
-
-        float[] positions = new float[mXAxis.mEntryCount * 2];
-
-        for (int i = 0; i < positions.length; i += 2) {
-
-            // only fill x values
-            if (centeringEnabled) {
-                positions[i] = mXAxis.mCenteredEntries[i / 2];
-            } else {
-                positions[i] = mXAxis.mEntries[i / 2];
-            }
-        }
-
-        mTrans.pointValuesToPixel(positions);
-
-        for (int i = 0; i < positions.length; i += 2) {
-
-            float x = positions[i];
-
-            if (mViewPortHandler.isInBoundsX(x)) {
-
-                String label = mXAxis.getValueFormatter().getFormattedValue(mXAxis.mEntries[i / 2], mXAxis);
-
-                if (mXAxis.isAvoidFirstLastClippingEnabled()) {
-
-                    // avoid clipping of the last
-                    if (i == mXAxis.mEntryCount - 1 && mXAxis.mEntryCount > 1) {
-                        float width = Utils.calcTextWidth(mAxisLabelPaint, label);
-
-                        if (width > mViewPortHandler.offsetRight() * 2
-                                && x + width > mViewPortHandler.getChartWidth())
-                            x -= width / 2;
-
-                        // avoid clipping of the first
-                    } else if (i == 0) {
-
-                        float width = Utils.calcTextWidth(mAxisLabelPaint, label);
-                        x += width / 2;
-                    }
-                }
-                mScaleLinePaint.setStrokeWidth(5f);
-                float startX=x;
-                float startY= mViewPortHandler.contentBottom();
-                float stopX = startX;
-                float stopY =startY+mXAxis.getScaleLen();
-//                drawXScales(c,positions,startX, startY, stopX,stopY);
-                c.drawLine(startX,startY,stopX,stopY,mScaleLinePaint);
-            }
-        }
-    }
-
 
     /**
      * draws the x-labels on the specified y-position
@@ -271,7 +207,7 @@ public class XAxisRenderer extends AxisRenderer {
                 if (mXAxis.isAvoidFirstLastClippingEnabled()) {
 
                     // avoid clipping of the last
-                    if (i == mXAxis.mEntryCount - 1 && mXAxis.mEntryCount > 1) {
+                    if (i / 2 == mXAxis.mEntryCount - 1 && mXAxis.mEntryCount > 1) {
                         float width = Utils.calcTextWidth(mAxisLabelPaint, label);
 
                         if (width > mViewPortHandler.offsetRight() * 2
@@ -294,7 +230,6 @@ public class XAxisRenderer extends AxisRenderer {
     protected void drawLabel(Canvas c, String formattedLabel, float x, float y, MPPointF anchor, float angleDegrees) {
         Utils.drawXAxisValue(c, formattedLabel, x, y, mAxisLabelPaint, anchor, angleDegrees);
     }
-
     protected Path mRenderGridLinesPath = new Path();
     protected float[] mRenderGridLinesBuffer = new float[2];
     @Override
@@ -405,12 +340,6 @@ public class XAxisRenderer extends AxisRenderer {
     float[] mLimitLineSegmentsBuffer = new float[4];
     private Path mLimitLinePath = new Path();
 
-    /**
-     * 绘制限制线
-     * @param c
-     * @param limitLine
-     * @param position
-     */
     public void renderLimitLineLine(Canvas c, LimitLine limitLine, float[] position) {
         mLimitLineSegmentsBuffer[0] = position[0];
         mLimitLineSegmentsBuffer[1] = mViewPortHandler.contentTop();
@@ -429,13 +358,6 @@ public class XAxisRenderer extends AxisRenderer {
         c.drawPath(mLimitLinePath, mLimitLinePaint);
     }
 
-    /**
-     * 渲染限制线的文字
-     * @param c
-     * @param limitLine
-     * @param position
-     * @param yOffset
-     */
     public void renderLimitLineLabel(Canvas c, LimitLine limitLine, float[] position, float yOffset) {
         String label = limitLine.getLabel();
 
@@ -476,5 +398,4 @@ public class XAxisRenderer extends AxisRenderer {
             }
         }
     }
-
 }
