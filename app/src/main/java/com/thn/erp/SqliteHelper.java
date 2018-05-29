@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 
 import com.thn.erp.overview.bean.CustomMenuBean;
-import com.thn.erp.utils.LogUtil;
+import com.thn.basemodule.tools.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;

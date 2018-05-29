@@ -41,8 +41,8 @@ import com.thn.erp.sale.adapter.SpecificationAdapter;
 import com.thn.erp.sale.bean.GoodsData;
 import com.thn.erp.sale.bean.SKUListData;
 import com.thn.basemodule.tools.JsonUtil;
-import com.thn.erp.utils.LogUtil;
-import com.thn.erp.utils.SPUtil;
+import com.thn.basemodule.tools.LogUtil;
+import com.thn.basemodule.tools.SPUtil;
 import com.thn.erp.view.CounterView;
 import com.thn.erp.view.CustomHeadView;
 import com.thn.erp.view.SearchView;
@@ -307,7 +307,7 @@ public class SelectGoodsActivity extends BaseActivity {
             }
         }
 
-        if (dataBean==null){
+        if (dataBean==null && !items.isEmpty()){
             dataBean = items.get(0);
             LogUtil.e(dataBean.cover);
             setSkuInfo(dataBean);

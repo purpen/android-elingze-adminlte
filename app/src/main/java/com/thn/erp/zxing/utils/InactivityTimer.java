@@ -26,7 +26,7 @@ import android.os.AsyncTask;
 import android.os.BatteryManager;
 import android.os.Build;
 
-import com.thn.erp.utils.LogUtil;
+import com.thn.basemodule.tools.LogUtil;
 
 
 /**

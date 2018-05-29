@@ -13,7 +13,7 @@ import com.thn.erp.Constants;
 import com.thn.erp.MainActivity;
 import com.thn.erp.UserGuideActivity;
 import com.thn.erp.user.LoginRegisterActivity;
-import com.thn.erp.utils.SPUtil;
+import com.thn.basemodule.tools.SPUtil;
 import com.thn.basemodule.tools.ToastUtil;
 
 import java.util.List;
@@ -91,7 +91,7 @@ public class ViewPagerAdapter<T> extends RecyclingPagerAdapter {
                     @Override
                     public void onClick(View v) {
                         if (TextUtils.isEmpty(UserGuideActivity.fromPage)) {
-                            String token = SPUtil.read(Constants.TOKEN);
+                            String token = SPUtil.read(Constants.AUTHORIZATION);
                             if (TextUtils.isEmpty(token)){
                                 activity.startActivity(new Intent(activity, LoginRegisterActivity.class));
                             }else {

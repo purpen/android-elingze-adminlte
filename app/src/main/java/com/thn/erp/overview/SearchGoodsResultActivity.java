@@ -9,8 +9,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
-import com.thn.basemodule.tools.WaitingDialog;
 import com.thn.basemodule.tools.LogUtil;
+import com.thn.basemodule.tools.WaitingDialog;
 import com.thn.basemodule.tools.ToastUtil;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;

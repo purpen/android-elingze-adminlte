@@ -23,7 +23,7 @@ import com.thn.erp.overview.usermanage.CustomerListActivity;
 import com.thn.erp.sale.adapter.OrderListAdapter;
 import com.thn.erp.sale.bean.OrderData;
 import com.thn.basemodule.tools.JsonUtil;
-import com.thn.erp.utils.LogUtil;
+import com.thn.basemodule.tools.LogUtil;
 import com.thn.erp.view.common.PublicTopBar;
 
 import java.io.IOException;

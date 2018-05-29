@@ -27,8 +27,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.thn.basemodule.tools.DimenUtil;
+import com.thn.basemodule.tools.ScreenUtil;
 import com.thn.erp.R;
-import com.thn.erp.utils.Util;
+import com.thn.basemodule.tools.Util;
 
 import java.util.List;
 import java.util.Map;
@@ -91,7 +92,7 @@ public class TitleRecyclerViewAdapter extends RecyclerView.Adapter<TitleRecycler
         int resId = R.layout.item_recyclerview_goods_title;
         view = LayoutInflater.from(mContext).inflate(resId, viewGroup, false);
         if (equalWidth) {
-            view.setLayoutParams(new RelativeLayout.LayoutParams((int) (Util.getScreenWidth() * 0.25), view.getLayoutParams().height));
+            view.setLayoutParams(new RelativeLayout.LayoutParams((int) (ScreenUtil.getScreenWidth() * 0.25), view.getLayoutParams().height));
         }else {
             view.setLayoutParams(new RelativeLayout.LayoutParams(DimenUtil.dp2px(80), view.getLayoutParams().height));
         }

@@ -26,7 +26,7 @@ import android.view.SurfaceHolder;
 
 
 import com.thn.erp.R;
-import com.thn.erp.utils.LogUtil;
+import com.thn.basemodule.tools.LogUtil;
 import com.thn.erp.zxing.camera.open.OpenCameraInterface;
 
 import java.io.IOException;

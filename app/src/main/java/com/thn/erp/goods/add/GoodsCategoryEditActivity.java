@@ -18,7 +18,7 @@ import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.basemodule.tools.JsonUtil;
-import com.thn.erp.utils.LogUtil;
+import com.thn.basemodule.tools.LogUtil;
 import com.thn.basemodule.tools.ToastUtil;
 import com.thn.erp.view.common.PublicTopBar;
 

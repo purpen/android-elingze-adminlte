@@ -21,7 +21,7 @@ import com.thn.erp.more.MoreFragment;
 import com.thn.erp.overview.OverViewFragment;
 import com.thn.erp.sale.SaleFragment;
 import com.thn.erp.statistics.StatisticsFragment;
-import com.thn.erp.utils.LogUtil;
+import com.thn.basemodule.tools.LogUtil;
 import com.thn.basemodule.tools.ToastUtil;
 
 import java.util.ArrayList;

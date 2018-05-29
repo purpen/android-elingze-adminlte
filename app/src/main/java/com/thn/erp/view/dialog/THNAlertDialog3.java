@@ -8,8 +8,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.thn.basemodule.tools.ScreenUtil;
 import com.thn.erp.R;
-import com.thn.erp.utils.Util;
+import com.thn.basemodule.tools.Util;
 
 /**
  * Created by Stephen on 2016/12/13 15:48
@@ -53,7 +54,7 @@ class THNAlertDialog3 extends BaseDialog implements View.OnClickListener {
         this.setContentView(R.layout.dialog_alertdialog_layout3);
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.gravity = Gravity.CENTER;
-        lp.width = (int) (Util.getScreenWidth() * 0.87);
+        lp.width = (int) (ScreenUtil.getScreenWidth() * 0.87);
         getWindow().setAttributes(lp);
         this.setCanceledOnTouchOutside(true);
 

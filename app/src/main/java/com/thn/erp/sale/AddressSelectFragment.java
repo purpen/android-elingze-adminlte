@@ -23,7 +23,7 @@ import com.thn.erp.sale.adapter.TownsListAdapter;
 import com.thn.erp.sale.bean.ProvinceCityRestrict;
 import com.thn.erp.sale.bean.TownsData;
 import com.thn.basemodule.tools.JsonUtil;
-import com.thn.erp.utils.LogUtil;
+import com.thn.basemodule.tools.LogUtil;
 import com.thn.basemodule.tools.ToastUtil;
 
 import java.io.IOException;

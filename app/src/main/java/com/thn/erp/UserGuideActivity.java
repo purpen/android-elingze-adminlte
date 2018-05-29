@@ -5,12 +5,11 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.thn.basemodule.tools.LogUtil;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.net.DataConstants;
 import com.thn.erp.overview.bean.CustomMenuBean;
 import com.thn.erp.user.LoginRegisterActivity;
-import com.thn.erp.utils.SPUtil;
+import com.thn.basemodule.tools.SPUtil;
 import com.thn.erp.view.autoScrollViewpager.ScrollableView;
 import com.thn.erp.view.autoScrollViewpager.ViewPagerAdapter;
 

@@ -4,7 +4,7 @@ import com.thn.erp.Constants;
 import com.thn.erp.goods.category.UpdateCetegoryBean;
 import com.thn.erp.net.paramsBean.UpdateBrandBean;
 import com.thn.erp.utils.BeanHelper;
-import com.thn.erp.utils.SPUtil;
+import com.thn.basemodule.tools.SPUtil;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;

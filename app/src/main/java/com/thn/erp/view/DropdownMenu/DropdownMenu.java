@@ -14,9 +14,11 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.thn.basemodule.tools.ScreenUtil;
 import com.thn.erp.R;
-import com.thn.erp.utils.LogUtil;
-import com.thn.erp.utils.Util;
+import com.thn.basemodule.tools.LogUtil;
+import com.thn.basemodule.tools.Util;
 
 /**
  * 下拉菜单
@@ -107,7 +109,7 @@ public class DropdownMenu extends RelativeLayout {
         double v = (getResources().getDimensionPixelSize(R.dimen.dp200) - getMeasuredWidth()) * 0.5;
 
         LogUtil.e("v="+v);
-        if (getLeft()<v || Util.getScreenWidth()- getRight()<v){
+        if (getLeft()<v || ScreenUtil.getScreenWidth()- getRight()<v){
             popupWindow.showAsDropDown(view);
         }else {
             popupWindow.showAsDropDown(view,-(int)v,0);

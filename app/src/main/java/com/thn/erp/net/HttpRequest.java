@@ -5,8 +5,8 @@ import android.text.TextUtils;
 
 import com.thn.erp.Constants;
 import com.thn.basemodule.tools.JsonUtil;
-import com.thn.erp.utils.LogUtil;
-import com.thn.erp.utils.SPUtil;
+import com.thn.basemodule.tools.LogUtil;
+import com.thn.basemodule.tools.SPUtil;
 
 import java.io.File;
 import java.io.IOException;

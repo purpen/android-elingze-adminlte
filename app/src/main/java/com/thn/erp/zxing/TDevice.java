@@ -12,17 +12,13 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
-import android.graphics.Point;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.PowerManager;
-import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
-import android.view.Display;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
@@ -30,7 +26,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.thn.erp.AppApplication;
-import com.thn.erp.utils.LogUtil;
+import com.thn.basemodule.tools.LogUtil;
 
 import java.io.File;
 import java.lang.reflect.Field;

@@ -24,7 +24,7 @@ import com.thn.erp.net.URL;
 import com.thn.erp.user.bean.AppKeyData;
 import com.thn.erp.user.bean.LoginBean;
 import com.thn.basemodule.tools.JsonUtil;
-import com.thn.erp.utils.SPUtil;
+import com.thn.basemodule.tools.SPUtil;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -98,7 +98,6 @@ public class LoginFragment extends BaseFragment {
                 LoginBean loginBean = JsonUtil.fromJson(json, LoginBean.class);
                 if (loginBean.success) {
                     getAppKeyAndSecret(loginBean.data.store_rid,authorzationCode);
-                   // SPUtil.write(Constants.TOKEN, loginBean.data.token);
                 }else {
                     ToastUtil.showError(loginBean.status.message);
                 }

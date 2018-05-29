@@ -1,4 +1,4 @@
-package com.thn.erp.utils;
+package com.thn.basemodule.tools;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

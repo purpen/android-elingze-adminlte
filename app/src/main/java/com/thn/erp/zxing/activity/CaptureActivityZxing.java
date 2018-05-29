@@ -37,8 +37,8 @@ import android.widget.TextView;
 import com.google.zxing.Result;
 import com.thn.basemodule.tools.BaseModuleContext;
 import com.thn.erp.R;
-import com.thn.erp.utils.LogUtil;
-import com.thn.erp.utils.SPUtil;
+import com.thn.basemodule.tools.LogUtil;
+import com.thn.basemodule.tools.SPUtil;
 import com.thn.erp.view.CustomHeadView;
 import com.thn.erp.view.dialog.DefaultDialog;
 import com.thn.erp.view.dialog.IDialogListener;
@@ -434,7 +434,7 @@ public final class CaptureActivityZxing extends ZxingBaseActivity implements
             //获取推广码 字段referral_code
             String referral_code = map.get("referral_code");
             if (!TextUtils.isEmpty(referral_code)) {
-                SPUtil.write("referral_code", referral_code);
+                LogUtil.e("referral_code", referral_code);
             }
 //                LogUtil.e("text", String.format("infoType=%s;infoId=%s", infoType, infoId));
             if (TextUtils.isEmpty(infoType) || TextUtils.isEmpty(infoId)) {

@@ -14,7 +14,7 @@ import com.thn.erp.AppApplication;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseUltimateViewAdapter;
 import com.thn.erp.sale.bean.OrderData;
-import com.thn.erp.utils.DateUtil;
+import com.thn.basemodule.tools.DateUtil;
 
 import java.util.List;
 

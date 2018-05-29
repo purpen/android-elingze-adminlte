@@ -16,7 +16,7 @@ import com.thn.erp.net.URL;
 import com.thn.erp.user.LoginRegisterActivity;
 import com.thn.erp.user.bean.LogoutBean;
 import com.thn.basemodule.tools.JsonUtil;
-import com.thn.erp.utils.SPUtil;
+import com.thn.basemodule.tools.SPUtil;
 import com.thn.erp.view.common.LinearLayoutArrowTextView;
 import com.thn.erp.view.common.PublicTopBar;
 

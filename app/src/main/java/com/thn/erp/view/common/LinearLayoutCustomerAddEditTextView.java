@@ -2,19 +2,13 @@ package com.thn.erp.view.common;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.thn.erp.R;
-import com.thn.erp.utils.LogUtil;
-
-import butterknife.BindView;
 
 /**
  * Created by Stephen on 2018/3/14 16:53

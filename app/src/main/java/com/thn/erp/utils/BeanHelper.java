@@ -1,5 +1,7 @@
 package com.thn.erp.utils;
 
+import com.thn.basemodule.tools.LogUtil;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;

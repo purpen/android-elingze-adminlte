@@ -18,7 +18,7 @@ import com.thn.erp.net.URL;
 import com.thn.erp.user.bean.AuthCheckCodeBean;
 import com.thn.erp.user.bean.ResetPasswordBean;
 import com.thn.basemodule.tools.JsonUtil;
-import com.thn.erp.utils.Util;
+import com.thn.basemodule.tools.Util;
 import com.thn.erp.view.CustomHeadView;
 
 import java.io.IOException;

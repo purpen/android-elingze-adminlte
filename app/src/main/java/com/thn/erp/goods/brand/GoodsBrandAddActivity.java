@@ -17,7 +17,7 @@ import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.net.paramsBean.UpdateBrandBean;
 import com.thn.basemodule.tools.JsonUtil;
-import com.thn.erp.utils.LogUtil;
+import com.thn.basemodule.tools.LogUtil;
 import com.thn.erp.view.common.LinearLayoutCustomerAddEditTextView;
 import com.thn.erp.view.common.LinearLayoutCustomerAddSwitchView;
 import com.thn.erp.view.common.PublicTopBar;

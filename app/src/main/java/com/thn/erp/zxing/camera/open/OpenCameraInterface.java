@@ -18,7 +18,7 @@ package com.thn.erp.zxing.camera.open;
 
 import android.hardware.Camera;
 
-import com.thn.erp.utils.LogUtil;
+import com.thn.basemodule.tools.LogUtil;
 
 
 public class OpenCameraInterface {

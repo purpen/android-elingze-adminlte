@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
-import com.thn.erp.utils.LogUtil;
+import com.thn.basemodule.tools.LogUtil;
 
 public class CustomPopupWindow {
     private PopupWindow mPopupWindow;

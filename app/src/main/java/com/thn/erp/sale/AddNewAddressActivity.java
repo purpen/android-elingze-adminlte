@@ -19,7 +19,7 @@ import com.thn.erp.sale.bean.CommitConsigneeData;
 import com.thn.erp.sale.bean.ProvinceCityRestrict;
 import com.thn.erp.sale.bean.TownsData;
 import com.thn.basemodule.tools.JsonUtil;
-import com.thn.erp.utils.Util;
+import com.thn.basemodule.tools.Util;
 import com.thn.erp.view.CustomHeadView;
 import java.io.IOException;
 import java.util.HashMap;

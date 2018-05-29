@@ -21,7 +21,7 @@ import android.hardware.Camera;
 import android.os.Handler;
 import android.os.Message;
 
-import com.thn.erp.utils.LogUtil;
+import com.thn.basemodule.tools.LogUtil;
 
 
 public class PreviewCallback implements Camera.PreviewCallback {

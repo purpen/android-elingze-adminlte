@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.thn.basemodule.tools.ScreenUtil;
 import com.thn.basemodule.tools.WaitingDialog;
 import com.thn.basemodule.tools.ToastUtil;
 import com.thn.erp.R;
@@ -24,7 +25,7 @@ import com.thn.erp.overview.bean.CustomMenuBean;
 import com.thn.erp.overview.bean.SlidesData;
 import com.thn.erp.overview.usermanage.CustomerListActivity;
 import com.thn.basemodule.tools.JsonUtil;
-import com.thn.erp.utils.Util;
+import com.thn.basemodule.tools.Util;
 import com.thn.erp.view.autoScrollViewpager.ScrollableView;
 import com.thn.erp.view.autoScrollViewpager.ViewPagerAdapter;
 import java.io.IOException;
@@ -106,7 +107,7 @@ public class OverViewFragment extends BaseFragment {
     }
 
     private void initScrollView() {
-            viewPagerAdapter = new ViewPagerAdapter<>(activity, slideList, Util.getScreenWidth(), getResources().getDimensionPixelSize(R.dimen.dp100));
+            viewPagerAdapter = new ViewPagerAdapter<>(activity, slideList, ScreenUtil.getScreenWidth(), getResources().getDimensionPixelSize(R.dimen.dp100));
             scrollableView.setAdapter(viewPagerAdapter.setInfiniteLoop(true));
 //            scrollableView.setOnPageChangeListener(this);
             scrollableView.setAutoScrollDurationFactor(8);

@@ -16,7 +16,7 @@ import com.thn.erp.MainActivity;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.user.adapter.LoginRegisterViewPagerAdapter;
-import com.thn.erp.utils.SPUtil;
+import com.thn.basemodule.tools.SPUtil;
 import com.thn.erp.view.WrapContentHeightViewPager;
 
 import java.util.ArrayList;

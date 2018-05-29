@@ -23,7 +23,7 @@ import android.view.Display;
 import android.view.WindowManager;
 
 
-import com.thn.erp.utils.LogUtil;
+import com.thn.basemodule.tools.LogUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;

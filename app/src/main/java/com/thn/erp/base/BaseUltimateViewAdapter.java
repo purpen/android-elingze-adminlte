@@ -14,7 +14,7 @@ import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.thn.erp.R;
 import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
 import com.thn.erp.common.interfaces.OnRecyclerViewItemLongClickListener;
-import com.thn.erp.utils.LogUtil;
+import com.thn.basemodule.tools.LogUtil;
 
 import java.security.SecureRandom;
 import java.util.List;

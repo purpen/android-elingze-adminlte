@@ -21,7 +21,7 @@ import com.thn.erp.net.URL;
 import com.thn.erp.user.bean.AuthCheckCodeBean;
 import com.thn.erp.user.bean.RegisterBean;
 import com.thn.basemodule.tools.JsonUtil;
-import com.thn.erp.utils.LogUtil;
+import com.thn.basemodule.tools.LogUtil;
 
 import java.io.IOException;
 import java.util.HashMap;
