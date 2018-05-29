@@ -9,7 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
-import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
+import com.thn.basemodule.tools.WaitingDialog;
+import com.thn.basemodule.tools.ToastUtil;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
 import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
@@ -21,9 +22,8 @@ import com.thn.erp.net.URL;
 import com.thn.erp.overview.usermanage.CustomerListActivity;
 import com.thn.erp.sale.adapter.OrderListAdapter;
 import com.thn.erp.sale.bean.OrderData;
-import com.thn.erp.utils.JsonUtil;
+import com.thn.basemodule.tools.JsonUtil;
 import com.thn.erp.utils.LogUtil;
-import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.common.PublicTopBar;
 
 import java.io.IOException;
@@ -48,7 +48,7 @@ public class SaleFragment extends BaseFragment {
     private boolean isRefreshing = false;
     private TitleRecyclerViewAdapter titleRecyclerViewAdapter;
     private OrderListAdapter adapter;
-    private THNWaittingDialog dialog;
+    private WaitingDialog dialog;
     private int page = 1;
     private String status = "";
     private LinearLayoutManager linearLayoutManager;
@@ -64,7 +64,7 @@ public class SaleFragment extends BaseFragment {
     @Override
     protected void initView() {
         page = 1;
-        dialog= new THNWaittingDialog(activity);
+        dialog= new WaitingDialog(activity);
         myTopbar.setTopBarCenterTextView("销售", getResources().getColor(R.color.THN_color_bgColor_white));
         initRecyclerView();
         list = new ArrayList<>();
@@ -158,7 +158,7 @@ public class SaleFragment extends BaseFragment {
                     List<OrderData.DataBean.OrdersBean> orders = orderData.data.orders;
                     updateData(orders);
                 } else {
-                    ToastUtils.showError(orderData.status.message);
+                    ToastUtil.showError(orderData.status.message);
                 }
 
             }
@@ -166,7 +166,7 @@ public class SaleFragment extends BaseFragment {
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }

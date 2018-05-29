@@ -8,8 +8,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
-
-import com.stephen.taihuoniaolibrary.utils.THNLogUtil;
+import com.thn.erp.utils.LogUtil;
 
 public class CustomPopupWindow {
     private PopupWindow mPopupWindow;
@@ -77,7 +76,7 @@ public class CustomPopupWindow {
      */
     public CustomPopupWindow setWindowAlpha(float alpha) {
         if (activity==null){
-            THNLogUtil.e("function setWindowAlpha activity==null");
+            LogUtil.e("function setWindowAlpha activity==null");
             return this;
         }
         Window window = activity.getWindow();

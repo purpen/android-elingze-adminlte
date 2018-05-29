@@ -5,7 +5,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
-import com.stephen.taihuoniaolibrary.utils.THNTypeConversionUtils;
+import com.thn.basemodule.tools.ToastUtil;
+import com.thn.basemodule.tools.WaitingDialog;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.common.interfaces.ImpTopbarOnClickListener;
@@ -15,13 +16,11 @@ import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.net.paramsBean.UpdateBrandBean;
-import com.thn.erp.utils.JsonUtil;
+import com.thn.basemodule.tools.JsonUtil;
 import com.thn.erp.utils.LogUtil;
-import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.common.LinearLayoutCustomerAddEditTextView;
 import com.thn.erp.view.common.LinearLayoutCustomerAddSwitchView;
 import com.thn.erp.view.common.PublicTopBar;
-import com.thn.erp.view.svprogress.WaitingDialog;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -104,7 +103,7 @@ public class GoodsBrandAddActivity extends BaseActivity implements ImpTopbarOnCl
     private UpdateBrandBean checkInputParams(){
         String name = addEditText1.getValue();
         if (TextUtils.isEmpty(name)) {
-            ToastUtils.showInfo("名称不能为空");
+            ToastUtil.showInfo("名称不能为空");
             return null;
         }
         String features = addEditText2.getValue();
@@ -112,8 +111,8 @@ public class GoodsBrandAddActivity extends BaseActivity implements ImpTopbarOnCl
         String supplier_id = addEditText4.getValue();
         boolean is_recommended = switchView1.getSwitchStatus();
         String sort_order = addEditText6.getValue();
-        int supplierId = THNTypeConversionUtils.StringConvertInt(supplier_id);
-        int sortOrder = THNTypeConversionUtils.StringConvertInt(sort_order);
+        int supplierId = Integer.valueOf(supplier_id);
+        int sortOrder = Integer.valueOf(sort_order);
         return new UpdateBrandBean(name, features, description, supplierId, is_recommended, sortOrder);
     }
 
@@ -139,16 +138,16 @@ public class GoodsBrandAddActivity extends BaseActivity implements ImpTopbarOnCl
                 if (customerBean.getSuccess()) {
                     setResult(-1);
                     finish();
-                    ToastUtils.showSuccess(customerBean.getStatus().getMessage());
+                    ToastUtil.showSuccess(customerBean.getStatus().getMessage());
                 } else {
-                    ToastUtils.showError(customerBean.getStatus().getMessage());
+                    ToastUtil.showError(customerBean.getStatus().getMessage());
                 }
             }
 
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }

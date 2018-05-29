@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import com.thn.basemodule.tools.ToastUtil;
+import com.thn.basemodule.tools.WaitingDialog;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
 import com.thn.erp.base.BaseUltimateRecyclerView;
@@ -20,9 +22,7 @@ import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.sale.bean.GoodsData;
-import com.thn.erp.utils.JsonUtil;
-import com.thn.erp.utils.ToastUtils;
-import com.thn.erp.view.svprogress.WaitingDialog;
+import com.thn.basemodule.tools.JsonUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -96,7 +96,6 @@ public class GoodsListFragment extends BaseFragment {
 
     private void initListAdapter() {
         page = 1;
-        dialog = new WaitingDialog(activity);
         list = new ArrayList<>();
         adapter = new GoodsListAdapter(list);
 
@@ -151,7 +150,7 @@ public class GoodsListFragment extends BaseFragment {
                 if (customerBean.success) {
                     updateData(customerBean.data.products);
                 } else {
-                    ToastUtils.showError(customerBean.status.message);
+                    ToastUtil.showError(customerBean.status.message);
                 }
 
             }
@@ -159,7 +158,7 @@ public class GoodsListFragment extends BaseFragment {
             @Override
             public void onFailure(IOException e) {
 //                dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }

@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.thn.basemodule.tools.ToastUtil;
+import com.thn.basemodule.tools.WaitingDialog;
 import com.thn.erp.Constants;
 import com.thn.erp.MainActivity;
 import com.thn.erp.R;
@@ -18,10 +20,8 @@ import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.user.bean.AuthCheckCodeBean;
 import com.thn.erp.user.bean.RegisterBean;
-import com.thn.erp.utils.JsonUtil;
+import com.thn.basemodule.tools.JsonUtil;
 import com.thn.erp.utils.LogUtil;
-import com.thn.erp.utils.ToastUtils;
-import com.thn.erp.view.svprogress.WaitingDialog;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -77,12 +77,12 @@ public class RegisterFragment extends BaseFragment {
     private void getCheckCode() {
         account = etPhoneReg.getText().toString();
         if (TextUtils.isEmpty(account)) {
-            ToastUtils.showInfo("请输入手机号");
+            ToastUtil.showInfo("请输入手机号");
             return;
         }
 
 //        if (!Util.isMobileNO(account)) {
-//            ToastUtils.showInfo("请输入正确手机号");
+//            ToastUtil.showInfo("请输入正确手机号");
 //            return;
 //        }
 
@@ -102,7 +102,7 @@ public class RegisterFragment extends BaseFragment {
                     }
                 } else {
                     btnCheckCode.setEnabled(true);
-                    ToastUtils.showError(authCheckCodeBean.meta.message);
+                    ToastUtil.showError(authCheckCodeBean.meta.message);
                 }
             }
 
@@ -110,7 +110,7 @@ public class RegisterFragment extends BaseFragment {
             public void onFailure(IOException e) {
                 LogUtil.e(e.toString());
                 btnCheckCode.setEnabled(true);
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }
@@ -134,7 +134,7 @@ public class RegisterFragment extends BaseFragment {
 //                    SPUtil.write(Constants.TOKEN, loginBean.data.token);
 //                    jump2MainPage();
                 } else {
-                    ToastUtils.showError(registerBean.status.message);
+                    ToastUtil.showError(registerBean.status.message);
                 }
 
             }
@@ -142,7 +142,7 @@ public class RegisterFragment extends BaseFragment {
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }
@@ -161,12 +161,12 @@ public class RegisterFragment extends BaseFragment {
         account = etPhoneReg.getText().toString();
 
         if (TextUtils.isEmpty(account)) {
-            ToastUtils.showInfo("手机号不能为空");
+            ToastUtil.showInfo("手机号不能为空");
             return false;
         }
 
 //        if (!Util.isMobileNO(account)) {
-//            ToastUtils.showInfo("请输入正确手机号");
+//            ToastUtil.showInfo("请输入正确手机号");
 //            return false;
 //        }
 
@@ -177,12 +177,12 @@ public class RegisterFragment extends BaseFragment {
 
         userPsw = etPasswordReg.getText().toString();
         if (TextUtils.isEmpty(userPsw)) {
-            ToastUtils.showInfo("请输入密码");
+            ToastUtil.showInfo("请输入密码");
             return false;
         }
 
         if (userPsw.length()<6){
-            ToastUtils.showInfo("密码长度最少为6位");
+            ToastUtil.showInfo("密码长度最少为6位");
             return false;
         }
 

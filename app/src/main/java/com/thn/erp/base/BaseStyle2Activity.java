@@ -4,7 +4,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 
-import com.stephen.taihuoniaolibrary.utils.THNStatusBarUtils;
+import com.thn.basemodule.tools.StatusBarUtil;
 import com.thn.basemodule.tools.DimenUtil;
 import com.thn.erp.R;
 import com.thn.erp.common.RecycleViewItemDecorationVertical;
@@ -21,7 +21,7 @@ public abstract class BaseStyle2Activity extends BaseActivity {
         super.onCreate(savedInstanceState);
         getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.THN_color_bgColor_content)));
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        THNStatusBarUtils.chenjin(this, R.color.THN_color_primaryColor);
+        StatusBarUtil.chenjin(this, R.color.THN_color_primaryColor);
     }
 
 
@@ -41,7 +41,7 @@ public abstract class BaseStyle2Activity extends BaseActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         ultimateRecyclerView.setHasFixedSize(true);
         ultimateRecyclerView.removeItemDividerDecoration();
-        ultimateRecyclerView.addItemDecoration(new RecycleViewItemDecorationVertical(DimenUtil.dp2px(this, 10)));
+        ultimateRecyclerView.addItemDecoration(new RecycleViewItemDecorationVertical(DimenUtil.dp2px( 10)));
         ultimateRecyclerView.setLayoutManager(linearLayoutManager);
     }
 
@@ -49,7 +49,7 @@ public abstract class BaseStyle2Activity extends BaseActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         ultimateRecyclerView.setHasFixedSize(true);
         ultimateRecyclerView.removeItemDividerDecoration();
-        ultimateRecyclerView.addItemDecoration(new RecycleViewItemDecorationVertical(DimenUtil.dp2px(this, 10)));
+        ultimateRecyclerView.addItemDecoration(new RecycleViewItemDecorationVertical(DimenUtil.dp2px( 10)));
         ultimateRecyclerView.setLayoutManager(linearLayoutManager);
     }
 }

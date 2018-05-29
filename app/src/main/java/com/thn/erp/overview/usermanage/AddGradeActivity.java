@@ -8,8 +8,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
-import com.stephen.taihuoniaolibrary.utils.THNToastUtil;
-import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
+import com.thn.basemodule.tools.WaitingDialog;
+import com.thn.basemodule.tools.ToastUtil;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.net.ClientParamsAPI;
@@ -19,8 +19,7 @@ import com.thn.erp.net.URL;
 import com.thn.erp.overview.usermanage.bean.AddCustomerGradeData;
 import com.thn.erp.overview.usermanage.bean.CustomerClassData;
 import com.thn.erp.overview.usermanage.bean.EditGradeData;
-import com.thn.erp.utils.JsonUtil;
-import com.thn.erp.utils.ToastUtils;
+import com.thn.basemodule.tools.JsonUtil;
 import com.thn.erp.view.CustomHeadView;
 
 import java.io.IOException;
@@ -38,7 +37,7 @@ public class AddGradeActivity extends BaseActivity {
     CustomHeadView customHeadView;
     @BindView(R.id.et)
     EditText et;
-    THNWaittingDialog dialog;
+    WaitingDialog dialog;
     private MyHandler myHandler;
     private CustomerClassData.DataBean.GradesBean grade;
     @Override
@@ -53,8 +52,8 @@ public class AddGradeActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        dialog = new THNWaittingDialog(this);
-        myHandler = new MyHandler(activity);
+        dialog = new WaitingDialog(this);
+        myHandler = new MyHandler(this);
         int titleId;
         if (grade==null){
             titleId = R.string.add_customer_grade;
@@ -74,7 +73,7 @@ public class AddGradeActivity extends BaseActivity {
             public void onClick(View v) {
                 Editable text = et.getText();
                 if (TextUtils.isEmpty(text)){
-                    THNToastUtil.showInfo("请输入客户分类");
+                    ToastUtil.showInfo("请输入客户分类");
                     return;
                 }
 
@@ -104,10 +103,10 @@ public class AddGradeActivity extends BaseActivity {
                 dialog.dismiss();
                 AddCustomerGradeData data = JsonUtil.fromJson(json, AddCustomerGradeData.class);
                 if (data.success == true) {
-                    ToastUtils.showSuccess(R.string.submit_success);
+                    ToastUtil.showSuccess(R.string.submit_success);
                     myHandler.sendEmptyMessageDelayed(0, 1000);
                 } else {
-                    ToastUtils.showError(data.status.message);
+                    ToastUtil.showError(data.status.message);
                 }
 
             }
@@ -115,7 +114,7 @@ public class AddGradeActivity extends BaseActivity {
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }
@@ -137,10 +136,10 @@ public class AddGradeActivity extends BaseActivity {
                 dialog.dismiss();
                 EditGradeData data = JsonUtil.fromJson(json, EditGradeData.class);
                 if (data.success == true) {
-                    ToastUtils.showSuccess(R.string.submit_success);
+                    ToastUtil.showSuccess(R.string.submit_success);
                     myHandler.sendEmptyMessageDelayed(0, 1000);
                 } else {
-                    ToastUtils.showError(data.status.message);
+                    ToastUtil.showError(data.status.message);
                 }
 
             }
@@ -148,7 +147,7 @@ public class AddGradeActivity extends BaseActivity {
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }

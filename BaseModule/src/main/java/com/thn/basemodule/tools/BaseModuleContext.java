@@ -1,4 +1,4 @@
-package com.stephen.taihuoniaolibrary.common;
+package com.thn.basemodule.tools;
 
 import android.app.Application;
 import android.content.Context;
@@ -8,10 +8,10 @@ import android.content.Context;
  * Email: 895745843@qq.com
  */
 
-public class THNApp {
+public class BaseModuleContext {
     private static Application mContext;
 
-    private THNApp() {
+    private BaseModuleContext() {
     }
 
     public static void init(Application application) {
@@ -22,13 +22,6 @@ public class THNApp {
         return mContext;
     }
 
-    public static int getScreenHeight() {
-        return mContext.getResources().getDisplayMetrics().heightPixels;
-    }
-
-    public static int getScreenWidth() {
-        return mContext.getResources().getDisplayMetrics().widthPixels;
-    }
 
     public static String getString(int resourceId){
         return mContext.getResources().getString(resourceId);

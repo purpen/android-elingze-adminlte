@@ -1,9 +1,10 @@
-package com.thn.erp.utils;
+package com.thn.basemodule.tools;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.Reader;
 import java.util.List;
@@ -18,7 +19,7 @@ public class JsonUtil {
         return element.getAsJsonArray();
     }
 
-    public static String list2Json(List list) throws JsonSyntaxException {
+    public static String list2Json(List list) throws JsonSyntaxException{
         return new Gson().toJson(list);
     }
 
@@ -26,17 +27,17 @@ public class JsonUtil {
         return getGson().fromJson(json, clazz);
     }
 
-    public static <T> T fromJson(JsonElement element, Class<T> clazz) {
-        return getGson().fromJson(element, clazz);
-    }
+//    public static <T> T fromJson(JsonElement element, Class<T> clazz) {
+//        return getGson().fromJson(element, clazz);
+//    }
 
-//    public static <T> T fromJson(String json, TypeToken<HttpResponse<T>> token) throws JsonSyntaxException {
-//        return ((HttpResponse<T>) getGson().fromJson(json, token.getType())).getData();
+//    public static <T> T fromJson(String json, TypeToken<HttpResponseBean<T>> token) throws JsonSyntaxException {
+//        return ((HttpResponseBean<T>) getGson().fromJson(json, token.getType())).getData();
 //    }
-//
-//    public static <T> HttpResponse<T> json2Bean(String json, TypeToken<HttpResponse<T>> token) throws JsonSyntaxException {
-//        return (HttpResponse<T>) getGson().fromJson(json, token.getType());
-//    }
+
+    public static <T> HttpResponseBean<T> json2Bean(String json, TypeToken<HttpResponseBean<T>> token) throws JsonSyntaxException {
+        return (HttpResponseBean<T>) getGson().fromJson(json, token.getType());
+    }
 
     public static String toJson(Object object) {
         return getGson().toJson(object);

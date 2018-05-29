@@ -93,7 +93,7 @@ public class TitleRecyclerViewAdapter extends RecyclerView.Adapter<TitleRecycler
         if (equalWidth) {
             view.setLayoutParams(new RelativeLayout.LayoutParams((int) (Util.getScreenWidth() * 0.25), view.getLayoutParams().height));
         }else {
-            view.setLayoutParams(new RelativeLayout.LayoutParams(DimenUtil.dp2px(view.getContext(),80), view.getLayoutParams().height));
+            view.setLayoutParams(new RelativeLayout.LayoutParams(DimenUtil.dp2px(80), view.getLayoutParams().height));
         }
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;

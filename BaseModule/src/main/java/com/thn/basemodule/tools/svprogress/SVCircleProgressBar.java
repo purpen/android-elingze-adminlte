@@ -1,4 +1,4 @@
-package com.thn.erp.view.svprogress;
+package com.thn.basemodule.tools.svprogress;
 
 
 import android.content.Context;
@@ -10,7 +10,7 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.thn.erp.R;
+import com.thn.basemodule.R;
 
 
 /**

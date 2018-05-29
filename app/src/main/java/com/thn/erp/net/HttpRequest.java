@@ -2,11 +2,9 @@ package com.thn.erp.net;
 
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Base64;
 
-import com.stephen.taihuoniaolibrary.utils.THNLogUtil;
 import com.thn.erp.Constants;
-import com.thn.erp.utils.JsonUtil;
+import com.thn.basemodule.tools.JsonUtil;
 import com.thn.erp.utils.LogUtil;
 import com.thn.erp.utils.SPUtil;
 
@@ -105,7 +103,7 @@ public class HttpRequest {
         final String url = requestUrl.contains("http") ? requestUrl: URL.BASE_URL + requestUrl;
         authorization = TextUtils.isEmpty(authorization) ? SPUtil.read(Constants.AUTHORIZATION) : authorization;
 
-        THNLogUtil.e("----------sendRequest: "+ "\n Type:" + type + "\n URL: "+ url  + "\n Authorization: " + authorization + "\n Params: " + params );
+        LogUtil.e("----------sendRequest: "+ "\n Type:" + type + "\n URL: "+ url  + "\n Authorization: " + authorization + "\n Params: " + params );
 
         Request request = getRequest(type, url, authorization, params);
         if (null == request) return null;

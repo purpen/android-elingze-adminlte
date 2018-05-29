@@ -19,10 +19,11 @@ import com.qiniu.android.storage.UpCancellationSignal;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UpProgressHandler;
 import com.qiniu.android.storage.UploadOptions;
-import com.stephen.taihuoniaolibrary.utils.THNToastUtil;
-import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
+import com.thn.basemodule.tools.WaitingDialog;
 import com.thn.basemodule.tools.DimenUtil;
+import com.thn.basemodule.tools.JsonUtil;
 import com.thn.basemodule.tools.LogUtil;
+import com.thn.basemodule.tools.ToastUtil;
 import com.thn.erp.AppApplication;
 import com.thn.erp.Constants;
 import com.thn.erp.R;
@@ -37,8 +38,6 @@ import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.utils.FileUtil;
-import com.thn.erp.utils.JsonUtil;
-import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.CustomHeadView;
 import com.thn.erp.view.CustomPopupWindow;
 import com.thn.erp.view.common.LinearLayoutCustomerAddArrowView;
@@ -101,7 +100,7 @@ public class GoodsAddActivity extends BaseStyle2Activity {
     TagFlowLayout idFlowlayout;
 
     private GoodsAddRecyclerViewAdapter mGoodsAddRecyclerViewAdapter;
-    private THNWaittingDialog dialog;
+    private WaitingDialog dialog;
     private File mCurrentPhotoFile;
     private LayoutInflater layoutInflater;
     private List<String> coverIds = new ArrayList<>();
@@ -118,7 +117,7 @@ public class GoodsAddActivity extends BaseStyle2Activity {
         initTopbar();
         initRecyclerView();
         initLinearLayaout();
-        dialog = new THNWaittingDialog(this);
+        dialog = new WaitingDialog(this);
     }
 
     @Override
@@ -168,7 +167,7 @@ public class GoodsAddActivity extends BaseStyle2Activity {
     private void initRecyclerView() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView1.setLayoutManager(layoutManager);
-        recyclerView1.addItemDecoration(new RecycleViewItemDecorationHorizontal(DimenUtil.dp2px(this, 10)));
+        recyclerView1.addItemDecoration(new RecycleViewItemDecorationHorizontal(DimenUtil.dp2px( 10)));
         mGoodsAddRecyclerViewAdapter = new GoodsAddRecyclerViewAdapter(this, new OnRecyclerViewItemClickListener() {
             @Override
             public void onClick(View view, int i) {
@@ -210,17 +209,17 @@ public class GoodsAddActivity extends BaseStyle2Activity {
             @Override
             public void onClick(View v) {
                 if (coverIds.size() == 0) {
-                    THNToastUtil.showInfo("请上传商品");
+                    ToastUtil.showInfo("请上传商品");
                     return;
                 }
                 String productName = layoutItemView1.getValue().toString();
                 if (TextUtils.isEmpty(productName)) {
-                    THNToastUtil.showInfo("请输入商品名");
+                    ToastUtil.showInfo("请输入商品名");
                     return;
                 }
                 String price = layoutItemView4.getValue().toString();
                 if (TextUtils.isEmpty(price)) {
-                    THNToastUtil.showInfo("请输入商品价格");
+                    ToastUtil.showInfo("请输入商品价格");
                     return;
                 }
 
@@ -359,7 +358,7 @@ public class GoodsAddActivity extends BaseStyle2Activity {
                 });
             }
         } else {
-            THNToastUtil.showInfo("添加图片失败");
+            ToastUtil.showInfo("添加图片失败");
         }
     }
 
@@ -383,14 +382,14 @@ public class GoodsAddActivity extends BaseStyle2Activity {
                     String directoryId = customerBean.getData().getDirectory_id();
                     uploadFile(imgPath, upToken, new String[]{userId, directoryId}, globalCallBack);
                 } else {
-                    ToastUtils.showError(customerBean.getStatus().getMessage());
+                    ToastUtil.showError(customerBean.getStatus().getMessage());
                 }
             }
 
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }
@@ -491,17 +490,17 @@ public class GoodsAddActivity extends BaseStyle2Activity {
                 dialog.dismiss();
                 AddGoodsData customerBean = JsonUtil.fromJson(json, AddGoodsData.class);
                 if (customerBean.getSuccess()) {
-                    THNToastUtil.showSuccess("上传成功");
+                    ToastUtil.showSuccess("上传成功");
                     GoodsAddActivity.this.finish();
                 } else {
-                    ToastUtils.showError(customerBean.getStatus().getMessage());
+                    ToastUtil.showError(customerBean.getStatus().getMessage());
                 }
             }
 
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }

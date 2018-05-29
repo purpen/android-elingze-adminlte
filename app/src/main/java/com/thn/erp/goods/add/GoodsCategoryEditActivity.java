@@ -7,7 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
+import com.thn.basemodule.tools.WaitingDialog;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseStyle2Activity;
 import com.thn.erp.common.interfaces.ImpTopbarOnClickListener;
@@ -17,9 +17,9 @@ import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
-import com.thn.erp.utils.JsonUtil;
+import com.thn.basemodule.tools.JsonUtil;
 import com.thn.erp.utils.LogUtil;
-import com.thn.erp.utils.ToastUtils;
+import com.thn.basemodule.tools.ToastUtil;
 import com.thn.erp.view.common.PublicTopBar;
 
 import java.io.IOException;
@@ -100,13 +100,13 @@ public class GoodsCategoryEditActivity extends BaseStyle2Activity implements Imp
         getGoodsList();
     }
 
-    private THNWaittingDialog dialog;
+    private WaitingDialog dialog;
     private void getGoodsList() {
         HashMap<String, String> params = ClientParamsAPI.getGoodsList("",1);
         HttpRequest.sendRequest(HttpRequest.GET, URL.PRODUCT_CATEGORY, params, new HttpRequestCallback() {
             @Override
             public void onStart() {
-                dialog = new THNWaittingDialog(GoodsCategoryEditActivity.this);
+                dialog = new WaitingDialog(activity);
                 dialog.show();
             }
 
@@ -118,14 +118,14 @@ public class GoodsCategoryEditActivity extends BaseStyle2Activity implements Imp
                 if (customerBean.getStatus().getCode() == 200) {
                     refreshRecyclerView(customerBean.getData().getCategories());
                 } else {
-                    ToastUtils.showError(customerBean.getStatus().getMessage());
+                    ToastUtil.showError(customerBean.getStatus().getMessage());
                 }
             }
 
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }

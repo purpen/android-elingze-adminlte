@@ -7,8 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.stephen.taihuoniaolibrary.utils.THNToastUtil;
-import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
+import com.thn.basemodule.tools.WaitingDialog;
 import com.thn.basemodule.tools.GlideUtil;
 import com.thn.erp.Constants;
 import com.thn.erp.MainActivity;
@@ -26,7 +25,7 @@ public class ViewPagerAdapter<T> extends RecyclingPagerAdapter {
     private int size;
     private boolean isInfiniteLoop;
     private String code;
-    private THNWaittingDialog dialog;
+    private WaitingDialog dialog;
     private int imgW;
     private int imgH;
 

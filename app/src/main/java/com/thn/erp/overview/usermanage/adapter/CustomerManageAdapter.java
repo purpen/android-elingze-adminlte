@@ -1,4 +1,5 @@
 package com.thn.erp.overview.usermanage.adapter;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
@@ -7,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
-import com.stephen.taihuoniaolibrary.utils.THNToastUtil;
-import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
+import com.thn.basemodule.tools.WaitingDialog;
+import com.thn.basemodule.tools.ToastUtil;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseUltimateViewAdapter;
 import com.thn.erp.net.ClientParamsAPI;
@@ -18,8 +19,7 @@ import com.thn.erp.net.URL;
 import com.thn.erp.overview.usermanage.AddCustomActivity;
 import com.thn.erp.overview.usermanage.bean.CustomerData;
 import com.thn.erp.overview.usermanage.bean.CustomerDeleteData;
-import com.thn.erp.utils.JsonUtil;
-import com.thn.erp.utils.ToastUtils;
+import com.thn.basemodule.tools.JsonUtil;
 import com.thn.erp.view.dialog.DefaultDialog;
 import com.thn.erp.view.dialog.IDialogListenerConfirmBack;
 
@@ -33,9 +33,10 @@ import butterknife.ButterKnife;
 
 public class CustomerManageAdapter extends BaseUltimateViewAdapter<CustomerData.DataBean.CustomersBean> {
     private List<CustomerData.DataBean.CustomersBean> list;
-
-    public CustomerManageAdapter(List<CustomerData.DataBean.CustomersBean> list) {
+    private Activity activity;
+    public CustomerManageAdapter(Activity activity,List<CustomerData.DataBean.CustomersBean> list) {
         super(list);
+        this.activity = activity;
         this.list = list;
     }
 
@@ -64,9 +65,9 @@ public class CustomerManageAdapter extends BaseUltimateViewAdapter<CustomerData.
 
         viewHolder.tvDelete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 Resources resources = v.getContext().getResources();
-                final THNWaittingDialog dialog = new THNWaittingDialog(v.getContext());
+                final WaitingDialog dialog = new WaitingDialog(activity);
                 new DefaultDialog(v.getContext(), resources.getString(R.string.hint_dialog_delete_customer_title), resources.getStringArray(R.array.text_dialog_button), new IDialogListenerConfirmBack() {
 
                     @Override
@@ -85,16 +86,16 @@ public class CustomerManageAdapter extends BaseUltimateViewAdapter<CustomerData.
                                 CustomerDeleteData data = JsonUtil.fromJson(json, CustomerDeleteData.class);
                                 if (data.success) {
                                     CustomerManageAdapter.this.remove(position);
-                                    THNToastUtil.showSuccess("删除成功");
+                                    ToastUtil.showSuccess("删除成功");
                                 } else {
-                                    ToastUtils.showError(data.status.message);
+                                    ToastUtil.showError(data.status.message);
                                 }
                             }
 
                             @Override
                             public void onFailure(IOException e) {
                                 dialog.dismiss();
-                                ToastUtils.showError(R.string.network_err);
+                                ToastUtil.showError(R.string.network_err);
                             }
                         });
                     }

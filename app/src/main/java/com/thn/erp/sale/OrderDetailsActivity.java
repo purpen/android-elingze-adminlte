@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
+import com.thn.basemodule.tools.WaitingDialog;
 import com.thn.basemodule.tools.GlideUtil;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
@@ -20,8 +20,8 @@ import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.sale.bean.OrderData;
 import com.thn.erp.sale.bean.OrderDetailData;
-import com.thn.erp.utils.JsonUtil;
-import com.thn.erp.utils.ToastUtils;
+import com.thn.basemodule.tools.JsonUtil;
+import com.thn.basemodule.tools.ToastUtil;
 import com.thn.erp.view.CustomHeadView;
 import com.thn.erp.view.CustomItemLayout;
 import com.thn.erp.view.dialog.DefaultDialog;
@@ -80,7 +80,7 @@ public class OrderDetailsActivity extends BaseActivity {
     private RelativeLayout mLogisticsCompanyLayout;//物流公司
     private RelativeLayout mLogisticsNumberLayout;//物流单号
     private TextView mLogisticsNumber, mLogisticsCompany;
-    private THNWaittingDialog dialog;
+    private WaitingDialog dialog;
     private TextView mCounty;
     private TextView mTown;
     private OrderData.DataBean.OrdersBean ordersBean;
@@ -106,7 +106,7 @@ public class OrderDetailsActivity extends BaseActivity {
 
     protected void initView() {
         customHeadView.setCenterTxtShow("订单详情");
-        dialog = new THNWaittingDialog(this);
+        dialog = new WaitingDialog(this);
 //        mBottomLayout.setOnClickListener(this);
 //        mCall.setOnClickListener(this);
 //        mRightButton.setOnClickListener(this);
@@ -130,14 +130,14 @@ public class OrderDetailsActivity extends BaseActivity {
                 if (orderDetailData.success == true) {
                     updateUI(orderDetailData.data);
                 } else {
-                    ToastUtils.showError(orderDetailData.status.message);
+                    ToastUtil.showError(orderDetailData.status.message);
                 }
             }
 
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }
@@ -604,16 +604,16 @@ public class OrderDetailsActivity extends BaseActivity {
 //                                mDialog.dismiss();
 //                                HttpResponse netBean = JsonUtil.fromJson(json, HttpResponse.class);
 //                                if (netBean.isSuccess()) {
-//                                    ToastUtils.showSuccess("提醒发货成功!");
+//                                    ToastUtil.showSuccess("提醒发货成功!");
 //                                } else {
-//                                    ToastUtils.showInfo(netBean.getMessage());
+//                                    ToastUtil.showInfo(netBean.getMessage());
 //                                }
 //                            }
 //
 //                            @Override
 //                            public void onFailure(String error) {
 //                                mDialog.dismiss();
-//                                ToastUtils.showError("网络错误");
+//                                ToastUtil.showError("网络错误");
 //                            }
 //                        });
 //                    }

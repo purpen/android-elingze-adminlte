@@ -5,7 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
+import com.thn.basemodule.tools.WaitingDialog;
+import com.thn.basemodule.tools.ToastUtil;
 import com.thn.erp.Constants;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseStyle2Activity;
@@ -14,9 +15,8 @@ import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.user.LoginRegisterActivity;
 import com.thn.erp.user.bean.LogoutBean;
-import com.thn.erp.utils.JsonUtil;
+import com.thn.basemodule.tools.JsonUtil;
 import com.thn.erp.utils.SPUtil;
-import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.common.LinearLayoutArrowTextView;
 import com.thn.erp.view.common.PublicTopBar;
 
@@ -96,7 +96,7 @@ public class SettingActivity extends BaseStyle2Activity {
      * 退出登录
      */
     private void logoutUser() {
-        final THNWaittingDialog dialog = new THNWaittingDialog(this);
+        final WaitingDialog dialog = new WaitingDialog(this);
         HttpRequest.sendRequest(HttpRequest.POST, URL.LOGOUT_USER,new HttpRequestCallback() {
             @Override
             public void onStart() {
@@ -108,9 +108,9 @@ public class SettingActivity extends BaseStyle2Activity {
                 dialog.dismiss();
                 LogoutBean bean = JsonUtil.fromJson(json, LogoutBean.class);
                 if (bean.success == true) {
-                    ToastUtils.showSuccess("已退出登录");
+                    ToastUtil.showSuccess("已退出登录");
                 } else {
-                    ToastUtils.showError(bean.status.message);
+                    ToastUtil.showError(bean.status.message);
                 }
 
             }
@@ -118,7 +118,7 @@ public class SettingActivity extends BaseStyle2Activity {
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
         SPUtil.clear(Constants.AUTHORIZATION);

@@ -6,6 +6,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.CompoundButton;
 
+import com.thn.basemodule.tools.ToastUtil;
+import com.thn.basemodule.tools.WaitingDialog;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.net.ClientParamsAPI;
@@ -18,11 +20,9 @@ import com.thn.erp.overview.usermanage.bean.CustomerData;
 import com.thn.erp.sale.AddressSelectFragment;
 import com.thn.erp.sale.bean.ProvinceCityRestrict;
 import com.thn.erp.sale.bean.TownsData;
-import com.thn.erp.utils.JsonUtil;
-import com.thn.erp.utils.ToastUtils;
+import com.thn.basemodule.tools.JsonUtil;
 import com.thn.erp.view.CustomHeadView;
 import com.thn.erp.view.CustomItemLayout;
-import com.thn.erp.view.svprogress.WaitingDialog;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -183,9 +183,9 @@ public class AddCustomActivity extends BaseActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
-                    ToastUtils.showInfo("开");
+                    ToastUtil.showInfo("开");
                 } else {
-                    ToastUtils.showInfo("关");
+                    ToastUtil.showInfo("关");
                 }
             }
         });
@@ -269,10 +269,10 @@ public class AddCustomActivity extends BaseActivity {
                 dialog.dismiss();
                 AddCustomerData data = JsonUtil.fromJson(json, AddCustomerData.class);
                 if (data.success == true) {
-                    ToastUtils.showSuccess(R.string.submit_success);
+                    ToastUtil.showSuccess(R.string.submit_success);
                     finish();
                 } else {
-                    ToastUtils.showError(data.status.message);
+                    ToastUtil.showError(data.status.message);
                 }
 
             }
@@ -280,7 +280,7 @@ public class AddCustomActivity extends BaseActivity {
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }
@@ -292,13 +292,13 @@ public class AddCustomActivity extends BaseActivity {
     private boolean checkUserInput() {
         name=itemUserName.getRightETTxt();
         if (TextUtils.isEmpty(name)){
-            ToastUtils.showInfo(R.string.input_username);
+            ToastUtil.showInfo(R.string.input_username);
             return false;
         }
 //        手机
         mobile = itemPhone.getRightETTxt();
         if (TextUtils.isEmpty(mobile)){
-            ToastUtils.showInfo(R.string.input_phone);
+            ToastUtil.showInfo(R.string.input_phone);
             return false;
         }
 

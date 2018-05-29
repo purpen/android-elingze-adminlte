@@ -1,4 +1,4 @@
-package com.thn.erp.view.svprogress;
+package com.thn.basemodule.tools.svprogress;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,7 +13,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 
-import com.thn.erp.R;
+
+import com.thn.basemodule.R;
 
 import java.lang.ref.WeakReference;
 
@@ -58,7 +59,7 @@ public class SVProgressHUD {
     protected void initViews() {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         decorView = (ViewGroup) ((Activity) context).getWindow().getDecorView().findViewById(android.R.id.content);
-        rootView = (ViewGroup) View.inflate(context, R.layout.view_svprogresshud,null);
+        rootView = (ViewGroup) View.inflate(context, R.layout.view_svprogress,null);
         rootView.setLayoutParams(new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
         ));

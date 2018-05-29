@@ -62,7 +62,6 @@ dependencies {
     implementation files('libs/commons-codec-1.11.jar')
     implementation project(':dateRangePicker')
     implementation project(':MPChartLib')
-    implementation project(':library-taihuoniao')
     implementation project(':ultimaterecyclerview')
     implementation project(':library_zxing')
     implementation project(':library_printer')
@@ -72,7 +71,7 @@ dependencies {
     implementation rootProject.ext.dependencies["appcompat-v7"]
     implementation rootProject.ext.dependencies["recyclerview-v7"]
     implementation rootProject.ext.dependencies["animated-vector-drawable"]
-    implementation 'com.android.support:multidex:1.0.3'
+
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.squareup.okhttp3:okhttp:3.8.1'
     implementation 'com.squareup.okio:okio:1.13.0'
@@ -85,7 +84,7 @@ dependencies {
     implementation 'ch.ielse:switchbutton:1.0.1'
     implementation 'com.qiniu:qiniu-android-sdk:7.3.11'
     implementation 'com.hyman:flowlayout-lib:1.1.2'
-    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.google.zxing:core:3.0.1'
     implementation 'org.greenrobot:eventbus:3.1.1'
     implementation 'pub.devrel:easypermissions:1.2.0'

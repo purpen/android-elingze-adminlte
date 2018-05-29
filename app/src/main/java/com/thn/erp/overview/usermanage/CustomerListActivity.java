@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import com.thn.basemodule.tools.ToastUtil;
+import com.thn.basemodule.tools.WaitingDialog;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
@@ -18,11 +20,9 @@ import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.overview.usermanage.adapter.CustomerListAdapter;
 import com.thn.erp.overview.usermanage.bean.CustomerData;
-import com.thn.erp.utils.JsonUtil;
-import com.thn.erp.utils.ToastUtils;
+import com.thn.basemodule.tools.JsonUtil;
 import com.thn.erp.view.CustomHeadView;
 import com.thn.erp.view.SearchView;
-import com.thn.erp.view.svprogress.WaitingDialog;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -92,7 +92,7 @@ public class CustomerListActivity extends BaseActivity {
         searchView.setOnSearchClickListener(new SearchView.OnSearchClickListener() {
             @Override
             public void onSearchClick(String s) {
-                ToastUtils.showInfo("going search");
+                ToastUtil.showInfo("going search");
             }
         });
         customHeadView.getHeadRightTV().setOnClickListener(new View.OnClickListener() {
@@ -169,7 +169,7 @@ public class CustomerListActivity extends BaseActivity {
                     if (customers.size() == 0) ultimateRecyclerView.disableLoadmore();
                     updateData(customers);
                 } else {
-                    ToastUtils.showError(customerBean.status.message);
+                    ToastUtil.showError(customerBean.status.message);
                 }
 
             }
@@ -177,7 +177,7 @@ public class CustomerListActivity extends BaseActivity {
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }

@@ -1,20 +1,20 @@
 package com.thn.erp.overview;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
+import com.thn.basemodule.tools.WaitingDialog;
+import com.thn.basemodule.tools.ToastUtil;
 import com.thn.erp.R;
 import com.thn.erp.SqliteHelper;
 import com.thn.erp.base.BaseFragment;
+import com.thn.erp.more.chat.MessageListActivity;
 import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
@@ -23,8 +23,7 @@ import com.thn.erp.overview.adapter.IndexMenuAdapter;
 import com.thn.erp.overview.bean.CustomMenuBean;
 import com.thn.erp.overview.bean.SlidesData;
 import com.thn.erp.overview.usermanage.CustomerListActivity;
-import com.thn.erp.utils.JsonUtil;
-import com.thn.erp.utils.ToastUtils;
+import com.thn.basemodule.tools.JsonUtil;
 import com.thn.erp.utils.Util;
 import com.thn.erp.view.autoScrollViewpager.ScrollableView;
 import com.thn.erp.view.autoScrollViewpager.ViewPagerAdapter;
@@ -45,7 +44,7 @@ public class OverViewFragment extends BaseFragment {
     RecyclerView recyclerView;
     private ViewPagerAdapter<String> viewPagerAdapter;
     private IndexMenuAdapter adapter;
-    private THNWaittingDialog dialog;
+    private WaitingDialog dialog;
     private List<String> slideList;
     private List<IndexMenuAdapter.MultipleItem> list;
     private ScrollableView scrollableView;
@@ -57,7 +56,7 @@ public class OverViewFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        dialog = new THNWaittingDialog(getContext());
+        dialog = new WaitingDialog(activity);
         slideList = new ArrayList<>();
         list = new ArrayList<>();
         initRecyclerView();
@@ -65,7 +64,7 @@ public class OverViewFragment extends BaseFragment {
 
     @Override
     protected void requestNet() {
-//        getSlides();
+        getSlides();
     }
 
     /**
@@ -86,7 +85,7 @@ public class OverViewFragment extends BaseFragment {
                 if (slidesData.success == true) {
                     updateData(slidesData.data.slides);
                 } else {
-                    ToastUtils.showError(slidesData.status.message);
+                    ToastUtil.showError(slidesData.status.message);
                 }
 
             }
@@ -94,7 +93,7 @@ public class OverViewFragment extends BaseFragment {
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }
@@ -194,7 +193,7 @@ public class OverViewFragment extends BaseFragment {
     }
 
     /**
-     * 获取选中的菜单列表
+     * 获取菜单列表
      */
     private List<IndexMenuAdapter.MultipleItem> getMenuData() {
         int length = menuTitles.length;
@@ -225,6 +224,8 @@ public class OverViewFragment extends BaseFragment {
             item = new IndexMenuAdapter.MultipleItem(IndexMenuAdapter.MultipleItem.IMAGE_TEXT, beanItem);
             list.add(item);
         }
+
+        //添加选择更多菜单
         IndexMenuAdapter.MultipleItem imageItem = new IndexMenuAdapter.MultipleItem(IndexMenuAdapter.MultipleItem.IMAGE, R.mipmap.icon_menu_more);
         list.add(imageItem);
         return list;
@@ -233,10 +234,19 @@ public class OverViewFragment extends BaseFragment {
 
     @OnClick(R.id.llSearchGoods)
     void performClick(View v) {
+        Intent intent;
         switch (v.getId()) {
             case R.id.llSearchGoods:
-                Intent intent = new Intent(activity, SearchGoodsHistoryActivity.class);
+                intent = new Intent(activity, SearchGoodsHistoryActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.idButtonLeft:
+                //消息列表
+                intent = new Intent(activity, MessageListActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.idButtonRight:
+                //扫码
                 break;
         }
     }

@@ -10,7 +10,6 @@ import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseUltimateViewAdapter;
 import com.thn.erp.more.bean.PrepareExportStockBean;
-import com.thn.erp.utils.ToastUtils;
 
 import java.util.List;
 

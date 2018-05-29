@@ -24,6 +24,8 @@ import android.widget.TextView;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.thn.basemodule.tools.GlideUtil;
+import com.thn.basemodule.tools.ToastUtil;
+import com.thn.basemodule.tools.WaitingDialog;
 import com.thn.erp.AppApplication;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
@@ -38,14 +40,12 @@ import com.thn.erp.sale.adapter.SKUAdapter;
 import com.thn.erp.sale.adapter.SpecificationAdapter;
 import com.thn.erp.sale.bean.GoodsData;
 import com.thn.erp.sale.bean.SKUListData;
-import com.thn.erp.utils.JsonUtil;
+import com.thn.basemodule.tools.JsonUtil;
 import com.thn.erp.utils.LogUtil;
 import com.thn.erp.utils.SPUtil;
-import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.CounterView;
 import com.thn.erp.view.CustomHeadView;
 import com.thn.erp.view.SearchView;
-import com.thn.erp.view.svprogress.WaitingDialog;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -100,7 +100,7 @@ public class SelectGoodsActivity extends BaseActivity {
     @Override
     protected void initView() {
         page = 1;
-        dialog = new WaitingDialog(activity);
+        dialog = new WaitingDialog(this);
         list = new ArrayList<>();
         customHeadView.setHeadCenterTxtShow(true, R.string.select_goods_title);
         adapter = new GoodsAdapter(list);
@@ -126,7 +126,7 @@ public class SelectGoodsActivity extends BaseActivity {
         searchView.setOnSearchClickListener(new SearchView.OnSearchClickListener() {
             @Override
             public void onSearchClick(String s) {
-                ToastUtils.showInfo("going search");
+                ToastUtil.showInfo("going search");
             }
         });
         customHeadView.getHeadRightTV().setOnClickListener(new View.OnClickListener() {
@@ -250,7 +250,7 @@ public class SelectGoodsActivity extends BaseActivity {
                     setDialogData(skuListData);
                     SPUtil.write(SKUListData.class.getName(),json);
                 } else {
-                    ToastUtils.showError(skuListData.status.message);
+                    ToastUtil.showError(skuListData.status.message);
                 }
 
             }
@@ -258,7 +258,7 @@ public class SelectGoodsActivity extends BaseActivity {
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }
@@ -378,12 +378,12 @@ public class SelectGoodsActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 if (colors.size() > 0 && selectedColorTv == null) {
-                    ToastUtils.showInfo("请选择颜色分类");
+                    ToastUtil.showInfo("请选择颜色分类");
                     return;
                 }
 
                 if (modes.size() > 0 && selectedSpecTv == null) {
-                    ToastUtils.showInfo("请选择规格");
+                    ToastUtil.showInfo("请选择规格");
                     return;
                 }
 
@@ -616,7 +616,7 @@ public class SelectGoodsActivity extends BaseActivity {
                     if (products.size() == 0) ultimateRecyclerView.disableLoadmore();
                     updateData(customerBean.data.products);
                 } else {
-                    ToastUtils.showError(customerBean.status.message);
+                    ToastUtil.showError(customerBean.status.message);
                 }
 
             }
@@ -624,7 +624,7 @@ public class SelectGoodsActivity extends BaseActivity {
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }

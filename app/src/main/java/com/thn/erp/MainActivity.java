@@ -13,8 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.stephen.taihuoniaolibrary.utils.THNStatusBarUtils;
-import com.stephen.taihuoniaolibrary.utils.THNToastUtil;
+import com.thn.basemodule.tools.StatusBarUtil;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.bean.TabItem;
 import com.thn.erp.goods.GoodsFragment;
@@ -23,6 +22,7 @@ import com.thn.erp.overview.OverViewFragment;
 import com.thn.erp.sale.SaleFragment;
 import com.thn.erp.statistics.StatisticsFragment;
 import com.thn.erp.utils.LogUtil;
+import com.thn.basemodule.tools.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -144,7 +144,7 @@ public class MainActivity extends BaseActivity {
 //            WindowUtils.showStatusBar(this);
 //            firstRelative.setPadding(0, App.getStatusBarHeight(), 0, 0);
 //        }
-        THNStatusBarUtils.chenjin(this, R.color.THN_color_primaryColor);
+        StatusBarUtil.chenjin(this, R.color.THN_color_primaryColor);
     }
 
     private void recoverAllState(Bundle savedInstanceState) {
@@ -218,7 +218,7 @@ public class MainActivity extends BaseActivity {
         initTabItem(image2, tv_nav2, SaleFragment.class, R.mipmap.sale_selected, R.mipmap.sale_normal);
         initTabItem(image3, tv_nav3, StatisticsFragment.class, R.mipmap.statistic_selected, R.mipmap.statistic_normal);
         initTabItem(image4, tv_nav4, MoreFragment.class, R.mipmap.more_selected, R.mipmap.more_normal);
-//        THNStatusBarUtils.showStatusBar(this);
+//        StatusBarUtil.showStatusBar(this);
     }
 
     private void initTabItem(ImageView imageView, TextView tv, Class clazz, int selId, int unselId) {
@@ -334,7 +334,7 @@ public class MainActivity extends BaseActivity {
         Timer tExit;
         if (!isExit) {
             isExit = true;
-            THNToastUtil.showInfo("再按一次退出程序");
+            ToastUtil.showInfo("再按一次退出程序");
             tExit = new Timer();
             tExit.schedule(new TimerTask() {
                 @Override

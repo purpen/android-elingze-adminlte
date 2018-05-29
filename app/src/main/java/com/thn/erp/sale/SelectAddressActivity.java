@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
-import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
+import com.thn.basemodule.tools.WaitingDialog;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.net.ClientParamsAPI;
@@ -19,8 +19,8 @@ import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.sale.adapter.AddressListAdapter;
 import com.thn.erp.sale.bean.AddressData;
-import com.thn.erp.utils.JsonUtil;
-import com.thn.erp.utils.ToastUtils;
+import com.thn.basemodule.tools.JsonUtil;
+import com.thn.basemodule.tools.ToastUtil;
 import com.thn.erp.view.CustomHeadView;
 
 import java.io.IOException;
@@ -48,7 +48,7 @@ public class SelectAddressActivity extends BaseActivity{
     private List<AddressData.DataBean> list = new ArrayList<>();
     private AddressListAdapter adapter;
     //网络请求
-    private THNWaittingDialog dialog;
+    private WaitingDialog dialog;
     private LinearLayoutManager linearLayoutManager;
     private boolean isRefreshing = false;
 
@@ -66,7 +66,7 @@ public class SelectAddressActivity extends BaseActivity{
     protected void initView() {
         customHeadView.setHeadCenterTxtShow(true, R.string.select_address_title);
         customHeadView.setHeadRightTxtShow(true,R.string.manage_address);
-        dialog = new THNWaittingDialog(this);
+        dialog = new WaitingDialog(this);
         adapter = new AddressListAdapter(list);
         linearLayoutManager = new LinearLayoutManager(this);
         ultimateRecyclerView.setHasFixedSize(true);
@@ -173,14 +173,14 @@ public class SelectAddressActivity extends BaseActivity{
                     if (data.size()==0) ultimateRecyclerView.disableLoadmore();
                     updateData(addressData.data);
                 } else {
-                    ToastUtils.showError(addressData.status.message);
+                    ToastUtil.showError(addressData.status.message);
                 }
             }
 
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }

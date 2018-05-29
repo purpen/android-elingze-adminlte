@@ -23,6 +23,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.Utils;
 import com.github.mikephil.charting.utils.ViewPortHandler;
+import com.thn.basemodule.tools.ToastUtil;
 import com.thn.erp.Constants;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
@@ -34,9 +35,8 @@ import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.statistics.adapter.ProductsTop100Adapter;
 import com.thn.erp.utils.DateUtil;
-import com.thn.erp.utils.JsonUtil;
+import com.thn.basemodule.tools.JsonUtil;
 import com.thn.erp.utils.LogUtil;
-import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.CustomScrollView;
 import com.thn.erp.view.ListViewForScrollView;
 import com.thn.erp.view.MyMarkerView;
@@ -250,14 +250,14 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
                 if (saleTop100Bean.meta.status_code== Constants.SUCCESS){
                     refreshList(saleTop100Bean.data);
                 }else {
-                    ToastUtils.showError(saleTop100Bean.meta.message);
+                    ToastUtil.showError(saleTop100Bean.meta.message);
                 }
 
             }
 
             @Override
             public void onFailure(IOException e) {
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }
@@ -297,13 +297,13 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
                     datas = salesTrendsBean.data;
                     if (isLoadSaleAmount) setSaleAmountChartData(datas);
                 }else {
-                    ToastUtils.showError(salesTrendsBean.meta.message);
+                    ToastUtil.showError(salesTrendsBean.meta.message);
                 }
             }
 
             @Override
             public void onFailure(IOException e) {
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }

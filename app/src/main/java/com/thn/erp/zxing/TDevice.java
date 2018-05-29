@@ -29,10 +29,8 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-
-import com.stephen.taihuoniaolibrary.common.THNApp;
+import com.thn.erp.AppApplication;
 import com.thn.erp.utils.LogUtil;
-import com.thn.erp.utils.Util;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -66,14 +64,11 @@ public class TDevice {
 
     public TDevice() {
     }
-
-    public static float dpToPixel(float dp) {
-        return dp * (getDisplayMetrics().densityDpi / 160F);
-    }
-
+    
+    
     public static int getDefaultLoadFactor() {
         if (_loadFactor == null) {
-            Integer integer = 0xf & THNApp.getContext()
+            Integer integer = 0xf & AppApplication.getContext()
                     .getResources().getConfiguration().screenLayout;
             _loadFactor = integer;
             _loadFactor = Math.max(integer, 1);
@@ -81,79 +76,7 @@ public class TDevice {
         return _loadFactor;
     }
 
-    public static float getDensity() {
-        if (displayDensity == 0.0)
-            displayDensity = getDisplayMetrics().density;
-        return displayDensity;
-    }
 
-    public static DisplayMetrics getDisplayMetrics() {
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        ((WindowManager) THNApp.getContext().getSystemService(
-                Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(
-                displaymetrics);
-        return displaymetrics;
-    }
-
-    public static float getScreenHeight() {
-        return getDisplayMetrics().heightPixels;
-    }
-
-    public static float getScreenWidth() {
-        return getDisplayMetrics().widthPixels;
-    }
-
-    public static int[] getRealScreenSize(Activity activity) {
-        int[] size = new int[2];
-        int screenWidth, screenHeight;
-        WindowManager w = activity.getWindowManager();
-        Display d = w.getDefaultDisplay();
-        DisplayMetrics metrics = new DisplayMetrics();
-        d.getMetrics(metrics);
-        // since SDK_INT = 1;
-        screenWidth = metrics.widthPixels;
-        screenHeight = metrics.heightPixels;
-        // includes window decorations (statusbar bar/menu bar)
-        if (Build.VERSION.SDK_INT >= 14 && Build.VERSION.SDK_INT < 17)
-            try {
-                screenWidth = (Integer) Display.class.getMethod("getRawWidth")
-                        .invoke(d);
-                screenHeight = (Integer) Display.class
-                        .getMethod("getRawHeight").invoke(d);
-            } catch (Exception ignored) {
-            }
-        // includes window decorations (statusbar bar/menu bar)
-        if (Build.VERSION.SDK_INT >= 17)
-            try {
-                Point realSize = new Point();
-                Display.class.getMethod("getRealSize", Point.class).invoke(d,
-                        realSize);
-                screenWidth = realSize.x;
-                screenHeight = realSize.y;
-            } catch (Exception ignored) {
-            }
-        size[0] = screenWidth;
-        size[1] = screenHeight;
-        return size;
-    }
-
-    public static int getStatusBarHeight() {
-        Class<?> c;
-        Object obj;
-        Field field;
-        int x;
-        try {
-            c = Class.forName("com.android.internal.R$dimen");
-            obj = c.newInstance();
-            field = c.getField("status_bar_height");
-            x = Integer.parseInt(field.get(obj).toString());
-            return THNApp.getContext().getResources()
-                    .getDimensionPixelSize(x);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
 
 //    public static String getUdid() {
 //        String udid = BaseApplication.getPreferences().getString("udid", "");
@@ -189,7 +112,7 @@ public class TDevice {
 
     public static boolean hasCamera() {
         if (_hasCamera == null) {
-            PackageManager pckMgr = THNApp.getContext()
+            PackageManager pckMgr = AppApplication.getContext()
                     .getPackageManager();
             boolean flag = pckMgr
                     .hasSystemFeature("android.hardware.camera.front");
@@ -251,20 +174,20 @@ public class TDevice {
     public static void hideSoftKeyboard(View view) {
         if (view == null)
             return;
-        ((InputMethodManager) THNApp.getContext().getSystemService(
+        ((InputMethodManager) AppApplication.getContext().getSystemService(
                 Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
                 view.getWindowToken(), 0);
     }
 
     public static boolean isLandscape() {
         boolean flag;
-        flag = THNApp.getContext().getResources().getConfiguration().orientation == 2;
+        flag = AppApplication.getContext().getResources().getConfiguration().orientation == 2;
         return flag;
     }
 
     public static boolean isPortrait() {
         boolean flag = true;
-        if (THNApp.getContext().getResources().getConfiguration().orientation != 1)
+        if (AppApplication.getContext().getResources().getConfiguration().orientation != 1)
             flag = false;
         return flag;
     }
@@ -272,16 +195,13 @@ public class TDevice {
     public static boolean isTablet() {
         if (_isTablet == null) {
             boolean flag;
-            flag = (0xf & THNApp.getContext().getResources()
+            flag = (0xf & AppApplication.getContext().getResources()
                     .getConfiguration().screenLayout) >= 3;
             _isTablet = flag;
         }
         return _isTablet;
     }
 
-    public static float pixelsToDp(float f) {
-        return f / (getDisplayMetrics().densityDpi / 160F);
-    }
 
     public static void showAnimatedView(View view) {
         if (PRE_HC && view != null)
@@ -293,13 +213,13 @@ public class TDevice {
     }
 
     public static void showSoftKeyboard(View view) {
-        ((InputMethodManager) THNApp.getContext().getSystemService(
+        ((InputMethodManager) AppApplication.getContext().getSystemService(
                 Context.INPUT_METHOD_SERVICE)).showSoftInput(view,
                 InputMethodManager.SHOW_FORCED);
     }
 
     public static void toogleSoftKeyboard(View view) {
-        ((InputMethodManager) THNApp.getContext().getSystemService(
+        ((InputMethodManager) AppApplication.getContext().getSystemService(
                 Context.INPUT_METHOD_SERVICE)).toggleSoftInput(0,
                 InputMethodManager.HIDE_NOT_ALWAYS);
     }
@@ -310,15 +230,15 @@ public class TDevice {
     }
 
     public static String getCurCountryLan() {
-        return THNApp.getContext().getResources().getConfiguration().locale
+        return AppApplication.getContext().getResources().getConfiguration().locale
                 .getLanguage()
                 + "-"
-                + THNApp.getContext().getResources().getConfiguration().locale
+                + AppApplication.getContext().getResources().getConfiguration().locale
                 .getCountry();
     }
 
     public static boolean isZhCN() {
-        String lang = THNApp.getContext().getResources()
+        String lang = AppApplication.getContext().getResources()
                 .getConfiguration().locale.getCountry();
         return lang.equalsIgnoreCase("CN");
     }
@@ -402,7 +322,7 @@ public class TDevice {
 
     public static PackageInfo getPackageInfo(String pckName) {
         try {
-            return THNApp.getContext().getPackageManager()
+            return AppApplication.getContext().getPackageManager()
                     .getPackageInfo(pckName, 0);
         } catch (NameNotFoundException e) {
         }
@@ -412,9 +332,9 @@ public class TDevice {
     public static int getVersionCode() {
         int versionCode;
         try {
-            versionCode = THNApp.getContext()
+            versionCode = AppApplication.getContext()
                     .getPackageManager()
-                    .getPackageInfo(THNApp.getContext().getPackageName(),
+                    .getPackageInfo(AppApplication.getContext().getPackageName(),
                             0).versionCode;
         } catch (NameNotFoundException ex) {
             versionCode = 0;
@@ -425,7 +345,7 @@ public class TDevice {
     public static int getVersionCode(String packageName) {
         int versionCode;
         try {
-            versionCode = THNApp.getContext().getPackageManager()
+            versionCode = AppApplication.getContext().getPackageManager()
                     .getPackageInfo(packageName, 0).versionCode;
         } catch (NameNotFoundException ex) {
             versionCode = 0;
@@ -436,9 +356,9 @@ public class TDevice {
     public static String getVersionName() {
         String name;
         try {
-            name = THNApp.getContext()
+            name = AppApplication.getContext()
                     .getPackageManager()
-                    .getPackageInfo(THNApp.getContext().getPackageName(),
+                    .getPackageInfo(AppApplication.getContext().getPackageName(),
                             0).versionName;
         } catch (NameNotFoundException ex) {
             name = "";
@@ -447,7 +367,7 @@ public class TDevice {
     }
 
     public static boolean isScreenOn() {
-        PowerManager pm = (PowerManager) THNApp.getContext()
+        PowerManager pm = (PowerManager) AppApplication.getContext()
                 .getSystemService(Context.POWER_SERVICE);
         return pm.isScreenOn();
     }
@@ -506,7 +426,7 @@ public class TDevice {
     }
 
 //    public static String getIMEI() {
-//        TelephonyManager tel = (TelephonyManager) THNApp.getContext()
+//        TelephonyManager tel = (TelephonyManager) AppApplication.getContext()
 //                .getSystemService(Context.TELEPHONY_SERVICE);
 //        return tel.getDeviceId();
 //    }
@@ -516,7 +436,7 @@ public class TDevice {
     }
 
     public static void openApp(Context context, String packageName) {
-        Intent mainIntent = THNApp.getContext().getPackageManager()
+        Intent mainIntent = AppApplication.getContext().getPackageManager()
                 .getLaunchIntentForPackage(packageName);
         if (mainIntent == null) {
             mainIntent = new Intent(packageName);
@@ -542,7 +462,7 @@ public class TDevice {
 
     public static boolean isWifiOpen() {
         boolean isWifiConnect = false;
-        ConnectivityManager cm = (ConnectivityManager) THNApp.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) AppApplication.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         // check the networkInfos numbers
         NetworkInfo[] networkInfos = cm.getAllNetworkInfo();
         for (NetworkInfo networkInfo : networkInfos) {
@@ -571,10 +491,10 @@ public class TDevice {
     public static void copyTextToBoard(String string) {
         if (TextUtils.isEmpty(string))
             return;
-        ClipboardManager clip = (ClipboardManager) THNApp.getContext()
+        ClipboardManager clip = (ClipboardManager) AppApplication.getContext()
                 .getSystemService(Context.CLIPBOARD_SERVICE);
         clip.setText(string);
-        Toast.makeText(THNApp.getContext(), "复制成功", Toast.LENGTH_SHORT).show();
+        Toast.makeText(AppApplication.getContext(), "复制成功", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -611,7 +531,7 @@ public class TDevice {
             obj = c.newInstance();
             field = c.getField("status_bar_height");
             x = Integer.parseInt(field.get(obj).toString());
-            sbar = THNApp.getContext().getResources()
+            sbar = AppApplication.getContext().getResources()
                     .getDimensionPixelSize(x);
 
         } catch (Exception e1) {
@@ -620,23 +540,6 @@ public class TDevice {
         return sbar;
     }
 
-//    public static int getActionBarHeight(Context context) {
-//        int actionBarHeight = 0;
-//        TypedValue tv = new TypedValue();
-//        if (context.getTheme().resolveAttribute(android.R.attr.actionBarSize,
-//                tv, true))
-//            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,
-//                    context.getResources().getDisplayMetrics());
-//
-//        if (actionBarHeight == 0
-//                && context.getTheme().resolveAttribute(R.attr.actionBarSize,
-//                tv, true)) {
-//            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,
-//                    context.getResources().getDisplayMetrics());
-//        }
-//
-//        return actionBarHeight;
-//    }
 
     public static boolean hasStatusBar(Activity activity) {
         WindowManager.LayoutParams attrs = activity.getWindow().getAttributes();
@@ -666,7 +569,7 @@ public class TDevice {
      */
     public static int getNetworkType() {
         int netType = 0;
-        ConnectivityManager connectivityManager = (ConnectivityManager)THNApp.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager)AppApplication.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if (networkInfo == null) {
             return netType;

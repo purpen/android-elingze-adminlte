@@ -1,4 +1,4 @@
-package com.thn.erp.view.svprogress;
+package com.thn.basemodule.tools.svprogress;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.thn.erp.R;
+import com.thn.basemodule.R;
 
 
 /**
@@ -18,7 +18,7 @@ import com.thn.erp.R;
  * 默认的SVProgress效果
  */
 public class SVProgressDefaultView extends LinearLayout {
-    private int resBigLoading = R.mipmap.ic_sv_loading;
+    private int resBigLoading = R.drawable.ic_sv_loading;
     private ImageView ivBigLoading, ivSmallLoading;
     private SVCircleProgressBar circleProgressBar;
     private TextView tvMsg;
@@ -70,17 +70,17 @@ public class SVProgressDefaultView extends LinearLayout {
     }
 
     public void showInfoWithStatus(String string) {
-        int resInfo = R.mipmap.ic_svstatus_info;
+        int resInfo = R.drawable.ic_svstatus_info;
         showBaseStatus(resInfo, string);
     }
 
     public void showSuccessWithStatus(String string) {
-        int resSuccess = R.mipmap.ic_svstatus_success;
+        int resSuccess = R.drawable.ic_svstatus_success;
         showBaseStatus(resSuccess, string);
     }
 
     public void showErrorWithStatus(String string) {
-        int resError = R.mipmap.ic_svstatus_error;
+        int resError = R.drawable.ic_svstatus_error;
         showBaseStatus(resError, string);
     }
     public void showWithProgress(String string) {

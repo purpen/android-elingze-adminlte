@@ -8,7 +8,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
-import com.stephen.taihuoniaolibrary.utils.THNToastUtil;
+import com.thn.basemodule.tools.ToastUtil;
+import com.thn.basemodule.tools.WaitingDialog;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
 import com.thn.erp.base.BaseUltimateRecyclerView;
@@ -24,12 +25,10 @@ import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.overview.SearchGoodsHistoryActivity;
 import com.thn.erp.sale.bean.GoodsData;
-import com.thn.erp.utils.JsonUtil;
-import com.thn.erp.utils.ToastUtils;
+import com.thn.basemodule.tools.JsonUtil;
 import com.thn.erp.view.DropdownMenu.DropdownMenu;
 import com.thn.erp.view.DropdownMenu.DropdownMenuAdapter;
 import com.thn.erp.view.common.PublicTopBar;
-import com.thn.erp.view.svprogress.WaitingDialog;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -113,7 +112,7 @@ public class GoodsFragment extends BaseFragment {
         menu0.setOnItemClickListener(new DropdownMenuAdapter.OnItemClickListener() {
             @Override
             public void onClick(View v, int position) {
-                THNToastUtil.showInfo(((TextView)v).getText().toString());
+                ToastUtil.showInfo(((TextView)v).getText().toString());
                 menu0.dismiss();
             }
         });
@@ -127,7 +126,7 @@ public class GoodsFragment extends BaseFragment {
         menu1.setOnItemClickListener(new DropdownMenuAdapter.OnItemClickListener() {
             @Override
             public void onClick(View v, int position) {
-                THNToastUtil.showInfo(((TextView)v).getText().toString());
+                ToastUtil.showInfo(((TextView)v).getText().toString());
                 menu1.dismiss();
             }
         });
@@ -141,7 +140,7 @@ public class GoodsFragment extends BaseFragment {
         menu2.setOnItemClickListener(new DropdownMenuAdapter.OnItemClickListener() {
             @Override
             public void onClick(View v, int position) {
-                THNToastUtil.showInfo(((TextView)v).getText().toString());
+                ToastUtil.showInfo(((TextView)v).getText().toString());
                 menu2.dismiss();
             }
         });
@@ -258,7 +257,7 @@ public class GoodsFragment extends BaseFragment {
                 if (customerBean.success) {
                     updateData(customerBean.data.products);
                 } else {
-                    ToastUtils.showError(customerBean.status.message);
+                    ToastUtil.showError(customerBean.status.message);
                 }
 
             }
@@ -266,7 +265,7 @@ public class GoodsFragment extends BaseFragment {
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }

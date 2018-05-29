@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import com.thn.basemodule.tools.WaitingDialog;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
@@ -18,11 +19,10 @@ import com.thn.erp.net.URL;
 import com.thn.erp.overview.usermanage.AddCustomActivity;
 import com.thn.erp.overview.usermanage.adapter.CustomerListAdapter;
 import com.thn.erp.overview.usermanage.bean.CustomerData;
-import com.thn.erp.utils.JsonUtil;
-import com.thn.erp.utils.ToastUtils;
+import com.thn.basemodule.tools.JsonUtil;
+import com.thn.basemodule.tools.ToastUtil;
 import com.thn.erp.view.CustomHeadView;
 import com.thn.erp.view.SearchView;
-import com.thn.erp.view.svprogress.WaitingDialog;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public class SelectCustomerActivity extends BaseActivity {
     @Override
     protected void initView() {
         page = 1;
-        dialog = new WaitingDialog(activity);
+        dialog = new WaitingDialog(this);
         list = new ArrayList<>();
         customHeadView.setHeadCenterTxtShow(true, R.string.select_customer_title);
         adapter = new CustomerListAdapter(list);
@@ -82,7 +82,7 @@ public class SelectCustomerActivity extends BaseActivity {
         searchView.setOnSearchClickListener(new SearchView.OnSearchClickListener() {
             @Override
             public void onSearchClick(String s) {
-                ToastUtils.showInfo("going search");
+                ToastUtil.showInfo("going search");
             }
         });
         customHeadView.getHeadRightTV().setOnClickListener(new View.OnClickListener() {
@@ -143,7 +143,7 @@ public class SelectCustomerActivity extends BaseActivity {
                     if (customers.size()==0) ultimateRecyclerView.disableLoadmore();
                     updateData(customers);
                 } else {
-                    ToastUtils.showError(customerBean.status.message);
+                    ToastUtil.showError(customerBean.status.message);
                 }
 
             }
@@ -151,7 +151,7 @@ public class SelectCustomerActivity extends BaseActivity {
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }

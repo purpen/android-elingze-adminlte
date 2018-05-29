@@ -35,7 +35,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.zxing.Result;
-import com.stephen.taihuoniaolibrary.common.THNApp;
+import com.thn.basemodule.tools.BaseModuleContext;
 import com.thn.erp.R;
 import com.thn.erp.utils.LogUtil;
 import com.thn.erp.utils.SPUtil;
@@ -306,7 +306,7 @@ public final class CaptureActivityZxing extends ZxingBaseActivity implements
     }
 
     private void displayFrameworkBugMessageAndExit() {
-        new DefaultDialog(CaptureActivityZxing.this, THNApp.getString(R.string.app_name), THNApp.getString(R.string.hint_dialog_open_camera_fail_content), THNApp.getStringArray(R.array.text_dialog_button), new IDialogListener() {
+        new DefaultDialog(CaptureActivityZxing.this, BaseModuleContext.getString(R.string.app_name), BaseModuleContext.getString(R.string.hint_dialog_open_camera_fail_content), BaseModuleContext.getStringArray(R.array.text_dialog_button), new IDialogListener() {
             @Override
             public void click(View view, int index) {
                 finish();

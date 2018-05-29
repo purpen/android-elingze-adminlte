@@ -1,4 +1,4 @@
-package com.stephen.taihuoniaolibrary.common;
+package com.thn.basemodule.tools;
 
 import java.io.Serializable;
 

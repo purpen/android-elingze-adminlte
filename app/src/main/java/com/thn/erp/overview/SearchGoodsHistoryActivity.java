@@ -6,7 +6,8 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
-import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
+import com.thn.basemodule.tools.WaitingDialog;
+import com.thn.basemodule.tools.ToastUtil;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.net.ClientParamsAPI;
@@ -14,8 +15,7 @@ import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.overview.bean.SearchHistoryData;
-import com.thn.erp.utils.JsonUtil;
-import com.thn.erp.utils.ToastUtils;
+import com.thn.basemodule.tools.JsonUtil;
 import com.thn.erp.view.CustomSearchHeadView;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
@@ -36,7 +36,7 @@ public class SearchGoodsHistoryActivity extends BaseActivity {
     @BindView(R.id.customSearchHeadView)
     CustomSearchHeadView customSearchHeadView;
     private int page = 1;
-    private THNWaittingDialog dialog;
+    private WaitingDialog dialog;
     private ArrayList<SearchHistoryData.DataBean.SearchItemsBean> list;
 
     @Override
@@ -46,7 +46,7 @@ public class SearchGoodsHistoryActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        dialog = new THNWaittingDialog(this);
+        dialog = new WaitingDialog(this);
         list = new ArrayList<>();
     }
 
@@ -79,7 +79,7 @@ public class SearchGoodsHistoryActivity extends BaseActivity {
                 if (data.success == true) {
                     updateUI(data);
                 } else {
-                    ToastUtils.showError(data.status.message);
+                    ToastUtil.showError(data.status.message);
                 }
 
             }
@@ -87,7 +87,7 @@ public class SearchGoodsHistoryActivity extends BaseActivity {
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }
@@ -130,7 +130,7 @@ public class SearchGoodsHistoryActivity extends BaseActivity {
             @Override
             public void onSearch(String s) {
                 if (TextUtils.isEmpty(s)){
-                    ToastUtils.showInfo("请输入关键字");
+                    ToastUtil.showInfo("请输入关键字");
                     return;
                 }
                 Intent intent = new Intent(getApplicationContext(), SearchGoodsResultActivity.class);

@@ -1,4 +1,4 @@
-package com.stephen.taihuoniaolibrary.utils;
+package com.thn.basemodule.tools;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -15,7 +15,7 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import java.util.HashMap;
 import java.util.Hashtable;
 
-public class THNQrCodeUtil {
+public class QrCodeUtil {
 
 	/**
 	 * 传入字符串生成二维码

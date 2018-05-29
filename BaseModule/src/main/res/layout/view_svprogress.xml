@@ -11,14 +11,14 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_svprogresshuddefault"
         android:gravity="center"
-        android:minWidth="120dp"
+        android:minWidth="@dimen/dp120"
         android:orientation="vertical"
-        android:padding="15dp">
+        android:padding="@dimen/dp15">
 
         <ImageView
             android:id="@+id/ivBigLoading"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/dp80"
+            android:layout_height="@dimen/dp80"
             android:scaleType="fitCenter"
             android:padding="15dp"
             android:src="@drawable/ic_sv_loading"
@@ -26,12 +26,12 @@
 
         <ImageView
             android:id="@+id/ivSmallLoading"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="@dimen/dp60"
+            android:layout_height="@dimen/dp60"
             android:scaleType="centerInside"
             android:visibility="gone" />
 
-        <com.thn.erp.view.svprogress.SVCircleProgressBar
+        <com.thn.basemodule.tools.svprogress.SVCircleProgressBar
             android:id="@+id/circleProgressBar"
             android:layout_width="@dimen/dp60"
             android:layout_height="@dimen/dp60"
@@ -44,10 +44,10 @@
             android:id="@+id/tvMsg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/dp10"
             android:gravity="center"
             android:textColor="@android:color/black"
-            android:textSize="14sp"
+            android:textSize="@dimen/sp14"
             android:visibility="gone" />
 
     </LinearLayout>

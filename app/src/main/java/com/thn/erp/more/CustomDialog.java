@@ -1,4 +1,4 @@
-package com.thn.basemodule.tools;
+package com.thn.erp.more;
 
 
 import android.app.Dialog;
@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 
 import com.thn.basemodule.R;
+import com.thn.basemodule.tools.DimenUtil;
 
 public class CustomDialog extends DialogFragment {
 
@@ -24,7 +25,7 @@ public class CustomDialog extends DialogFragment {
         if (dialog != null) {
             DisplayMetrics dm = new DisplayMetrics();
             getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-            dialog.getWindow().setLayout(DimenUtil.dp2px(getActivity(),250),DimenUtil.dp2px(getActivity(),218));
+            dialog.getWindow().setLayout(DimenUtil.dp2px(250),DimenUtil.dp2px(218));
         }
     }
     @Nullable

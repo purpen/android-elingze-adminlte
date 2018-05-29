@@ -1,8 +1,8 @@
-package com.thn.erp.view.svprogress;
+package com.thn.basemodule.tools.svprogress;
 
 import android.view.Gravity;
 
-import com.thn.erp.R;
+import com.thn.basemodule.R;
 
 
 /**

@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.thn.basemodule.tools.GlideUtil;
+import com.thn.basemodule.tools.ToastUtil;
+import com.thn.basemodule.tools.WaitingDialog;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.common.constant.ExtraKey;
@@ -20,12 +22,10 @@ import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.net.paramsBean.UpdateBrandBean;
-import com.thn.erp.utils.JsonUtil;
+import com.thn.basemodule.tools.JsonUtil;
 import com.thn.erp.utils.LogUtil;
-import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.common.LinearLayoutCustomerAddSwitchView;
 import com.thn.erp.view.common.PublicTopBar;
-import com.thn.erp.view.svprogress.WaitingDialog;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -125,14 +125,14 @@ public class BrandDetailsActivity extends BaseActivity implements ImpTopbarOnCli
                 if (customerBean.getSuccess()) {
                     refreshUi(customerBean.getData());
                 } else {
-                    ToastUtils.showError(customerBean.getStatus().getMessage());
+                    ToastUtil.showError(customerBean.getStatus().getMessage());
                 }
             }
 
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }
@@ -165,11 +165,11 @@ public class BrandDetailsActivity extends BaseActivity implements ImpTopbarOnCli
         switch (view.getId()) {
             case R.id.button_edit_confirm:
                 update();
-                ToastUtils.showInfo("保存");
+                ToastUtil.showInfo("保存");
                 break;
             case R.id.button_edit_cancel:
                 delete();
-                ToastUtils.showInfo("取消");
+                ToastUtil.showInfo("取消");
                 break;
         }
     }
@@ -192,18 +192,18 @@ public class BrandDetailsActivity extends BaseActivity implements ImpTopbarOnCli
                 dialog.dismiss();
                 BrandResultBean customerBean = JsonUtil.fromJson(json, BrandResultBean.class);
                 if (customerBean.getSuccess()) {
-                    ToastUtils.showSuccess(customerBean.getStatus().getMessage());
+                    ToastUtil.showSuccess(customerBean.getStatus().getMessage());
                     setResult(-1);
                     BrandDetailsActivity.this.finish();
                 } else {
-                    ToastUtils.showError(customerBean.getStatus().getMessage());
+                    ToastUtil.showError(customerBean.getStatus().getMessage());
                 }
             }
 
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }
@@ -237,18 +237,18 @@ public class BrandDetailsActivity extends BaseActivity implements ImpTopbarOnCli
                 dialog.dismiss();
                 BrandResultBean customerBean = JsonUtil.fromJson(json, BrandResultBean.class);
                 if (customerBean.getSuccess()) {
-                    ToastUtils.showSuccess(customerBean.getStatus().getMessage());
+                    ToastUtil.showSuccess(customerBean.getStatus().getMessage());
                     setResult(-1);
                     BrandDetailsActivity.this.finish();
                 } else {
-                    ToastUtils.showError(customerBean.getStatus().getMessage());
+                    ToastUtil.showError(customerBean.getStatus().getMessage());
                 }
             }
 
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }

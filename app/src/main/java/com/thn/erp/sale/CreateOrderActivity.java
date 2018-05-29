@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
-import com.stephen.taihuoniaolibrary.utils.THNToastUtil;
-import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
+import com.thn.basemodule.tools.WaitingDialog;
+import com.thn.basemodule.tools.ToastUtil;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.net.ClientParamsAPI;
@@ -24,8 +24,7 @@ import com.thn.erp.sale.bean.DefaultAddressData;
 import com.thn.erp.sale.bean.FreightData;
 import com.thn.erp.sale.bean.OrderGoodsItem;
 import com.thn.erp.sale.bean.SKUListData;
-import com.thn.erp.utils.JsonUtil;
-import com.thn.erp.utils.ToastUtils;
+import com.thn.basemodule.tools.JsonUtil;
 import com.thn.erp.view.CustomHeadView;
 import com.thn.erp.view.CustomItemLayout;
 
@@ -74,7 +73,7 @@ public class CreateOrderActivity extends BaseActivity {
     private int freight;
     private CreateOrderAdapter adapter;
     private List<SKUListData.DataBean.ItemsBean> list;
-    private THNWaittingDialog dialog;
+    private WaitingDialog dialog;
     private DefaultAddressData.DataBean address;
 
     @Override
@@ -91,7 +90,7 @@ public class CreateOrderActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        dialog = new THNWaittingDialog(activity);
+        dialog = new WaitingDialog(this);
         customHeadView.setHeadCenterTxtShow(true, R.string.create_order_title);
         adapter = new CreateOrderAdapter(list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -130,7 +129,7 @@ public class CreateOrderActivity extends BaseActivity {
      */
     private void createOrder() {
         if (null == address) {
-            THNToastUtil.showInfo("请选择收货地址");
+            ToastUtil.showInfo("请选择收货地址");
             return;
         }
         long storeId = 0;
@@ -158,9 +157,9 @@ public class CreateOrderActivity extends BaseActivity {
                 dialog.dismiss();
                 CreateOrderData createOrderData = JsonUtil.fromJson(json, CreateOrderData.class);
                 if (createOrderData.success == true) {
-                    ToastUtils.showInfo(R.string.add_order_success);
+                    ToastUtil.showInfo(R.string.add_order_success);
                 } else {
-                    ToastUtils.showError(createOrderData.status.message);
+                    ToastUtil.showError(createOrderData.status.message);
                 }
 
             }
@@ -168,7 +167,7 @@ public class CreateOrderActivity extends BaseActivity {
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }
@@ -199,7 +198,7 @@ public class CreateOrderActivity extends BaseActivity {
                     address = addressData.data;
                     setConsigneeAddress(address);
                 } else {
-                    ToastUtils.showError(addressData.status.message);
+                    ToastUtil.showError(addressData.status.message);
                 }
 
             }
@@ -207,7 +206,7 @@ public class CreateOrderActivity extends BaseActivity {
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }
@@ -256,7 +255,7 @@ public class CreateOrderActivity extends BaseActivity {
                     freight = freightData.data.freight;
                     tvFreight.setText("运费：￥" + freightData.data.freight);
                 } else {
-                    ToastUtils.showError(freightData.status.message);
+                    ToastUtil.showError(freightData.status.message);
                 }
 
             }
@@ -264,7 +263,7 @@ public class CreateOrderActivity extends BaseActivity {
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }

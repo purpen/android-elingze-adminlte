@@ -14,7 +14,8 @@ import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
-import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
+import com.thn.basemodule.tools.WaitingDialog;
+import com.thn.basemodule.tools.ToastUtil;
 import com.thn.erp.R;
 import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
@@ -23,8 +24,7 @@ import com.thn.erp.net.URL;
 import com.thn.erp.sale.AddNewAddressActivity;
 import com.thn.erp.sale.bean.AddressData;
 import com.thn.erp.sale.bean.DeleteAddressData;
-import com.thn.erp.utils.JsonUtil;
-import com.thn.erp.utils.ToastUtils;
+import com.thn.basemodule.tools.JsonUtil;
 import com.thn.erp.view.dialog.DefaultDialog;
 import com.thn.erp.view.dialog.IDialogListenerConfirmBack;
 
@@ -39,7 +39,7 @@ import okhttp3.Call;
 
 
 public class ManageAddressListAdapter extends UltimateViewAdapter {
-    private THNWaittingDialog dialog;
+    private WaitingDialog dialog;
     private Activity activity;
     private List<AddressData.DataBean> list;
 
@@ -54,7 +54,7 @@ public class ManageAddressListAdapter extends UltimateViewAdapter {
     }
 
     public ManageAddressListAdapter(Activity activity,List<AddressData.DataBean> list) {
-        dialog = new THNWaittingDialog(activity);
+        dialog = new WaitingDialog(activity);
         this.activity = activity;
         this.list = list;
     }
@@ -113,17 +113,17 @@ public class ManageAddressListAdapter extends UltimateViewAdapter {
                                 public void onSuccess(String json) {
                                     DeleteAddressData deleteAddressData = JsonUtil.fromJson(json, DeleteAddressData.class);
                                     if (deleteAddressData.success) {
-                                        ToastUtils.showSuccess("删除成功");
+                                        ToastUtil.showSuccess("删除成功");
                                         activity.finish();
                                     } else {
-                                        ToastUtils.showError(deleteAddressData.status.message);
+                                        ToastUtil.showError(deleteAddressData.status.message);
                                     }
                                 }
 
                                 @Override
                                 public void onFailure(IOException e) {
                                     dialog.dismiss();
-                                    ToastUtils.showError(R.string.network_err);
+                                    ToastUtil.showError(R.string.network_err);
                                 }
                             });
                         }

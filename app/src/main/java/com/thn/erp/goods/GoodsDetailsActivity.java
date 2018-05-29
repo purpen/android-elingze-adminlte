@@ -4,6 +4,8 @@ import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+import com.thn.basemodule.tools.ToastUtil;
+import com.thn.basemodule.tools.WaitingDialog;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseStyle2Activity;
 import com.thn.erp.common.interfaces.ImpTopbarOnClickListener;
@@ -12,13 +14,11 @@ import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.sale.bean.GoodsData;
-import com.thn.erp.utils.JsonUtil;
-import com.thn.erp.utils.ToastUtils;
+import com.thn.basemodule.tools.JsonUtil;
 import com.thn.erp.view.MyExpandableListAdapter;
 import com.thn.erp.view.autoScrollViewpager.ScrollableView;
 import com.thn.erp.view.autoScrollViewpager.ViewPagerAdapter;
 import com.thn.erp.view.common.PublicTopBar;
-import com.thn.erp.view.svprogress.WaitingDialog;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -121,7 +121,7 @@ public class GoodsDetailsActivity extends BaseStyle2Activity implements ImpTopba
                 if (data.success == true) {
                     updateData(data);
                 } else {
-                    ToastUtils.showError(data.status.message);
+                    ToastUtil.showError(data.status.message);
                 }
 
             }
@@ -129,7 +129,7 @@ public class GoodsDetailsActivity extends BaseStyle2Activity implements ImpTopba
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }

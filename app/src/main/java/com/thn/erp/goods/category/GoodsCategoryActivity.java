@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import com.thn.basemodule.tools.ToastUtil;
+import com.thn.basemodule.tools.WaitingDialog;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseStyle2Activity;
 import com.thn.erp.base.BaseUltimateRecyclerView;
@@ -25,13 +27,11 @@ import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
-import com.thn.erp.utils.JsonUtil;
+import com.thn.basemodule.tools.JsonUtil;
 import com.thn.erp.utils.LogUtil;
-import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.CustomPopupWindow;
 import com.thn.erp.view.SearchView;
 import com.thn.erp.view.common.PublicTopBar;
-import com.thn.erp.view.svprogress.WaitingDialog;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -79,7 +79,7 @@ public class GoodsCategoryActivity extends BaseStyle2Activity implements ImpTopb
     protected void initView() {
         initTopbar();
         initRecyclerView();
-        dialog = new WaitingDialog(activity);
+        dialog = new WaitingDialog(this);
     }
 
     private void initRecyclerView() {
@@ -106,7 +106,7 @@ public class GoodsCategoryActivity extends BaseStyle2Activity implements ImpTopb
         searchView.setOnSearchClickListener(new SearchView.OnSearchClickListener() {
             @Override
             public void onSearchClick(String s) {
-                ToastUtils.showInfo("going search");
+                ToastUtil.showInfo("going search");
             }
         });
 
@@ -201,14 +201,14 @@ public class GoodsCategoryActivity extends BaseStyle2Activity implements ImpTopb
                 if (customerBean.getStatus().getCode() == 200) {
                     updateData(customerBean.getData().getCategories());
                 } else {
-                    ToastUtils.showError(customerBean.getStatus().getMessage());
+                    ToastUtil.showError(customerBean.getStatus().getMessage());
                 }
             }
 
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }
@@ -262,17 +262,17 @@ public class GoodsCategoryActivity extends BaseStyle2Activity implements ImpTopb
                 dialog.dismiss();
                 BrandResultBean customerBean = JsonUtil.fromJson(json, BrandResultBean.class);
                 if (customerBean.getSuccess()) {
-                    ToastUtils.showSuccess(customerBean.getStatus().getMessage());
+                    ToastUtil.showSuccess(customerBean.getStatus().getMessage());
                     customPopupWindow.dismiss();
                 } else {
-                    ToastUtils.showError(customerBean.getStatus().getMessage());
+                    ToastUtil.showError(customerBean.getStatus().getMessage());
                 }
             }
 
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }

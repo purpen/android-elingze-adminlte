@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.thn.basemodule.tools.DimenUtil;
 import com.thn.erp.R;
 
 
@@ -65,7 +66,7 @@ public class CommonToast {
 			FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(-2,
 					-2);
 			params.gravity = i;
-			int j = (int) TDevice.dpToPixel(16F);
+			int j = (int) DimenUtil.dp2px(16F);
 			params.setMargins(j, j, j, j);
 			_toastVw.setLayoutParams(params);
 		}

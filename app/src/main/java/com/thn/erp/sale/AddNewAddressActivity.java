@@ -5,8 +5,9 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import com.stephen.taihuoniaolibrary.utils.THNToastUtil;
-import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
+
+import com.thn.basemodule.tools.WaitingDialog;
+import com.thn.basemodule.tools.ToastUtil;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.net.ClientParamsAPI;
@@ -17,8 +18,7 @@ import com.thn.erp.sale.bean.AddressData;
 import com.thn.erp.sale.bean.CommitConsigneeData;
 import com.thn.erp.sale.bean.ProvinceCityRestrict;
 import com.thn.erp.sale.bean.TownsData;
-import com.thn.erp.utils.JsonUtil;
-import com.thn.erp.utils.ToastUtils;
+import com.thn.basemodule.tools.JsonUtil;
 import com.thn.erp.utils.Util;
 import com.thn.erp.view.CustomHeadView;
 import java.io.IOException;
@@ -51,7 +51,7 @@ public class AddNewAddressActivity extends BaseActivity {
     private String cityId;
     private String countyId;
     private String townId;
-    private THNWaittingDialog dialog;
+    private WaitingDialog dialog;
     private AddressSelectFragment addressSelectFragment;
     private ProvinceCityRestrict.DataBean curProvince;
     private ProvinceCityRestrict.DataBean curCity;
@@ -74,7 +74,7 @@ public class AddNewAddressActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        dialog = new THNWaittingDialog(this);
+        dialog = new WaitingDialog(this);
         if (addressBean != null) {
             customHeadView.setHeadCenterTxtShow(true, R.string.edit_address);
             customHeadView.setHeadRightTxtShow(true, R.string.save);
@@ -169,29 +169,29 @@ public class AddNewAddressActivity extends BaseActivity {
     private void commitConsigneeAddress() {
         String consigneeName = etConsigneeName.getText().toString().trim();
         if (TextUtils.isEmpty(consigneeName)) {
-            ToastUtils.showInfo(R.string.name_is_empty);
+            ToastUtil.showInfo(R.string.name_is_empty);
             return;
         }
 
         String phone = etPhone.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
-            ToastUtils.showInfo(R.string.phone_is_empty);
+            ToastUtil.showInfo(R.string.phone_is_empty);
             return;
         }
 
         if (!Util.isMobileNO(etPhone.getText().toString())) {
-            ToastUtils.showInfo(R.string.phone_is_err);
+            ToastUtil.showInfo(R.string.phone_is_err);
             return;
         }
 
         if (TextUtils.equals(tvAddress.getText(), getResources().getString(R.string.please_select_address))) {
-            ToastUtils.showInfo(R.string.please_select_address);
+            ToastUtil.showInfo(R.string.please_select_address);
             return;
         }
 
         String addressDetail = etAddressDetails.getText().toString().trim();
         if (TextUtils.isEmpty(addressDetail)) {
-            ToastUtils.showInfo(R.string.address_details_is_empty);
+            ToastUtil.showInfo(R.string.address_details_is_empty);
             return;
         }
         String method;
@@ -219,7 +219,7 @@ public class AddNewAddressActivity extends BaseActivity {
             method=HttpRequest.POST;
         }else { //编辑地址
             method = HttpRequest.DELETE;
-            THNToastUtil.showInfo("缺少省ID");
+            ToastUtil.showInfo("缺少省ID");
 //            TODO 缺少省市区ID
 //                provinceId=addressBean.;
 //                cityId=addressBean.city_id;
@@ -239,20 +239,20 @@ public class AddNewAddressActivity extends BaseActivity {
                 dialog.dismiss();
                 CommitConsigneeData commitConsigneeData = JsonUtil.fromJson(json, CommitConsigneeData.class);
                 if (commitConsigneeData.success) {
-                    ToastUtils.showSuccess(commitConsigneeData.status.message);
+                    ToastUtil.showSuccess(commitConsigneeData.status.message);
 //                    Intent intent = new Intent();
 //                    intent.putExtra("address", 1);
 //                    setResult(DataConstants.RESULTCODE_ADDNEWADDRESS, intent);
                     finish();
                 } else {
-                    ToastUtils.showError(commitConsigneeData.status.message);
+                    ToastUtil.showError(commitConsigneeData.status.message);
                 }
             }
 
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }

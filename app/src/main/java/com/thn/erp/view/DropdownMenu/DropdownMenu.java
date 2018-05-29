@@ -14,9 +14,8 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.stephen.taihuoniaolibrary.utils.THNLogUtil;
 import com.thn.erp.R;
+import com.thn.erp.utils.LogUtil;
 import com.thn.erp.utils.Util;
 
 /**
@@ -103,11 +102,11 @@ public class DropdownMenu extends RelativeLayout {
     }
 
     private void  showMenu(){
-        THNLogUtil.e("getLeft()="+getLeft());
-        THNLogUtil.e("getRight()="+getRight());
+        LogUtil.e("getLeft()="+getLeft());
+        LogUtil.e("getRight()="+getRight());
         double v = (getResources().getDimensionPixelSize(R.dimen.dp200) - getMeasuredWidth()) * 0.5;
 
-        THNLogUtil.e("v="+v);
+        LogUtil.e("v="+v);
         if (getLeft()<v || Util.getScreenWidth()- getRight()<v){
             popupWindow.showAsDropDown(view);
         }else {

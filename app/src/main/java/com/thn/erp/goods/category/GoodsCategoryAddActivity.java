@@ -6,7 +6,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
-import com.stephen.taihuoniaolibrary.utils.THNTypeConversionUtils;
+import com.thn.basemodule.tools.ToastUtil;
+import com.thn.basemodule.tools.WaitingDialog;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.common.constant.ExtraKey;
@@ -16,12 +17,10 @@ import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
-import com.thn.erp.utils.JsonUtil;
+import com.thn.basemodule.tools.JsonUtil;
 import com.thn.erp.utils.LogUtil;
-import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.common.LinearLayoutCustomerAddEditTextView;
 import com.thn.erp.view.common.PublicTopBar;
-import com.thn.erp.view.svprogress.WaitingDialog;
 
 import java.io.IOException;
 
@@ -92,12 +91,12 @@ public class GoodsCategoryAddActivity extends BaseActivity implements ImpTopbarO
     private UpdateCetegoryBean checkCategoryParams(){
         String name = addEditText1.getValue();
         if (TextUtils.isEmpty(name)) {
-            ToastUtils.showInfo("名称不能为空");
+            ToastUtil.showInfo("名称不能为空");
             return null;
         }
         String description = addEditText2.getValue();
         String sort_order = addEditText3.getValue();
-        int sortOrder = THNTypeConversionUtils.StringConvertInt(sort_order);
+        int sortOrder = Integer.valueOf(sort_order);
         return new UpdateCetegoryBean(name, description, sortOrder);
     }
 
@@ -146,18 +145,18 @@ public class GoodsCategoryAddActivity extends BaseActivity implements ImpTopbarO
                 dialog.dismiss();
                 BrandResultBean customerBean = JsonUtil.fromJson(json, BrandResultBean.class);
                 if (customerBean.getSuccess()) {
-                    ToastUtils.showSuccess(customerBean.getStatus().getMessage());
+                    ToastUtil.showSuccess(customerBean.getStatus().getMessage());
                     setResult(Activity.RESULT_OK);
                     GoodsCategoryAddActivity.this.finish();
                 } else {
-                    ToastUtils.showError(customerBean.getStatus().getMessage());
+                    ToastUtil.showError(customerBean.getStatus().getMessage());
                 }
             }
 
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }

@@ -25,7 +25,7 @@ import android.view.View;
 
 import com.thn.basemodule.tools.Constants;
 import com.thn.basemodule.tools.LogUtil;
-import com.thn.basemodule.tools.ToastUtils;
+import com.thn.basemodule.tools.ToastUtil;
 import com.thn.imagealbum.BuildConfig;
 import com.thn.imagealbum.album.ImageLoaderEngine;
 
@@ -348,7 +348,7 @@ public class ImageUtils {
         if (uri == null) return;
         String state = Environment.getExternalStorageState();
         if (!state.equals(Environment.MEDIA_MOUNTED)) {
-            ToastUtils.showInfo(activity,"请插入SD卡");
+            ToastUtil.showInfo("请插入SD卡");
             return;
         }
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -371,7 +371,7 @@ public class ImageUtils {
                     .setEngine(new ImageLoaderEngine())
                     .forResult(Constants.REQUEST_CODE_PICK_IMAGE);
         } else {
-            ToastUtils.showError(activity,"未检测到SD卡");
+            ToastUtil.showError("未检测到SD卡");
         }
     }
 

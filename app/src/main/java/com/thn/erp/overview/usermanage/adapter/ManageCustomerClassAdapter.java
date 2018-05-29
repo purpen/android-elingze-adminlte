@@ -1,5 +1,6 @@
 package com.thn.erp.overview.usermanage.adapter;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
@@ -8,8 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
-import com.stephen.taihuoniaolibrary.utils.THNToastUtil;
-import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
+import com.thn.basemodule.tools.WaitingDialog;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseUltimateViewAdapter;
 import com.thn.erp.net.ClientParamsAPI;
@@ -19,8 +19,8 @@ import com.thn.erp.net.URL;
 import com.thn.erp.overview.usermanage.AddGradeActivity;
 import com.thn.erp.overview.usermanage.bean.CustomerClassData;
 import com.thn.erp.overview.usermanage.bean.DeleteGradeData;
-import com.thn.erp.utils.JsonUtil;
-import com.thn.erp.utils.ToastUtils;
+import com.thn.basemodule.tools.JsonUtil;
+import com.thn.basemodule.tools.ToastUtil;
 import com.thn.erp.view.dialog.DefaultDialog;
 import com.thn.erp.view.dialog.IDialogListenerConfirmBack;
 
@@ -35,7 +35,8 @@ import butterknife.ButterKnife;
  * 客户等级
  */
 public class ManageCustomerClassAdapter extends BaseUltimateViewAdapter<CustomerClassData.DataBean.GradesBean> {
-    public ManageCustomerClassAdapter(List<CustomerClassData.DataBean.GradesBean> list) {
+    private Activity activity;
+    public ManageCustomerClassAdapter(Activity activity, List<CustomerClassData.DataBean.GradesBean> list) {
         super(list);
     }
 
@@ -62,9 +63,9 @@ public class ManageCustomerClassAdapter extends BaseUltimateViewAdapter<Customer
 
         viewHolder.tvDelete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 Resources resources = v.getContext().getResources();
-                final THNWaittingDialog dialog = new THNWaittingDialog(v.getContext());
+                final WaitingDialog dialog = new WaitingDialog(activity);
                 new DefaultDialog(v.getContext(), resources.getString(R.string.hint_dialog_delete_grade_title), resources.getStringArray(R.array.text_dialog_button), new IDialogListenerConfirmBack() {
 
                     @Override
@@ -83,16 +84,16 @@ public class ManageCustomerClassAdapter extends BaseUltimateViewAdapter<Customer
                                 DeleteGradeData data = JsonUtil.fromJson(json, DeleteGradeData.class);
                                 if (data.success) {
                                     ManageCustomerClassAdapter.this.remove(position);
-                                    THNToastUtil.showSuccess("删除成功");
+                                    ToastUtil.showSuccess("删除成功");
                                 } else {
-                                    ToastUtils.showError(data.status.message);
+                                    ToastUtil.showError(data.status.message);
                                 }
                             }
 
                             @Override
                             public void onFailure(IOException e) {
                                 dialog.dismiss();
-                                ToastUtils.showError(R.string.network_err);
+                                ToastUtil.showError(R.string.network_err);
                             }
                         });
                     }

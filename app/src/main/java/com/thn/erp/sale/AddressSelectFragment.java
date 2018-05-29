@@ -22,9 +22,9 @@ import com.thn.erp.sale.adapter.SimpleTextAdapter;
 import com.thn.erp.sale.adapter.TownsListAdapter;
 import com.thn.erp.sale.bean.ProvinceCityRestrict;
 import com.thn.erp.sale.bean.TownsData;
-import com.thn.erp.utils.JsonUtil;
+import com.thn.basemodule.tools.JsonUtil;
 import com.thn.erp.utils.LogUtil;
-import com.thn.erp.utils.ToastUtils;
+import com.thn.basemodule.tools.ToastUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -277,13 +277,13 @@ public class AddressSelectFragment extends DialogFragment {
                     townsList.addAll(townsData.data);
                     refreshUI();
                 }else {
-                    ToastUtils.showError(townsData.status.message);
+                    ToastUtil.showError(townsData.status.message);
                 }
             }
 
             @Override
             public void onFailure(IOException e) {
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
                 setItemClickable(true);
                 progressbar.setVisibility(View.GONE);
             }
@@ -313,13 +313,13 @@ public class AddressSelectFragment extends DialogFragment {
                     countyList.addAll(provinceCityRestrict.data);
                     refreshUI();
                 }else {
-                    ToastUtils.showError(provinceCityRestrict.status.message);
+                    ToastUtil.showError(provinceCityRestrict.status.message);
                 }
             }
 
             @Override
             public void onFailure(IOException e) {
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
                 setItemClickable(true);
                 progressbar.setVisibility(View.GONE);
             }
@@ -349,13 +349,13 @@ public class AddressSelectFragment extends DialogFragment {
                     cityList.addAll(provinceCityRestrict.data);
                     refreshUI();
                 }else {
-                    ToastUtils.showError(provinceCityRestrict.status.message);
+                    ToastUtil.showError(provinceCityRestrict.status.message);
                 }
             }
 
             @Override
             public void onFailure(IOException e) {
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
                 setItemClickable(true);
                 progressbar.setVisibility(View.GONE);
             }
@@ -387,13 +387,13 @@ public class AddressSelectFragment extends DialogFragment {
                     provinceList.addAll(provinceCityRestrict.data);
                     refreshUI();
                 }else {
-                    ToastUtils.showError(provinceCityRestrict.status.message);
+                    ToastUtil.showError(provinceCityRestrict.status.message);
                 }
             }
 
             @Override
             public void onFailure(IOException e) {
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
                 setItemClickable(true);
                 progressbar.setVisibility(View.GONE);
             }

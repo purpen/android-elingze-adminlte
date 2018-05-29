@@ -10,6 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.thn.basemodule.tools.LogUtil;
+import com.thn.basemodule.tools.ToastUtil;
+import com.thn.basemodule.tools.WaitingDialog;
 import com.thn.erp.Constants;
 import com.thn.erp.MainActivity;
 import com.thn.erp.R;
@@ -20,10 +23,8 @@ import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.user.bean.AppKeyData;
 import com.thn.erp.user.bean.LoginBean;
-import com.thn.erp.utils.JsonUtil;
+import com.thn.basemodule.tools.JsonUtil;
 import com.thn.erp.utils.SPUtil;
-import com.thn.erp.utils.ToastUtils;
-import com.thn.erp.view.svprogress.WaitingDialog;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -61,7 +62,7 @@ public class LoginFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        dialog = new WaitingDialog(activity);
+        dialog = new WaitingDialog(getActivity());
     }
 
 
@@ -92,20 +93,21 @@ public class LoginFragment extends BaseFragment {
 
             @Override
             public void onSuccess(String json) {
+                LogUtil.e(json);
                 dialog.dismiss();
                 LoginBean loginBean = JsonUtil.fromJson(json, LoginBean.class);
                 if (loginBean.success) {
                     getAppKeyAndSecret(loginBean.data.store_rid,authorzationCode);
                    // SPUtil.write(Constants.TOKEN, loginBean.data.token);
                 }else {
-                    ToastUtils.showError(loginBean.status.message);
+                    ToastUtil.showError(loginBean.status.message);
                 }
             }
 
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }
@@ -130,14 +132,14 @@ public class LoginFragment extends BaseFragment {
                     SPUtil.write(Constants.APP_SECRET,appKeyData.data.access_token);
                     jump2MainPage();
                 }else {
-                    ToastUtils.showError(appKeyData.status.message);
+                    ToastUtil.showError(appKeyData.status.message);
                 }
             }
 
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }
@@ -154,22 +156,22 @@ public class LoginFragment extends BaseFragment {
     private boolean checkUserInput() {
         userName = etPhone.getText().toString();
         if (TextUtils.isEmpty(userName)) {
-            ToastUtils.showInfo("请输入手机号");
+            ToastUtil.showInfo("请输入手机号");
             return false;
         }
 //        if (!Util.isMobileNO(userName)) {
-//            ToastUtils.showInfo("请输入正确手机号");
+//            ToastUtil.showInfo("请输入正确手机号");
 //            return false;
 //        }
 
         userPsw = etPassword.getText().toString();
         if (TextUtils.isEmpty(userPsw)) {
-            ToastUtils.showInfo("请输入密码");
+            ToastUtil.showInfo("请输入密码");
             return false;
         }
 
         if (userPsw.length()<6){
-            ToastUtils.showInfo("密码长度最少为6位");
+            ToastUtil.showInfo("密码长度最少为6位");
             return false;
         }
         return true;

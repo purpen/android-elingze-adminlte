@@ -8,7 +8,7 @@ public class LoginBean {
 
 
     /**
-     * data : {"created_at":1523927428,"expiration":2592000,"store_rid":"Q4209136","token":"eyJhbGciOiJIUzI1NiIsIPuVGBJ7bUPTJklWBJZOdZXKzCVCfxQxHlhA"}
+     * data : {"created_at":1527504270,"expiration":2592000,"store_rid":"Q3694287","token":"eyJhbGciOiJIUzI1NiIsImlhdCI6MTUyNzUwNDI3MCwiZXhwIjoxNTMwMDk2MjcwfQ.eyJpZCI6N30.Q9ji-OHGw_cWBWN_7M0gztDjRjRHvH6b82Dk5FoLypo"}
      * status : {"code":200,"message":"Ok all right."}
      * success : true
      */
@@ -19,10 +19,10 @@ public class LoginBean {
 
     public static class DataBean {
         /**
-         * created_at : 1523927428
+         * created_at : 1527504270
          * expiration : 2592000
-         * store_rid : Q4209136
-         * token : eyJhbGciOiJIUzI1NiIsIPuVGBJ7bUPTJklWBJZOdZXKzCVCfxQxHlhA
+         * store_rid : Q3694287
+         * token : eyJhbGciOiJIUzI1NiIsImlhdCI6MTUyNzUwNDI3MCwiZXhwIjoxNTMwMDk2MjcwfQ.eyJpZCI6N30.Q9ji-OHGw_cWBWN_7M0gztDjRjRHvH6b82Dk5FoLypo
          */
 
         public int created_at;

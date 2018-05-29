@@ -10,13 +10,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
-import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
+import com.thn.basemodule.tools.WaitingDialog;
+import com.thn.basemodule.tools.ToastUtil;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.overview.usermanage.bean.CustomerData;
 import com.thn.erp.sale.adapter.DXOrderGoodsAdapter;
 import com.thn.erp.sale.bean.SKUListData;
-import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.CustomHeadView;
 
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ public class DXOrderActivity extends BaseActivity {
 
     private DXOrderGoodsAdapter adapter;
     private ArrayList<SKUListData.DataBean.ItemsBean> list;
-    private THNWaittingDialog dialog;
+    private WaitingDialog dialog;
 
     @Override
     protected int getLayout() {
@@ -53,7 +53,7 @@ public class DXOrderActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        dialog = new THNWaittingDialog(activity);
+        dialog = new WaitingDialog(this);
         list = new ArrayList<>();
         customHeadView.setHeadCenterTxtShow(true, R.string.dx_order_title);
         adapter = new DXOrderGoodsAdapter(list);
@@ -82,25 +82,25 @@ public class DXOrderActivity extends BaseActivity {
                 break;
             case R.id.submitOrder:
                 if (TextUtils.isEmpty(etCustomer.getText())){
-                    ToastUtils.showInfo("请选择客户名");
+                    ToastUtil.showInfo("请选择客户名");
                     return;
                 }
 
                 if (list.size()==0){
-                    ToastUtils.showInfo("请选择商品");
+                    ToastUtil.showInfo("请选择商品");
                     return;
                 }
 
                 String perPrice = adapter.getPerPrice();
                 if (TextUtils.isEmpty(perPrice)){
-                    ToastUtils.showInfo("请输入单价");
+                    ToastUtil.showInfo("请输入单价");
                     return;
                 }
 
                 int quantity = adapter.getQuantity();
 
                 if (quantity==0){
-                    ToastUtils.showInfo("请输入数量");
+                    ToastUtil.showInfo("请输入数量");
                     return;
                 }
 

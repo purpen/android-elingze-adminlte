@@ -7,7 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
-import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
+import com.thn.basemodule.tools.WaitingDialog;
+import com.thn.basemodule.tools.ToastUtil;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
@@ -17,8 +18,7 @@ import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.overview.usermanage.adapter.ManageCustomerClassAdapter;
 import com.thn.erp.overview.usermanage.bean.CustomerClassData;
-import com.thn.erp.utils.JsonUtil;
-import com.thn.erp.utils.ToastUtils;
+import com.thn.basemodule.tools.JsonUtil;
 import com.thn.erp.view.CustomHeadView;
 
 import java.io.IOException;
@@ -44,7 +44,7 @@ public class ManageCustomerClassActivity extends BaseActivity {
     private List<CustomerClassData.DataBean.GradesBean> list;
     private int page=1;
     private boolean isRefreshing =false;
-    private THNWaittingDialog dialog;
+    private WaitingDialog dialog;
     private boolean isLoadMore=false;
 
     @Override
@@ -54,10 +54,10 @@ public class ManageCustomerClassActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        dialog =new THNWaittingDialog(this);
+        dialog =new WaitingDialog(this);
         customHeadView.setHeadCenterTxtShow(true, R.string.manage_class_title);
         list = new ArrayList<>();
-        adapter = new ManageCustomerClassAdapter(list);
+        adapter = new ManageCustomerClassAdapter(this,list);
         linearLayoutManager = new LinearLayoutManager(this);
         ultimateRecyclerView.setHasFixedSize(true);
         ultimateRecyclerView.setLayoutManager(linearLayoutManager);
@@ -140,7 +140,7 @@ public class ManageCustomerClassActivity extends BaseActivity {
                     if (gradesBeans.size()==0) ultimateRecyclerView.disableLoadmore();
                     updateData(gradesBeans);
                 } else {
-                    ToastUtils.showError(customerClassData.status.message);
+                    ToastUtil.showError(customerClassData.status.message);
                 }
 
             }
@@ -148,7 +148,7 @@ public class ManageCustomerClassActivity extends BaseActivity {
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                ToastUtils.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }

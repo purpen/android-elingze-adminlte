@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
-import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
+import com.thn.basemodule.tools.WaitingDialog;
 import com.thn.basemodule.tools.GlideUtil;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
@@ -47,7 +47,7 @@ public class ImageCropActivity extends BaseActivity {
 
     Button bt_clip;
     private String page;
-    private THNWaittingDialog dialog;
+    private WaitingDialog dialog;
 
 
     @Override
@@ -71,7 +71,7 @@ public class ImageCropActivity extends BaseActivity {
     @Override
     protected void initView() {
         if (uri == null) return;
-        dialog = new THNWaittingDialog(this);
+        dialog = new WaitingDialog(this);
         GlideUtil.loadImageAsBitmap(uri, csiv);
     }
 

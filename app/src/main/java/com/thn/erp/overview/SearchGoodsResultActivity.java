@@ -9,9 +9,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
-import com.stephen.taihuoniaolibrary.utils.THNLogUtil;
-import com.stephen.taihuoniaolibrary.utils.THNToastUtil;
-import com.stephen.taihuoniaolibrary.utils.THNWaittingDialog;
+import com.thn.basemodule.tools.WaitingDialog;
+import com.thn.basemodule.tools.LogUtil;
+import com.thn.basemodule.tools.ToastUtil;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseActivity;
 import com.thn.erp.net.ClientParamsAPI;
@@ -20,7 +20,7 @@ import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
 import com.thn.erp.overview.adapter.SearchGoodsResultAdapter;
 import com.thn.erp.overview.bean.SearchResultData;
-import com.thn.erp.utils.JsonUtil;
+import com.thn.basemodule.tools.JsonUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class SearchGoodsResultActivity extends BaseActivity {
     @BindView(R.id.ultimateRecyclerView)
     UltimateRecyclerView ultimateRecyclerView;
     private String keyWords;
-    private THNWaittingDialog dialog;
+    private WaitingDialog dialog;
     private int page = 1;
     private ArrayList<SearchResultData.DataBean.ProductsBean> list;
     private SearchGoodsResultAdapter adapter;
@@ -61,7 +61,7 @@ public class SearchGoodsResultActivity extends BaseActivity {
         if (!TextUtils.isEmpty(keyWords)) {
             tvSearchText.setText(keyWords);
         }
-        dialog = new THNWaittingDialog(this);
+        dialog = new WaitingDialog(this);
         list = new ArrayList<>();
         adapter = new SearchGoodsResultAdapter(list);
         linearLayoutManager = new LinearLayoutManager(this);
@@ -82,7 +82,7 @@ public class SearchGoodsResultActivity extends BaseActivity {
     @Override
     protected void requestNet() {
         if (TextUtils.isEmpty(keyWords)) {
-            THNLogUtil.e("搜索内容为空");
+            LogUtil.e("搜索内容为空");
             return;
         }
         getSearchResult();
@@ -106,14 +106,14 @@ public class SearchGoodsResultActivity extends BaseActivity {
                 if (data.success) {
                     updateData(data.data.products);
                 } else {
-                    THNToastUtil.showError(data.status.message);
+                    ToastUtil.showError(data.status.message);
                 }
             }
 
             @Override
             public void onFailure(IOException e) {
                 dialog.dismiss();
-                THNToastUtil.showError(R.string.network_err);
+                ToastUtil.showError(R.string.network_err);
             }
         });
     }

@@ -14,6 +14,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.TextView;
 
+import com.thn.basemodule.tools.ToastUtil;
 import com.thn.erp.MainActivity;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseStyle2Activity;
@@ -23,7 +24,6 @@ import com.thn.erp.common.interfaces.ImpTopbarOnClickListener;
 import com.thn.erp.more.adapter.StockProductListAdapter;
 import com.thn.erp.more.bean.PrepareExportStockBean;
 import com.thn.erp.utils.DialogHelp;
-import com.thn.erp.utils.ToastUtils;
 import com.thn.erp.view.common.PublicTopBar;
 import com.uuzuche.lib_zxing.activity.CaptureFragment;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
@@ -116,14 +116,14 @@ public class ScanExportStockActivity extends BaseStyle2Activity implements ImpTo
             List<Object> objects = new ArrayList<>();
             objects.add(result);
             mStockProductListAdapter.addList(objects);
-            ToastUtils.showSuccess("扫码成功");
+            ToastUtil.showSuccess("扫码成功");
             textViewMoreCanExportStockTotal.setText("数量：" + String.valueOf(mObjects.size()));
             resendScanRequest();
         }
 
         @Override
         public void onAnalyzeFailed() {
-            ToastUtils.showError("扫码失败，重新扫描");
+            ToastUtil.showError("扫码失败，重新扫描");
             resendScanRequest();
         }
     };
@@ -186,7 +186,7 @@ public class ScanExportStockActivity extends BaseStyle2Activity implements ImpTo
                     @Override
                     public void run() {
                         waitDialog.cancel();
-                        ToastUtils.showSuccess("出库成功");
+                        ToastUtil.showSuccess("出库成功");
                         ScanExportStockActivity.this.startActivity(new Intent(ScanExportStockActivity.this, MainActivity.class));
                     }
                 }, 3000);
