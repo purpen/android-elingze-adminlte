@@ -19,15 +19,15 @@ import butterknife.ButterKnife;
  * Created by lilin on 2017/7/6.
  */
 
-public class ProductsTop100Adapter extends CommonBaseAdapter<SaleTop100Bean.DataBean> {
+public class ProductsTop100Adapter extends CommonBaseAdapter<SaleTop100Bean.DataBean.SaleLogStatisticsBean> {
 
-    public ProductsTop100Adapter(List<SaleTop100Bean.DataBean> list, Activity activity) {
+    public ProductsTop100Adapter(List<SaleTop100Bean.DataBean.SaleLogStatisticsBean> list, Activity activity) {
         super(list, activity);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        SaleTop100Bean.DataBean item=list.get(position);
+        SaleTop100Bean.DataBean.SaleLogStatisticsBean item=list.get(position);
         ViewHolder holder;
         if (null == convertView) {
             convertView = View.inflate(activity, R.layout.item_sale_top100, null);
@@ -38,10 +38,10 @@ public class ProductsTop100Adapter extends CommonBaseAdapter<SaleTop100Bean.Data
             holder = (ViewHolder) convertView.getTag();
         }
         holder.order.setText(String.valueOf(position+1));
-        holder.id.setText(item.sku_id);
-        holder.productsName.setText(item.sku_name);
-        holder.saleNum.setText(item.sales_quantity);
-        holder.saleAmount.setText(item.sum_money);
+//        holder.id.setText(item.sku_id);
+        holder.productsName.setText(item.name);
+        holder.saleNum.setText(item.quantity);
+        holder.saleAmount.setText(item.sale_amount);
         holder.percentage.setText(String.format("%s%%",item.proportion));
         return convertView;
     }

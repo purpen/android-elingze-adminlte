@@ -107,7 +107,8 @@
                         <com.github.mikephil.charting.charts.LineChart
                             android:id="@+id/saleAmountChart"
                             android:layout_width="match_parent"
-                            android:layout_height="185dp" />
+                            android:layout_height="185dp"
+                            />
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -178,7 +179,7 @@
                         android:layout_height="wrap_content"
                         android:divider="@color/color_eee"
                         android:dividerHeight="@dimen/dp05"
-                        android:padding="@dimen/dp10" />
+                        />
                 </LinearLayout>
             </LinearLayout>
     </com.thn.erp.view.CustomScrollView>

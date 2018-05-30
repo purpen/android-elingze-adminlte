@@ -21,7 +21,11 @@ public class URL {
      */
     public static final String SALES_TRENDS = BASE_URL + "stats/sale_amount_trend";
 
-    public static final String SALES_TOP100 = BASE_URL + "survey/salesRanking";
+    /**
+     * 产品销售量排行榜
+     */
+    public static final String SALES_TOP100 = BASE_URL + "stats/sale_leader_board";
+
     public static final String SALES_PRICE_PER_USER = BASE_URL + "survey/customerPriceDistribution";
     public static final String REBUY_RATE = BASE_URL + "survey/repeatPurchase";
     public static final String AREA_DISTRIBUTION = BASE_URL + "survey/orderDistribution";

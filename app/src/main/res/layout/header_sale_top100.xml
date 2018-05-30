@@ -2,19 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp30"
-    >
+    android:background="@color/color_E6E6E6">
+
     <View
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp05"
-        android:background="@color/color_eee"
-        />
+        android:background="@color/color_eee" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp25"
-        android:orientation="horizontal"
         android:layout_below="@+id/line"
-        >
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/order"
@@ -23,8 +23,7 @@
             android:gravity="center"
             android:text="序号"
             android:textColor="@color/color_222"
-            android:textSize="@dimen/sp12"
-            />
+            android:textSize="@dimen/sp12" />
 
         <TextView
             android:id="@+id/id"
@@ -34,50 +33,45 @@
             android:text="ID"
             android:textColor="@color/color_222"
             android:textSize="@dimen/sp12"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/productsName"
             android:layout_width="@dimen/dp90"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:text="产品名称"
             android:textColor="@color/color_222"
-            android:textSize="@dimen/sp12"
-            />
+            android:textSize="@dimen/sp12" />
 
         <TextView
             android:id="@+id/saleNum"
             android:layout_width="@dimen/dp50"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:text="销售数量"
             android:textColor="@color/color_222"
-            android:textSize="@dimen/sp12"
-            />
+            android:textSize="@dimen/sp12" />
 
         <TextView
             android:id="@+id/saleAmount"
             android:layout_width="@dimen/dp70"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:text="销售额"
             android:textColor="@color/color_222"
-            android:textSize="@dimen/sp12"
-            />
+            android:textSize="@dimen/sp12" />
 
         <TextView
             android:id="@+id/percentage"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:text="占比"
             android:textColor="@color/color_222"
-            android:textSize="@dimen/sp12"
-            />
+            android:textSize="@dimen/sp12" />
     </LinearLayout>
 </RelativeLayout>

@@ -1,8 +1,4 @@
 package com.thn.erp.statistics;
-
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,7 +18,6 @@ import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.Utils;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.thn.basemodule.tools.ToastUtil;
 import com.thn.erp.Constants;
@@ -165,8 +160,9 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
             @Override
             public void onValueSelected(Entry e, Highlight h) {
                 currentSaleAccount.setText(String.format("销售额：%s",e.getY()));
-                if (null==datas) return;
-                currentSaleDate.setText(DateUtil.getDateByTimestamp(datas.get((int)e.getX()).time));
+                if (null==datas || datas.isEmpty()) return;
+                int time = datas.get((int) e.getX()).time;
+                currentSaleDate.setText(DateUtil.getDateByTimestamp(time));
             }
 
             @Override
@@ -176,8 +172,12 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
         });
     }
 
+    /**
+     * 初始化销售额图表
+     */
     private void setUpSaleAmountChart() {
 
+        saleAmountChart.setDragEnabled(true);
         //x轴
         XAxis xAxis = saleAmountChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -187,33 +187,47 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
         int axisColor = getResources().getColor(R.color.color_E5E5E5);
         xAxis.setAxisLineColor(axisColor);
         xAxis.setAxisLineWidth(LINE_WIDTH);
+        xAxis.setDrawGridLines(false);
+        xAxis.setDrawAxisLine(false);
         xAxis.setTextSize(TEXT_SIZE);
-        xAxis.setAxisMinimum(0);
+//        xAxis.setAxisMinimum(0);
+        xAxis.setGranularity(1);
+        //sxAxis.setXOffset(10);
+//        xAxis.setCenterAxisLabels(true);
+        //每页显示7个标签
+        xAxis.setLabelCount(7,true);
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
+
                 if (datas==null) return null;
+                LogUtil.e("value=="+value);
                 if (datas.size()>0){
+                    if (value>=datas.size()) return "";
                     int v = (int)value;
                     SalesTrendsBean.DataBean.SaleAmountDataBean bean = datas.get(v);
-                    return DateUtil.getDateByTimestamp(bean.time);
+                    return DateUtil.getDateByTimestamp(bean.time).substring(5);
                 }else {
-                    return null;
+                    return "";
                 }
             }
         });
 
+
         MyMarkerView mv = new MyMarkerView(activity,R.layout.custom_marker_view);
         mv.setChartView(saleAmountChart);
         saleAmountChart.setMarker(mv);
-        xAxis.setDrawGridLines(false);
+
 
         //设置y轴值
         YAxis leftAxis = saleAmountChart.getAxisLeft();
         leftAxis.setAxisLineColor(axisColor);
         leftAxis.setAxisLineWidth(LINE_WIDTH);
         leftAxis.setAxisMinimum(0f);
+        leftAxis.setDrawGridLines(true);
         leftAxis.setDrawZeroLine(true);
+        leftAxis.setSpaceBottom(0);
+        leftAxis.setZeroLineColor(axisColor);
         YAxis yAxisRight = saleAmountChart.getAxisRight();
         yAxisRight.setEnabled(false);
 //        totalSaleLineChart.animateX(2500);
@@ -243,16 +257,16 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
         if (TextUtils.isEmpty(start_time)) return;
         if (TextUtils.isEmpty(end_time)) return;
         HashMap<String, String> params = ClientParamsAPI.getSalesTop100Params(start_time, end_time);
-        HttpRequest.sendRequest(HttpRequest.GET, URL.SALES_TOP100, params, new HttpRequestCallback() {
+        HttpRequest.sendRequest(HttpRequest.POST, URL.SALES_TOP100, params, new HttpRequestCallback() {
 
             @Override
             public void onSuccess(String json) {
                 SaleTop100Bean saleTop100Bean = JsonUtil.fromJson(json, SaleTop100Bean.class);
                 if (null == saleTop100Bean) return;
-                if (saleTop100Bean.meta.status_code== Constants.SUCCESS){
-                    refreshList(saleTop100Bean.data);
+                if (saleTop100Bean.status.code== Constants.SUCCESS){
+                    refreshList(saleTop100Bean.data.sale_log_statistics);
                 }else {
-                    ToastUtil.showError(saleTop100Bean.meta.message);
+                    ToastUtil.showError(saleTop100Bean.status.message);
                 }
 
             }
@@ -269,7 +283,7 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
      *
      * @param list
      */
-    private void refreshList(List<SaleTop100Bean.DataBean> list) {
+    private void refreshList(List<SaleTop100Bean.DataBean.SaleLogStatisticsBean> list) {
         if (null==list) return;
         if (list.size()==0) {
             statesArr.add(false);
@@ -293,17 +307,19 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
 
             @Override
             public void onSuccess(String json) {
+                LogUtil.e(json);
                 SalesTrendsBean salesTrendsBean = JsonUtil.fromJson(json, SalesTrendsBean.class);
                 if (salesTrendsBean.status.code== Constants.SUCCESS){
                     if (null!=datas) datas.clear();
                     datas = salesTrendsBean.data.sale_amount_data;
                     //测试数据
-                    for (int i = 0; i < 10; i++) {
+                    for (int i = 0; i < 30; i++) {
                         SalesTrendsBean.DataBean.SaleAmountDataBean bean = new SalesTrendsBean.DataBean.SaleAmountDataBean();
                         bean.sale_amount = (int)(Math.random()*1000);
                         bean.time = 1526745600+24*3600*i;
                         datas.add(bean);
                     }
+                    saleAmountChart.zoom(30/7,1f,0,0);
                     if (isLoadSaleAmount) setSaleAmountChartData(datas);
                 }else {
                     ToastUtil.showError(salesTrendsBean.status.message);
@@ -323,15 +339,15 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
      * 设置linechart填充样式
      * @param set
      */
-    private void setLineChartFillStyle(LineDataSet set) {
-        set.setDrawFilled(true);
-        if (Utils.getSDKInt() >= 18) {
-            Drawable drawable = ContextCompat.getDrawable(activity, R.drawable.shape_linechart_fill_color);
-            set.setFillDrawable(drawable);
-        } else {
-            set.setFillColor(getResources().getColor(R.color.color_66fee178));
-        }
-    }
+//    private void setLineChartFillStyle(LineDataSet set) {
+//        set.setDrawFilled(true);
+//        if (Utils.getSDKInt() >= 18) {
+//            Drawable drawable = ContextCompat.getDrawable(activity, R.drawable.shape_linechart_fill_color);
+//            set.setFillDrawable(drawable);
+//        } else {
+//            set.setFillColor(getResources().getColor(R.color.color_66fee178));
+//        }
+//    }
 
 
     /**

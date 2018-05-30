@@ -137,10 +137,9 @@ public class ClientParamsAPI {
      * @return
      */
     public static HashMap<String, String> getSalesTop100Params(String start_time, String end_time) {
-        HashMap<String, String> params = new HashMap<>();
+        HashMap<String, String> params = generateCommonParams();
         params.put("start_time", start_time);
         params.put("end_time", end_time);
-        params.put("token", SPUtil.read(Constants.TOKEN));
         return params;
     }
 
