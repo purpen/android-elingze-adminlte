@@ -187,6 +187,12 @@ public class URL {
      */
     public static final String APPKEY_APPSECRET = BASE_URL + "auth/exchange_token";
 
+
+    /**
+     * 获取今天，过去7天，过去30天销售数据
+     */
+    public static final String SALES_DAYS_TRENDS = BASE_URL + "stats/stat_collect";
+
     /**
      * 获取默认地址
      */

@@ -65,29 +65,31 @@ public class HttpRequest {
 
     /**
      * 以GET 方式单独请求数据
+     *
      * @param requestUrl 请求Url
-     * @param callback callback
+     * @param callback   callback
      * @return call
      */
-    public static Call getRequest(String requestUrl, HttpRequestCallback callback){
+    public static Call getRequest(String requestUrl, HttpRequestCallback callback) {
         return getRequest(requestUrl, null, callback);
     }
 
-    public static Call getRequest(String requestUrl, String urlSuffix, HttpRequestCallback callback){
+    public static Call getRequest(String requestUrl, String urlSuffix, HttpRequestCallback callback) {
         HashMap<String, String> defaultParams = ClientParamsAPI.getDefaultParams();
         return getRequest(requestUrl, urlSuffix, defaultParams, callback);
     }
 
-    public static Call getRequest(String requestUrl, String urlSuffix, HashMap params, HttpRequestCallback callback){
+    public static Call getRequest(String requestUrl, String urlSuffix, HashMap params, HttpRequestCallback callback) {
         String requestUrl1 = requestUrl + File.separator + urlSuffix;
         return sendRequest(GET, requestUrl1, params, callback);
     }
 
     /**
      * 接口请求方法
-     * @param type 请求类型
+     *
+     * @param type       请求类型
      * @param requestUrl url
-     * @param callback callback
+     * @param callback   callback
      * @return call
      */
     public static Call sendRequest(String type, String requestUrl, HttpRequestCallback callback) {
@@ -99,11 +101,12 @@ public class HttpRequest {
     }
 
     public static Call sendRequest(String type, String requestUrl, String authorization, HashMap params, HttpRequestCallback callback) {
-        if (type == null || TextUtils.isEmpty(requestUrl) || null == params || callback == null) throw new IllegalArgumentException("request params can not be null ");
-        final String url = requestUrl.contains("http") ? requestUrl: URL.BASE_URL + requestUrl;
+        if (type == null || TextUtils.isEmpty(requestUrl) || null == params || callback == null)
+            throw new IllegalArgumentException("request params can not be null ");
+        final String url = requestUrl.contains("http") ? requestUrl : URL.BASE_URL + requestUrl;
         authorization = TextUtils.isEmpty(authorization) ? SPUtil.read(Constants.AUTHORIZATION) : authorization;
 
-        LogUtil.e("----------sendRequest: "+ "\n Type:" + type + "\n URL: "+ url  + "\n Authorization: " + authorization + "\n Params: " + params );
+        LogUtil.e("----------sendRequest: " + "\n Type:" + type + "\n URL: " + url + "\n Authorization: " + authorization + "\n Params: " + params);
 
         Request request = getRequest(type, url, authorization, params);
         if (null == request) return null;
@@ -127,7 +130,7 @@ public class HttpRequest {
                     message.obj = response.body().string();
                     handler.sendMessage(message);
                 } else {
-                    LogUtil.e("服务器响应失败： URL = "+ url + " 状态码 " + response.code());
+                    LogUtil.e("服务器响应失败： URL = " + url + " 状态码 " + response.code());
                     Message message = Message.obtain();
                     message.what = NetWorkHandler.CALLBACK_FAILURE;
                     message.obj = new IOException("INTERNAL SERVER ERROR");
@@ -140,10 +143,11 @@ public class HttpRequest {
 
     /**
      * 获取 OkHttpRequest
-     * @param type type
-     * @param url url
+     *
+     * @param type          type
+     * @param url           url
      * @param authorization authorization
-     * @param params params
+     * @param params        params
      * @return request
      */
     private static Request getRequest(String type, String url, String authorization, HashMap params) {
@@ -172,8 +176,9 @@ public class HttpRequest {
                         .addHeader("Authorization", authorization)
                         .delete(getRequestBody(params))
                         .build();
+            default:
+                return null;
         }
-        return null;
     }
 
     /**
@@ -195,7 +200,8 @@ public class HttpRequest {
     }
 
     /**
-     *  获取RequestBody 参数
+     * 获取RequestBody 参数
+     *
      * @param params
      * @return
      */

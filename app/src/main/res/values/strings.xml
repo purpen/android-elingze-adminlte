@@ -127,6 +127,9 @@
     <string name="rationale_camera">需要获取相机权限</string>
     <string name="rationale_external_storage">需要获取相机权限</string>
     <string name="custom_main_menu_title">自定义主页</string>
+    <string name="title_today_sale_money">今天销售额</string>
+    <string name="title_7day_sale_money">7天销售额</string>
+    <string name="title_30day_sale_money">30天销售额</string>
 
     <string-array name="messages_array">
         <item>How are you</item>
