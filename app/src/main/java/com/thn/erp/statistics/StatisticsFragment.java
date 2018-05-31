@@ -38,11 +38,11 @@ public class StatisticsFragment extends BaseFragment {
         customHeadView.setHeadGoBackShow(false);
         customHeadView.setCenterTxtShow(getString(R.string.statistics_title),getResources().getColor(android.R.color.white));
         ArrayList<Class> classes = new ArrayList<>();
-        classes.add(SaleAmountFragment.class);
-        classes.add(SaleAmountFragment.class);
-        classes.add(SaleAmountFragment.class);
-        classes.add(SaleAmountFragment.class);
-        classes.add(SaleAmountFragment.class);
+        classes.add(StatisticSaleAmountFragment.class);
+        classes.add(StatisticSaleAmountFragment.class);
+        classes.add(StatisticSaleAmountFragment.class);
+        classes.add(StatisticOrderFragment.class);
+        classes.add(StatisticSaleAmountFragment.class);
         String[] titles = getResources().getStringArray(R.array.statistics_titles);
         adapter=new BaseViewPagerAdapter(getChildFragmentManager(),classes, Arrays.asList(titles));
         viewPager.setAdapter(adapter);

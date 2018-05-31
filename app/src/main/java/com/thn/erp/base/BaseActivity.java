@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.thn.basemodule.tools.LogUtil;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 
 /**
@@ -17,19 +18,19 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity extends AppCompatActivity {
     protected final String TAG = getClass().getSimpleName();
     protected Activity activity;
-//    private AppApplication application;
+    protected Unbinder unbinder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LogUtil.e("onCreate()" + TAG);
-//        application = (AppApplication) getApplication();
         getIntentData();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 //        ShareSDK.initSDK(this);
         this.activity = this;
         setContentView(getLayout());
-        ButterKnife.bind(this);
+
+        unbinder = ButterKnife.bind(this);
         initView();
         installListener();
         requestNet();
@@ -59,8 +60,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-
         super.onDestroy();
+        unbinder.unbind();
     }
 
 //    @Override

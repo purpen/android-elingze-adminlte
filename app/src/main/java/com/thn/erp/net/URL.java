@@ -194,6 +194,11 @@ public class URL {
     public static final String SALES_DAYS_TRENDS = BASE_URL + "stats/stat_collect";
 
     /**
+     * 获取订单数量
+     */
+    public static final String STATISTIC_ORDER_TRENDS = BASE_URL + "stats/order_quantity_trend";
+
+    /**
      * 获取默认地址
      */
     public static String GET_DEFAULT_ADDRESS = BASE_URL + "address/is_default";

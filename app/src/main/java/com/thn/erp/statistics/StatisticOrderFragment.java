@@ -27,18 +27,14 @@ import com.thn.basemodule.tools.ToastUtil;
 import com.thn.erp.Constants;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
-import com.thn.erp.bean.SaleTop100Bean;
-import com.thn.erp.bean.SalesTrendsBean;
 import com.thn.erp.net.ClientParamsAPI;
 import com.thn.erp.net.HttpRequest;
 import com.thn.erp.net.HttpRequestCallback;
 import com.thn.erp.net.URL;
-import com.thn.erp.statistics.adapter.ProductsTop100Adapter;
+import com.thn.erp.statistics.bean.OrderTrendsBean;
 import com.thn.erp.statistics.bean.SaleDaysTrendsBean;
 import com.thn.erp.view.CustomScrollView;
-import com.thn.erp.view.ListViewForScrollView;
 import com.thn.erp.view.MyMarkerView;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -48,15 +44,14 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 
 /**
  * Created by lilin on 2017/6/16.
- * 销售额
+ * 统计订单
  */
 
-public class SaleAmountFragment extends BaseFragment implements DatePickerDialog.OnDateSetListener {
+public class StatisticOrderFragment extends BaseFragment implements DatePickerDialog.OnDateSetListener {
     private static final float LINE_WIDTH = 1f;
     private static final float TEXT_SIZE = 9f;
     private static final float VALUE_TEXT_SIZE = 9f;
@@ -66,13 +61,8 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
     TextView tvRateToday;
     @BindView(R.id.tvMoney7Day)
     TextView tvMoney7Day;
-    @BindView(R.id.tvRate7Day)
-    TextView tvRate7Day;
     @BindView(R.id.tvMoney30Days)
     TextView tvMoney30Days;
-    @BindView(R.id.tvRate30Day)
-    TextView tvRate30Day;
-    Unbinder unbinder;
     private int color;
     @BindView(R.id.scrollView)
     CustomScrollView scrollView;
@@ -80,17 +70,14 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
     TextView currentSaleAccount;
     @BindView(R.id.currentSaleDate)
     TextView currentSaleDate;
-    private List<SalesTrendsBean.DataBean.SaleAmountDataBean> datas;
+    private List<OrderTrendsBean.DataBean.OrderQuantityDataBean> datas;
     @BindView(R.id.saleAmountChart)
     LineChart saleAmountChart;
-    @BindView(R.id.listViewForScrollView)
-    ListViewForScrollView listViewForScrollView;
     @BindView(R.id.tvSaleAmountPeriod)
     TextView tvSaleAmountPeriod;
+
     @BindView(R.id.ivTriangle)
     ImageView ivTriangle;
-    @BindView(R.id.tvSaleRank)
-    TextView tvSaleRank;
 
     @BindView(R.id.emptyView)
     LinearLayout emptyView;
@@ -102,7 +89,7 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
 
     @Override
     protected int getLayout() {
-        return R.layout.fragment_sale_amount;
+        return R.layout.fragment_statistics_order;
     }
 
     @Override
@@ -110,20 +97,13 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
         color = getResources().getColor(R.color.color_27AE59);
         statesArr = new ArrayList<>();
         setUpSaleAmountChart();
-        listViewForScrollView.setFocusable(false);
-        View view = View.inflate(activity, R.layout.header_sale_top100, null);
-        listViewForScrollView.addHeaderView(view);
     }
 
-    @OnClick({R.id.llSaleAmountPeriod, R.id.llSaleRank})
+    @OnClick({R.id.llSaleAmountPeriod})
     void onViewClicked(View v) {
         switch (v.getId()) {
             case R.id.llSaleAmountPeriod:
                 currentClickedId = R.id.llSaleAmountPeriod;
-                getCalendarTime();
-                break;
-            case R.id.llSaleRank:
-                currentClickedId = R.id.llSaleRank;
                 getCalendarTime();
                 break;
             default:
@@ -137,7 +117,7 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
     private void getCalendarTime() {
         Calendar now = Calendar.getInstance();
         DatePickerDialog dpd = DatePickerDialog.newInstance(
-                SaleAmountFragment.this,
+                StatisticOrderFragment.this,
                 now.get(Calendar.YEAR),
                 now.get(Calendar.MONTH),
                 now.get(Calendar.DAY_OF_MONTH)
@@ -160,11 +140,8 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
                 isLoadSaleOrder = false;
                 isLoadSaleAmount = true;
                 tvSaleAmountPeriod.setText(dateStr);
-                getSaleAmountData(start_time, end_time);
+                getOrderAmountData(start_time, end_time);
                 break;
-            case R.id.llSaleRank:
-                tvSaleRank.setText(dateStr);
-                getProductsTop100Data(start_time, end_time);
             default:
                 break;
         }
@@ -176,7 +153,7 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
         saleAmountChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
-                currentSaleAccount.setText(String.format("销售额：%s", e.getY()));
+                currentSaleAccount.setText(String.format("订单量：%s", e.getY()));
                 if (null == datas || datas.isEmpty()) return;
                 int time = datas.get((int) e.getX()).time;
                 currentSaleDate.setText(DateUtil.getDateByTimestamp(time));
@@ -222,7 +199,7 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
                 if (datas.size() > 0) {
                     if (value >= datas.size()) return "";
                     int v = (int) value;
-                    SalesTrendsBean.DataBean.SaleAmountDataBean bean = datas.get(v);
+                    OrderTrendsBean.DataBean.OrderQuantityDataBean bean = datas.get(v);
                     return DateUtil.getDateByTimestamp(bean.time).substring(5);
                 } else {
                     return "";
@@ -258,12 +235,10 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
         String start_time = DateUtil.getSpecifiedMonthBefore(end_time, 1);
         LogUtil.e("end_time=" + end_time + ";start_time=" + start_time);
         tvSaleAmountPeriod.setText(String.format("%s 至 %s", start_time, end_time));
-        tvSaleRank.setText(String.format("%s 至 %s", start_time, end_time));
         isLoadSaleAmount = true;
         isLoadSaleOrder = true;
         getSaleTrendData();
-        getSaleAmountData(start_time, end_time);
-        getProductsTop100Data(start_time, end_time);
+        getOrderAmountData(start_time, end_time);
     }
 
     /**
@@ -301,9 +276,9 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
         tvMoneyToday.setText(String.format("￥%s",data.today.sale_amount));
         tvMoney7Day.setText(String.format("￥%s",data.seven_days.sale_amount));
         tvMoney30Days.setText(String.format("￥%s",data.thirty_days.sale_amount));
-        tvRateToday.setText(String.format("日同比 %s",data.today.day_yoy));
-        tvMoney7Day.setText(String.format("七日同比 %s",data.seven_days.week_yoy));
-        tvMoney30Days.setText(String.format("月同比 %s",data.thirty_days.month_yoy));
+        tvRateToday.setText(String.format("日同比 %s%",data.today.day_yoy));
+        tvMoney7Day.setText(String.format("七日同比 %s%",data.seven_days.week_yoy));
+        tvMoney30Days.setText(String.format("月同比 %s%",data.thirty_days.month_yoy));
         if (data.today.day_yoy>=0){
             tvRateToday.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_statistic_rise, 0);
         }else {
@@ -327,79 +302,30 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
     }
 
     /**
-     * 获取top100产品列表
-     *
-     * @param start_time
-     * @param end_time
-     */
-    private void getProductsTop100Data(String start_time, String end_time) {
-        if (TextUtils.isEmpty(start_time)) return;
-        if (TextUtils.isEmpty(end_time)) return;
-        HashMap<String, String> params = ClientParamsAPI.getSalesTop100Params(start_time, end_time);
-        HttpRequest.sendRequest(HttpRequest.POST, URL.SALES_TOP100, params, new HttpRequestCallback() {
-
-            @Override
-            public void onSuccess(String json) {
-                SaleTop100Bean saleTop100Bean = JsonUtil.fromJson(json, SaleTop100Bean.class);
-                if (null == saleTop100Bean) return;
-                if (saleTop100Bean.status.code == Constants.SUCCESS) {
-                    refreshList(saleTop100Bean.data.sale_log_statistics);
-                } else {
-                    ToastUtil.showError(saleTop100Bean.status.message);
-                }
-
-            }
-
-            @Override
-            public void onFailure(IOException e) {
-                ToastUtil.showError(R.string.network_err);
-            }
-        });
-    }
-
-    /**
-     * 刷新表格数据
-     *
-     * @param list
-     */
-    private void refreshList(List<SaleTop100Bean.DataBean.SaleLogStatisticsBean> list) {
-        if (null == list) return;
-        if (list.size() == 0) {
-            statesArr.add(false);
-        } else {
-            statesArr.add(true);
-        }
-        checkHaveNotData();
-        ProductsTop100Adapter adapter = new ProductsTop100Adapter(list, activity);
-        listViewForScrollView.setAdapter(adapter);
-    }
-
-
-    /**
      * 获得销售额表数据
      */
-    private void getSaleAmountData(String start_time, String end_time) {
+    private void getOrderAmountData(String start_time, String end_time) {
         if (TextUtils.isEmpty(start_time)) return;
         if (TextUtils.isEmpty(end_time)) return;
-        HashMap<String, String> params = ClientParamsAPI.getSalesTrendsRequestParams(start_time, end_time);
-        HttpRequest.sendRequest(HttpRequest.POST, URL.SALES_TRENDS, params, new HttpRequestCallback() {
+        HashMap<String, String> params = ClientParamsAPI.getOrderTrendsRequestParams(start_time, end_time);
+        HttpRequest.sendRequest(HttpRequest.POST, URL.STATISTIC_ORDER_TRENDS, params, new HttpRequestCallback() {
 
             @Override
             public void onSuccess(String json) {
                 LogUtil.e(json);
-                SalesTrendsBean salesTrendsBean = JsonUtil.fromJson(json, SalesTrendsBean.class);
+                OrderTrendsBean salesTrendsBean = JsonUtil.fromJson(json, OrderTrendsBean.class);
                 if (salesTrendsBean.status.code == Constants.SUCCESS) {
                     if (null != datas) datas.clear();
-                    datas = salesTrendsBean.data.sale_amount_data;
+                    datas = salesTrendsBean.data.order_quantity_data;
                     //测试数据
                     for (int i = 0; i < 30; i++) {
-                        SalesTrendsBean.DataBean.SaleAmountDataBean bean = new SalesTrendsBean.DataBean.SaleAmountDataBean();
-                        bean.sale_amount = (int) (Math.random() * 1000);
+                        OrderTrendsBean.DataBean.OrderQuantityDataBean bean = new OrderTrendsBean.DataBean.OrderQuantityDataBean();
+                        bean.order_quantity = (int) (Math.random() * 1000);
                         bean.time = 1526745600 + 24 * 3600 * i;
                         datas.add(bean);
                     }
                     saleAmountChart.zoom(30 / 7, 1f, 0, 0);
-                    if (isLoadSaleAmount) setSaleAmountChartData(datas);
+                    if (isLoadSaleAmount) setOrderAmountChartData(datas);
                 } else {
                     ToastUtil.showError(salesTrendsBean.status.message);
                 }
@@ -429,11 +355,11 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
 
 
     /**
-     * 设置销售额表数据
+     * 设置订单量表数据
      *
      * @param datas
      */
-    private void setSaleAmountChartData(List<SalesTrendsBean.DataBean.SaleAmountDataBean> datas) {
+    private void setOrderAmountChartData(List<OrderTrendsBean.DataBean.OrderQuantityDataBean> datas) {
         if (null == datas) {
             statesArr.add(false);
             return;
@@ -447,13 +373,13 @@ public class SaleAmountFragment extends BaseFragment implements DatePickerDialog
         ArrayList<Entry> values = new ArrayList<>();
         int len = datas.size();
         for (int i = 0; i < len; i++) {
-            SalesTrendsBean.DataBean.SaleAmountDataBean dataBean = datas.get(i);
-            int money = dataBean.sale_amount;
+            OrderTrendsBean.DataBean.OrderQuantityDataBean dataBean = datas.get(i);
+            int quantity = dataBean.order_quantity;
             if (i == 0) {
-                currentSaleAccount.setText(String.format("销售额：%s", money));
+                currentSaleAccount.setText(String.format("订单量：%s", quantity));
                 currentSaleDate.setText(DateUtil.getDateByTimestamp(dataBean.time));
             }
-            values.add(new Entry(i, money));
+            values.add(new Entry(i, quantity));
         }
 
         LineDataSet set;

@@ -147,7 +147,6 @@ public class ClientParamsAPI {
         HashMap<String, String> params = generateCommonParams();
         params.put("start_time", start_time);
         params.put("end_time", end_time);
-        params.put("token", SPUtil.read(Constants.TOKEN));
         return params;
     }
 
@@ -470,5 +469,19 @@ public class ClientParamsAPI {
         HashMap<String, String> params = generateCommonParams();
         params.put("store_rid",storeId);
         return  params;
+    }
+
+
+    /**
+     * 获得订单量趋势
+     * @param start_time
+     * @param end_time
+     * @return
+     */
+    public static HashMap<String,String> getOrderTrendsRequestParams(String start_time, String end_time) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("start_time", start_time);
+        params.put("end_time", end_time);
+        return params;
     }
 }

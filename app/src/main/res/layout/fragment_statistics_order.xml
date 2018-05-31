@@ -150,7 +150,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="销售额"
+                        android:text="订单量"
                         android:textColor="@color/color_222"
                         android:textSize="@dimen/sp15" />
 
@@ -183,6 +183,65 @@
 
                 </RelativeLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/dp15"
+                    android:paddingBottom="@dimen/dp15"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:orientation="horizontal"
+                    >
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="日订单平均金额"
+                            android:textColor="@color/color_666"
+                            android:textSize="@dimen/sp13" />
+
+                        <TextView
+                            android:id="@+id/tvMoney"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp10"
+                            android:text="100"
+                            android:textColor="@color/color_27AE59"
+                            android:textSize="20sp" />
+
+                    </LinearLayout>
+                    <include layout="@layout/include_view_line_divider_horizontal"/>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="日平均订单量"
+                            android:textColor="@color/color_666"
+                            android:textSize="@dimen/sp13" />
+
+                        <TextView
+                            android:id="@+id/tvOrderNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp10"
+                            android:text="10"
+                            android:textColor="@color/color_27AE59"
+                            android:textSize="20sp" />
+
+
+                    </LinearLayout>
+                </LinearLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -193,7 +252,8 @@
                         android:id="@+id/currentSaleAccount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="销售额：123"
+                        android:layout_marginBottom="@dimen/dp5"
+                        android:text="订单量：123"
                         android:textColor="@color/color_666"
                         android:textSize="@dimen/sp13" />
 
@@ -215,7 +275,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="单位:元"
+                        android:text="单位:个"
                         android:textColor="@color/color_27AE59"
                         android:textSize="@dimen/sp9" />
 
@@ -224,75 +284,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="185dp" />
                 </RelativeLayout>
-            </LinearLayout>
-
-
-            <!--销售产品top100-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp5"
-                android:background="@android:color/white"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/dp15"
-                android:paddingLeft="@dimen/dp15"
-                android:paddingRight="@dimen/dp15"
-                android:paddingTop="@dimen/dp10">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="销售排行榜"
-                        android:textColor="@color/color_222"
-                        android:textSize="@dimen/sp15" />
-
-                    <LinearLayout
-                        android:id="@+id/llSaleRank"
-                        android:layout_width="wrap_content"
-                        android:layout_height="23dp"
-                        android:layout_alignParentRight="true"
-                        android:background="@drawable/border_date_radius_ddd"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:paddingLeft="@dimen/dp5"
-                        android:paddingRight="@dimen/dp5">
-
-                        <TextView
-                            android:id="@+id/tvSaleRank"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="2017-05-28至2017-06-26"
-                            android:textColor="@color/color_666"
-                            android:textSize="@dimen/sp10" />
-
-                        <ImageView
-                            android:id="@+id/ivRankTriangle"
-                            android:layout_width="9dp"
-                            android:layout_height="9dp"
-                            android:layout_marginLeft="@dimen/dp5"
-                            android:src="@mipmap/icon_date_triangle" />
-                    </LinearLayout>
-                </RelativeLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/dp5"
-                    android:layout_marginTop="@dimen/dp8"
-                    android:text="Top100产品排行榜"
-                    android:textColor="@color/color_666"
-                    android:textSize="@dimen/sp13" />
-
-                <com.thn.erp.view.ListViewForScrollView
-                    android:id="@+id/listViewForScrollView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:divider="@color/color_eee"
-                    android:dividerHeight="@dimen/dp05" />
             </LinearLayout>
         </LinearLayout>
     </com.thn.erp.view.CustomScrollView>
