@@ -46,8 +46,6 @@ public class GoodsFragment extends BaseFragment {
     PublicTopBar myTopbar;
     @BindView(R.id.ry_menu_item)
     RecyclerView ryMenuItem;
-    //    @BindView(R.id.ultimateRecyclerView)
-//    BaseUltimateRecyclerView ultimateRecyclerView;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
@@ -64,12 +62,10 @@ public class GoodsFragment extends BaseFragment {
     private WaitingDialog dialog;
 
     private int page;
-//    private List<GoodsData.DataBean.ProductsBean> list;
     private Boolean isRefreshing = false;
     private Boolean isLoadingMore = false;
     private GoodsListAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
-    private String cid = "";
 
     @Override
     protected int getLayout() {
@@ -193,40 +189,6 @@ public class GoodsFragment extends BaseFragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
-
-
-
-//        recyclerView.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                page = 1;
-//                isRefreshing = true;
-//                getGoodsList();
-//            }
-//        });
-
-
-
-//        adapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-//            @Override
-//            public void onClick(View view, int i) {
-//                GoodsData.DataBean.ProductsBean productsBean = list.get(i);
-//                Intent intent = new Intent();
-//                intent.setClass(getActivity(), GoodsDetailsActivity.class);
-//                intent.putExtra(GoodsDetailsActivity.class.getSimpleName(), productsBean);
-//                getActivity().startActivity(intent);
-//            }
-//        });
-
-//        ultimateRecyclerView.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
-//            @Override
-//            public void loadMore(int itemsCount, final int maxLastVisiblePosition) {
-//                ultimateRecyclerView.disableLoadmore();
-//                isLoadingMore = true;
-//                page++;
-//                getGoodsList();
-//            }
-//        });
     }
 
 
@@ -314,15 +276,11 @@ public class GoodsFragment extends BaseFragment {
         });
     }
 
+    /**
+     * 更新列表
+     * @param goodses
+     */
     private void updateData(List<GoodsData.DataBean.ProductsBean> goodses) {
-//        if (isRefreshing) {
-//            adapter.setList(goodses);
-//            ultimateRecyclerView.setRefreshing(false);
-//            linearLayoutManager.scrollToPosition(0);
-//            adapter.notifyDataSetChanged();
-//        } else {
-//            adapter.addList(goodses);
-//        }
         final int size = goodses == null ? 0 : goodses.size();
         if (isRefreshing){
             isRefreshing = false;
