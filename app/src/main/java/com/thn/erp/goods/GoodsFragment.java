@@ -1,19 +1,16 @@
 package com.thn.erp.goods;
-
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
-
-import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.thn.basemodule.tools.ToastUtil;
 import com.thn.basemodule.tools.WaitingDialog;
+import com.thn.erp.Constants;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
-import com.thn.erp.base.BaseUltimateRecyclerView;
-import com.thn.erp.common.interfaces.OnRecyclerViewItemClickListener;
 import com.thn.erp.goods.adapter.GoodsListAdapter;
 import com.thn.erp.goods.adapter.TitleRecyclerViewAdapter;
 import com.thn.erp.goods.add.GoodsAddActivity;
@@ -49,8 +46,14 @@ public class GoodsFragment extends BaseFragment {
     PublicTopBar myTopbar;
     @BindView(R.id.ry_menu_item)
     RecyclerView ryMenuItem;
-    @BindView(R.id.ultimateRecyclerView)
-    BaseUltimateRecyclerView ultimateRecyclerView;
+    //    @BindView(R.id.ultimateRecyclerView)
+//    BaseUltimateRecyclerView ultimateRecyclerView;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
+
+    @BindView(R.id.swipeLayout)
+    SwipeRefreshLayout swipeLayout;
+
     @BindView(R.id.menu0)
     DropdownMenu menu0;
     @BindView(R.id.menu1)
@@ -61,7 +64,7 @@ public class GoodsFragment extends BaseFragment {
     private WaitingDialog dialog;
 
     private int page;
-    private List<GoodsData.DataBean.ProductsBean> list;
+//    private List<GoodsData.DataBean.ProductsBean> list;
     private Boolean isRefreshing = false;
     private Boolean isLoadingMore = false;
     private GoodsListAdapter adapter;
@@ -112,7 +115,7 @@ public class GoodsFragment extends BaseFragment {
         menu0.setOnItemClickListener(new DropdownMenuAdapter.OnItemClickListener() {
             @Override
             public void onClick(View v, int position) {
-                ToastUtil.showInfo(((TextView)v).getText().toString());
+                ToastUtil.showInfo(((TextView) v).getText().toString());
                 menu0.dismiss();
             }
         });
@@ -126,7 +129,7 @@ public class GoodsFragment extends BaseFragment {
         menu1.setOnItemClickListener(new DropdownMenuAdapter.OnItemClickListener() {
             @Override
             public void onClick(View v, int position) {
-                ToastUtil.showInfo(((TextView)v).getText().toString());
+                ToastUtil.showInfo(((TextView) v).getText().toString());
                 menu1.dismiss();
             }
         });
@@ -140,52 +143,92 @@ public class GoodsFragment extends BaseFragment {
         menu2.setOnItemClickListener(new DropdownMenuAdapter.OnItemClickListener() {
             @Override
             public void onClick(View v, int position) {
-                ToastUtil.showInfo(((TextView)v).getText().toString());
+                ToastUtil.showInfo(((TextView) v).getText().toString());
                 menu2.dismiss();
             }
         });
-    }
 
-    private void initListAdapter() {
-        page = 1;
-        list = new ArrayList<>();
-        adapter = new GoodsListAdapter(list);
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Object item = adapter.getItem(position);
+                if (item instanceof GoodsData.DataBean.ProductsBean){
+                    GoodsData.DataBean.ProductsBean productsBean = (GoodsData.DataBean.ProductsBean)item;
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), GoodsDetailsActivity.class);
+                    intent.putExtra(GoodsDetailsActivity.class.getSimpleName(), productsBean);
+                    activity.startActivity(intent);
+                }
+            }
+        });
 
-        linearLayoutManager = new LinearLayoutManager(getActivity());
-        ultimateRecyclerView.setHasFixedSize(true);
-        ultimateRecyclerView.setLayoutManager(linearLayoutManager);
-        ultimateRecyclerView.setAdapter(adapter);
+        adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                isLoadingMore = true;
+                page++;
+                getGoodsList();
+            }
+        }, recyclerView);
 
-        ultimateRecyclerView.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                adapter.setEnableLoadMore(false);
                 page = 1;
                 isRefreshing = true;
                 getGoodsList();
             }
         });
 
-        adapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-            @Override
-            public void onClick(View view, int i) {
-                GoodsData.DataBean.ProductsBean productsBean = list.get(i);
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), GoodsDetailsActivity.class);
-                intent.putExtra(GoodsDetailsActivity.class.getSimpleName(), productsBean);
-                getActivity().startActivity(intent);
-            }
-        });
-
-        ultimateRecyclerView.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
-            @Override
-            public void loadMore(int itemsCount, final int maxLastVisiblePosition) {
-                ultimateRecyclerView.disableLoadmore();
-                isLoadingMore = true;
-                page++;
-                getGoodsList();
-            }
-        });
     }
+
+    private void initListAdapter() {
+        page = 1;
+        adapter = new GoodsListAdapter(R.layout.layout_goods_adapter);
+        swipeLayout.setColorSchemeColors(getResources().getColor(R.color.color_27AE59));
+        swipeLayout.setRefreshing(true);
+        linearLayoutManager = new LinearLayoutManager(activity);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
+
+
+
+//        recyclerView.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                page = 1;
+//                isRefreshing = true;
+//                getGoodsList();
+//            }
+//        });
+
+
+
+//        adapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+//            @Override
+//            public void onClick(View view, int i) {
+//                GoodsData.DataBean.ProductsBean productsBean = list.get(i);
+//                Intent intent = new Intent();
+//                intent.setClass(getActivity(), GoodsDetailsActivity.class);
+//                intent.putExtra(GoodsDetailsActivity.class.getSimpleName(), productsBean);
+//                getActivity().startActivity(intent);
+//            }
+//        });
+
+//        ultimateRecyclerView.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
+//            @Override
+//            public void loadMore(int itemsCount, final int maxLastVisiblePosition) {
+//                ultimateRecyclerView.disableLoadmore();
+//                isLoadingMore = true;
+//                page++;
+//                getGoodsList();
+//            }
+//        });
+    }
+
 
     private void initTopBar() {
         myTopbar.setTopBarCenterTextView("商品", getResources().getColor(R.color.THN_color_bgColor_white));
@@ -242,7 +285,6 @@ public class GoodsFragment extends BaseFragment {
             , R.mipmap.icon_goods_top_category_05, R.mipmap.icon_goods_top_category_06};
 
     private void getGoodsList() {
-
         HashMap<String, String> params = ClientParamsAPI.getGoodsList("", page);
         HttpRequest.sendRequest(HttpRequest.GET, URL.GOODS_LIST, params, new HttpRequestCallback() {
             @Override
@@ -253,6 +295,7 @@ public class GoodsFragment extends BaseFragment {
             @Override
             public void onSuccess(String json) {
                 dialog.dismiss();
+                swipeLayout.setRefreshing(false);
                 GoodsData customerBean = JsonUtil.fromJson(json, GoodsData.class);
                 if (customerBean.success) {
                     updateData(customerBean.data.products);
@@ -264,6 +307,7 @@ public class GoodsFragment extends BaseFragment {
 
             @Override
             public void onFailure(IOException e) {
+                swipeLayout.setRefreshing(false);
                 dialog.dismiss();
                 ToastUtil.showError(R.string.network_err);
             }
@@ -271,14 +315,30 @@ public class GoodsFragment extends BaseFragment {
     }
 
     private void updateData(List<GoodsData.DataBean.ProductsBean> goodses) {
-        if (isRefreshing) {
-            adapter.setList(goodses);
-            ultimateRecyclerView.setRefreshing(false);
-            linearLayoutManager.scrollToPosition(0);
-            adapter.notifyDataSetChanged();
-        } else {
-            adapter.addList(goodses);
+//        if (isRefreshing) {
+//            adapter.setList(goodses);
+//            ultimateRecyclerView.setRefreshing(false);
+//            linearLayoutManager.scrollToPosition(0);
+//            adapter.notifyDataSetChanged();
+//        } else {
+//            adapter.addList(goodses);
+//        }
+        final int size = goodses == null ? 0 : goodses.size();
+        if (isRefreshing){
+            isRefreshing = false;
+            swipeLayout.setRefreshing(false);
+            adapter.setEnableLoadMore(true);
+            adapter.setNewData(goodses);
+        }else {
+            if (goodses.size()>0) adapter.addData(goodses);
         }
         dialog.dismiss();
+        if (size < Integer.valueOf(Constants.PAGE_SIZE)) {
+            //第一页如果不够一页就不显示没有更多数据布局
+            adapter.loadMoreEnd(isRefreshing);
+
+        } else {
+            adapter.loadMoreComplete();
+        }
     }
 }

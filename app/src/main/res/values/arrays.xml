@@ -28,8 +28,6 @@
 
     <integer-array name="google_colors">
         <item>@color/color_27AE59</item>
-        <item>@color/color_27AE59</item>
-        <item>@color/color_27AE59</item>
     </integer-array>
 
 

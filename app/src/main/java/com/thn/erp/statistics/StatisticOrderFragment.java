@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.borax12.materialdaterangepicker.date.DatePickerDialog;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -41,7 +40,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -59,10 +57,18 @@ public class StatisticOrderFragment extends BaseFragment implements DatePickerDi
     TextView tvMoneyToday;
     @BindView(R.id.tvRateToday)
     TextView tvRateToday;
+
     @BindView(R.id.tvMoney7Day)
     TextView tvMoney7Day;
+    @BindView(R.id.tvRate7Day)
+    TextView tvRate7Day;
+
     @BindView(R.id.tvMoney30Days)
     TextView tvMoney30Days;
+    @BindView(R.id.tvRate30Day)
+    TextView tvRate30Day;
+
+
     private int color;
     @BindView(R.id.scrollView)
     CustomScrollView scrollView;
@@ -86,6 +92,7 @@ public class StatisticOrderFragment extends BaseFragment implements DatePickerDi
     private boolean isLoadSaleOrder = true;
     private int currentClickedId = -1;
     private ArrayList<Boolean> statesArr;//没有数据放入false，有数据放入true
+
 
     @Override
     protected int getLayout() {
@@ -276,29 +283,29 @@ public class StatisticOrderFragment extends BaseFragment implements DatePickerDi
         tvMoneyToday.setText(String.format("￥%s",data.today.sale_amount));
         tvMoney7Day.setText(String.format("￥%s",data.seven_days.sale_amount));
         tvMoney30Days.setText(String.format("￥%s",data.thirty_days.sale_amount));
-        tvRateToday.setText(String.format("日同比 %s%",data.today.day_yoy));
-        tvMoney7Day.setText(String.format("七日同比 %s%",data.seven_days.week_yoy));
-        tvMoney30Days.setText(String.format("月同比 %s%",data.thirty_days.month_yoy));
+
+        tvRateToday.setText(String.format("日同比 %s%%",data.today.day_yoy));
+        tvRate7Day.setText(String.format("七日同比 %s%%",data.seven_days.week_yoy));
+        tvRate30Day.setText(String.format("月同比 %s%%",data.thirty_days.month_yoy));
+
         if (data.today.day_yoy>=0){
             tvRateToday.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_statistic_rise, 0);
         }else {
             tvRateToday.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_statistic_decline, 0);
         }
-        tvRateToday.setCompoundDrawablePadding(R.dimen.dp5);
+
 
         if (data.seven_days.week_yoy>=0){
-            tvMoney7Day.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_statistic_rise, 0);
+            tvRate7Day.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_statistic_rise, 0);
         }else {
-            tvMoney7Day.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_statistic_decline, 0);
+            tvRate7Day.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_statistic_decline, 0);
         }
-        tvMoney7Day.setCompoundDrawablePadding(R.dimen.dp5);
 
         if (data.thirty_days.month_yoy>=0){
-            tvMoney30Days.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_statistic_rise, 0);
+            tvRate30Day.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_statistic_rise, 0);
         }else {
-            tvMoney30Days.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_statistic_decline, 0);
+            tvRate30Day.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_statistic_decline, 0);
         }
-        tvMoney30Days.setCompoundDrawablePadding(R.dimen.dp5);
     }
 
     /**

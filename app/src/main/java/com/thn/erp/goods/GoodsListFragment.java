@@ -4,13 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.thn.basemodule.tools.ToastUtil;
 import com.thn.basemodule.tools.WaitingDialog;
+import com.thn.erp.Constants;
 import com.thn.erp.R;
 import com.thn.erp.base.BaseFragment;
 import com.thn.erp.base.BaseUltimateRecyclerView;
@@ -39,13 +42,17 @@ import butterknife.Unbinder;
  */
 
 public class GoodsListFragment extends BaseFragment {
+//
+//    @BindView(R.id.ultimateRecyclerView)
+//    BaseUltimateRecyclerView ultimateRecyclerView;
 
-    @BindView(R.id.ultimateRecyclerView)
-    BaseUltimateRecyclerView ultimateRecyclerView;
-    Unbinder unbinder;
+//    @BindView(R.id.ultimateRecyclerView)
+//    BaseUltimateRecyclerView ultimateRecyclerView;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
 
-
-    private List<GoodsData.DataBean.ProductsBean> list;
+    @BindView(R.id.swipeLayout)
+    SwipeRefreshLayout swipeLayout;
     private LinearLayoutManager linearLayoutManager;
     private Boolean isRefreshing = false;
     private GoodsListAdapter adapter;
@@ -69,7 +76,6 @@ public class GoodsListFragment extends BaseFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         brandId = getArguments().getString(ExtraKey.BRAND_ID, null);
     }
@@ -81,30 +87,49 @@ public class GoodsListFragment extends BaseFragment {
         getGoodsList();
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
-        return rootView;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
     private void initListAdapter() {
         page = 1;
-        list = new ArrayList<>();
-        adapter = new GoodsListAdapter(list);
+        adapter = new GoodsListAdapter(R.layout.layout_goods_adapter);
 
         linearLayoutManager = new LinearLayoutManager(getActivity());
-        ultimateRecyclerView.setHasFixedSize(true);
-        ultimateRecyclerView.setLayoutManager(linearLayoutManager);
-        ultimateRecyclerView.setAdapter(adapter);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
 
-        ultimateRecyclerView.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//        ultimateRecyclerView.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                page = 1;
+//                isRefreshing = true;
+//                getGoodsList();
+//            }
+//        });
+
+//        adapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+//            @Override
+//            public void onClick(View view, int i) {
+//                GoodsData.DataBean.ProductsBean productsBean = list.get(i);
+//                Intent intent = new Intent();
+//                intent.setClass(getActivity(), GoodsDetailsActivity.class);
+//                intent.putExtra(GoodsDetailsActivity.class.getSimpleName(),productsBean);
+//                getActivity().startActivity(intent);
+//            }
+//        } );
+
+//        ultimateRecyclerView.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
+//            @Override
+//            public void loadMore(int itemsCount, final int maxLastVisiblePosition) {
+//                ultimateRecyclerView.disableLoadmore();
+//                isRefreshing = false;
+//                page++;
+//                getGoodsList();
+//            }
+//        });
+    }
+
+    @Override
+    protected void installListener() {
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 page = 1;
@@ -113,24 +138,26 @@ public class GoodsListFragment extends BaseFragment {
             }
         });
 
-        adapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+        adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
-            public void onClick(View view, int i) {
-                GoodsData.DataBean.ProductsBean productsBean = list.get(i);
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), GoodsDetailsActivity.class);
-                intent.putExtra(GoodsDetailsActivity.class.getSimpleName(),productsBean);
-                getActivity().startActivity(intent);
-            }
-        } );
-
-        ultimateRecyclerView.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
-            @Override
-            public void loadMore(int itemsCount, final int maxLastVisiblePosition) {
-                ultimateRecyclerView.disableLoadmore();
+            public void onLoadMoreRequested() {
                 isRefreshing = false;
                 page++;
                 getGoodsList();
+            }
+        }, recyclerView);
+
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Object item = adapter.getItem(position);
+                if (item instanceof GoodsData.DataBean.ProductsBean){
+                    GoodsData.DataBean.ProductsBean productsBean = (GoodsData.DataBean.ProductsBean)item;
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), GoodsDetailsActivity.class);
+                    intent.putExtra(GoodsDetailsActivity.class.getSimpleName(), productsBean);
+                    activity.startActivity(intent);
+                }
             }
         });
     }
@@ -164,14 +191,20 @@ public class GoodsListFragment extends BaseFragment {
     }
 
     private void updateData(List<GoodsData.DataBean.ProductsBean> goodses) {
-        if (isRefreshing) {
-            adapter.setList(goodses);
-            ultimateRecyclerView.setRefreshing(false);
-            linearLayoutManager.scrollToPosition(0);
-            adapter.notifyDataSetChanged();
-        } else {
-            adapter.addList(goodses);
+        final int size = goodses == null ? 0 : goodses.size();
+        if (isRefreshing){
+            swipeLayout.setRefreshing(false);
+            adapter.setNewData(goodses);
+        }else {
+            if (goodses.size()>0) adapter.addData(goodses);
         }
         dialog.dismiss();
+        if (size < Integer.valueOf(Constants.PAGE_SIZE)) {
+            //第一页如果不够一页就不显示没有更多数据布局
+            adapter.loadMoreEnd(isRefreshing);
+
+        } else {
+            adapter.loadMoreComplete();
+        }
     }
 }

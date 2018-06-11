@@ -48,7 +48,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 
 /**
@@ -72,7 +71,6 @@ public class StatisticSaleAmountFragment extends BaseFragment implements DatePic
     TextView tvMoney30Days;
     @BindView(R.id.tvRate30Day)
     TextView tvRate30Day;
-    Unbinder unbinder;
     private int color;
     @BindView(R.id.scrollView)
     CustomScrollView scrollView;
@@ -301,29 +299,26 @@ public class StatisticSaleAmountFragment extends BaseFragment implements DatePic
         tvMoneyToday.setText(String.format("￥%s",data.today.sale_amount));
         tvMoney7Day.setText(String.format("￥%s",data.seven_days.sale_amount));
         tvMoney30Days.setText(String.format("￥%s",data.thirty_days.sale_amount));
-        tvRateToday.setText(String.format("日同比 %s%",data.today.day_yoy));
-        tvMoney7Day.setText(String.format("七日同比 %s%",data.seven_days.week_yoy));
-        tvMoney30Days.setText(String.format("月同比 %s%",data.thirty_days.month_yoy));
+        tvRateToday.setText(String.format("日同比 %s%%",data.today.day_yoy));
+        tvRate7Day.setText(String.format("七日同比 %s%%",data.seven_days.week_yoy));
+        tvRate30Day.setText(String.format("月同比 %s%%",data.thirty_days.month_yoy));
         if (data.today.day_yoy>=0){
             tvRateToday.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_statistic_rise, 0);
         }else {
             tvRateToday.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_statistic_decline, 0);
         }
-        tvRateToday.setCompoundDrawablePadding(R.dimen.dp5);
 
         if (data.seven_days.week_yoy>=0){
-            tvMoney7Day.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_statistic_rise, 0);
+            tvRate7Day.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_statistic_rise, 0);
         }else {
-            tvMoney7Day.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_statistic_decline, 0);
+            tvRate7Day.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_statistic_decline, 0);
         }
-        tvMoney7Day.setCompoundDrawablePadding(R.dimen.dp5);
 
         if (data.thirty_days.month_yoy>=0){
-            tvMoney30Days.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_statistic_rise, 0);
+            tvRate30Day.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_statistic_rise, 0);
         }else {
-            tvMoney30Days.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_statistic_decline, 0);
+            tvRate30Day.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_statistic_decline, 0);
         }
-        tvMoney30Days.setCompoundDrawablePadding(R.dimen.dp5);
     }
 
     /**
