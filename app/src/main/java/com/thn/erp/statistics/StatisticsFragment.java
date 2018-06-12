@@ -42,7 +42,7 @@ public class StatisticsFragment extends BaseFragment {
         classes.add(StatisticsGoodsFragment.class);
         classes.add(StatisticSaleAmountFragment.class);
         classes.add(StatisticOrderFragment.class);
-        classes.add(StatisticSaleAmountFragment.class);
+        classes.add(StatisticStockFragment.class);
         String[] titles = getResources().getStringArray(R.array.statistics_titles);
         adapter=new BaseViewPagerAdapter(getChildFragmentManager(),classes, Arrays.asList(titles));
         viewPager.setAdapter(adapter);

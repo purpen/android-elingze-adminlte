@@ -132,6 +132,10 @@
     <string name="title_30day_sale_money">30天销售额</string>
     <string name="title_statistics_goods_classify">商品分类</string>
     <string name="title_statistics_brand_classify">品牌分类</string>
+    <string name="title_stock_cost">库存成本</string>
+    <string name="title_stock_amount">库存总数</string>
+    <string name="title_stock_warn">库存预警数</string>
+    <string name="title_statistics_stock">仓库统计</string>
 
     <string-array name="messages_array">
         <item>How are you</item>

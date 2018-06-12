@@ -1,5 +1,4 @@
 package com.thn.erp.overview.adapter;
-import android.content.Context;
 import android.support.annotation.DrawableRes;
 import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
