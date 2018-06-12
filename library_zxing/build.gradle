@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -30,12 +31,16 @@ dependencies {
     implementation rootProject.ext.dependencies["support-v4"]
     implementation 'com.google.zxing:core:3.0.1'
     androidTestImplementation 'junit:junit:4.12'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 ext {
     PUBLISH_GROUP_ID = 'cn.yipianfengye.android'
     PUBLISH_ARTIFACT_ID = 'zxing-library'
     PUBLISH_VERSION = '2.2'
+}
+repositories {
+    mavenCentral()
 }
 
 //apply from: 'config.gradle'

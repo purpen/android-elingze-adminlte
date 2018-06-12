@@ -17,7 +17,7 @@ import butterknife.Unbinder;
 import okhttp3.Call;
 
 
-public abstract class BaseFragment<T> extends Fragment {
+public abstract class BaseFragment extends Fragment {
     protected final String TAG = getClass().getSimpleName();
     protected FragmentActivity activity;
     private Unbinder unbinder;
@@ -33,8 +33,7 @@ public abstract class BaseFragment<T> extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(getLayout(),null);
         unbinder=ButterKnife.bind(this, view);
-        initView();
-        requestNet();
+
         return view;
     }
 
@@ -52,6 +51,8 @@ public abstract class BaseFragment<T> extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initView();
+        requestNet();
         installListener();
     }
 
@@ -95,13 +96,13 @@ public abstract class BaseFragment<T> extends Fragment {
     }
 
 
-    protected void refreshUI() {
-
-    }
-
-    protected void refreshUI(List<T> list) {
-
-    }
+//    protected void refreshUI() {
+//
+//    }
+//
+//    protected void refreshUI(List<T> list) {
+//
+//    }
 
     @Override
     public void onDestroyView() {

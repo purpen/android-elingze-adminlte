@@ -130,6 +130,8 @@
     <string name="title_today_sale_money">今天销售额</string>
     <string name="title_7day_sale_money">7天销售额</string>
     <string name="title_30day_sale_money">30天销售额</string>
+    <string name="title_statistics_goods_classify">商品分类</string>
+    <string name="title_statistics_brand_classify">品牌分类</string>
 
     <string-array name="messages_array">
         <item>How are you</item>

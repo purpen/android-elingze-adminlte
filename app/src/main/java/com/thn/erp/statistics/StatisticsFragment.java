@@ -39,7 +39,7 @@ public class StatisticsFragment extends BaseFragment {
         customHeadView.setCenterTxtShow(getString(R.string.statistics_title),getResources().getColor(android.R.color.white));
         ArrayList<Class> classes = new ArrayList<>();
         classes.add(StatisticSaleAmountFragment.class);
-        classes.add(StatisticSaleAmountFragment.class);
+        classes.add(StatisticsGoodsFragment.class);
         classes.add(StatisticSaleAmountFragment.class);
         classes.add(StatisticOrderFragment.class);
         classes.add(StatisticSaleAmountFragment.class);

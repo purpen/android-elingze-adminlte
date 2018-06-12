@@ -45,6 +45,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -296,12 +297,12 @@ public class StatisticSaleAmountFragment extends BaseFragment implements DatePic
      */
     private void setSaleTrendsData(SaleDaysTrendsBean.DataBean data) {
         if (data==null) return;
-        tvMoneyToday.setText(String.format("￥%s",data.today.sale_amount));
-        tvMoney7Day.setText(String.format("￥%s",data.seven_days.sale_amount));
-        tvMoney30Days.setText(String.format("￥%s",data.thirty_days.sale_amount));
-        tvRateToday.setText(String.format("日同比 %s%%",data.today.day_yoy));
-        tvRate7Day.setText(String.format("七日同比 %s%%",data.seven_days.week_yoy));
-        tvRate30Day.setText(String.format("月同比 %s%%",data.thirty_days.month_yoy));
+        tvMoneyToday.setText(String.format(Locale.CHINESE,"￥%,.2f",data.today.sale_amount));
+        tvMoney7Day.setText(String.format(Locale.CHINESE,"￥%,.2f",data.seven_days.sale_amount));
+        tvMoney30Days.setText(String.format(Locale.CHINESE,"￥%,.2f",data.thirty_days.sale_amount));
+        tvRateToday.setText(String.format(Locale.CHINESE,"日同比 %.0f%%",data.today.day_yoy));
+        tvRate7Day.setText(String.format(Locale.CHINESE,"七日同比 %.0f%%",data.seven_days.week_yoy));
+        tvRate30Day.setText(String.format(Locale.CHINESE,"月同比 %.0f%%",data.thirty_days.month_yoy));
         if (data.today.day_yoy>=0){
             tvRateToday.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_statistic_rise, 0);
         }else {
