@@ -26,18 +26,8 @@
             android:textSize="@dimen/sp12" />
 
         <TextView
-            android:id="@+id/id"
-            android:layout_width="@dimen/dp45"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:text="ID"
-            android:textColor="@color/color_222"
-            android:textSize="@dimen/sp12"
-            android:visibility="gone" />
-
-        <TextView
             android:id="@+id/column1"
-            android:layout_width="@dimen/dp90"
+            android:layout_width="@dimen/dp50"
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="仓库名"
