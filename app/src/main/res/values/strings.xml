@@ -136,6 +136,8 @@
     <string name="title_stock_amount">库存总数</string>
     <string name="title_stock_warn">库存预警数</string>
     <string name="title_statistics_stock">仓库统计</string>
+    <string name="title_statistics_customer_grade">客户级别</string>
+    <string name="title_statistics_customer_area">客户地域分布</string>
 
     <string-array name="messages_array">
         <item>How are you</item>

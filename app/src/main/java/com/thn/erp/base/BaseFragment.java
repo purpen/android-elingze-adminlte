@@ -33,15 +33,11 @@ public abstract class BaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(getLayout(),null);
         unbinder=ButterKnife.bind(this, view);
-
         return view;
     }
 
     protected abstract int getLayout();
 
-    protected void initView() {
-
-    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -55,6 +51,11 @@ public abstract class BaseFragment extends Fragment {
         requestNet();
         installListener();
     }
+
+    protected void initView() {
+
+    }
+
 
     protected void installListener() {
     }

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.thn.erp.view.CustomScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp10"
+            android:background="@color/color_f8f8f8"
+            android:orientation="vertical">
+            <!--客户地域分布-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@android:color/white"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dp15"
+                android:paddingLeft="@dimen/dp15"
+                android:paddingRight="@dimen/dp15"
+                android:paddingTop="@dimen/dp10">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_statistics_customer_area"
+                        android:textColor="@color/color_222"
+                        android:textSize="@dimen/sp15" />
+
+                    <LinearLayout
+                        android:id="@+id/llContainer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="23dp"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/border_date_radius_ddd"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/dp5"
+                        android:paddingRight="@dimen/dp5">
+
+                        <TextView
+                            android:id="@+id/tvTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2017-05-28至2017-06-26"
+                            android:textColor="@color/color_666"
+                            android:textSize="@dimen/sp10" />
+
+                        <ImageView
+                            android:id="@+id/ivRankTriangle"
+                            android:layout_width="9dp"
+                            android:layout_height="9dp"
+                            android:layout_marginLeft="@dimen/dp5"
+                            android:src="@mipmap/icon_date_triangle" />
+                    </LinearLayout>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp5"
+                    android:layout_marginTop="@dimen/dp8">
+
+                    <TextView
+                        android:id="@+id/currentAccount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="客户数：12"
+                        android:textColor="@color/color_666"
+                        android:textSize="@dimen/sp13" />
+
+                    <TextView
+                        android:id="@+id/currentDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="2017-05-28"
+                        android:textColor="@color/color_666"
+                        android:textSize="@dimen/sp13" />
+                </RelativeLayout>
+
+
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/barChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp15"
+                    android:layout_marginRight="@dimen/dp15"
+                    android:background="@drawable/border_radius5_e6e6e6" />
+            </LinearLayout>
+
+
+            <!--客户级别-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@android:color/white"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dp15"
+                android:paddingLeft="@dimen/dp15"
+                android:paddingRight="@dimen/dp15"
+                android:paddingTop="@dimen/dp10">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_statistics_customer_grade"
+                    android:textColor="@color/color_222"
+                    android:textSize="@dimen/sp15" />
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/pieChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </com.thn.erp.view.CustomScrollView>
+
+    <include
+        android:id="@+id/emptyView"
+        layout="@layout/view_no_chart_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+</RelativeLayout>

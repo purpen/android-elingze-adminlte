@@ -128,7 +128,7 @@ class StatisticStockFragment : BaseFragment() {
      */
     private fun getHeaderView(): View {
         val headerView = LayoutInflater.from(context).inflate(R.layout.item_statistics_warehouse, null)
-        headerView.setBackgroundColor(resources.getColor(R.color.color_E6E6E6))
+        headerView.background = resources.getDrawable(R.drawable.border_radius5_e6e6e6_bg_fafafa)
         headerView.setLayoutParams(ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, resources.getDimensionPixelSize(R.dimen.dp30)))
         return headerView
     }

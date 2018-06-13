@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/color_27AE59</item>
         <item name="colorPrimaryDark">@color/color_27AE59</item>
         <item name="colorAccent">@color/color_222</item>
+        <item name="android:background">@null</item>
     </style>
 
     <!-- Activity 通用样式 -->

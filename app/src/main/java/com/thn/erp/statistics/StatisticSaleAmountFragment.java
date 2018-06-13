@@ -459,7 +459,6 @@ public class StatisticSaleAmountFragment extends BaseFragment implements DatePic
             set = (LineDataSet) saleAmountChart.getData().getDataSetByIndex(0);
             set.setValues(values);
             saleAmountChart.getData().notifyDataChanged();
-            saleAmountChart.notifyDataSetChanged();
         } else {
             set = new LineDataSet(values, "");
             set.setDrawIcons(false);
@@ -488,7 +487,7 @@ public class StatisticSaleAmountFragment extends BaseFragment implements DatePic
             LineData data = new LineData(dataSets);
             saleAmountChart.setData(data);
         }
-        saleAmountChart.invalidate();
+        saleAmountChart.notifyDataSetChanged();
     }
 
     private void checkHaveNotData() {

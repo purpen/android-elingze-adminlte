@@ -40,7 +40,7 @@ public class StatisticsFragment extends BaseFragment {
         ArrayList<Class> classes = new ArrayList<>();
         classes.add(StatisticSaleAmountFragment.class);
         classes.add(StatisticsGoodsFragment.class);
-        classes.add(StatisticSaleAmountFragment.class);
+        classes.add(StatisticCustomerFragment.class);
         classes.add(StatisticOrderFragment.class);
         classes.add(StatisticStockFragment.class);
         String[] titles = getResources().getStringArray(R.array.statistics_titles);

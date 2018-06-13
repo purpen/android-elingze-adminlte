@@ -315,6 +315,7 @@ public class DatePickerDialog extends DialogFragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+
         View view = inflater.inflate(R.layout.range_date_picker_dialog, null);
 
         tabHost = (TabHost) view.findViewById(R.id.tabHost);
@@ -518,15 +519,18 @@ public class DatePickerDialog extends DialogFragment implements
 
     private void updateTab(TabHost tabHost) {
         for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
-            TextView tv = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
-            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
+            View view = tabHost.getTabWidget().getChildAt(i);
+            TextView tv = view.findViewById(android.R.id.title);
+            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+            view.setBackground(getResources().getDrawable(R.drawable.custom_tab_indicator_selected));//选中后的背景
             if (tabHost.getCurrentTab() == i) {//选中
-                tv.setTextColor(this.getResources().getColor(android.R.color.black));
+                tv.setTextColor(this.getResources().getColor(R.color.color_27AE59));
             } else {//不选中
                 tv.setTextColor(this.getResources().getColor(android.R.color.darker_gray));
             }
         }
     }
+
 
     @Override
     public void onResume() {
