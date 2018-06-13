@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -13,7 +12,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/color_f8f8f8"
+            >
             <!--销售趋势-->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -137,6 +138,7 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
                 android:orientation="vertical"
+                android:layout_marginTop="@dimen/dp10"
                 android:paddingBottom="@dimen/dp15"
                 android:paddingLeft="@dimen/dp15"
                 android:paddingRight="@dimen/dp15"
@@ -231,7 +233,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp5"
+                android:layout_marginTop="@dimen/dp10"
                 android:background="@android:color/white"
                 android:orientation="vertical"
                 android:paddingBottom="@dimen/dp15"
@@ -287,12 +289,18 @@
                     android:textColor="@color/color_666"
                     android:textSize="@dimen/sp13" />
 
-                <com.thn.erp.view.ListViewForScrollView
-                    android:id="@+id/listViewForScrollView"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:divider="@color/color_eee"
-                    android:dividerHeight="@dimen/dp05" />
+                    android:background="@android:color/white">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/border_radius5_e6e6e6" />
+                </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
     </com.thn.erp.view.CustomScrollView>
@@ -303,4 +311,4 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone" />
-</LinearLayout>
+</RelativeLayout>

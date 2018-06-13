@@ -1,7 +1,11 @@
 package com.thn.erp.statistics;
 
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,7 +40,6 @@ import com.thn.erp.net.URL;
 import com.thn.erp.statistics.adapter.ProductsTop100Adapter;
 import com.thn.erp.statistics.bean.SaleDaysTrendsBean;
 import com.thn.erp.view.CustomScrollView;
-import com.thn.erp.view.ListViewForScrollView;
 import com.thn.erp.view.MyMarkerView;
 
 import java.io.IOException;
@@ -82,8 +85,8 @@ public class StatisticSaleAmountFragment extends BaseFragment implements DatePic
     private List<SalesTrendsBean.DataBean.SaleAmountDataBean> datas;
     @BindView(R.id.saleAmountChart)
     LineChart saleAmountChart;
-    @BindView(R.id.listViewForScrollView)
-    ListViewForScrollView listViewForScrollView;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
     @BindView(R.id.tvSaleAmountPeriod)
     TextView tvSaleAmountPeriod;
     @BindView(R.id.ivTriangle)
@@ -98,6 +101,7 @@ public class StatisticSaleAmountFragment extends BaseFragment implements DatePic
     private boolean isLoadSaleOrder = true;
     private int currentClickedId = -1;
     private ArrayList<Boolean> statesArr;//没有数据放入false，有数据放入true
+    private ProductsTop100Adapter adapter;
 
     @Override
     protected int getLayout() {
@@ -108,11 +112,34 @@ public class StatisticSaleAmountFragment extends BaseFragment implements DatePic
     protected void initView() {
         color = getResources().getColor(R.color.color_27AE59);
         statesArr = new ArrayList<>();
+        initRecyclerView();
         setUpSaleAmountChart();
-        listViewForScrollView.setFocusable(false);
-        View view = View.inflate(activity, R.layout.header_sale_top100, null);
-        listViewForScrollView.addHeaderView(view);
     }
+
+    /**
+     * 初始化表单
+     */
+    private void initRecyclerView() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
+
+        adapter = new ProductsTop100Adapter(R.layout.item_sale_top100);
+        adapter.addHeaderView(getHeaderView());
+        recyclerView.setAdapter(adapter);
+    }
+
+    /**
+     * 获得头布局
+     * @return
+     */
+    private View getHeaderView() {
+        View headerView = LayoutInflater.from(getContext()).inflate(R.layout.item_sale_top100, null);
+        headerView.setBackground(getResources().getDrawable(R.drawable.border_radius5_e6e6e6_bg_fafafa));
+        headerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getResources().getDimensionPixelSize(R.dimen.dp30)));
+        return headerView;
+    }
+
 
     @OnClick({R.id.llSaleAmountPeriod, R.id.llSaleRank})
     void onViewClicked(View v) {
@@ -151,8 +178,8 @@ public class StatisticSaleAmountFragment extends BaseFragment implements DatePic
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth, int yearEnd, int monthOfYearEnd, int dayOfMonthEnd) {
         if (currentClickedId < 0) return;
-        String start_time = String.format("%04d-%02d-%02d", year, monthOfYear + 1, dayOfMonth);
-        String end_time = String.format("%04d-%02d-%02d", yearEnd, monthOfYearEnd + 1, dayOfMonthEnd);
+        String start_time = String.format(Locale.CHINESE,"%04d-%02d-%02d", year, monthOfYear + 1, dayOfMonth);
+        String end_time = String.format(Locale.CHINESE,"%04d-%02d-%02d", yearEnd, monthOfYearEnd + 1, dayOfMonthEnd);
         String dateStr = String.format("%s 至 %s", start_time, end_time);
         switch (currentClickedId) {
             case R.id.llSaleAmountPeriod:
@@ -366,8 +393,7 @@ public class StatisticSaleAmountFragment extends BaseFragment implements DatePic
             statesArr.add(true);
         }
         checkHaveNotData();
-        ProductsTop100Adapter adapter = new ProductsTop100Adapter(list, activity);
-        listViewForScrollView.setAdapter(adapter);
+        adapter.setNewData(list);
     }
 
 
